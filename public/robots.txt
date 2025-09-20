@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://breathingflame.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /cms/
+Disallow: /_/
+
+# Allow important pages
+Allow: /#ignite-your-flame
+Allow: /#peak-energy-profiler
+

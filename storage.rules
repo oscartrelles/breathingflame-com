@@ -1,0 +1,39 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Images and media files - public read, authenticated write
+    match /images/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        (request.auth.token.role == 'admin' || request.auth.token.role == 'editor');
+    }
+    
+    // Documents and resources - public read, authenticated write
+    match /documents/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        (request.auth.token.role == 'admin' || request.auth.token.role == 'editor');
+    }
+    
+    // User uploads - user-specific access
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Temporary uploads - authenticated users only
+    match /temp/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Admin files - admin only
+    match /admin/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.token.role == 'admin';
+    }
+    
+    // Default rule - deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
