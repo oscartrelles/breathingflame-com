@@ -41,21 +41,7 @@ export function Header({ className = '' }: HeaderProps) {
     setIsMobileMenuOpen(false)
   }, [location.pathname])
 
-  // Handle CTA click
-  const handleCTAClick = () => {
-    if (navigation?.primaryCTA?.type === 'modal') {
-      setIsModalOpen(true)
-      trackButtonClick('header_cta', 'modal_open')
-    } else {
-      trackButtonClick('header_cta', 'link_click')
-    }
-  }
 
-  // Handle Typeform anchor links
-  const handleTypeformClick = (anchor: string) => {
-    trackButtonClick('typeform_anchor', anchor)
-    setIsMobileMenuOpen(false)
-  }
 
   const headerClasses = `${styles.header} ${isScrolled ? styles.scrolled : ''} ${className}`
 
@@ -71,87 +57,73 @@ export function Header({ className = '' }: HeaderProps) {
               onClick={() => trackButtonClick('logo', 'header')}
             >
               <img 
-                src="/logo.svg" 
+                src="/bf-logo.png" 
                 alt="Breathing Flame" 
                 className={styles.logoImage}
               />
               <span className={styles.logoText}>Breathing Flame</span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className={styles.nav}>
-              {navigation?.headerLinks?.map((link, index) => (
-                <div key={index} className={styles.navItem}>
-                  <Link 
-                    to={link.href}
-                    className={`${styles.navLink} ${
-                      location.pathname === link.href ? styles.active : ''
-                    }`}
-                    onClick={() => trackButtonClick('nav_link', link.text)}
-                  >
-                    {link.text}
-                  </Link>
-                  
-                  {/* Dropdown for links with children */}
-                  {link.children && link.children.length > 0 && (
-                    <div className={styles.dropdown}>
-                      {link.children.map((child, childIndex) => (
-                        <Link
-                          key={childIndex}
-                          to={child.href}
-                          className={styles.dropdownLink}
-                          onClick={() => trackButtonClick('nav_dropdown', child.text)}
+            {/* Right-aligned container for nav and CTA */}
+            <div className={styles.headerRight}>
+              {/* Desktop Navigation */}
+              <nav className={styles.nav}>
+                {navigation?.headerLinks
+                  ?.sort((a, b) => (a.order || 0) - (b.order || 0))
+                  ?.map((link) => (
+                    <div key={link.label} className={styles.navItem}>
+                      {link.external ? (
+                        <a
+                          href={link.pathOrUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${styles.navLink} ${
+                            location.pathname === link.pathOrUrl ? styles.active : ''
+                          }`}
+                          onClick={() => trackButtonClick('nav_link', link.label)}
                         >
-                          {child.text}
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          to={link.pathOrUrl}
+                          className={`${styles.navLink} ${
+                            location.pathname === link.pathOrUrl ? styles.active : ''
+                          }`}
+                          onClick={() => trackButtonClick('nav_link', link.label)}
+                        >
+                          {link.label}
                         </Link>
-                      ))}
+                      )}
                     </div>
+                  ))}
+              </nav>
+
+              {/* CTA Button */}
+              {navigation?.primaryCTA && (
+                <div className={styles.cta}>
+                  {navigation.primaryCTA.external ? (
+                    <a
+                      href={navigation.primaryCTA.pathOrUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn--primary"
+                      onClick={() => trackButtonClick('header_cta', 'external')}
+                    >
+                      {navigation.primaryCTA.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={navigation.primaryCTA.pathOrUrl}
+                      className="btn btn--primary"
+                      onClick={() => trackButtonClick('header_cta', 'link')}
+                    >
+                      {navigation.primaryCTA.label}
+                    </Link>
                   )}
                 </div>
-              ))}
-
-              {/* Typeform Anchors */}
-              <div className={styles.navItem}>
-                <Link 
-                  to="/#ignite-your-flame"
-                  className={styles.navLink}
-                  onClick={() => handleTypeformClick('ignite-your-flame')}
-                >
-                  Ignite Assessment
-                </Link>
-              </div>
-              <div className={styles.navItem}>
-                <Link 
-                  to="/#peak-energy-profiler"
-                  className={styles.navLink}
-                  onClick={() => handleTypeformClick('peak-energy-profiler')}
-                >
-                  Peak Profiler
-                </Link>
-              </div>
-            </nav>
-
-            {/* CTA Button */}
-            {navigation?.primaryCTA && (
-              <div className={styles.cta}>
-                {navigation.primaryCTA.type === 'modal' ? (
-                  <button
-                    className="btn btn--primary"
-                    onClick={handleCTAClick}
-                  >
-                    {navigation.primaryCTA.text}
-                  </button>
-                ) : (
-                  <Link
-                    to={navigation.primaryCTA.href}
-                    className="btn btn--primary"
-                    onClick={() => trackButtonClick('header_cta', 'link')}
-                  >
-                    {navigation.primaryCTA.text}
-                  </Link>
-                )}
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -167,73 +139,57 @@ export function Header({ className = '' }: HeaderProps) {
 
           {/* Mobile Navigation */}
           <nav className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.open : ''}`}>
-            {navigation?.headerLinks?.map((link, index) => (
-              <div key={index} className={styles.mobileNavItem}>
-                <Link 
-                  to={link.href}
-                  className={`${styles.mobileNavLink} ${
-                    location.pathname === link.href ? styles.active : ''
-                  }`}
-                  onClick={() => trackButtonClick('mobile_nav_link', link.text)}
-                >
-                  {link.text}
-                </Link>
-                
-                {/* Mobile dropdown */}
-                {link.children && link.children.length > 0 && (
-                  <div className={styles.mobileDropdown}>
-                    {link.children.map((child, childIndex) => (
-                      <Link
-                        key={childIndex}
-                        to={child.href}
-                        className={styles.mobileDropdownLink}
-                        onClick={() => trackButtonClick('mobile_nav_dropdown', child.text)}
-                      >
-                        {child.text}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+            {navigation?.headerLinks
+              ?.sort((a, b) => (a.order || 0) - (b.order || 0))
+              ?.map((link) => (
+                <div key={link.label} className={styles.mobileNavItem}>
+                  {link.external ? (
+                    <a
+                      href={link.pathOrUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${styles.mobileNavLink} ${
+                        location.pathname === link.pathOrUrl ? styles.active : ''
+                      }`}
+                      onClick={() => trackButtonClick('mobile_nav_link', link.label)}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.pathOrUrl}
+                      className={`${styles.mobileNavLink} ${
+                        location.pathname === link.pathOrUrl ? styles.active : ''
+                      }`}
+                      onClick={() => trackButtonClick('mobile_nav_link', link.label)}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
 
-            {/* Mobile Typeform Links */}
-            <div className={styles.mobileNavItem}>
-              <Link 
-                to="/#ignite-your-flame"
-                className={styles.mobileNavLink}
-                onClick={() => handleTypeformClick('ignite-your-flame')}
-              >
-                Ignite Assessment
-              </Link>
-            </div>
-            <div className={styles.mobileNavItem}>
-              <Link 
-                to="/#peak-energy-profiler"
-                className={styles.mobileNavLink}
-                onClick={() => handleTypeformClick('peak-energy-profiler')}
-              >
-                Peak Profiler
-              </Link>
-            </div>
 
             {/* Mobile CTA */}
             {navigation?.primaryCTA && (
               <div className={styles.mobileCTA}>
-                {navigation.primaryCTA.type === 'modal' ? (
-                  <button
+                {navigation.primaryCTA.external ? (
+                  <a
+                    href={navigation.primaryCTA.pathOrUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn btn--primary btn--large"
-                    onClick={handleCTAClick}
+                    onClick={() => trackButtonClick('mobile_header_cta', 'external')}
                   >
-                    {navigation.primaryCTA.text}
-                  </button>
+                    {navigation.primaryCTA.label}
+                  </a>
                 ) : (
                   <Link
-                    to={navigation.primaryCTA.href}
+                    to={navigation.primaryCTA.pathOrUrl}
                     className="btn btn--primary btn--large"
                     onClick={() => trackButtonClick('mobile_header_cta', 'link')}
                   >
-                    {navigation.primaryCTA.text}
+                    {navigation.primaryCTA.label}
                   </Link>
                 )}
               </div>

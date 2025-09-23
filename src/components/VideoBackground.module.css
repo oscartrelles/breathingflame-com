@@ -1,0 +1,173 @@
+/* Video Background Component Styles */
+
+.videoContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-background);
+  z-index: -2;
+}
+
+.videoWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw; /* 16:9 aspect ratio */
+  min-height: 100vh;
+  min-width: 177.77vh; /* 16:9 aspect ratio */
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
+}
+
+/* Overlay for text readability */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Loading state */
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+  z-index: 3;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Fallback content */
+.fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--color-background-secondary) 0%,
+    var(--color-background) 100%
+  );
+  z-index: 3;
+}
+
+.fallbackContent {
+  text-align: center;
+  color: var(--color-text-primary);
+  padding: var(--spacing-8);
+}
+
+.fallbackContent h3 {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  font-style: italic;
+  margin-bottom: var(--spacing-4);
+  color: var(--color-primary);
+}
+
+.fallbackContent p {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .videoWrapper {
+    width: 100vw;
+    height: 56.25vw; /* Maintain 16:9 aspect ratio */
+    min-height: 100vh;
+    min-width: 177.77vh;
+  }
+  
+  .overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.6) 70%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .fallbackContent {
+    padding: var(--spacing-4);
+  }
+  
+  .fallbackContent h3 {
+    font-size: var(--font-size-lg);
+  }
+  
+  .fallbackContent p {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Performance optimizations */
+.video {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+  
+  .video {
+    will-change: auto;
+  }
+}

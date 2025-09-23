@@ -31,25 +31,43 @@ export interface Settings {
 
 export interface Navigation {
   id: string
-  headerLinks: NavLink[]
-  footerLinks: FooterLink[]
-  primaryCTA: {
-    text: string
-    href: string
-    type: 'modal' | 'link'
-  }
+  headerLinks: NavigationHeaderLink[]
+  primaryCTA: NavigationCTA
+  footerGroups: NavigationFooterGroup[]
+  anchors: NavigationAnchor[]
 }
 
-export interface NavLink {
-  text: string
-  href: string
-  children?: NavLink[]
+export interface NavigationHeaderLink {
+  label: string
+  pathOrUrl: string
+  external: boolean
+  order: number
 }
 
-export interface FooterLink {
-  text: string
-  href: string
-  category: string
+export interface NavigationCTA {
+  label: string
+  pathOrUrl: string
+  external: boolean
+}
+
+export interface NavigationFooterLink {
+  label: string
+  pathOrUrl: string
+  external: boolean
+  order: number
+  icon?: string
+}
+
+export interface NavigationFooterGroup {
+  title: string
+  order: number
+  links: NavigationFooterLink[]
+}
+
+export interface NavigationAnchor {
+  label: string
+  hash: string
+  order: number
 }
 
 export interface Home {

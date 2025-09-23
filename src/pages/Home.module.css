@@ -1,6 +1,6 @@
 /* Home Page Styles */
 
-/* Hero Section */
+/* Hero Section with Video Background */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -8,40 +8,35 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 0; /* No padding - video should extend behind header */
+  margin: 0; /* No margin */
 }
 
-.heroBackground {
-  position: absolute;
+.heroVideoBackground {
+  position: absolute !important;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -2;
-}
-
-.heroVideo,
-.heroImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.heroOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
 }
 
 .heroContent {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--spacing-8) 0;
   position: relative;
-  z-index: 1;
+  z-index: 10; /* Above video background, overlay, and header */
+  text-align: center;
+  max-width: 900px; /* Increased for more breathing room */
+  margin: 0 auto;
+  padding: var(--spacing-16) var(--spacing-6) var(--spacing-16); /* Horizontal padding for mobile */
+  padding-top: calc(var(--header-height) + var(--spacing-16)); /* Ensure content is below header */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .heroTitle {
@@ -84,11 +79,11 @@
   margin-top: var(--spacing-8);
 }
 
-/* Section Headers */
+/* Section Headers - Enhanced spacing like Positive Intelligence */
 .sectionHeader {
   text-align: center;
-  margin-bottom: var(--spacing-16);
-  max-width: 600px;
+  margin-bottom: var(--spacing-24); /* Increased from 16 to 24 for more breathing room */
+  max-width: 700px; /* Increased for better readability */
   margin-left: auto;
   margin-right: auto;
 }
@@ -104,31 +99,32 @@
   line-height: var(--line-height-relaxed);
 }
 
-/* Pillars Grid */
+/* Pillars Grid - Enhanced spacing like Positive Intelligence */
 .pillarsGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--spacing-8);
+  gap: var(--spacing-12); /* Increased gap for more breathing room */
 }
 
 @media (min-width: 768px) {
   .pillarsGrid {
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-12);
+    gap: var(--spacing-16); /* Increased gap for desktop */
   }
 }
 
 .pillarCard {
   text-align: center;
-  padding: var(--spacing-8);
+  padding: var(--spacing-10); /* Increased padding for more breathing room */
   background-color: var(--color-background-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  transition: all var(--transition-base);
+  transition: all var(--duration-300) var(--ease-smooth); /* Enhanced transition */
+  will-change: transform, box-shadow; /* Optimize for animations */
 }
 
 .pillarCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px); /* Increased hover lift */
   box-shadow: var(--shadow-xl);
   border-color: var(--color-primary);
 }
@@ -350,6 +346,35 @@
 @media (min-width: 1024px) {
   .testimonialsGrid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Senja Testimonials Container */
+.senjaContainer {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-background);
+}
+
+/* Ensure Senja widgets respect our design system */
+.senjaContainer :global(.senja-testimonial) {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.senjaContainer :global(.senja-testimonial:hover) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Responsive adjustments for Senja widget */
+@media (max-width: 768px) {
+  .senjaContainer {
+    border-radius: var(--radius-md);
   }
 }
 

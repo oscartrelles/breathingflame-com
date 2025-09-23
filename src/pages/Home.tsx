@@ -1,7 +1,18 @@
-import { useHome, usePrograms, useExperiences, useFeaturedTestimonials } from '@/hooks/useFirestore'
+import { useHome, usePrograms, useExperiences } from '@/hooks/useFirestore'
 import { TypeformEmbed } from '@/components/TypeformEmbed'
+import { VideoBackground } from '@/components/VideoBackground'
 import { SEO } from '@/components/SEO'
 import { trackTypeformInteraction } from '@/components/Analytics'
+import { motion } from 'framer-motion'
+import { 
+  fadeInUp, 
+  heroText, 
+  staggerContainer, 
+  staggerChild, 
+  useInViewAnimation,
+  useReducedMotion,
+  pageTransition 
+} from '@/utils/animations'
 import styles from './Home.module.css'
 
 /**
@@ -21,7 +32,7 @@ export function Home() {
   const { data: homeData } = useHome()
   const { data: programs } = usePrograms()
   const { data: experiences } = useExperiences()
-  const { data: featuredTestimonials } = useFeaturedTestimonials(6)
+  const reducedMotion = useReducedMotion()
 
   // Get featured programs and experiences
   const featuredPrograms = programs?.filter(program => 
@@ -42,7 +53,11 @@ export function Home() {
   }
 
   return (
-    <>
+    <motion.div
+      initial="initial"
+      animate="animate"
+      variants={reducedMotion ? {} : pageTransition}
+    >
       <SEO 
         data={{
           title: homeData?.hero?.title || 'Breathing Flame - Resilience. Clarity. Transformation.',
@@ -51,74 +66,91 @@ export function Home() {
         }}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section with YouTube Video Background */}
       <section className={styles.hero}>
-        <div className={styles.heroBackground}>
-          {homeData?.hero?.backgroundVideo ? (
-            <video
-              className={styles.heroVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
+        {/* YouTube Video Background */}
+        <VideoBackground
+          videoId="KcK67tYvPgA"
+          title="Breathing Flame Hero Video"
+          overlay={true}
+          overlayOpacity={0.65}
+          startTime={6}
+          endTime={80}
+          className={styles.heroVideoBackground}
+        />
+
+        {/* Hero Content Overlay */}
+        <div className={styles.heroContent}>
+          <div className="container">
+            <motion.h1 
+              className={styles.heroTitle}
+              variants={reducedMotion ? {} : heroText}
             >
-              <source src={homeData.hero.backgroundVideo} type="video/mp4" />
-            </video>
-          ) : homeData?.hero?.backgroundImage ? (
-            <img
-              src={homeData.hero.backgroundImage}
-              alt="Breathing Flame Hero"
-              className={styles.heroImage}
-            />
-          ) : null}
-          
-          <div 
-            className={styles.heroOverlay}
-            style={{ 
-              backgroundColor: `rgba(0, 0, 0, ${homeData?.hero?.overlayOpacity || 0.6})` 
-            }}
-          />
-        </div>
-
-        <div className="container">
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>
               {homeData?.hero?.title || 'Resilience. Clarity. Transformation.'}
-            </h1>
+            </motion.h1>
             
-            <p className={styles.heroSubtitle}>
+            <motion.p 
+              className={styles.heroSubtitle}
+              variants={reducedMotion ? {} : fadeInUp}
+              transition={{ delay: 0.2 }}
+            >
               {homeData?.hero?.subtitle || 'Perform at your best. Live with clarity. Transform your life.'}
-            </p>
+            </motion.p>
             
-            <p className={styles.heroDescription}>
+            <motion.p 
+              className={styles.heroDescription}
+              variants={reducedMotion ? {} : fadeInUp}
+              transition={{ delay: 0.3 }}
+            >
               {homeData?.hero?.description || 'Discover the power of breathwork, mindfulness, and transformative experiences that help you build resilience, gain clarity, and create lasting positive change in your life.'}
-            </p>
+            </motion.p>
 
-            <div className={styles.heroCTA}>
-              <a
+            <motion.div 
+              className={styles.heroCTA}
+              variants={reducedMotion ? {} : fadeInUp}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.a
                 href={homeData?.hero?.ctaHref || '/contact'}
                 className="btn btn--primary btn--large"
+                whileHover={reducedMotion ? {} : { scale: 1.02, y: -2 }}
+                whileTap={reducedMotion ? {} : { scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
-                {homeData?.hero?.ctaText || 'Book a Session'}
-              </a>
-            </div>
+                {homeData?.hero?.ctaText || 'Start Your Journey'}
+              </motion.a>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Pillars Section */}
-      <section className="section">
+      {/* Pillars Section - Staggered reveal like Positive Intelligence */}
+      <section className="section section--lg">
         <div className="container">
-          <div className={styles.sectionHeader}>
+          <motion.div 
+            className={styles.sectionHeader}
+            {...useInViewAnimation()}
+          >
             <h2 className={styles.sectionTitle}>Our Three Pillars</h2>
             <p className={styles.sectionDescription}>
               The foundation of transformation through breathwork and mindfulness
             </p>
-          </div>
+          </motion.div>
 
-          <div className={styles.pillarsGrid}>
+          <motion.div 
+            className={styles.pillarsGrid}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+          >
             {homeData?.pillars?.map((pillar, index) => (
-              <div key={pillar.id || index} className={styles.pillarCard}>
+              <motion.div 
+                key={pillar.id || index} 
+                className={styles.pillarCard}
+                variants={reducedMotion ? {} : staggerChild}
+                whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
+              >
                 <div className={styles.pillarIcon}>
                   <div 
                     className={styles.pillarIconInner}
@@ -132,9 +164,9 @@ export function Home() {
                 
                 <h3 className={styles.pillarTitle}>{pillar.title}</h3>
                 <p className={styles.pillarDescription}>{pillar.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -223,43 +255,27 @@ export function Home() {
       )}
 
       {/* Testimonials */}
-      {featuredTestimonials.length > 0 && (
-        <section className="section section--sm">
-          <div className="container">
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>What People Say</h2>
-              <p className={styles.sectionDescription}>
-                Real stories from our community
-              </p>
-            </div>
-
-            <div className={styles.testimonialsGrid}>
-              {featuredTestimonials.map((testimonial) => (
-                <div key={testimonial.id} className={styles.testimonialCard}>
-                  <div className={styles.testimonialRating}>
-                    {'★'.repeat(testimonial.rating)}
-                    {'☆'.repeat(5 - testimonial.rating)}
-                  </div>
-                  
-                  <blockquote className={styles.testimonialText}>
-                    "{testimonial.text}"
-                  </blockquote>
-                  
-                  <div className={styles.testimonialAuthor}>
-                    <div className={styles.authorInfo}>
-                      <h4 className={styles.authorName}>{testimonial.author.name}</h4>
-                      <p className={styles.authorTitle}>{testimonial.author.title}</p>
-                      {testimonial.author.company && (
-                        <p className={styles.authorCompany}>{testimonial.author.company}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <section className="section section--sm">
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>What People Say</h2>
+            <p className={styles.sectionDescription}>
+              Real stories from our community
+            </p>
           </div>
-        </section>
-      )}
+
+          {/* Senja Testimonials Widget */}
+          <div className={styles.senjaContainer}>
+            <div 
+              className="senja-embed" 
+              data-id="81b3e80e-4b5d-4110-9928-fff9a187aa48" 
+              data-mode="shadow" 
+              data-lazyload="false" 
+              style={{ display: 'block', width: '100%' }}
+            ></div>
+          </div>
+        </div>
+      </section>
 
       {/* Organization Preview Cards */}
       {homeData?.orgPreviewCards && homeData.orgPreviewCards.length > 0 && (
@@ -386,7 +402,7 @@ export function Home() {
           </section>
         </>
       )}
-    </>
+    </motion.div>
   )
 }
 

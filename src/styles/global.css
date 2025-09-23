@@ -30,6 +30,8 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-style: italic;
   letter-spacing: -0.02em;
+  /* League Gothic 20% larger than default */
+  font-size: calc(1em * var(--league-gothic-scale));
 }
 
 h1 {
@@ -76,10 +78,10 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3) var(--spacing-6);
+  padding: var(--spacing-1) var(--spacing-4);
   font-family: var(--font-family-primary);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   text-decoration: none;
   border: none;
@@ -100,6 +102,7 @@ a:hover {
   color: var(--color-background);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+  transition: all var(--duration-300) var(--ease-smooth);
 }
 
 .btn--secondary {
@@ -111,6 +114,9 @@ a:hover {
 .btn--secondary:hover {
   background-color: var(--color-primary);
   color: var(--color-background);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--duration-300) var(--ease-smooth);
 }
 
 .btn--outline {
@@ -200,16 +206,21 @@ a:hover {
   max-width: var(--container-2xl);
 }
 
+/* Section spacing - inspired by Positive Intelligence's generous whitespace */
 .section {
-  padding: var(--spacing-20) 0;
+  padding: var(--spacing-32) 0; /* Increased from 20 to 32 for more breathing room */
 }
 
 .section--sm {
-  padding: var(--spacing-12) 0;
+  padding: var(--spacing-16) 0;
 }
 
 .section--lg {
-  padding: var(--spacing-32) 0;
+  padding: var(--spacing-48) 0; /* Increased from 32 to 48 for hero sections */
+}
+
+.section--xl {
+  padding: var(--spacing-56) 0; /* Extra large for major sections */
 }
 
 /* Grid */

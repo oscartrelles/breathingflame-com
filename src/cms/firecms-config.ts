@@ -128,13 +128,14 @@ export const settingsCollection = buildCollection<Settings>({
 // Navigation Collection
 export const navigationCollection = buildCollection<Navigation>({
   name: 'Navigation',
-  singularName: 'Navigation',
+  singularName: 'Navigation (singleton)',
   path: 'navigation',
   icon: 'Navigation',
   description: 'Site navigation configuration',
   permissions: ({ user }) => ({
     read: true,
-    write: user?.role === 'admin'
+    write: ['admin', 'editor'].includes(user?.role || ''),
+    delete: user?.role === 'admin'
   }),
   properties: {
     headerLinks: buildProperty({
@@ -143,51 +144,23 @@ export const navigationCollection = buildCollection<Navigation>({
       of: buildProperty({
         dataType: 'map',
         properties: {
-          text: buildProperty({
+          label: buildProperty({
             dataType: 'string',
-            name: 'Link Text'
+            name: 'Label',
+            validation: { required: true }
           }),
-          href: buildProperty({
+          pathOrUrl: buildProperty({
             dataType: 'string',
-            name: 'Link URL'
+            name: 'Path or URL',
+            validation: { required: true }
           }),
-          children: buildProperty({
-            dataType: 'array',
-            name: 'Sub Links',
-            of: buildProperty({
-              dataType: 'map',
-              properties: {
-                text: buildProperty({
-                  dataType: 'string',
-                  name: 'Sub Link Text'
-                }),
-                href: buildProperty({
-                  dataType: 'string',
-                  name: 'Sub Link URL'
-                })
-              }
-            })
-          })
-        }
-      })
-    }),
-    footerLinks: buildProperty({
-      dataType: 'array',
-      name: 'Footer Links',
-      of: buildProperty({
-        dataType: 'map',
-        properties: {
-          text: buildProperty({
-            dataType: 'string',
-            name: 'Link Text'
+          external: buildProperty({
+            dataType: 'boolean',
+            name: 'External Link'
           }),
-          href: buildProperty({
-            dataType: 'string',
-            name: 'Link URL'
-          }),
-          category: buildProperty({
-            dataType: 'string',
-            name: 'Category'
+          order: buildProperty({
+            dataType: 'number',
+            name: 'Order'
           })
         }
       })
@@ -196,23 +169,89 @@ export const navigationCollection = buildCollection<Navigation>({
       dataType: 'map',
       name: 'Primary CTA',
       properties: {
-        text: buildProperty({
+        label: buildProperty({
           dataType: 'string',
-          name: 'CTA Text'
+          name: 'Label'
         }),
-        href: buildProperty({
+        pathOrUrl: buildProperty({
           dataType: 'string',
-          name: 'CTA URL'
+          name: 'Path or URL'
         }),
-        type: buildProperty({
-          dataType: 'string',
-          name: 'CTA Type',
-          enumValues: {
-            modal: 'Modal',
-            link: 'Link'
-          }
+        external: buildProperty({
+          dataType: 'boolean',
+          name: 'External Link'
         })
       }
+    }),
+    footerGroups: buildProperty({
+      dataType: 'array',
+      name: 'Footer Groups',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          title: buildProperty({
+            dataType: 'string',
+            name: 'Title',
+            validation: { required: true }
+          }),
+          order: buildProperty({
+            dataType: 'number',
+            name: 'Order'
+          }),
+          links: buildProperty({
+            dataType: 'array',
+            name: 'Links',
+            of: buildProperty({
+              dataType: 'map',
+              properties: {
+                label: buildProperty({
+                  dataType: 'string',
+                  name: 'Label',
+                  validation: { required: true }
+                }),
+                pathOrUrl: buildProperty({
+                  dataType: 'string',
+                  name: 'Path or URL',
+                  validation: { required: true }
+                }),
+                external: buildProperty({
+                  dataType: 'boolean',
+                  name: 'External Link'
+                }),
+                order: buildProperty({
+                  dataType: 'number',
+                  name: 'Order'
+                }),
+                icon: buildProperty({
+                  dataType: 'string',
+                  name: 'Icon (optional)'
+                })
+              }
+            })
+          })
+        }
+      })
+    }),
+    anchors: buildProperty({
+      dataType: 'array',
+      name: 'Anchors',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          label: buildProperty({
+            dataType: 'string',
+            name: 'Label'
+          }),
+          hash: buildProperty({
+            dataType: 'string',
+            name: 'Hash'
+          }),
+          order: buildProperty({
+            dataType: 'number',
+            name: 'Order'
+          })
+        }
+      })
     })
   }
 })

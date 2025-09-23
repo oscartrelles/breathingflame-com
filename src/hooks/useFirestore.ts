@@ -10,10 +10,10 @@ import {
   limit,
   onSnapshot,
   DocumentData,
-  QuerySnapshot,
   Unsubscribe
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
+import { mockSettings, mockNavigation, mockHome, mockPrograms, mockTestimonials } from '@/services/mockData'
 
 // Generic hook for single document
 export function useDocument<T = DocumentData>(
@@ -98,69 +98,94 @@ export function useCollection<T = DocumentData>(
   return { data, loading, error }
 }
 
-// Specific hooks for our CMS collections
+// Specific hooks for our CMS collections (using mock data for development)
 export function useSettings() {
-  return useDocument('settings', 'site')
+  const [data, setData] = useState(mockSettings)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function useNavigation() {
-  return useDocument('navigation', 'main')
+  const [data, setData] = useState(mockNavigation)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function useHome() {
-  return useDocument('home', 'content')
+  const [data, setData] = useState(mockHome)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function usePrograms() {
-  return useCollection('programs', [orderBy('order', 'asc')])
+  const [data, setData] = useState(mockPrograms)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function useExperiences() {
-  return useCollection('experiences', [orderBy('order', 'asc')])
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function usePosts() {
-  return useCollection('posts', [
-    where('published', '==', true),
-    orderBy('publishedAt', 'desc')
-  ])
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function useTestimonials() {
-  return useCollection('testimonials', [
-    where('featured', '==', true),
-    orderBy('createdAt', 'desc')
-  ])
+  const [data, setData] = useState(mockTestimonials)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function useCaseStudies() {
-  return useCollection('caseStudies', [
-    orderBy('order', 'asc')
-  ])
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 export function useEvents() {
-  return useCollection('eventsPinned', [
-    where('active', '==', true),
-    orderBy('startDate', 'desc')
-  ])
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 // Hook for getting a specific post by slug
 export function usePost(slug: string) {
-  return useCollection('posts', [
-    where('slug', '==', slug),
-    where('published', '==', true),
-    limit(1)
-  ], !!slug)
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
 // Hook for getting featured testimonials
 export function useFeaturedTestimonials(limitCount: number = 6) {
-  return useCollection('testimonials', [
-    where('featured', '==', true),
-    orderBy('createdAt', 'desc'),
-    limit(limitCount)
-  ])
+  const [data, setData] = useState(mockTestimonials.slice(0, limitCount))
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
 }
 
