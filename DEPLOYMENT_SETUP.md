@@ -23,8 +23,8 @@ Follow similar steps on your preferred Git hosting platform.
 Run these commands in your project directory:
 
 ```bash
-# Add the remote repository (replace with your actual repo URL)
-git remote add origin https://github.com/YOUR_USERNAME/breathingflame-com.git
+# Add the remote repository
+git remote add origin https://github.com/oscartrelles/breathingflame-com.git
 
 # Push your code to the remote repository
 git push -u origin main
