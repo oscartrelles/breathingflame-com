@@ -6,9 +6,9 @@ export const mockSettings = {
   siteTitle: 'Breathing Flame',
   masterTagline: 'Resilience. Clarity. Transformation.',
   contact: {
-    email: 'contact@breathingflame.com',
-    phone: '+1 (555) 123-4567',
-    address: 'San Francisco, CA'
+    email: 'info@breathingflame.com',
+    phone: '+34 611 00 64 08',
+    address: 'Málaga, Spain'
   },
   socials: {
     facebook: 'https://facebook.com/breathingflame',

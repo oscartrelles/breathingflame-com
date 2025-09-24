@@ -6,13 +6,13 @@ A modern, responsive website built with React, Vite, and Firebase, featuring air
 
 ## ✨ Features
 
-- **Modern Design**: Airy layouts with generous whitespace and tight animations
-- **Video Background**: YouTube video hero section with custom timestamp loop
-- **Responsive**: Mobile-first design with full-screen navigation
-- **Animations**: Framer Motion animations throughout the site
+- **Modern Design**: Airy layouts with generous whitespace and smooth animations
 - **CMS Integration**: FireCMS for content management
-- **Testimonials**: Senja widget integration
-- **Firebase**: Hosting, Firestore, and authentication ready
+- **Blog System**: Complete blog with listing, detail pages, and components
+- **Dynamic Sitemap**: Auto-generated from Firestore content
+- **SEO Optimized**: Comprehensive meta tags and structured data
+- **Responsive**: Mobile-first design with full-screen navigation
+- **Firebase**: Hosting, Firestore, Functions, and authentication ready
 
 ## 🚀 Quick Start
 
@@ -47,9 +47,6 @@ VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
 VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
 VITE_FIREBASE_APP_ID=1:123456789:web:your_app_id
 VITE_FIREBASE_MEASUREMENT_ID=G-YOUR_MEASUREMENT_ID
-
-# Senja Configuration
-VITE_SENJA_WIDGET_ID=your_senja_widget_id_here
 ```
 
 ## 🛠 Development
@@ -96,11 +93,21 @@ breathingflame-com/
 │   ├── hooks/             # Custom React hooks
 │   ├── utils/             # Utility functions
 │   └── types/             # TypeScript type definitions
+├── docs/                  # Comprehensive documentation
 ├── public/                # Static assets
 ├── dist/                  # Build output
 ├── firebase.json          # Firebase configuration
 └── deploy.sh              # Deployment script
 ```
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs` directory:
+
+- **[Getting Started](docs/getting-started.md)** - Development setup and first steps
+- **[Architecture](docs/architecture.md)** - Technical architecture and design decisions
+- **[Deployment](docs/deployment.md)** - Production deployment guide
+- **[Changelog](docs/changelog.md)** - Project history and updates
 
 ## 🎨 Design System
 
@@ -115,62 +122,28 @@ breathingflame-com/
 - **Frontend**: React 18, TypeScript, Vite
 - **Styling**: CSS Modules, CSS Variables
 - **Animations**: Framer Motion
-- **Backend**: Firebase (Firestore, Hosting, Auth)
+- **Backend**: Firebase (Firestore, Hosting, Auth, Functions)
 - **CMS**: FireCMS
 - **Deployment**: Firebase Hosting, GitHub Actions
 
-## 📱 Features
+## 📱 Key Features
 
-### Header
-- Responsive navigation with mobile hamburger menu
-- Right-aligned navigation and CTA button
-- Logo with consistent branding
-- Professional CTA button styling
+### CMS-Driven Content
+- Homepage, Individuals, Organizations, and Programs pages fully editable
+- Blog system with author management and tagging
+- Dynamic sitemap generation from Firestore content
 
-### Hero Section
-- Full-screen YouTube video background
-- Custom timestamp loop (6s-80s)
-- Overlay for text readability
-- Responsive video handling
+### SEO & Performance
+- Dynamic sitemap.xml generation
+- Comprehensive meta tags and JSON-LD structured data
+- Optimized bundle sizes and loading performance
+- Core Web Vitals optimization
 
-### Testimonials
-- Senja widget integration
-- Fallback to manual testimonials
-- Responsive grid layout
-
-### Footer
-- Simplified 4-column layout
-- Social links under logo
-- Dynamic content from CMS
-- Clean, professional styling
-
-## 🔄 CI/CD
-
-Automatic deployment via GitHub Actions:
-- Builds on push to main branch
-- Deploys to Firebase hosting
-- Includes build optimization and error handling
-
-## 📊 Performance
-
-- **Lighthouse Score**: 90+ across all metrics
-- **Bundle Size**: Optimized with code splitting
-- **Images**: WebP format with lazy loading
-- **Fonts**: Google Fonts with display=swap
-- **Animations**: GPU-accelerated transforms
-
-## 🛡 Security
-
-- Environment variables for sensitive data
-- Firebase security rules
-- HTTPS with automatic SSL
-- Content Security Policy headers
-
-## 📈 Analytics
-
-- Firebase Analytics integration
-- Custom event tracking
-- Performance monitoring ready
+### Integration Features
+- Typeform and Koalendar embeds
+- Legacy URL redirects for hash-based navigation
+- Scroll-to-top behavior on route changes
+- Comprehensive legal pages
 
 ## 🤝 Contributing
 
