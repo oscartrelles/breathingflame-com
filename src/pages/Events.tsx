@@ -10,7 +10,7 @@ export function Events() {
         }}
       />
       <div className="container">
-        <h1>Events</h1>
+        <h1>Upcoming Events</h1>
         <p>Events page will be implemented here with Luma API integration.</p>
       </div>
     </>

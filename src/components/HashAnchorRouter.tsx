@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 /**
  * HashAnchorRouter - Handles hash-based navigation and scrolling
@@ -15,6 +15,18 @@ import { useLocation } from 'react-router-dom'
  */
 export function HashAnchorRouter() {
   const location = useLocation()
+  const navigate = useNavigate()
+
+  // Legacy anchor → canonical route mapping
+  const legacyAnchorToResourceSlug: Record<string, string> = {
+    'ignite-your-flame': 'ignite-your-flame',
+    'peak-energy-profiler': 'peak-energy-profiler'
+  }
+
+  const legacyAnchorToPath: Record<string, string> = {
+    'free-consultation': '/free-consultation',
+    'events': '/events'
+  }
 
   const scrollToHash = useCallback((hash: string) => {
     if (!hash) return
@@ -69,6 +81,17 @@ export function HashAnchorRouter() {
   // Handle hash changes and initial load
   useEffect(() => {
     const handleHashChange = () => {
+      const raw = window.location.hash?.replace('#', '')
+      if (raw && legacyAnchorToResourceSlug[raw]) {
+        // Redirect legacy shared URLs like /#ignite-your-flame → /resources/ignite-your-flame
+        navigate(`/resources/${legacyAnchorToResourceSlug[raw]}`, { replace: true })
+        return
+      }
+      if (raw && legacyAnchorToPath[raw]) {
+        navigate(legacyAnchorToPath[raw], { replace: true })
+        return
+      }
+
       scrollToHash(window.location.hash)
     }
 
@@ -79,6 +102,15 @@ export function HashAnchorRouter() {
     if (location.hash) {
       // Small delay to ensure DOM is ready
       setTimeout(() => {
+        const raw = location.hash.replace('#', '')
+        if (legacyAnchorToResourceSlug[raw]) {
+          navigate(`/resources/${legacyAnchorToResourceSlug[raw]}`, { replace: true })
+          return
+        }
+        if (legacyAnchorToPath[raw]) {
+          navigate(legacyAnchorToPath[raw], { replace: true })
+          return
+        }
         scrollToHash(location.hash)
       }, 100)
     }
@@ -92,6 +124,15 @@ export function HashAnchorRouter() {
   useEffect(() => {
     if (location.hash) {
       setTimeout(() => {
+        const raw = location.hash.replace('#', '')
+        if (legacyAnchorToResourceSlug[raw]) {
+          navigate(`/resources/${legacyAnchorToResourceSlug[raw]}`, { replace: true })
+          return
+        }
+        if (legacyAnchorToPath[raw]) {
+          navigate(legacyAnchorToPath[raw], { replace: true })
+          return
+        }
         scrollToHash(location.hash)
       }, 200) // Longer delay for route changes
     }

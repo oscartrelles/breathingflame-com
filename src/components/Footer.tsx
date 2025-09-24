@@ -220,6 +220,19 @@ export function Footer() {
                                     )}
                                   </li>
                                 ))}
+                              {/* Ensure Events link under Transformation */}
+                              {(['TRANSFORMATION', 'Transformation'].includes(group.title) &&
+                                !group.links?.some(l => !l.external && l.pathOrUrl === '/events')) && (
+                                  <li key="Events">
+                                    <Link
+                                      to="/events"
+                                      className={styles.footerLink}
+                                      onClick={() => trackButtonClick('footer_link', `${group.title}_Events`)}
+                                    >
+                                      Events
+                                    </Link>
+                                  </li>
+                                )}
                             </ul>
                           </div>
                         ))}
@@ -247,6 +260,13 @@ export function Footer() {
               onClick={() => handleLinkClick('Terms of Service', 'legal')}
             >
               Terms of Service
+            </Link>
+            <Link
+              to="/sitemap"
+              className={styles.legalLink}
+              onClick={() => handleLinkClick('Sitemap', 'legal')}
+            >
+              Sitemap
             </Link>
             <Link
               to="/contact"

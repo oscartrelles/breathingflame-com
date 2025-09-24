@@ -10,6 +10,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    include: ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage'],
+  },
   build: {
     outDir: 'dist',
     sourcemap: true,
@@ -18,7 +21,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          firebase: ['firebase'],
         },
       },
     },

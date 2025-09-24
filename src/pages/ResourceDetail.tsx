@@ -14,7 +14,8 @@ export function ResourceDetail() {
       />
       <div className="container">
         <h1>Resource: {slug?.replace(/-/g, ' ')}</h1>
-        <p>Resource detail page will be implemented here.</p>
+        {/* Placeholder content now moved to dedicated pages */}
+        <p>Detailed resource content will appear here.</p>
       </div>
     </>
   )

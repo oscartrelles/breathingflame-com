@@ -1,5 +1,4 @@
 import { useHome, usePrograms, useExperiences } from '@/hooks/useFirestore'
-import { TypeformEmbed } from '@/components/TypeformEmbed'
 import { VideoBackground } from '@/components/VideoBackground'
 import { SEO } from '@/components/SEO'
 import { trackTypeformInteraction } from '@/components/Analytics'
@@ -36,21 +35,12 @@ export function Home() {
 
   // Get featured programs and experiences
   const featuredPrograms = programs?.filter(program => 
-    homeData?.featuredPrograms?.includes(program.id)
+    homeData?.sections?.featured?.featuredPrograms?.includes(program.id)
   ) || []
 
   const featuredExperiences = experiences?.filter(experience => 
-    homeData?.featuredExperiences?.includes(experience.id)
+    homeData?.sections?.featured?.featuredExperiences?.includes(experience.id)
   ) || []
-
-  // Handle Typeform interactions
-  const handleTypeformOpen = (type: 'ignite' | 'peak') => {
-    trackTypeformInteraction(type, 'opened')
-  }
-
-  const handleTypeformComplete = (type: 'ignite' | 'peak') => {
-    trackTypeformInteraction(type, 'completed')
-  }
 
   return (
     <motion.div
@@ -60,9 +50,9 @@ export function Home() {
     >
       <SEO 
         data={{
-          title: homeData?.hero?.title || 'Breathing Flame - Resilience. Clarity. Transformation.',
-          description: homeData?.hero?.description || 'Perform at your best. Live with clarity. Transform your life through breathwork, mindfulness, and transformative experiences.',
-          image: homeData?.hero?.backgroundImage || '/og-image.jpg'
+          title: homeData?.seo?.title || 'Breathing Flame - Resilience. Clarity. Transformation.',
+          description: homeData?.seo?.description || 'Perform at your best. Live with clarity. Transform your life through breathwork, mindfulness, and transformative experiences.',
+          image: homeData?.seo?.ogImage || '/og-image.jpg'
         }}
       />
 
@@ -86,7 +76,7 @@ export function Home() {
               className={styles.heroTitle}
               variants={reducedMotion ? {} : heroText}
             >
-              {homeData?.hero?.title || 'Resilience. Clarity. Transformation.'}
+              {homeData?.hero?.headline || 'Resilience. Clarity. Transformation.'}
             </motion.h1>
             
             <motion.p 
@@ -94,31 +84,32 @@ export function Home() {
               variants={reducedMotion ? {} : fadeInUp}
               transition={{ delay: 0.2 }}
             >
-              {homeData?.hero?.subtitle || 'Perform at your best. Live with clarity. Transform your life.'}
+              {homeData?.hero?.subtext || 'We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices.'}
             </motion.p>
             
-            <motion.p 
-              className={styles.heroDescription}
-              variants={reducedMotion ? {} : fadeInUp}
-              transition={{ delay: 0.3 }}
-            >
-              {homeData?.hero?.description || 'Discover the power of breathwork, mindfulness, and transformative experiences that help you build resilience, gain clarity, and create lasting positive change in your life.'}
-            </motion.p>
 
             <motion.div 
               className={styles.heroCTA}
               variants={reducedMotion ? {} : fadeInUp}
               transition={{ delay: 0.4 }}
             >
-              <motion.a
-                href={homeData?.hero?.ctaHref || '/contact'}
-                className="btn btn--primary btn--large"
-                whileHover={reducedMotion ? {} : { scale: 1.02, y: -2 }}
-                whileTap={reducedMotion ? {} : { scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-              >
-                {homeData?.hero?.ctaText || 'Start Your Journey'}
-              </motion.a>
+              {(homeData?.hero?.ctas || [
+                { label: 'For Individuals', pathOrUrl: '/individuals', external: false },
+                { label: 'For Organizations', pathOrUrl: '/organizations', external: false }
+              ]).map((cta: any, idx: number) => (
+                <motion.a
+                  key={idx}
+                  href={cta.pathOrUrl}
+                  className={`btn ${idx === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
+                  whileHover={reducedMotion ? {} : { scale: 1.02, y: -2 }}
+                  whileTap={reducedMotion ? {} : { scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  target={cta.external ? '_blank' : undefined}
+                  rel={cta.external ? 'noopener noreferrer' : undefined}
+                >
+                  {cta.label}
+                </motion.a>
+              ))}
             </motion.div>
           </div>
         </div>
@@ -132,9 +123,7 @@ export function Home() {
             {...useInViewAnimation()}
           >
             <h2 className={styles.sectionTitle}>Our Three Pillars</h2>
-            <p className={styles.sectionDescription}>
-              The foundation of transformation through breathwork and mindfulness
-            </p>
+            <p className={styles.sectionDescription}>Resilience. Clarity. Transformation.</p>
           </motion.div>
 
           <motion.div 
@@ -163,7 +152,7 @@ export function Home() {
                 </div>
                 
                 <h3 className={styles.pillarTitle}>{pillar.title}</h3>
-                <p className={styles.pillarDescription}>{pillar.description}</p>
+                <p className={styles.pillarDescription}>{pillar.copy}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -258,10 +247,8 @@ export function Home() {
       <section className="section section--sm">
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>What People Say</h2>
-            <p className={styles.sectionDescription}>
-              Real stories from our community
-            </p>
+            <h2 className={styles.sectionTitle}>{homeData?.sections?.testimonials?.headline || 'What People Are Saying'}</h2>
+            <p className={styles.sectionDescription}>{homeData?.sections?.testimonials?.subtext || 'Our clients—from entrepreneurs to teams—consistently highlight the power of resilience, clarity, and transformation.'}</p>
           </div>
 
           {/* Senja Testimonials Widget */}
@@ -278,32 +265,32 @@ export function Home() {
       </section>
 
       {/* Organization Preview Cards */}
-      {homeData?.orgPreviewCards && homeData.orgPreviewCards.length > 0 && (
+      {homeData?.sections?.organizations?.cards && homeData.sections.organizations.cards.length > 0 && (
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>For Organizations</h2>
+              <h2 className={styles.sectionTitle}>{homeData?.sections?.organizations?.headline || 'For Organizations'}</h2>
               <p className={styles.sectionDescription}>
                 Build resilient teams and transformative cultures
               </p>
             </div>
 
             <div className={styles.orgCardsGrid}>
-              {homeData.orgPreviewCards.map((card, index) => (
+              {homeData.sections.organizations.cards.map((card, index) => (
                 <div key={index} className={styles.orgCard}>
                   <div className={styles.orgCardImage}>
-                    <img src={card.image} alt={card.title} />
+                    <img src={card.image || '/images/org-card.jpg'} alt={card.title} />
                   </div>
                   
                   <div className={styles.orgCardContent}>
                     <h3 className={styles.orgCardTitle}>{card.title}</h3>
-                    <p className={styles.orgCardDescription}>{card.description}</p>
+                    <p className={styles.orgCardDescription}>{card.copy}</p>
                     
                     <a
-                      href={card.href}
+                      href={card.cta.url}
                       className="btn btn--outline"
                     >
-                      Learn More
+                      {card.cta.label}
                     </a>
                   </div>
                 </div>
@@ -313,21 +300,23 @@ export function Home() {
         </section>
       )}
 
-      {/* Community CTAs */}
-      {homeData?.communityCTAs && homeData.communityCTAs.length > 0 && (
+      {/* Community CTA */}
+      {homeData?.sections?.community?.ctas && homeData.sections.community.ctas.length > 0 && (
         <section className="section section--sm">
           <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>{homeData?.sections?.community?.headline || 'Join Our Community'}</h2>
+            </div>
             <div className={styles.communityCTAs}>
-              {homeData.communityCTAs.map((cta, index) => (
+              {homeData.sections.community.ctas.map((cta, index) => (
                 <div key={index} className={styles.communityCTA}>
-                  <h3 className={styles.communityCTATitle}>{cta.title}</h3>
-                  <p className={styles.communityCTADescription}>{cta.description}</p>
-                  
                   <a
-                    href={cta.buttonHref}
-                    className="btn btn--primary"
+                    href={cta.pathOrUrl}
+                    target={cta.external ? '_blank' : undefined}
+                    rel={cta.external ? 'noopener noreferrer' : undefined}
+                    className={`btn ${index === 0 ? 'btn--secondary' : 'btn--primary'}`}
                   >
-                    {cta.buttonText}
+                    {cta.label}
                   </a>
                 </div>
               ))}
@@ -336,72 +325,6 @@ export function Home() {
         </section>
       )}
 
-      {/* CRITICAL: Typeform Sections with Hash Anchors */}
-      {homeData?.typeforms?.enabled && (
-        <>
-          {/* Ignite Your Flame Section */}
-          <section 
-            id="ignite-your-flame" 
-            className={`section ${styles.typeformSection}`}
-          >
-            <div className="container">
-              <div className={styles.typeformHeader}>
-                <h2 className={styles.typeformTitle}>Ignite Your Flame</h2>
-                <p className={styles.typeformDescription}>
-                  Discover your inner fire and unlock your potential with our comprehensive assessment. 
-                  This personalized evaluation will help you identify your strengths, challenges, and 
-                  the path to transformation.
-                </p>
-              </div>
-
-              <TypeformEmbed
-                src={homeData.typeforms.igniteUrl || import.meta.env.VITE_TYPEFORM_IGNITE_URL || ''}
-                title="Ignite Your Flame Assessment"
-                height={800}
-                className={styles.typeformEmbed}
-              />
-
-              <div className={styles.typeformFooter}>
-                <p className={styles.typeformFooterText}>
-                  Take the assessment to begin your transformation journey. Your results will be 
-                  delivered via email with personalized insights and recommendations.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Peak Energy Profiler Section */}
-          <section 
-            id="peak-energy-profiler" 
-            className={`section ${styles.typeformSection}`}
-          >
-            <div className="container">
-              <div className={styles.typeformHeader}>
-                <h2 className={styles.typeformTitle}>Peak Energy Profiler</h2>
-                <p className={styles.typeformDescription}>
-                  Understand your energy patterns and optimize your performance. This assessment 
-                  reveals your peak energy times, stress triggers, and the strategies that work 
-                  best for your unique energy profile.
-                </p>
-              </div>
-
-              <TypeformEmbed
-                src={homeData.typeforms.peakUrl || import.meta.env.VITE_TYPEFORM_PEAK_URL || ''}
-                title="Peak Energy Profiler Assessment"
-                height={800}
-                className={styles.typeformEmbed}
-              />
-
-              <div className={styles.typeformFooter}>
-                <p className={styles.typeformFooterText}>
-                  Complete the profiler to discover your energy blueprint and learn how to 
-                  harness your natural rhythms for peak performance.
-                </p>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
     </motion.div>
   )
 }

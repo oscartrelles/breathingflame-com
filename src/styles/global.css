@@ -136,6 +136,31 @@ a:hover {
   min-height: 56px;
 }
 
+/* Buttons on accent (orange) backgrounds - higher contrast and glow */
+.btn--on-accent.btn--primary {
+  background-color: #111111;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.btn--on-accent.btn--primary:hover {
+  background-color: #000000;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 3px rgba(255,255,255,0.12) inset;
+}
+
+.btn--on-accent.btn--secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.8);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.btn--on-accent.btn--secondary:hover {
+  background-color: rgba(255,255,255,0.12);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
 .btn--small {
   padding: var(--spacing-2) var(--spacing-4);
   font-size: var(--font-size-sm);
@@ -209,6 +234,12 @@ a:hover {
 /* Section spacing - inspired by Positive Intelligence's generous whitespace */
 .section {
   padding: var(--spacing-32) 0; /* Increased from 20 to 32 for more breathing room */
+}
+
+/* Ensure first section on every page accounts for fixed header */
+main > section:first-child,
+main > div:first-child > section:first-child {
+  padding-top: calc(var(--spacing-32) + var(--header-height));
 }
 
 .section--sm {

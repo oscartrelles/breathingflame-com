@@ -8,6 +8,7 @@ Sitemap: https://breathingflame.com/sitemap.xml
 Disallow: /admin/
 Disallow: /cms/
 Disallow: /_/
+Disallow: /_audit
 
 # Allow important pages
 Allow: /#ignite-your-flame

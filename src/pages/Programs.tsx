@@ -1,166 +1,322 @@
-import { useState } from 'react'
-import { usePrograms, useExperiences } from '@/hooks/useFirestore'
+import { useState, useMemo, useCallback } from 'react'
+import { usePagePrograms, useAllOfferings } from '@/hooks/useFirestore'
 import { SEO } from '@/components/SEO'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useReducedMotion } from '@/utils/animations'
+import { motion } from 'framer-motion'
+import { 
+  fadeInUp, 
+  staggerContainer, 
+  staggerChild,
+  useInViewAnimation,
+  useReducedMotion,
+  pageTransition 
+} from '@/utils/animations'
+import { Offering } from '@/types'
 import styles from './Programs.module.css'
 
-/**
- * Programs Page - Unified list of programs and experiences
- * 
- * Features:
- * - Unified grid layout with programs and experiences
- * - Filter tabs (All, Programs, Experiences)
- * - Program/Experience cards with consistent styling
- * - Search functionality
- */
+type FilterTab = 'all' | 'programs' | 'experiences'
+
 export function Programs() {
-  const { data: programs } = usePrograms()
-  const { data: experiences } = useExperiences()
-  const [activeFilter, setActiveFilter] = useState<'all' | 'programs' | 'experiences'>('all')
+  const { data: pageData } = usePagePrograms()
+  const { data: allOfferings } = useAllOfferings()
   const reducedMotion = useReducedMotion()
+  
+  const [activeTab, setActiveTab] = useState<FilterTab>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [visibleCount, setVisibleCount] = useState(12)
 
-  // Combine programs and experiences
-  const allItems = [
-    ...(programs?.map(program => ({ ...program, type: 'program' })) || []),
-    ...(experiences?.map(experience => ({ ...experience, type: 'experience' })) || [])
-  ].sort((a, b) => (a.order || 0) - (b.order || 0))
+  // Filter and search logic
+  const filteredOfferings = useMemo(() => {
+    if (!allOfferings) return []
+    
+    let filtered = allOfferings
 
-  // Filter items based on active filter
-  const filteredItems = allItems.filter(item => {
-    if (activeFilter === 'all') return true
-    if (activeFilter === 'programs') return item.type === 'program'
-    if (activeFilter === 'experiences') return item.type === 'experience'
-    return true
-  })
+    // Apply tab filter
+    if (activeTab !== 'all') {
+      filtered = filtered.filter(offering => offering.kind === activeTab)
+    }
 
-  const filters = [
-    { key: 'all', label: 'All', count: allItems.length },
-    { key: 'programs', label: 'Programs', count: programs?.length || 0 },
-    { key: 'experiences', label: 'Experiences', count: experiences?.length || 0 }
-  ]
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      filtered = filtered.filter(offering => 
+        offering.title.toLowerCase().includes(query) ||
+        offering.slug.toLowerCase().includes(query) ||
+        (offering.tags && offering.tags.some(tag => tag.toLowerCase().includes(query)))
+      )
+    }
+
+    return filtered
+  }, [allOfferings, activeTab, searchQuery])
+
+  // Pagination
+  const visibleOfferings = filteredOfferings.slice(0, visibleCount)
+  const hasMore = visibleOfferings.length < filteredOfferings.length
+
+  const handleLoadMore = useCallback(() => {
+    setVisibleCount(prev => prev + 12)
+  }, [])
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
+    setVisibleCount(12) // Reset pagination on search
+  }, [])
+
+  const handleTabChange = useCallback((tab: FilterTab) => {
+    setActiveTab(tab)
+    setVisibleCount(12) // Reset pagination on tab change
+  }, [])
+
+  if (!pageData) {
+    return (
+      <div className="container">
+        <div className={styles.loading}>
+          <div className={styles.spinner} />
+          <p>Loading programs...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <>
+    <motion.div
+      initial="initial"
+      animate="animate"
+      variants={reducedMotion ? {} : pageTransition}
+    >
       <SEO 
         data={{
-          title: 'Programs & Experiences - Breathing Flame',
-          description: 'Discover our transformative programs and experiences designed to build resilience, gain clarity, and create lasting positive change.',
-          image: '/og-programs.jpg'
+          title: pageData.seo.title,
+          description: pageData.seo.description,
+          image: pageData.seo.ogImage
         }}
       />
 
-      <main className={styles.programsPage}>
+      {/* Hero Section */}
+      <section className={styles.hero}>
         <div className="container">
-          <header className={styles.pageHeader}>
-            <motion.h1
-              initial={reducedMotion ? {} : { y: 20, opacity: 0 }}
-              animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              Programs & Experiences
-            </motion.h1>
-            <motion.p
-              initial={reducedMotion ? {} : { y: 20, opacity: 0 }}
-              animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              Transformative programs and experiences designed to build resilience, gain clarity, and create lasting positive change.
-            </motion.p>
-          </header>
-
-          {/* Filter Tabs */}
           <motion.div 
-            className={styles.filterTabs}
-            initial={reducedMotion ? {} : { y: 20, opacity: 0 }}
-            animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            className={styles.heroContent}
+            {...useInViewAnimation()}
           >
-            {filters.map((filter) => (
-              <button
-                key={filter.key}
-                className={`${styles.filterTab} ${activeFilter === filter.key ? styles.active : ''}`}
-                onClick={() => setActiveFilter(filter.key as any)}
+            <h1 className={styles.heroTitle}>
+              {pageData.hero.headline}
+            </h1>
+            
+            <p className={styles.heroSubtitle}>
+              {pageData.hero.subtext}
+            </p>
+
+            {pageData.hero.ctas && pageData.hero.ctas.length > 0 && (
+              <div className={styles.heroCTA}>
+                {pageData.hero.ctas.map((cta, index) => (
+                  <a
+                    key={index}
+                    href={cta.pathOrUrl}
+                    className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
+                    target={cta.external ? '_blank' : undefined}
+                    rel={cta.external ? 'noopener noreferrer' : undefined}
+                  >
+                    {cta.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Controls Section */}
+      <section className="section section--sm">
+        <div className="container">
+          <motion.div 
+            className={styles.controls}
+            {...useInViewAnimation()}
+          >
+            {/* Filter Tabs */}
+            <div className={styles.tabs} role="tablist">
+              {pageData.filters.showAll && (
+                <button
+                  className={`${styles.tab} ${activeTab === 'all' ? styles.tabActive : ''}`}
+                  role="tab"
+                  aria-selected={activeTab === 'all'}
+                  onClick={() => handleTabChange('all')}
+                >
+                  All
+                </button>
+              )}
+              {pageData.filters.showPrograms && (
+                <button
+                  className={`${styles.tab} ${activeTab === 'programs' ? styles.tabActive : ''}`}
+                  role="tab"
+                  aria-selected={activeTab === 'programs'}
+                  onClick={() => handleTabChange('programs')}
+                >
+                  Programs
+                </button>
+              )}
+              {pageData.filters.showExperiences && (
+                <button
+                  className={`${styles.tab} ${activeTab === 'experiences' ? styles.tabActive : ''}`}
+                  role="tab"
+                  aria-selected={activeTab === 'experiences'}
+                  onClick={() => handleTabChange('experiences')}
+                >
+                  Experiences
+                </button>
+              )}
+            </div>
+
+            {/* Search Input */}
+            {pageData.search.enabled && (
+              <div className={styles.search}>
+                <input
+                  type="text"
+                  placeholder={pageData.search.placeholder}
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
+                  aria-label="Search programs"
+                />
+              </div>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Programs Grid */}
+      <section className="section section--sm">
+        <div className="container">
+          <motion.div 
+            className={styles.grid}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            {visibleOfferings.map((offering) => (
+              <motion.div 
+                key={`${offering.kind}-${offering.id}`}
+                className={styles.card}
+                variants={reducedMotion ? {} : staggerChild}
+                whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
-                {filter.label}
-                <span className={styles.filterCount}>({filter.count})</span>
-              </button>
+                <OfferingCard offering={offering} />
+              </motion.div>
             ))}
           </motion.div>
 
-          {/* Items Grid */}
-          <motion.section 
-            className={styles.itemsGrid}
-            layout
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeFilter}
-                initial={reducedMotion ? {} : { opacity: 0 }}
-                animate={reducedMotion ? {} : { opacity: 1 }}
-                exit={reducedMotion ? {} : { opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={styles.gridContainer}
-              >
-                {filteredItems.map((item, index) => (
-                  <motion.div
-                    key={`${item.type}-${item.id}`}
-                    className={`${styles.itemCard} ${styles[item.type]}`}
-                    initial={reducedMotion ? {} : { y: 20, opacity: 0 }}
-                    animate={reducedMotion ? {} : { y: 0, opacity: 1 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    whileHover={reducedMotion ? {} : { y: -4 }}
-                  >
-                    <div className={styles.cardHeader}>
-                      <span className={styles.itemType}>{item.type === 'program' ? 'Program' : 'Experience'}</span>
-                      <h2 className={styles.itemTitle}>{item.title}</h2>
-                      {item.subtitle && <p className={styles.itemSubtitle}>{item.subtitle}</p>}
-                    </div>
-                    
-                    <div className={styles.cardContent}>
-                      <p className={styles.itemDescription}>{item.shortDescription}</p>
-                      
-                      <div className={styles.cardMeta}>
-                        {item.duration && (
-                          <span className={styles.metaItem}>
-                            <strong>Duration:</strong> {item.duration}
-                          </span>
-                        )}
-                        {item.format && (
-                          <span className={styles.metaItem}>
-                            <strong>Format:</strong> {item.format}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className={styles.cardFooter}>
-                      <a 
-                        href={`/${item.type}s/${item.slug}`} 
-                        className="btn btn--primary"
-                      >
-                        Learn More
-                      </a>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </motion.section>
-
-          {filteredItems.length === 0 && (
+          {/* Load More Button */}
+          {hasMore && (
             <motion.div 
-              className={styles.emptyState}
-              initial={reducedMotion ? {} : { opacity: 0 }}
-              animate={reducedMotion ? {} : { opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              className={styles.loadMore}
+              {...useInViewAnimation()}
             >
-              <h3>No {activeFilter === 'all' ? 'items' : activeFilter} found</h3>
-              <p>Try selecting a different filter or check back later for new content.</p>
+              <button 
+                onClick={handleLoadMore}
+                className="btn btn--outline btn--large"
+              >
+                Show More Programs
+              </button>
+            </motion.div>
+          )}
+
+          {/* No Results */}
+          {filteredOfferings.length === 0 && (
+            <motion.div 
+              className={styles.noResults}
+              {...useInViewAnimation()}
+            >
+              <h3>No programs found</h3>
+              <p>Try adjusting your search or filter criteria.</p>
             </motion.div>
           )}
         </div>
-      </main>
-    </>
+      </section>
+
+      {/* Footer CTA */}
+      <section className={styles.footerCTA}>
+        <div className="container">
+          <motion.div 
+            className={styles.footerContent}
+            {...useInViewAnimation()}
+          >
+            <h2 className={styles.footerTitle}>Not sure where to start?</h2>
+            <p className={styles.footerDescription}>
+              Explore our individual and organizational offerings to find the perfect fit for your needs.
+            </p>
+            
+            <div className={styles.footerButtons}>
+              <a href="/individuals" className="btn btn--primary btn--large">
+                For Individuals
+              </a>
+              <a href="/organizations" className="btn btn--secondary btn--large">
+                For Organizations
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </motion.div>
+  )
+}
+
+// Offering Card Component
+function OfferingCard({ offering }: { offering: Offering }) {
+  const handleClick = useCallback(() => {
+    // Analytics event
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'programs_card_click', {
+        title: offering.title,
+        kind: offering.kind,
+        slug: offering.slug
+      })
+    }
+  }, [offering])
+
+  const getSummary = () => {
+    if (offering.kind === 'program' && offering.outcomes && offering.outcomes.length > 0) {
+      return offering.outcomes[0]
+    }
+    if (offering.kind === 'experience' && offering.highlights && offering.highlights.length > 0) {
+      return offering.highlights[0]
+    }
+    return offering.shortDescription
+  }
+
+  return (
+    <a
+      href={offering.ctaHref}
+      className={styles.cardLink}
+      onClick={handleClick}
+      aria-label={`Open ${offering.title} (${offering.kind})`}
+    >
+      <div className={styles.cardImage}>
+        <img src={offering.image} alt={offering.title} />
+        <div className={styles.cardEyebrow}>
+          {offering.kind === 'program' ? 'Program' : 'Experience'}
+        </div>
+      </div>
+      
+      <div className={styles.cardContent}>
+        <h3 className={styles.cardTitle}>{offering.title}</h3>
+        <p className={styles.cardSubtitle}>{offering.subtitle}</p>
+        <p className={styles.cardSummary}>{getSummary()}</p>
+        
+        {offering.tags && offering.tags.length > 0 && (
+          <div className={styles.cardTags}>
+            {offering.tags.slice(0, 3).map((tag, index) => (
+              <span key={index} className={styles.cardTag}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+        
+        <div className={styles.cardMeta}>
+          <span className={styles.cardDuration}>{offering.duration}</span>
+          <span className={styles.cardFormat}>{offering.format}</span>
+        </div>
+      </div>
+    </a>
   )
 }

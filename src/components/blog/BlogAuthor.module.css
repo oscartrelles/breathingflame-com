@@ -1,0 +1,78 @@
+/* Blog Author Component Styles */
+
+.author {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.authorHeader {
+  margin-bottom: 1.5rem;
+}
+
+.authorTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.authorContent {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.authorAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid var(--color-border);
+}
+
+.authorInfo {
+  flex: 1;
+}
+
+.authorName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.75rem 0;
+}
+
+.authorBio {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .author {
+    padding: 1.5rem;
+  }
+  
+  .authorContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .authorAvatar {
+    width: 60px;
+    height: 60px;
+    align-self: center;
+  }
+  
+  .authorName {
+    font-size: 1rem;
+  }
+  
+  .authorBio {
+    font-size: 0.9rem;
+  }
+}

@@ -1,405 +1,343 @@
-import { useSettings } from '@/hooks/useFirestore'
+import { usePageOrganizations, useTestimonials, usePosts } from '@/hooks/useFirestore'
 import { SEO } from '@/components/SEO'
+import { motion } from 'framer-motion'
+import { 
+  fadeInUp, 
+  staggerContainer, 
+  staggerChild,
+  useInViewAnimation,
+  useReducedMotion,
+  pageTransition 
+} from '@/utils/animations'
 import styles from './Organizations.module.css'
 
 /**
  * Organizations Page - B2B focused content
  * 
  * Features:
- * - Hero section for organizations
- * - Business drivers and challenges
- * - Solutions grid
- * - Case studies and testimonials
- * - Resources (whitepaper)
- * - Formats and pricing
- * - CTA band
+ * - Hero section with dual CTAs
+ * - Business drivers (Performance, Resilience, Wellbeing)
+ * - Solutions grid with 4 key offerings
+ * - Results section with testimonials
+ * - Resources section with whitepaper and blog
+ * - Formats list
+ * - Final CTA with dual buttons
  */
 export function Organizations() {
-  const { data: settings } = useSettings()
+  const { data: pageData } = usePageOrganizations()
+  const { data: testimonials } = useTestimonials()
+  const { data: posts } = usePosts()
+  const reducedMotion = useReducedMotion()
+
+  // Get referenced testimonials
+  const featuredTestimonials = testimonials?.filter(testimonial => 
+    pageData?.results?.testimonialRefs?.includes(testimonial.id)
+  ) || []
+
+  // Get featured blog post
+  const featuredPost = posts?.find(post => 
+    post.id === pageData?.resources?.featuredPostRef
+  )
+
+  if (!pageData) {
+    return (
+      <div className="container">
+        <div className={styles.loading}>
+          <div className={styles.spinner} />
+          <p>Loading content...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <>
+    <motion.div
+      initial="initial"
+      animate="animate"
+      variants={reducedMotion ? {} : pageTransition}
+    >
       <SEO 
         data={{
-          title: 'For Organizations - Breathing Flame',
-          description: 'Resilient teams. Clear leaders. Transformative cultures. Build high-performance organizations through breathwork and mindfulness.',
-          image: '/og-organizations.jpg'
+          title: pageData.seo.title,
+          description: pageData.seo.description,
+          image: pageData.seo.ogImage
         }}
       />
 
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className="container">
-          <div className={styles.heroContent}>
+          <motion.div 
+            className={styles.heroContent}
+            {...useInViewAnimation()}
+          >
             <h1 className={styles.heroTitle}>
-              Transform Your Organization
+              {pageData.hero.headline}
             </h1>
             
             <p className={styles.heroSubtitle}>
-              Resilient teams. Clear leaders. Transformative cultures.
-            </p>
-            
-            <p className={styles.heroDescription}>
-              Build high-performance organizations through breathwork, mindfulness, 
-              and transformative leadership practices. Create resilient teams that 
-              thrive under pressure and lead with clarity and purpose.
+              {pageData.hero.subtext}
             </p>
 
             <div className={styles.heroCTA}>
-              <a href="/contact" className="btn btn--primary btn--large">
-                Schedule Consultation
-              </a>
+              {pageData.hero.ctas.map((cta, index) => (
+                <a
+                  key={index}
+                  href={cta.pathOrUrl}
+                  className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
+                  target={cta.external ? '_blank' : undefined}
+                  rel={cta.external ? 'noopener noreferrer' : undefined}
+                >
+                  {cta.label}
+                </a>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Business Drivers Section */}
       <section className="section">
         <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>The Challenges You Face</h2>
-            <p className={styles.sectionDescription}>
-              Modern organizations struggle with these critical issues
-            </p>
-          </div>
-
-          <div className={styles.challengesGrid}>
-            <div className={styles.challengeCard}>
-              <h3 className={styles.challengeTitle}>Burnout & Stress</h3>
-              <p className={styles.challengeDescription}>
-                Teams overwhelmed by constant pressure, leading to decreased 
-                productivity, higher turnover, and declining mental health.
-              </p>
-            </div>
-
-            <div className={styles.challengeCard}>
-              <h3 className={styles.challengeTitle}>Poor Decision Making</h3>
-              <p className={styles.challengeDescription}>
-                Leaders making reactive decisions under stress, lacking clarity 
-                and strategic thinking when it matters most.
-              </p>
-            </div>
-
-            <div className={styles.challengeCard}>
-              <h3 className={styles.challengeTitle}>Toxic Culture</h3>
-              <p className={styles.challengeDescription}>
-                Environments characterized by fear, competition, and lack of 
-                psychological safety, hindering innovation and collaboration.
-              </p>
-            </div>
-
-            <div className={styles.challengeCard}>
-              <h3 className={styles.challengeTitle}>Low Engagement</h3>
-              <p className={styles.challengeDescription}>
-                Disconnected employees who lack purpose and motivation, 
-                resulting in poor performance and retention issues.
-              </p>
-            </div>
-          </div>
+          <motion.div 
+            className={styles.businessDriversGrid}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            {pageData.businessDrivers.map((driver, index) => (
+              <motion.div 
+                key={index}
+                className={styles.driverCard}
+                variants={reducedMotion ? {} : staggerChild}
+                whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
+              >
+                <div className={styles.driverIcon}>
+                  <div className={styles.driverIconInner}>
+                    <span>{driver.title.charAt(0)}</span>
+                  </div>
+                </div>
+                
+                <h3 className={styles.driverTitle}>{driver.title}</h3>
+                <p className={styles.driverDescription}>{driver.copy}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* Solutions Grid */}
+      {/* Solutions Section */}
       <section className="section section--sm">
         <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Our Solutions</h2>
-            <p className={styles.sectionDescription}>
-              Evidence-based programs that transform organizational culture and performance
-            </p>
-          </div>
-
-          <div className={styles.solutionsGrid}>
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionIcon}>
-                <div className={styles.solutionIconInner}>
-                  <span>R</span>
-                </div>
-              </div>
-              
-              <h3 className={styles.solutionTitle}>Resilient Teams</h3>
-              <p className={styles.solutionDescription}>
-                Build teams that bounce back from setbacks, maintain high performance 
-                under pressure, and support each other through challenges.
-              </p>
-              
-              <ul className={styles.solutionBenefits}>
-                <li>Stress reduction techniques</li>
-                <li>Emotional regulation skills</li>
-                <li>Peer support systems</li>
-                <li>Recovery protocols</li>
-              </ul>
-            </div>
-
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionIcon}>
-                <div className={styles.solutionIconInner}>
-                  <span>C</span>
-                </div>
-              </div>
-              
-              <h3 className={styles.solutionTitle}>Clear Leaders</h3>
-              <p className={styles.solutionDescription}>
-                Develop leaders who make decisions with clarity, communicate 
-                effectively, and inspire their teams to achieve extraordinary results.
-              </p>
-              
-              <ul className={styles.solutionBenefits}>
-                <li>Mindful decision making</li>
-                <li>Present-moment awareness</li>
-                <li>Authentic communication</li>
-                <li>Strategic thinking</li>
-              </ul>
-            </div>
-
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionIcon}>
-                <div className={styles.solutionIconInner}>
-                  <span>T</span>
-                </div>
-              </div>
-              
-              <h3 className={styles.solutionTitle}>Transformative Cultures</h3>
-              <p className={styles.solutionDescription}>
-                Create cultures of psychological safety, innovation, and continuous 
-                growth where people thrive and organizations flourish.
-              </p>
-              
-              <ul className={styles.solutionBenefits}>
-                <li>Psychological safety</li>
-                <li>Innovation mindset</li>
-                <li>Growth orientation</li>
-                <li>Purpose alignment</li>
-              </ul>
-            </div>
-          </div>
+          <motion.div 
+            className={styles.solutionsGrid}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {pageData.solutions.map((solution, index) => (
+              <motion.div 
+                key={index}
+                className={styles.solutionCard}
+                variants={reducedMotion ? {} : staggerChild}
+                whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
+              >
+                <h3 className={styles.solutionTitle}>{solution.title}</h3>
+                <p className={styles.solutionDescription}>{solution.copy}</p>
+                
+                <a 
+                  href={solution.cta.url} 
+                  className="btn btn--outline"
+                >
+                  {solution.cta.label}
+                </a>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* Case Studies Section */}
+      {/* Results Section */}
+      {featuredTestimonials.length > 0 && (
+        <section className="section section--sm">
+          <div className="container">
+            <motion.div 
+              className={styles.sectionHeader}
+              {...useInViewAnimation()}
+            >
+              <h2 className={styles.sectionTitle}>{pageData.results.headline}</h2>
+              <p className={styles.sectionDescription}>
+                {pageData.results.subtext}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className={styles.testimonialsGrid}
+              variants={reducedMotion ? {} : staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {featuredTestimonials.map((testimonial) => (
+                <motion.div 
+                  key={testimonial.id}
+                  className={styles.testimonialCard}
+                  variants={reducedMotion ? {} : staggerChild}
+                >
+                  <div className={styles.testimonialContent}>
+                    <p className={styles.testimonialText}>"{testimonial.text}"</p>
+                    
+                    <div className={styles.testimonialAuthor}>
+                      {testimonial.author.avatar && (
+                        <img 
+                          src={testimonial.author.avatar} 
+                          alt={testimonial.author.name}
+                          className={styles.testimonialAvatar}
+                        />
+                      )}
+                      <div className={styles.testimonialAuthorInfo}>
+                        <h4 className={styles.testimonialAuthorName}>{testimonial.author.name}</h4>
+                        <p className={styles.testimonialAuthorTitle}>{testimonial.author.title}</p>
+                        {testimonial.author.company && (
+                          <p className={styles.testimonialAuthorCompany}>{testimonial.author.company}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Resources Section */}
       <section className="section section--sm">
         <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Proven Results</h2>
+          <motion.div 
+            className={styles.sectionHeader}
+            {...useInViewAnimation()}
+          >
+            <h2 className={styles.sectionTitle}>{pageData.resources.headline}</h2>
             <p className={styles.sectionDescription}>
-              Real organizations achieving measurable transformation
+              {pageData.resources.subtext}
             </p>
-          </div>
+          </motion.div>
 
-          <div className={styles.caseStudiesGrid}>
-            <div className={styles.caseStudyCard}>
-              <div className={styles.caseStudyHeader}>
-                <h3 className={styles.caseStudyTitle}>Tech Startup</h3>
-                <p className={styles.caseStudyIndustry}>Technology</p>
-              </div>
-              
-              <div className={styles.caseStudyChallenge}>
-                <h4>Challenge</h4>
-                <p>High-pressure environment leading to 40% turnover and burnout crisis.</p>
-              </div>
-              
-              <div className={styles.caseStudySolution}>
-                <h4>Solution</h4>
-                <p>6-month resilience program with breathwork and mindfulness training.</p>
-              </div>
-              
-              <div className={styles.caseStudyResults}>
-                <h4>Results</h4>
-                <ul>
-                  <li>60% reduction in turnover</li>
-                  <li>35% increase in productivity</li>
-                  <li>90% employee satisfaction score</li>
-                </ul>
-              </div>
-              
-              <blockquote className={styles.caseStudyQuote}>
-                "The transformation in our team's resilience and performance has been 
-                remarkable. We're now a stronger, more focused organization."
-              </blockquote>
-              
-              <cite className={styles.caseStudyAttribution}>
-                — Sarah Chen, CEO
-              </cite>
-            </div>
+          <motion.div 
+            className={styles.resourcesGrid}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {/* Resource Links */}
+            {pageData.resources.resourceLinks.map((resource, index) => (
+              <motion.div 
+                key={index}
+                className={styles.resourceCard}
+                variants={reducedMotion ? {} : staggerChild}
+              >
+                <h3 className={styles.resourceTitle}>{resource.label}</h3>
+                <p className={styles.resourceDescription}>
+                  Comprehensive guide for leaders and HR teams.
+                </p>
+                <a 
+                  href={resource.pathOrUrl} 
+                  className="btn btn--outline"
+                  target={resource.external ? '_blank' : undefined}
+                  rel={resource.external ? 'noopener noreferrer' : undefined}
+                >
+                  Download Guide
+                </a>
+              </motion.div>
+            ))}
 
-            <div className={styles.caseStudyCard}>
-              <div className={styles.caseStudyHeader}>
-                <h3 className={styles.caseStudyTitle}>Financial Services</h3>
-                <p className={styles.caseStudyIndustry}>Finance</p>
-              </div>
-              
-              <div className={styles.caseStudyChallenge}>
-                <h4>Challenge</h4>
-                <p>Leadership team struggling with decision fatigue and poor communication.</p>
-              </div>
-              
-              <div className={styles.caseStudySolution}>
-                <h4>Solution</h4>
-                <p>Executive leadership program focused on clarity and mindful leadership.</p>
-              </div>
-              
-              <div className={styles.caseStudyResults}>
-                <h4>Results</h4>
-                <ul>
-                  <li>50% faster decision making</li>
-                  <li>25% improvement in team collaboration</li>
-                  <li>Significant reduction in workplace conflicts</li>
-                </ul>
-              </div>
-              
-              <blockquote className={styles.caseStudyQuote}>
-                "Our leadership team is now more aligned, decisive, and effective. 
-                The clarity we've gained is invaluable."
-              </blockquote>
-              
-              <cite className={styles.caseStudyAttribution}>
-                — Michael Rodriguez, Managing Director
-              </cite>
-            </div>
-          </div>
+            {/* Featured Blog Post */}
+            {featuredPost && (
+              <motion.div 
+                className={styles.resourceCard}
+                variants={reducedMotion ? {} : staggerChild}
+              >
+                <h3 className={styles.resourceTitle}>Latest Article</h3>
+                <p className={styles.resourceDescription}>
+                  {featuredPost.excerpt}
+                </p>
+                <a href={`/blog/${featuredPost.slug}`} className="btn btn--outline">
+                  Read Article
+                </a>
+              </motion.div>
+            )}
+          </motion.div>
         </div>
       </section>
 
       {/* Formats Section */}
       <section className="section section--sm">
         <div className="container">
-          <div className={styles.sectionHeader}>
+          <motion.div 
+            className={styles.sectionHeader}
+            {...useInViewAnimation()}
+          >
             <h2 className={styles.sectionTitle}>Program Formats</h2>
             <p className={styles.sectionDescription}>
               Flexible delivery options to meet your organization's needs
             </p>
-          </div>
+          </motion.div>
 
-          <div className={styles.formatsGrid}>
-            <div className={styles.formatCard}>
-              <h3 className={styles.formatTitle}>Workshop Series</h3>
-              <p className={styles.formatDuration}>2-4 hours per session</p>
-              <p className={styles.formatDescription}>
-                Interactive workshops that introduce breathwork and mindfulness 
-                practices to your teams.
-              </p>
-              
-              <ul className={styles.formatFeatures}>
-                <li>Hands-on practice</li>
-                <li>Group exercises</li>
-                <li>Take-home resources</li>
-                <li>Follow-up support</li>
-              </ul>
-              
-              <div className={styles.formatPrice}>
-                <span className={styles.priceLabel}>Starting at</span>
-                <span className={styles.priceAmount}>$2,500</span>
-                <span className={styles.pricePeriod}>per session</span>
-              </div>
-            </div>
-
-            <div className={styles.formatCard}>
-              <h3 className={styles.formatTitle}>Intensive Retreats</h3>
-              <p className={styles.formatDuration}>1-3 days</p>
-              <p className={styles.formatDescription}>
-                Deep dive experiences that create lasting transformation and 
-                build strong team bonds.
-              </p>
-              
-              <ul className={styles.formatFeatures}>
-                <li>Immersive experience</li>
-                <li>Team building</li>
-                <li>Personal transformation</li>
-                <li>Customized content</li>
-              </ul>
-              
-              <div className={styles.formatPrice}>
-                <span className={styles.priceLabel}>Starting at</span>
-                <span className={styles.priceAmount}>$15,000</span>
-                <span className={styles.pricePeriod}>per retreat</span>
-              </div>
-            </div>
-
-            <div className={styles.formatCard}>
-              <h3 className={styles.formatTitle}>Ongoing Programs</h3>
-              <p className={styles.formatDuration}>3-12 months</p>
-              <p className={styles.formatDescription}>
-                Comprehensive programs that embed mindfulness and resilience 
-                into your organizational culture.
-              </p>
-              
-              <ul className={styles.formatFeatures}>
-                <li>Regular sessions</li>
-                <li>Progress tracking</li>
-                <li>Cultural integration</li>
-                <li>Continuous support</li>
-              </ul>
-              
-              <div className={styles.formatPrice}>
-                <span className={styles.priceLabel}>Starting at</span>
-                <span className={styles.priceAmount}>$50,000</span>
-                <span className={styles.pricePeriod}>per program</span>
-              </div>
-            </div>
-          </div>
+          <motion.div 
+            className={styles.formatsList}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {pageData.formats.map((format, index) => (
+              <motion.div 
+                key={index}
+                className={styles.formatItem}
+                variants={reducedMotion ? {} : staggerChild}
+              >
+                <div className={styles.formatIcon}>
+                  <span>✓</span>
+                </div>
+                <span className={styles.formatText}>{format}</span>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* Resources Section */}
-      <section className="section section--sm">
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Resources</h2>
-            <p className={styles.sectionDescription}>
-              Download our comprehensive guide to organizational transformation
-            </p>
-          </div>
-
-          <div className={styles.resourceCard}>
-            <div className={styles.resourceContent}>
-              <h3 className={styles.resourceTitle}>The Complete Guide to Building Resilient Organizations</h3>
-              <p className={styles.resourceDescription}>
-                A comprehensive whitepaper covering the science behind organizational 
-                resilience, practical implementation strategies, and case studies from 
-                leading companies.
-              </p>
-              
-              <ul className={styles.resourceFeatures}>
-                <li>Evidence-based research</li>
-                <li>Implementation roadmap</li>
-                <li>ROI calculations</li>
-                <li>Success metrics</li>
-              </ul>
-            </div>
-            
-            <div className={styles.resourceDownload}>
-              <a href="/resources/whitepaper" className="btn btn--primary btn--large">
-                Download Whitepaper
-              </a>
-              <p className={styles.downloadNote}>Free 40-page guide</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Band */}
+      {/* Final CTA Section */}
       <section className={styles.ctaBand}>
         <div className="container">
-          <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Ready to Transform Your Organization?</h2>
+          <motion.div 
+            className={styles.ctaContent}
+            {...useInViewAnimation()}
+          >
+            <h2 className={styles.ctaTitle}>{pageData.finalCTA.headline}</h2>
             <p className={styles.ctaDescription}>
-              Schedule a consultation to discuss how we can help build resilience, 
-              clarity, and transformation in your organization.
+              {pageData.finalCTA.subtext}
             </p>
             
             <div className={styles.ctaButtons}>
-              <a href="/contact" className="btn btn--primary btn--large">
-                Schedule Consultation
-              </a>
-              <a href="/resources/whitepaper" className="btn btn--secondary btn--large">
-                Download Guide
-              </a>
+              {pageData.finalCTA.buttons.map((button, index) => (
+                <a
+                  key={index}
+                  href={button.pathOrUrl}
+                  className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
+                  target={button.external ? '_blank' : undefined}
+                  rel={button.external ? 'noopener noreferrer' : undefined}
+                >
+                  {button.label}
+                </a>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
-    </>
+    </motion.div>
   )
 }
-

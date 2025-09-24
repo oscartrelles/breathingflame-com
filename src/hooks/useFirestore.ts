@@ -13,7 +13,8 @@ import {
   Unsubscribe
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
-import { mockSettings, mockNavigation, mockHome, mockPrograms, mockTestimonials } from '@/services/mockData'
+import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms } from '@/services/mockData'
+import { Offering } from '@/types'
 
 // Generic hook for single document
 export function useDocument<T = DocumentData>(
@@ -131,16 +132,9 @@ export function usePrograms() {
   return { data, loading, error }
 }
 
-export function useExperiences() {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
-}
 
 export function usePosts() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState(mockPosts)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   
@@ -173,7 +167,7 @@ export function useEvents() {
 
 // Hook for getting a specific post by slug
 export function usePost(slug: string) {
-  const [data, setData] = useState([])
+  const [data, setData] = useState(mockPosts.find(post => post.slug === slug) || null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   
@@ -186,6 +180,65 @@ export function useFeaturedTestimonials(limitCount: number = 6) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   
+  return { data, loading, error }
+}
+
+export function usePageIndividuals() {
+  const [data, setData] = useState(mockPageIndividuals)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function usePageOrganizations() {
+  const [data, setData] = useState(mockPageOrganizations)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function usePagePrograms() {
+  const [data, setData] = useState(mockPagePrograms)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function useExperiences() {
+  const [data, setData] = useState(mockExperiences)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function useAllOfferings() {
+  const { data: programs } = usePrograms()
+  const { data: experiences } = useExperiences()
+  const [data, setData] = useState<Offering[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    if (programs && experiences) {
+      const mergedOfferings: Offering[] = [
+        ...programs.map(program => ({ ...program, kind: 'program' as const })),
+        ...experiences.map(experience => ({ ...experience, kind: 'experience' as const }))
+      ].sort((a, b) => {
+        // Sort by order if present, otherwise by title
+        if (a.order !== undefined && b.order !== undefined) {
+          return a.order - b.order
+        }
+        return a.title.localeCompare(b.title)
+      })
+      
+      setData(mergedOfferings)
+    }
+  }, [programs, experiences])
+
   return { data, loading, error }
 }
 

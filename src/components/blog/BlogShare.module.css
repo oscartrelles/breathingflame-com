@@ -1,0 +1,83 @@
+/* Blog Share Component Styles */
+
+.share {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.shareTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 1.5rem 0;
+}
+
+.shareButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.shareButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.shareButton:hover {
+  background: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.shareButton.copied {
+  background: var(--color-success);
+  color: var(--color-background);
+  border-color: var(--color-success);
+}
+
+.shareButton svg {
+  flex-shrink: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .share {
+    padding: 1.5rem;
+  }
+  
+  .shareButtons {
+    flex-direction: column;
+  }
+  
+  .shareButton {
+    justify-content: center;
+    padding: 0.875rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .share {
+    padding: 1rem;
+  }
+  
+  .shareButton {
+    font-size: 0.85rem;
+    padding: 0.75rem 0.875rem;
+  }
+}

@@ -10,7 +10,7 @@ admin.initializeApp()
 const corsHandler = cors({ origin: true })
 
 // Email configuration
-const emailTransporter = nodemailer.createTransporter({
+const emailTransporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: functions.config().email?.user,
@@ -19,7 +19,7 @@ const emailTransporter = nodemailer.createTransporter({
 })
 
 // Contact form submission handler
-export const submitContactForm = functions.https.onRequest((req, res) => {
+export const submitContactForm = functions.https.onRequest((req: any, res: any) => {
   return corsHandler(req, res, async () => {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' })
@@ -109,7 +109,7 @@ export const submitContactForm = functions.https.onRequest((req, res) => {
 })
 
 // Newsletter signup handler
-export const newsletterSignup = functions.https.onRequest((req, res) => {
+export const newsletterSignup = functions.https.onRequest((req: any, res: any) => {
   return corsHandler(req, res, async () => {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' })
@@ -185,7 +185,7 @@ export const newsletterSignup = functions.https.onRequest((req, res) => {
 })
 
 // Analytics tracking handler
-export const trackEvent = functions.https.onRequest((req, res) => {
+export const trackEvent = functions.https.onRequest((req: any, res: any) => {
   return corsHandler(req, res, async () => {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' })
@@ -220,7 +220,7 @@ export const trackEvent = functions.https.onRequest((req, res) => {
 })
 
 // Scheduled function to clean up old analytics data
-export const cleanupAnalytics = functions.pubsub.schedule('0 2 * * 0').onRun(async (context) => {
+export const cleanupAnalytics = functions.pubsub.schedule('0 2 * * 0').onRun(async (_context) => {
   const cutoffDate = new Date()
   cutoffDate.setDate(cutoffDate.getDate() - 365) // Keep data for 1 year
 
@@ -244,4 +244,7 @@ export const cleanupAnalytics = functions.pubsub.schedule('0 2 * * 0').onRun(asy
   await batch.commit()
   console.log(`Cleaned up ${snapshot.size} old analytics records`)
 })
+
+// Sitemap function export
+export { sitemap } from './sitemap'
 

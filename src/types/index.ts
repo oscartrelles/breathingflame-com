@@ -72,46 +72,86 @@ export interface NavigationAnchor {
 
 export interface Home {
   id: string
+  seo: {
+    title: string
+    description: string
+    ogImage: string
+  }
   hero: HeroSection
   pillars: Pillar[]
-  featuredPrograms: string[] // Program IDs
-  featuredExperiences: string[] // Experience IDs
-  featuredArticleRef?: string // Post ID
-  testimonialRefs: string[] // Testimonial IDs
-  orgPreviewCards: OrgPreviewCard[]
-  showEvents: boolean
-  communityCTAs: CommunityCTA[]
-  typeforms: {
-    igniteUrl: string
-    peakUrl: string
-    enabled: boolean
+  sections: {
+    featured: {
+      headline: string
+      subtext: string
+      featuredPrograms: string[] // Program IDs
+      featuredExperiences: string[] // Experience IDs
+    }
+    testimonials: {
+      headline: string
+      subtext: string
+      testimonialsFeatured: string[] // Testimonial IDs
+    }
+    featuredContent: {
+      headline: string
+      subtext: string
+      featuredArticleRef?: string // Post ID
+      videoEmbed?: string // YouTube embed URL
+    }
+    organizations: {
+      headline: string
+      cards: OrgPreviewCard[]
+    }
+    events: {
+      headline: string
+      fallbackCTA: {
+        label: string
+        pathOrUrl: string
+        external: boolean
+      }
+    }
+    community: {
+      headline: string
+      ctas: {
+        label: string
+        pathOrUrl: string
+        external: boolean
+      }[]
+    }
   }
+  showEvents: boolean
 }
 
 export interface HeroSection {
-  title: string
-  subtitle: string
-  description: string
-  backgroundImage?: string
-  backgroundVideo?: string
-  ctaText: string
-  ctaHref: string
-  overlayOpacity: number
+  headline: string
+  subtext: string
+  media: {
+    backgroundImage?: string
+    backgroundVideo?: string
+    overlayOpacity: number
+  }
+  ctas: {
+    label: string
+    pathOrUrl: string
+    external: boolean
+  }[]
 }
 
 export interface Pillar {
   id: string
   title: string
-  description: string
+  copy: string
   icon: string
   color: string
 }
 
 export interface OrgPreviewCard {
   title: string
-  description: string
-  image: string
-  href: string
+  copy: string
+  image?: string
+  cta: {
+    label: string
+    url: string
+  }
 }
 
 export interface CommunityCTA {
@@ -150,6 +190,7 @@ export interface Program {
   order: number
   published: boolean
   featured: boolean
+  tags?: string[]
 }
 
 export interface Experience {
@@ -166,8 +207,8 @@ export interface Experience {
     individual: number
     organization: number
   }
-  benefits: string[]
-  whatToExpect: {
+  highlights: string[]
+  howItWorks: {
     step: number
     title: string
     description: string
@@ -180,6 +221,71 @@ export interface Experience {
   order: number
   published: boolean
   featured: boolean
+  tags?: string[]
+}
+
+export interface Offering {
+  kind: 'program' | 'experience'
+  id: string
+  slug: string
+  title: string
+  subtitle: string
+  description: string
+  shortDescription: string
+  image: string
+  duration: string
+  format: 'online' | 'in-person' | 'hybrid'
+  price: {
+    individual: number
+    organization: number
+  }
+  outcomes?: string[]
+  highlights?: string[]
+  howItWorks: {
+    step: number
+    title: string
+    description: string
+  }[]
+  testimonials: string[] // Testimonial IDs
+  upcomingEvents: string[] // Event IDs
+  ctaText: string
+  ctaHref: string
+  faqs: FAQ[]
+  order: number
+  published: boolean
+  featured: boolean
+  tags?: string[]
+}
+
+export interface Experience {
+  id: string
+  slug: string
+  title: string
+  subtitle: string
+  description: string
+  shortDescription: string
+  image: string
+  duration: string
+  format: 'online' | 'in-person' | 'hybrid'
+  price: {
+    individual: number
+    organization: number
+  }
+  highlights: string[]
+  howItWorks: {
+    step: number
+    title: string
+    description: string
+  }[]
+  testimonials: string[] // Testimonial IDs
+  upcomingEvents: string[] // Event IDs
+  ctaText: string
+  ctaHref: string
+  faqs: FAQ[]
+  order: number
+  published: boolean
+  featured: boolean
+  tags?: string[]
 }
 
 export interface Post {
@@ -348,5 +454,145 @@ export interface JsonLd {
   '@context': string
   '@type': string
   [key: string]: any
+}
+
+// Page-specific interfaces
+export interface PagePrograms {
+  id: string
+  seo: {
+    title: string
+    description: string
+    ogImage: string
+  }
+  hero: {
+    headline: string
+    subtext: string
+    ctas: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+  }
+  filters: {
+    showAll: boolean
+    showPrograms: boolean
+    showExperiences: boolean
+    defaultTab: 'all' | 'programs' | 'experiences'
+  }
+  search: {
+    enabled: boolean
+    placeholder: string
+  }
+}
+
+export interface PageOrganizations {
+  id: string
+  seo: {
+    title: string
+    description: string
+    ogImage: string
+  }
+  hero: {
+    headline: string
+    subtext: string
+    ctas: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+  }
+  businessDrivers: {
+    title: string
+    copy: string
+  }[]
+  solutions: {
+    title: string
+    copy: string
+    cta: {
+      label: string
+      url: string
+    }
+  }[]
+  results: {
+    headline: string
+    subtext: string
+    testimonialRefs: string[]
+  }
+  resources: {
+    headline: string
+    subtext: string
+    resourceLinks: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+    featuredPostRef?: string
+  }
+  formats: string[]
+  finalCTA: {
+    headline: string
+    subtext: string
+    buttons: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+  }
+}
+
+export interface PageIndividuals {
+  id: string
+  seo: {
+    title: string
+    description: string
+    ogImage: string
+  }
+  hero: {
+    headline: string
+    subtext: string
+    ctas: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+  }
+  introBlocks: {
+    title: string
+    copy: string
+  }[]
+  programs: {
+    headline: string
+    subtext: string
+    programRefs: string[]
+  }
+  experiences: {
+    headline: string
+    subtext: string
+    experienceRefs: string[]
+  }
+  testimonials: {
+    headline: string
+    subtext: string
+    testimonialRefs: string[]
+  }
+  resources: {
+    headline: string
+    subtext: string
+    resourceLinks: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+    featuredPostRef?: string
+  }
+  finalCTA: {
+    headline: string
+    subtext: string
+    buttons: {
+      label: string
+      pathOrUrl: string
+      external: boolean
+    }[]
+  }
 }
 
