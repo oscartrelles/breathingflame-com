@@ -19,7 +19,7 @@ export function Programs() {
   const { data: pageData } = usePagePrograms()
   const { data: allOfferings } = useAllOfferings()
   const reducedMotion = useReducedMotion()
-  
+
   const [activeTab, setActiveTab] = useState<FilterTab>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [visibleCount, setVisibleCount] = useState(12)
@@ -164,8 +164,8 @@ export function Programs() {
                   Experiences
                 </button>
               )}
-            </div>
-
+                    </div>
+                    
             {/* Search Input */}
             {pageData.search.enabled && (
               <div className={styles.search}>
@@ -180,7 +180,7 @@ export function Programs() {
               </div>
             )}
           </motion.div>
-        </div>
+                      </div>
       </section>
 
       {/* Programs Grid */}
@@ -201,9 +201,9 @@ export function Programs() {
                 whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
                 <OfferingCard offering={offering} />
+                  </motion.div>
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
 
           {/* Load More Button */}
           {hasMore && (
@@ -274,12 +274,22 @@ function OfferingCard({ offering }: { offering: Offering }) {
   }, [offering])
 
   const getSummary = () => {
+    // 1. Check for summary field first
+    if (offering.summary) {
+      return offering.summary
+    }
+    
+    // 2. Programs: fallback to first outcome
     if (offering.kind === 'program' && offering.outcomes && offering.outcomes.length > 0) {
       return offering.outcomes[0]
     }
+    
+    // 3. Experiences: fallback to first highlight
     if (offering.kind === 'experience' && offering.highlights && offering.highlights.length > 0) {
       return offering.highlights[0]
     }
+    
+    // 4. Final fallback: shortDescription (equivalent to hero.subtext)
     return offering.shortDescription
   }
 

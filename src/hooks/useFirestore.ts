@@ -13,7 +13,7 @@ import {
   Unsubscribe
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
-import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms } from '@/services/mockData'
+import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout } from '@/services/mockData'
 import { Offering } from '@/types'
 
 // Generic hook for single document
@@ -201,6 +201,14 @@ export function usePageOrganizations() {
 
 export function usePagePrograms() {
   const [data, setData] = useState(mockPagePrograms)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function useAbout() {
+  const [data, setData] = useState(mockAbout)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   

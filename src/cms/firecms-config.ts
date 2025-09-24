@@ -12,7 +12,8 @@ import {
   FAQ,
   PageIndividuals,
   PageOrganizations,
-  PagePrograms
+  PagePrograms,
+  About
 } from '@/types'
 
 // Settings Collection
@@ -580,6 +581,12 @@ export const programsCollection = buildCollection<Program>({
       name: 'Short Description',
       multiline: true
     }),
+    summary: buildProperty({
+      dataType: 'string',
+      name: 'Summary',
+      multiline: true,
+      description: 'Compelling summary for program cards. Falls back to first outcome if empty.'
+    }),
     image: buildProperty({
       dataType: 'string',
       name: 'Featured Image URL'
@@ -726,6 +733,12 @@ export const experiencesCollection = buildCollection<Experience>({
       dataType: 'string',
       name: 'Short Description',
       multiline: true
+    }),
+    summary: buildProperty({
+      dataType: 'string',
+      name: 'Summary',
+      multiline: true,
+      description: 'Compelling summary for experience cards. Falls back to first highlight if empty.'
     }),
     image: buildProperty({
       dataType: 'string',
@@ -1662,6 +1675,265 @@ export const pageIndividualsCollection = buildCollection<PageIndividuals>({
   }
 })
 
+// About Collection
+export const aboutCollection = buildCollection<About>({
+  name: 'About',
+  singularName: 'About',
+  path: 'about',
+  icon: 'Info',
+  description: 'About page content configuration',
+  permissions: ({ user }) => ({
+    read: true,
+    write: ['admin', 'editor'].includes(user?.role || '')
+  }),
+  properties: {
+    hero: buildProperty({
+      dataType: 'map',
+      name: 'Hero Section',
+      properties: {
+        headline: buildProperty({
+          dataType: 'string',
+          name: 'Headline',
+          validation: { required: true }
+        }),
+        subtext: buildProperty({
+          dataType: 'string',
+          name: 'Subtext',
+          multiline: true,
+          validation: { required: true }
+        }),
+        image: buildProperty({
+          dataType: 'string',
+          name: 'Hero Image URL'
+        }),
+        ctas: buildProperty({
+          dataType: 'array',
+          name: 'Call-to-Action Buttons',
+          of: buildProperty({
+            dataType: 'map',
+            properties: {
+              label: buildProperty({
+                dataType: 'string',
+                name: 'Button Label'
+              }),
+              url: buildProperty({
+                dataType: 'string',
+                name: 'Button URL'
+              }),
+              external: buildProperty({
+                dataType: 'boolean',
+                name: 'External Link'
+              })
+            }
+          })
+        })
+      }
+    }),
+    story: buildProperty({
+      dataType: 'map',
+      name: 'Our Story',
+      properties: {
+        title: buildProperty({
+          dataType: 'string',
+          name: 'Section Title',
+          validation: { required: true }
+        }),
+        body: buildProperty({
+          dataType: 'string',
+          name: 'Story Content',
+          multiline: true,
+          validation: { required: true }
+        })
+      }
+    }),
+    founder: buildProperty({
+      dataType: 'map',
+      name: 'Founder Information',
+      properties: {
+        name: buildProperty({
+          dataType: 'string',
+          name: 'Founder Name',
+          validation: { required: true }
+        }),
+        title: buildProperty({
+          dataType: 'string',
+          name: 'Founder Title',
+          validation: { required: true }
+        }),
+        headshot: buildProperty({
+          dataType: 'string',
+          name: 'Headshot Image URL'
+        }),
+        bio: buildProperty({
+          dataType: 'string',
+          name: 'Founder Bio',
+          multiline: true,
+          validation: { required: true }
+        }),
+        credentials: buildProperty({
+          dataType: 'array',
+          name: 'Credentials',
+          of: buildProperty({
+            dataType: 'string',
+            name: 'Credential'
+          }),
+          validation: { required: true }
+        }),
+        socials: buildProperty({
+          dataType: 'array',
+          name: 'Social Links',
+          of: buildProperty({
+            dataType: 'map',
+            properties: {
+              label: buildProperty({
+                dataType: 'string',
+                name: 'Platform Name'
+              }),
+              url: buildProperty({
+                dataType: 'string',
+                name: 'Profile URL'
+              })
+            }
+          })
+        })
+      }
+    }),
+    approach: buildProperty({
+      dataType: 'map',
+      name: 'Our Approach',
+      properties: {
+        intro: buildProperty({
+          dataType: 'string',
+          name: 'Introduction Text',
+          multiline: true,
+          validation: { required: true }
+        }),
+        pillars: buildProperty({
+          dataType: 'array',
+          name: 'Pillars',
+          of: buildProperty({
+            dataType: 'map',
+            properties: {
+              title: buildProperty({
+                dataType: 'string',
+                name: 'Pillar Title'
+              }),
+              copy: buildProperty({
+                dataType: 'string',
+                name: 'Pillar Description',
+                multiline: true
+              })
+            }
+          }),
+          validation: { required: true }
+        })
+      }
+    }),
+    collaborators: buildProperty({
+      dataType: 'array',
+      name: 'Collaborators',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          name: buildProperty({
+            dataType: 'string',
+            name: 'Collaborator Name'
+          }),
+          role: buildProperty({
+            dataType: 'string',
+            name: 'Role/Title'
+          }),
+          logoUrl: buildProperty({
+            dataType: 'string',
+            name: 'Logo URL'
+          }),
+          url: buildProperty({
+            dataType: 'string',
+            name: 'Website URL'
+          })
+        }
+      })
+    }),
+    proof: buildProperty({
+      dataType: 'map',
+      name: 'Social Proof',
+      properties: {
+        ratingText: buildProperty({
+          dataType: 'string',
+          name: 'Rating Text'
+        }),
+        logos: buildProperty({
+          dataType: 'array',
+          name: 'Client/Partner Logos',
+          of: buildProperty({
+            dataType: 'string',
+            name: 'Logo URL'
+          })
+        })
+      }
+    }),
+    finalCTA: buildProperty({
+      dataType: 'map',
+      name: 'Final Call-to-Action',
+      properties: {
+        headline: buildProperty({
+          dataType: 'string',
+          name: 'Headline',
+          validation: { required: true }
+        }),
+        subtext: buildProperty({
+          dataType: 'string',
+          name: 'Subtext',
+          multiline: true
+        }),
+        buttons: buildProperty({
+          dataType: 'array',
+          name: 'Action Buttons',
+          of: buildProperty({
+            dataType: 'map',
+            properties: {
+              label: buildProperty({
+                dataType: 'string',
+                name: 'Button Label'
+              }),
+              url: buildProperty({
+                dataType: 'string',
+                name: 'Button URL'
+              }),
+              external: buildProperty({
+                dataType: 'boolean',
+                name: 'External Link'
+              })
+            }
+          }),
+          validation: { required: true }
+        })
+      }
+    }),
+    seo: buildProperty({
+      dataType: 'map',
+      name: 'SEO Settings',
+      properties: {
+        title: buildProperty({
+          dataType: 'string',
+          name: 'Page Title',
+          validation: { required: true }
+        }),
+        description: buildProperty({
+          dataType: 'string',
+          name: 'Meta Description',
+          multiline: true,
+          validation: { required: true }
+        }),
+        ogImage: buildProperty({
+          dataType: 'string',
+          name: 'OG Image URL'
+        })
+      }
+    })
+  }
+})
+
 // Export all collections
 export const collections = [
   settingsCollection,
@@ -1670,6 +1942,7 @@ export const collections = [
   pageProgramsCollection,
   pageOrganizationsCollection,
   pageIndividualsCollection,
+  aboutCollection,
   programsCollection,
   experiencesCollection,
   postsCollection,

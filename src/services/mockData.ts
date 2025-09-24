@@ -183,6 +183,7 @@ export const mockPrograms = [
     subtitle: '7-Week Transformation',
     description: 'Turn back the clock on aging through breathwork, cold therapy, and mindfulness practices.',
     shortDescription: 'Transform your body and mind with our comprehensive 10-week program.',
+    summary: 'A 7-week reset that combines breathwork, movement, fasting, and mindset to restore energy and improve your healthspan.',
     image: '/programs/rac.jpg',
     duration: '10 Weeks',
     format: 'hybrid' as const,
@@ -208,6 +209,7 @@ export const mockPrograms = [
     subtitle: 'Break Through Barriers',
     description: 'Identify and overcome the mental, emotional, and energetic blocks that are holding you back from living your fullest life.',
     shortDescription: 'A structured coaching program to remove blocks and move forward with momentum.',
+    summary: 'A structured 1:1 coaching program that removes personal and strategic blocks, giving you clarity and momentum.',
     image: '/programs/unblocked.jpg',
     duration: '10 Weeks',
     format: 'online' as const,
@@ -233,6 +235,7 @@ export const mockPrograms = [
     subtitle: 'Peak Performance',
     description: 'Achieve unstoppable momentum in all areas of your life through advanced breathwork techniques and peak performance strategies.',
     shortDescription: 'A follow-up program to help you lock in change and expand your breakthroughs.',
+    summary: 'A follow-up program that helps you lock in change, sustain new habits, and expand your breakthroughs.',
     image: '/programs/unstoppable.jpg',
     duration: '12 Weeks',
     format: 'hybrid' as const,
@@ -261,6 +264,7 @@ export const mockExperiences = [
     subtitle: 'Cold & Breathwork',
     description: 'Master the powerful combination of cold exposure and breathing techniques that boost immunity, reduce stress, and increase energy.',
     shortDescription: 'Breathwork, cold exposure, and mindset training to build resilience.',
+    summary: 'Discover the power of breath, mindset, and cold exposure to build resilience and boost energy in just one day.',
     image: '/experiences/whm.jpg',
     duration: '2-4 Hours',
     format: 'in-person' as const,
@@ -286,6 +290,7 @@ export const mockExperiences = [
     subtitle: 'Deep Healing',
     description: 'Experience profound healing and transformation through this powerful breathwork practice that combines music, guidance, and deep breathing.',
     shortDescription: 'Immersive, sound-based breathwork to reset your nervous system and reconnect deeply.',
+    summary: 'An immersive sound and breath experience that helps you release stress, reset your nervous system, and reconnect deeply.',
     image: '/experiences/9d-breathwork.jpg',
     duration: '90 Minutes',
     format: 'in-person' as const,
@@ -847,3 +852,64 @@ Start today. Your future self will thank you.`,
     }
   }
 ]
+
+export const mockAbout = {
+  id: 'main',
+  hero: {
+    headline: 'About Breathing Flame',
+    subtext: 'Resilience. Clarity. Transformation. We help people and organizations unlock performance and wellbeing through science-backed, nature-powered practices.'
+  },
+  story: {
+    title: 'Our Story',
+    body: 'Breathing Flame exists to help humans perform better and live better—without burning out.\n\nWe combine evidence-based methods with immersive experiences to build resilience, reveal clarity, and create lasting transformation for individuals and organizations.'
+  },
+  founder: {
+    name: 'Oscar Trelles',
+    title: 'Founder and Curriculum Director',
+    bio: 'Oscar blends breathwork, the Wim Hof Method, systemic coaching, and performance frameworks to help clients reset their nervous system, make clear decisions, and sustain meaningful change.\n\nHis work ranges from 1:1 coaching to organizational workshops and retreats.',
+    credentials: [
+      'Certified Wim Hof Method Instructor',
+      'Systemic/Constellations Facilitator',
+      'Corporate and Entrepreneurial Coaching'
+    ],
+    socials: [
+      { label: 'LinkedIn', url: 'https://www.linkedin.com/in/oscartrelles' }
+    ]
+  },
+  approach: {
+    intro: 'Our approach integrates physiological training, mindset work, and systemic insight.',
+    pillars: [
+      {
+        title: 'Resilience',
+        copy: 'Train your body and mind to handle stress, adapt to challenges, and sustain energy.'
+      },
+      {
+        title: 'Clarity',
+        copy: 'Remove hidden blocks and align decisions with what truly matters.'
+      },
+      {
+        title: 'Transformation',
+        copy: 'Turn breakthroughs into sustainable change with practices you can integrate every day.'
+      }
+    ]
+  },
+  collaborators: [],
+  proof: {
+    ratingText: '⭐ 5.0 on Google',
+    logos: []
+  },
+  finalCTA: {
+    headline: 'Ready to work together?',
+    subtext: 'Whether you\'re an individual or an organization, we\'ll help you build resilience, clarity, and transformation.',
+    buttons: [
+      { label: 'For Individuals', url: '/individuals', external: false },
+      { label: 'For Organizations', url: '/organizations', external: false },
+      { label: 'Contact', url: '/contact', external: false }
+    ]
+  },
+  seo: {
+    title: 'About – Breathing Flame',
+    description: 'Breathing Flame helps people and organizations unlock performance and wellbeing through science-backed, nature-powered practices.',
+    ogImage: '/og-image.jpg'
+  }
+}

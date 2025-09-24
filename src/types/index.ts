@@ -29,6 +29,66 @@ export interface Settings {
   }
 }
 
+export interface About {
+  id: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+    ctas?: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  story: {
+    title: string
+    body: string
+  }
+  founder: {
+    name: string
+    title: string
+    headshot?: string
+    bio: string
+    credentials: string[]
+    socials?: {
+      label: string
+      url: string
+    }[]
+  }
+  approach: {
+    intro: string
+    pillars: {
+      title: string
+      copy: string
+    }[]
+  }
+  collaborators?: {
+    name: string
+    role: string
+    logoUrl?: string
+    url?: string
+  }[]
+  proof?: {
+    ratingText?: string
+    logos?: string[]
+  }
+  finalCTA: {
+    headline: string
+    subtext?: string
+    buttons: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
+  }
+}
+
 export interface Navigation {
   id: string
   headerLinks: NavigationHeaderLink[]
@@ -154,6 +214,66 @@ export interface OrgPreviewCard {
   }
 }
 
+export interface About {
+  id: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+    ctas?: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  story: {
+    title: string
+    body: string
+  }
+  founder: {
+    name: string
+    title: string
+    headshot?: string
+    bio: string
+    credentials: string[]
+    socials?: {
+      label: string
+      url: string
+    }[]
+  }
+  approach: {
+    intro: string
+    pillars: {
+      title: string
+      copy: string
+    }[]
+  }
+  collaborators?: {
+    name: string
+    role: string
+    logoUrl?: string
+    url?: string
+  }[]
+  proof?: {
+    ratingText?: string
+    logos?: string[]
+  }
+  finalCTA: {
+    headline: string
+    subtext?: string
+    buttons: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
+  }
+}
+
 export interface CommunityCTA {
   title: string
   description: string
@@ -169,6 +289,7 @@ export interface Program {
   subtitle: string
   description: string
   shortDescription: string
+  summary?: string
   image: string
   duration: string
   format: 'online' | 'in-person' | 'hybrid'
@@ -200,6 +321,7 @@ export interface Experience {
   subtitle: string
   description: string
   shortDescription: string
+  summary?: string
   image: string
   duration: string
   format: 'online' | 'in-person' | 'hybrid'
@@ -264,6 +386,7 @@ export interface Experience {
   subtitle: string
   description: string
   shortDescription: string
+  summary?: string
   image: string
   duration: string
   format: 'online' | 'in-person' | 'hybrid'
@@ -308,6 +431,66 @@ export interface Post {
   seo: {
     metaTitle?: string
     metaDescription?: string
+    ogImage?: string
+  }
+}
+
+export interface About {
+  id: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+    ctas?: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  story: {
+    title: string
+    body: string
+  }
+  founder: {
+    name: string
+    title: string
+    headshot?: string
+    bio: string
+    credentials: string[]
+    socials?: {
+      label: string
+      url: string
+    }[]
+  }
+  approach: {
+    intro: string
+    pillars: {
+      title: string
+      copy: string
+    }[]
+  }
+  collaborators?: {
+    name: string
+    role: string
+    logoUrl?: string
+    url?: string
+  }[]
+  proof?: {
+    ratingText?: string
+    logos?: string[]
+  }
+  finalCTA: {
+    headline: string
+    subtext?: string
+    buttons: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  seo: {
+    title: string
+    description: string
     ogImage?: string
   }
 }
@@ -485,6 +668,66 @@ export interface PagePrograms {
   }
 }
 
+export interface About {
+  id: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+    ctas?: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  story: {
+    title: string
+    body: string
+  }
+  founder: {
+    name: string
+    title: string
+    headshot?: string
+    bio: string
+    credentials: string[]
+    socials?: {
+      label: string
+      url: string
+    }[]
+  }
+  approach: {
+    intro: string
+    pillars: {
+      title: string
+      copy: string
+    }[]
+  }
+  collaborators?: {
+    name: string
+    role: string
+    logoUrl?: string
+    url?: string
+  }[]
+  proof?: {
+    ratingText?: string
+    logos?: string[]
+  }
+  finalCTA: {
+    headline: string
+    subtext?: string
+    buttons: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
+  }
+}
+
 export interface PageOrganizations {
   id: string
   seo: {
@@ -537,6 +780,66 @@ export interface PageOrganizations {
       pathOrUrl: string
       external: boolean
     }[]
+  }
+}
+
+export interface About {
+  id: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+    ctas?: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  story: {
+    title: string
+    body: string
+  }
+  founder: {
+    name: string
+    title: string
+    headshot?: string
+    bio: string
+    credentials: string[]
+    socials?: {
+      label: string
+      url: string
+    }[]
+  }
+  approach: {
+    intro: string
+    pillars: {
+      title: string
+      copy: string
+    }[]
+  }
+  collaborators?: {
+    name: string
+    role: string
+    logoUrl?: string
+    url?: string
+  }[]
+  proof?: {
+    ratingText?: string
+    logos?: string[]
+  }
+  finalCTA: {
+    headline: string
+    subtext?: string
+    buttons: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
   }
 }
 
@@ -593,6 +896,66 @@ export interface PageIndividuals {
       pathOrUrl: string
       external: boolean
     }[]
+  }
+}
+
+export interface About {
+  id: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+    ctas?: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  story: {
+    title: string
+    body: string
+  }
+  founder: {
+    name: string
+    title: string
+    headshot?: string
+    bio: string
+    credentials: string[]
+    socials?: {
+      label: string
+      url: string
+    }[]
+  }
+  approach: {
+    intro: string
+    pillars: {
+      title: string
+      copy: string
+    }[]
+  }
+  collaborators?: {
+    name: string
+    role: string
+    logoUrl?: string
+    url?: string
+  }[]
+  proof?: {
+    ratingText?: string
+    logos?: string[]
+  }
+  finalCTA: {
+    headline: string
+    subtext?: string
+    buttons: {
+      label: string
+      url: string
+      external: boolean
+    }[]
+  }
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
   }
 }
 
