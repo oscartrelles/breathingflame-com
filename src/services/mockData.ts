@@ -913,3 +913,44 @@ export const mockAbout = {
     ogImage: '/og-image.jpg'
   }
 }
+
+export const mockPageEvents = {
+  id: 'main',
+  seo: {
+    title: 'Events – Breathing Flame',
+    description: 'Join live workshops, breathwork sessions, and retreats designed to build resilience, clarity, and transformation.',
+    ogImage: '/og-image.jpg'
+  },
+  hero: {
+    headline: 'Upcoming Events',
+    subtext: 'Workshops, breathwork journeys, and retreats that help you build resilience, clarity, and transformation.'
+  },
+  intro: {
+    title: 'Join Us Live',
+    body: 'Our events give you an immersive experience of the tools we teach—whether it’s a Wim Hof Method workshop, a 9D Breathwork Journey, or a transformational retreat. Every session is a chance to reset, recharge, and reconnect with what matters.'
+  },
+  embed: {
+    url: import.meta.env.VITE_LUMA_EMBED_URL || 'https://luma.com/embed/calendar/cal-V27tG2UMiGzbGHH/events',
+    height: 900,
+    border: '1px solid #bfcbda88',
+    borderRadius: '8px'
+  },
+  pinned: [],
+  fallbackCTA: { label: 'Open Calendar on Luma', url: 'https://luma.com/calendar/cal-V27tG2UMiGzbGHH/events' }
+}
+
+export const mockPageResources = {
+  id: 'main',
+  hero: { headline: 'Resources', subtext: 'Articles and videos on performance, resilience, and healthspan.' },
+  filters: { enabled: true, tags: ['Performance', 'Resilience', 'Longevity'] },
+  search: { enabled: true, placeholder: 'Search articles…' },
+  newsletter: {
+    enabled: true,
+    idAnchor: 'newsletter',
+    headline: 'Subscribe to the Breathing Flame Letter',
+    subtext: 'Monthly insights on performance, resilience, and healthspan.',
+    ctaLabel: 'Subscribe',
+    ctaUrl: '/resources#newsletter'
+  },
+  seo: { title: 'Resources – Breathing Flame', description: 'Evidence-based articles and videos on performance, resilience, and longevity.', ogImage: '/og-image.jpg' }
+}

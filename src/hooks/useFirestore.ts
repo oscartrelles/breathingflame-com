@@ -13,7 +13,7 @@ import {
   Unsubscribe
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
-import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout } from '@/services/mockData'
+import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout, mockPageEvents, mockPageResources } from '@/services/mockData'
 import { Offering } from '@/types'
 
 // Generic hook for single document
@@ -174,6 +174,40 @@ export function usePost(slug: string) {
   return { data, loading, error }
 }
 
+export function usePageResources() {
+  const [data, setData] = useState(mockPageResources)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function usePostsFiltered(params?: { tag?: string; search?: string; limit?: number; offset?: number }) {
+  const { tag, search, limit, offset } = params || {}
+  const [data, setData] = useState(mockPosts)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+
+  let filtered = [...mockPosts]
+  if (tag && tag !== 'All') filtered = filtered.filter(p => p.tags?.includes(tag))
+  if (search && search.trim()) {
+    const q = search.toLowerCase()
+    filtered = filtered.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      p.excerpt.toLowerCase().includes(q) ||
+      p.content.toLowerCase().includes(q)
+    )
+  }
+  filtered.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+  const start = offset || 0
+  const end = limit ? start + limit : undefined
+  const slice = filtered.slice(start, end)
+
+  useEffect(() => { setData(slice) }, [])
+  
+  return { data, loading, error, total: filtered.length }
+}
+
 // Hook for getting featured testimonials
 export function useFeaturedTestimonials(limitCount: number = 6) {
   const [data, setData] = useState(mockTestimonials.slice(0, limitCount))
@@ -209,6 +243,14 @@ export function usePagePrograms() {
 
 export function useAbout() {
   const [data, setData] = useState(mockAbout)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function usePageEvents() {
+  const [data, setData] = useState(mockPageEvents)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   

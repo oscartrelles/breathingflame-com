@@ -13,6 +13,8 @@ import {
   PageIndividuals,
   PageOrganizations,
   PagePrograms,
+  PageResources,
+  PageEvents,
   About
 } from '@/types'
 
@@ -1934,11 +1936,138 @@ export const aboutCollection = buildCollection<About>({
   }
 })
 
+// Events Page Collection (singleton)
+export const pageEventsCollection = buildCollection<PageEvents>({
+  name: 'Events Page',
+  singularName: 'Events Page',
+  path: 'pageEvents',
+  icon: 'Event',
+  description: 'Configuration for the /events page',
+  properties: {
+    hero: buildProperty({
+      dataType: 'map',
+      name: 'Hero',
+      properties: {
+        headline: buildProperty({ dataType: 'string', name: 'Headline', validation: { required: true } }),
+        subtext: buildProperty({ dataType: 'string', name: 'Subtext', multiline: true })
+      }
+    }),
+    intro: buildProperty({
+      dataType: 'map',
+      name: 'Intro',
+      properties: {
+        title: buildProperty({ dataType: 'string', name: 'Title', validation: { required: true } }),
+        body: buildProperty({ dataType: 'string', name: 'Body', multiline: true })
+      }
+    }),
+    embed: buildProperty({
+      dataType: 'map',
+      name: 'Luma Embed',
+      properties: {
+        url: buildProperty({ dataType: 'string', name: 'Embed URL', validation: { required: true } }),
+        height: buildProperty({ dataType: 'number', name: 'Height (px)', description: 'Default 900' }),
+        border: buildProperty({ dataType: 'string', name: 'Border CSS', description: 'e.g., 1px solid #bfcbda88' }),
+        borderRadius: buildProperty({ dataType: 'string', name: 'Border Radius', description: 'e.g., 8px' })
+      }
+    }),
+    pinned: buildProperty({
+      dataType: 'array',
+      name: 'Pinned Events',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          title: buildProperty({ dataType: 'string', name: 'Title', validation: { required: true } }),
+          date: buildProperty({ dataType: 'string', name: 'Date' }),
+          location: buildProperty({ dataType: 'string', name: 'Location' }),
+          summary: buildProperty({ dataType: 'string', name: 'Summary', multiline: true }),
+          url: buildProperty({ dataType: 'string', name: 'URL', validation: { required: true } })
+        }
+      })
+    }),
+    fallbackCTA: buildProperty({
+      dataType: 'map',
+      name: 'Fallback CTA',
+      properties: {
+        label: buildProperty({ dataType: 'string', name: 'Label' }),
+        url: buildProperty({ dataType: 'string', name: 'URL' })
+      }
+    }),
+    seo: buildProperty({
+      dataType: 'map',
+      name: 'SEO',
+      properties: {
+        title: buildProperty({ dataType: 'string', name: 'Title', validation: { required: true } }),
+        description: buildProperty({ dataType: 'string', name: 'Description', multiline: true }),
+        ogImage: buildProperty({ dataType: 'string', name: 'OG Image URL' })
+      }
+    })
+  }
+})
+
+// Resources Page Collection (singleton)
+export const pageResourcesCollection = buildCollection<PageResources>({
+  name: 'Resources Page',
+  singularName: 'Resources Page',
+  path: 'pageResources',
+  icon: 'Article',
+  description: 'Configuration for the /resources hub',
+  properties: {
+    hero: buildProperty({
+      dataType: 'map',
+      name: 'Hero',
+      properties: {
+        headline: buildProperty({ dataType: 'string', name: 'Headline', validation: { required: true } }),
+        subtext: buildProperty({ dataType: 'string', name: 'Subtext', multiline: true })
+      }
+    }),
+    filters: buildProperty({
+      dataType: 'map',
+      name: 'Filters',
+      properties: {
+        enabled: buildProperty({ dataType: 'boolean', name: 'Enabled' }),
+        tags: buildProperty({ dataType: 'array', name: 'Tags', of: buildProperty({ dataType: 'string' }) })
+      }
+    }),
+    search: buildProperty({
+      dataType: 'map',
+      name: 'Search',
+      properties: {
+        enabled: buildProperty({ dataType: 'boolean', name: 'Enabled' }),
+        placeholder: buildProperty({ dataType: 'string', name: 'Placeholder' })
+      }
+    }),
+    featuredPostRef: buildProperty({ dataType: 'string', name: 'Featured Post ID' }),
+    newsletter: buildProperty({
+      dataType: 'map',
+      name: 'Newsletter Block',
+      properties: {
+        enabled: buildProperty({ dataType: 'boolean', name: 'Enabled' }),
+        idAnchor: buildProperty({ dataType: 'string', name: 'Anchor ID' }),
+        headline: buildProperty({ dataType: 'string', name: 'Headline' }),
+        subtext: buildProperty({ dataType: 'string', name: 'Subtext', multiline: true }),
+        ctaLabel: buildProperty({ dataType: 'string', name: 'CTA Label' }),
+        ctaUrl: buildProperty({ dataType: 'string', name: 'CTA URL' })
+      }
+    }),
+    seo: buildProperty({
+      dataType: 'map',
+      name: 'SEO',
+      properties: {
+        title: buildProperty({ dataType: 'string', name: 'Title' }),
+        description: buildProperty({ dataType: 'string', name: 'Description', multiline: true }),
+        ogImage: buildProperty({ dataType: 'string', name: 'OG Image URL' })
+      }
+    })
+  }
+})
+
 // Export all collections
 export const collections = [
   settingsCollection,
   navigationCollection,
   homeCollection,
+  pageResourcesCollection,
+  pageEventsCollection,
   pageProgramsCollection,
   pageOrganizationsCollection,
   pageIndividualsCollection,

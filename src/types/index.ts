@@ -418,10 +418,12 @@ export interface Post {
   excerpt: string
   content: string
   featuredImage?: string
+  cover?: string
   author: {
     name: string
     bio: string
     avatar?: string
+    url?: string
   }
   tags: string[]
   published: boolean
@@ -433,6 +435,9 @@ export interface Post {
     metaDescription?: string
     ogImage?: string
   }
+  videoId?: string
+  canonicalUrl?: string
+  og?: { title?: string; description?: string; image?: string }
 }
 
 export interface About {
@@ -640,6 +645,39 @@ export interface JsonLd {
 }
 
 // Page-specific interfaces
+export interface PageEvents {
+  id: string
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
+  }
+  hero: {
+    headline: string
+    subtext: string
+  }
+  intro: {
+    title: string
+    body: string
+  }
+  embed: {
+    url: string
+    height?: number
+    border?: string
+    borderRadius?: string
+  }
+  pinned?: {
+    title: string
+    date?: string
+    location?: string
+    summary?: string
+    url: string
+  }[]
+  fallbackCTA?: {
+    label: string
+    url: string
+  }
+}
 export interface PagePrograms {
   id: string
   seo: {
@@ -666,6 +704,23 @@ export interface PagePrograms {
     enabled: boolean
     placeholder: string
   }
+}
+
+export interface PageResources {
+  id: string
+  hero: { headline: string; subtext: string }
+  filters: { enabled: boolean; tags: string[] }
+  search: { enabled: boolean; placeholder: string }
+  featuredPostRef?: string
+  newsletter: {
+    enabled: boolean
+    idAnchor: string
+    headline: string
+    subtext: string
+    ctaLabel: string
+    ctaUrl: string
+  }
+  seo: { title: string; description: string; ogImage?: string }
 }
 
 export interface About {
