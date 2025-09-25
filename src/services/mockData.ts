@@ -941,16 +941,20 @@ export const mockPageEvents = {
 
 export const mockPageResources = {
   id: 'main',
-  hero: { headline: 'Resources', subtext: 'Articles and videos on performance, resilience, and healthspan.' },
+  hero: { headline: 'Resources', subtext: 'Practical, evidence-based insights to help you build performance, resilience, and healthspan.' },
   filters: { enabled: true, tags: ['Performance', 'Resilience', 'Longevity'] },
   search: { enabled: true, placeholder: 'Search articles…' },
   newsletter: {
     enabled: true,
     idAnchor: 'newsletter',
     headline: 'Subscribe to the Breathing Flame Letter',
-    subtext: 'Monthly insights on performance, resilience, and healthspan.',
+    subtext: 'Monthly insights, tools, and event invites — focused on performance, resilience, and healthspan. No spam.',
     ctaLabel: 'Subscribe',
     ctaUrl: '/resources#newsletter'
   },
-  seo: { title: 'Resources – Breathing Flame', description: 'Evidence-based articles and videos on performance, resilience, and longevity.', ogImage: '/og-image.jpg' }
+  seo: { title: 'Resources – Breathing Flame', description: 'Evidence-based articles and videos on performance, resilience, and healthspan.', ogImage: mockSettings.seoDefaults.ogImage },
+  emptyState: {
+    title: 'No posts found',
+    subtext: 'Try a different tag or clear the search.'
+  }
 }
