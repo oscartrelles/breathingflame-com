@@ -13,7 +13,7 @@ import {
   Unsubscribe
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
-import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout, mockPageEvents, mockPageResources, mockPageTestimonials, mockPageContact } from '@/services/mockData'
+import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout, mockPageEvents, mockPageResources, mockPageTestimonials, mockPageContact, mockSolutions } from '@/services/mockData'
 import { Offering } from '@/types'
 
 // Generic hook for single document
@@ -315,6 +315,20 @@ export function useLatestPostsLite(limit: number = 5) {
   }, [limit])
 
   return { data, loading, error }
+}
+
+// Solutions hooks
+export function useSolutions() {
+  const [data, setData] = useState(mockSolutions)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  return { data, loading, error }
+}
+
+export function useSolutionBySlug(slug: string) {
+  const { data } = useSolutions()
+  const solution = data.find(s => s.slug === slug) || null
+  return { data: solution, loading: false, error: null as Error | null }
 }
 
 export function useAllOfferings() {

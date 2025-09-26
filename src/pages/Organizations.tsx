@@ -1,4 +1,4 @@
-import { usePageOrganizations, useTestimonials, usePosts } from '@/hooks/useFirestore'
+import { usePageOrganizations, useTestimonials, usePosts, useSolutions } from '@/hooks/useFirestore'
 import { SEO } from '@/components/SEO'
 import { motion } from 'framer-motion'
 import { 
@@ -27,6 +27,7 @@ export function Organizations() {
   const { data: pageData } = usePageOrganizations()
   const { data: testimonials } = useTestimonials()
   const { data: posts } = usePosts()
+  const { data: solutions } = useSolutions()
   const reducedMotion = useReducedMotion()
 
   // Get referenced testimonials
@@ -116,9 +117,9 @@ export function Organizations() {
                 <div className={styles.driverIcon}>
                   <div className={styles.driverIconInner}>
                     <span>{driver.title.charAt(0)}</span>
-                  </div>
-                </div>
-                
+          </div>
+            </div>
+
                 <h3 className={styles.driverTitle}>{driver.title}</h3>
                 <p className={styles.driverDescription}>{driver.copy}</p>
               </motion.div>
@@ -127,7 +128,7 @@ export function Organizations() {
         </div>
       </section>
 
-      {/* Solutions Section */}
+      {/* Solutions Section (from CMS solutions collection) */}
       <section className="section section--sm">
         <div className="container">
           <motion.div 
@@ -137,26 +138,27 @@ export function Organizations() {
             whileInView="animate"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {pageData.solutions.map((solution, index) => (
+            {[...solutions].sort((a,b) => (a.order||999)-(b.order||999) || a.title.localeCompare(b.title)).map((solution, index) => (
               <motion.div 
                 key={index}
                 className={styles.solutionCard}
                 variants={reducedMotion ? {} : staggerChild}
                 whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
+                <div className={styles.solutionEyebrow}>Solution</div>
                 <h3 className={styles.solutionTitle}>{solution.title}</h3>
-                <p className={styles.solutionDescription}>{solution.copy}</p>
+                <p className={styles.solutionDescription}>{solution.summary || solution.hero?.subtext}</p>
                 
                 <a 
-                  href={solution.cta.url} 
+                  href={`/solutions/${solution.slug}`} 
                   className="btn btn--outline"
                 >
-                  {solution.cta.label}
+                  Learn more
                 </a>
               </motion.div>
             ))}
           </motion.div>
-        </div>
+                </div>
       </section>
 
       {/* Results Section */}
@@ -203,14 +205,14 @@ export function Organizations() {
                         {testimonial.author.company && (
                           <p className={styles.testimonialAuthorCompany}>{testimonial.author.company}</p>
                         )}
-                      </div>
-                    </div>
-                  </div>
+                </div>
+              </div>
+            </div>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
-        </section>
+        </div>
+      </section>
       )}
 
       {/* Resources Section */}
@@ -302,7 +304,7 @@ export function Organizations() {
               >
                 <div className={styles.formatIcon}>
                   <span>✓</span>
-                </div>
+              </div>
                 <span className={styles.formatText}>{format}</span>
               </motion.div>
             ))}

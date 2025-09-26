@@ -284,66 +284,112 @@ export interface CommunityCTA {
 
 export interface Program {
   id: string
+  type: 'program'
   slug: string
   title: string
-  subtitle: string
-  description: string
-  shortDescription: string
+  subtitle?: string
+  description?: string
+  shortDescription?: string
   summary?: string
-  image: string
-  duration: string
-  format: 'online' | 'in-person' | 'hybrid'
-  price: {
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+  }
+  outcomes: string[]
+  modules: string[]
+  includes?: string[]
+  format?: {
+    duration?: string
+    delivery?: string
+    location?: string
+  }
+  testimonials: string[] // Testimonial IDs
+  faq: Array<{ q: string; a: string }>
+  ctas: Array<{ label: string; url: string; external?: boolean }>
+  relatedEventsMode: 'auto' | 'manual'
+  relatedEvents?: string[] // Luma URLs (manual)
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
+  }
+  order?: number
+  tags?: string[]
+  // Legacy fields for backward compatibility
+  image?: string
+  duration?: string
+  format_legacy?: 'online' | 'in-person' | 'hybrid'
+  price?: {
     individual: number
     organization: number
   }
-  outcomes: string[]
-  howItWorks: {
+  howItWorks?: {
     step: number
     title: string
     description: string
   }[]
-  testimonials: string[] // Testimonial IDs
-  upcomingEvents: string[] // Event IDs
-  ctaText: string
-  ctaHref: string
-  faqs: FAQ[]
-  order: number
-  published: boolean
-  featured: boolean
-  tags?: string[]
+  upcomingEvents?: string[] // Event IDs
+  ctaText?: string
+  ctaHref?: string
+  faqs?: FAQ[]
+  published?: boolean
+  featured?: boolean
 }
 
 export interface Experience {
   id: string
+  type: 'experience'
   slug: string
   title: string
-  subtitle: string
-  description: string
-  shortDescription: string
+  hero: {
+    headline: string
+    subtext: string
+    image?: string
+  }
   summary?: string
-  image: string
-  duration: string
-  format: 'online' | 'in-person' | 'hybrid'
-  price: {
+  highlights: string[]
+  audience?: string
+  includes?: string[]
+  format?: {
+    duration?: string
+    delivery?: string
+    location?: string
+  }
+  testimonials: string[] // Testimonial IDs
+  faq: Array<{ q: string; a: string }>
+  ctas: Array<{ label: string; url: string; external?: boolean }>
+  relatedEventsMode: 'auto' | 'manual'
+  relatedEvents?: string[] // Luma URLs (manual)
+  seo: {
+    title: string
+    description: string
+    ogImage?: string
+  }
+  order?: number
+  tags?: string[]
+  // Legacy fields for backward compatibility
+  subtitle?: string
+  description?: string
+  shortDescription?: string
+  image?: string
+  duration?: string
+  format_legacy?: 'online' | 'in-person' | 'hybrid'
+  price?: {
     individual: number
     organization: number
   }
-  highlights: string[]
-  howItWorks: {
+  howItWorks?: {
     step: number
     title: string
     description: string
   }[]
-  testimonials: string[] // Testimonial IDs
-  upcomingEvents: string[] // Event IDs
-  ctaText: string
-  ctaHref: string
-  faqs: FAQ[]
-  order: number
-  published: boolean
-  featured: boolean
-  tags?: string[]
+  upcomingEvents?: string[] // Event IDs
+  ctaText?: string
+  ctaHref?: string
+  faqs?: FAQ[]
+  published?: boolean
+  featured?: boolean
 }
 
 export interface Offering {
@@ -376,6 +422,25 @@ export interface Offering {
   order: number
   published: boolean
   featured: boolean
+  tags?: string[]
+}
+
+export interface Solution {
+  id: string
+  title: string
+  slug: string
+  hero: { headline: string; subtext: string; image?: string }
+  summary?: string
+  outcomes: string[]
+  modules: string[]
+  formats?: string[]
+  includes?: string[]
+  audience?: string
+  ctas: Array<{ label: string; url: string; external?: boolean }>
+  testimonials?: string[]
+  faq?: Array<{ q: string; a: string }>
+  seo: { title: string; description: string; ogImage?: string }
+  order?: number
   tags?: string[]
 }
 

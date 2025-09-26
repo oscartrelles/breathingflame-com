@@ -17,7 +17,8 @@ import {
   PageEvents,
   PageTestimonials,
   PageContact,
-  About
+  About,
+  Solution
 } from '@/types'
 
 // Settings Collection
@@ -561,6 +562,14 @@ export const programsCollection = buildCollection<Program>({
     write: ['admin', 'editor'].includes(user?.role || '')
   }),
   properties: {
+    type: buildProperty({
+      dataType: 'string',
+      name: 'Type',
+      defaultValue: 'program',
+      enumValues: {
+        program: 'Program'
+      }
+    }),
     title: buildProperty({
       dataType: 'string',
       name: 'Program Title',
@@ -571,19 +580,26 @@ export const programsCollection = buildCollection<Program>({
       name: 'URL Slug',
       validation: { required: true }
     }),
-    subtitle: buildProperty({
-      dataType: 'string',
-      name: 'Subtitle'
-    }),
-    description: buildProperty({
-      dataType: 'string',
-      name: 'Description',
-      multiline: true
-    }),
-    shortDescription: buildProperty({
-      dataType: 'string',
-      name: 'Short Description',
-      multiline: true
+    hero: buildProperty({
+      dataType: 'map',
+      name: 'Hero Section',
+      properties: {
+        headline: buildProperty({
+          dataType: 'string',
+          name: 'Headline',
+          validation: { required: true }
+        }),
+        subtext: buildProperty({
+          dataType: 'string',
+          name: 'Subtext',
+          multiline: true,
+          validation: { required: true }
+        }),
+        image: buildProperty({
+          dataType: 'string',
+          name: 'Hero Image URL'
+        })
+      }
     }),
     summary: buildProperty({
       dataType: 'string',
@@ -591,17 +607,173 @@ export const programsCollection = buildCollection<Program>({
       multiline: true,
       description: 'Compelling summary for program cards. Falls back to first outcome if empty.'
     }),
+    outcomes: buildProperty({
+      dataType: 'array',
+      name: 'Expected Outcomes',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Outcome'
+      }),
+      validation: { required: true }
+    }),
+    modules: buildProperty({
+      dataType: 'array',
+      name: 'How It Works (Modules)',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Module Description'
+      }),
+      validation: { required: true }
+    }),
+    includes: buildProperty({
+      dataType: 'array',
+      name: 'What\'s Included',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Included Item'
+      })
+    }),
+    format: buildProperty({
+      dataType: 'map',
+      name: 'Format Details',
+      properties: {
+        duration: buildProperty({
+          dataType: 'string',
+          name: 'Duration'
+        }),
+        delivery: buildProperty({
+          dataType: 'string',
+          name: 'Delivery Method'
+        }),
+        location: buildProperty({
+          dataType: 'string',
+          name: 'Location'
+        })
+      }
+    }),
+    testimonials: buildProperty({
+      dataType: 'array',
+      name: 'Testimonials',
+      of: buildProperty({
+        dataType: 'reference',
+        name: 'Testimonial',
+        path: 'testimonials'
+      })
+    }),
+    faq: buildProperty({
+      dataType: 'array',
+      name: 'FAQ',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          q: buildProperty({
+            dataType: 'string',
+            name: 'Question'
+          }),
+          a: buildProperty({
+            dataType: 'string',
+            name: 'Answer',
+            multiline: true
+          })
+        }
+      })
+    }),
+    ctas: buildProperty({
+      dataType: 'array',
+      name: 'Call-to-Actions',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          label: buildProperty({
+            dataType: 'string',
+            name: 'Button Label'
+          }),
+          url: buildProperty({
+            dataType: 'string',
+            name: 'Button URL'
+          }),
+          external: buildProperty({
+            dataType: 'boolean',
+            name: 'External Link'
+          })
+        }
+      })
+    }),
+    relatedEventsMode: buildProperty({
+      dataType: 'string',
+      name: 'Related Events Mode',
+      enumValues: {
+        auto: 'Auto (link to /events)',
+        manual: 'Manual (custom Luma URLs)'
+      },
+      defaultValue: 'auto'
+    }),
+    relatedEvents: buildProperty({
+      dataType: 'array',
+      name: 'Related Events (Luma URLs)',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Luma Event URL'
+      })
+    }),
+    seo: buildProperty({
+      dataType: 'map',
+      name: 'SEO',
+      properties: {
+        title: buildProperty({
+          dataType: 'string',
+          name: 'SEO Title'
+        }),
+        description: buildProperty({
+          dataType: 'string',
+          name: 'SEO Description',
+          multiline: true
+        }),
+        ogImage: buildProperty({
+          dataType: 'string',
+          name: 'OG Image URL'
+        })
+      }
+    }),
+    order: buildProperty({
+      dataType: 'number',
+      name: 'Display Order'
+    }),
+    tags: buildProperty({
+      dataType: 'array',
+      name: 'Tags',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Tag'
+      }),
+      description: 'Tags for filtering and search'
+    }),
+    // Legacy fields for backward compatibility
+    subtitle: buildProperty({
+      dataType: 'string',
+      name: 'Subtitle (Legacy)'
+    }),
+    description: buildProperty({
+      dataType: 'string',
+      name: 'Description (Legacy)',
+      multiline: true
+    }),
+    shortDescription: buildProperty({
+      dataType: 'string',
+      name: 'Short Description (Legacy)',
+      multiline: true
+    }),
     image: buildProperty({
       dataType: 'string',
-      name: 'Featured Image URL'
+      name: 'Featured Image URL (Legacy)'
     }),
     duration: buildProperty({
       dataType: 'string',
-      name: 'Duration'
+      name: 'Duration (Legacy)'
     }),
-    format: buildProperty({
+    format_legacy: buildProperty({
       dataType: 'string',
-      name: 'Format',
+      name: 'Format (Legacy)',
       enumValues: {
         online: 'Online',
         in_person: 'In Person',
@@ -610,7 +782,7 @@ export const programsCollection = buildCollection<Program>({
     }),
     price: buildProperty({
       dataType: 'map',
-      name: 'Pricing',
+      name: 'Pricing (Legacy)',
       properties: {
         individual: buildProperty({
           dataType: 'number',
@@ -622,17 +794,9 @@ export const programsCollection = buildCollection<Program>({
         })
       }
     }),
-    outcomes: buildProperty({
-      dataType: 'array',
-      name: 'Expected Outcomes',
-      of: buildProperty({
-        dataType: 'string',
-        name: 'Outcome'
-      })
-    }),
     howItWorks: buildProperty({
       dataType: 'array',
-      name: 'How It Works',
+      name: 'How It Works (Legacy)',
       of: buildProperty({
         dataType: 'map',
         properties: {
@@ -654,15 +818,15 @@ export const programsCollection = buildCollection<Program>({
     }),
     ctaText: buildProperty({
       dataType: 'string',
-      name: 'CTA Button Text'
+      name: 'CTA Button Text (Legacy)'
     }),
     ctaHref: buildProperty({
       dataType: 'string',
-      name: 'CTA Button URL'
+      name: 'CTA Button URL (Legacy)'
     }),
     faqs: buildProperty({
       dataType: 'array',
-      name: 'FAQs',
+      name: 'FAQs (Legacy)',
       of: buildProperty({
         dataType: 'map',
         properties: {
@@ -678,26 +842,21 @@ export const programsCollection = buildCollection<Program>({
         }
       })
     }),
-    order: buildProperty({
-      dataType: 'number',
-      name: 'Display Order'
-    }),
-    tags: buildProperty({
+    upcomingEvents: buildProperty({
       dataType: 'array',
-      name: 'Tags',
+      name: 'Upcoming Events (Legacy)',
       of: buildProperty({
         dataType: 'string',
-        name: 'Tag'
-      }),
-      description: 'Tags for filtering and search'
+        name: 'Event ID'
+      })
     }),
     published: buildProperty({
       dataType: 'boolean',
-      name: 'Published'
+      name: 'Published (Legacy)'
     }),
     featured: buildProperty({
       dataType: 'boolean',
-      name: 'Featured'
+      name: 'Featured (Legacy)'
     })
   }
 })
@@ -714,6 +873,14 @@ export const experiencesCollection = buildCollection<Experience>({
     write: ['admin', 'editor'].includes(user?.role || '')
   }),
   properties: {
+    type: buildProperty({
+      dataType: 'string',
+      name: 'Type',
+      defaultValue: 'experience',
+      enumValues: {
+        experience: 'Experience'
+      }
+    }),
     title: buildProperty({
       dataType: 'string',
       name: 'Experience Title',
@@ -724,19 +891,26 @@ export const experiencesCollection = buildCollection<Experience>({
       name: 'URL Slug',
       validation: { required: true }
     }),
-    subtitle: buildProperty({
-      dataType: 'string',
-      name: 'Subtitle'
-    }),
-    description: buildProperty({
-      dataType: 'string',
-      name: 'Description',
-      multiline: true
-    }),
-    shortDescription: buildProperty({
-      dataType: 'string',
-      name: 'Short Description',
-      multiline: true
+    hero: buildProperty({
+      dataType: 'map',
+      name: 'Hero Section',
+      properties: {
+        headline: buildProperty({
+          dataType: 'string',
+          name: 'Headline',
+          validation: { required: true }
+        }),
+        subtext: buildProperty({
+          dataType: 'string',
+          name: 'Subtext',
+          multiline: true,
+          validation: { required: true }
+        }),
+        image: buildProperty({
+          dataType: 'string',
+          name: 'Hero Image URL'
+        })
+      }
     }),
     summary: buildProperty({
       dataType: 'string',
@@ -744,52 +918,129 @@ export const experiencesCollection = buildCollection<Experience>({
       multiline: true,
       description: 'Compelling summary for experience cards. Falls back to first highlight if empty.'
     }),
-    image: buildProperty({
-      dataType: 'string',
-      name: 'Featured Image URL'
+    highlights: buildProperty({
+      dataType: 'array',
+      name: 'Key Highlights',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Highlight'
+      }),
+      validation: { required: true }
     }),
-    duration: buildProperty({
+    audience: buildProperty({
       dataType: 'string',
-      name: 'Duration'
+      name: 'Target Audience',
+      multiline: true
+    }),
+    includes: buildProperty({
+      dataType: 'array',
+      name: 'What\'s Included',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Included Item'
+      })
     }),
     format: buildProperty({
-      dataType: 'string',
-      name: 'Format',
-      enumValues: {
-        online: 'Online',
-        in_person: 'In Person',
-        hybrid: 'Hybrid'
-      }
-    }),
-    price: buildProperty({
       dataType: 'map',
-      name: 'Pricing',
+      name: 'Format Details',
       properties: {
-        individual: buildProperty({
-          dataType: 'number',
-          name: 'Individual Price'
+        duration: buildProperty({
+          dataType: 'string',
+          name: 'Duration'
         }),
-        organization: buildProperty({
-          dataType: 'number',
-          name: 'Organization Price'
+        delivery: buildProperty({
+          dataType: 'string',
+          name: 'Delivery Method'
+        }),
+        location: buildProperty({
+          dataType: 'string',
+          name: 'Location'
         })
       }
     }),
-    outcomes: buildProperty({
+    testimonials: buildProperty({
       dataType: 'array',
-      name: 'Expected Outcomes',
+      name: 'Testimonials',
       of: buildProperty({
-        dataType: 'string',
-        name: 'Outcome'
+        dataType: 'reference',
+        name: 'Testimonial',
+        path: 'testimonials'
       })
     }),
-    ctaText: buildProperty({
-      dataType: 'string',
-      name: 'CTA Button Text'
+    faq: buildProperty({
+      dataType: 'array',
+      name: 'FAQ',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          q: buildProperty({
+            dataType: 'string',
+            name: 'Question'
+          }),
+          a: buildProperty({
+            dataType: 'string',
+            name: 'Answer',
+            multiline: true
+          })
+        }
+      })
     }),
-    ctaHref: buildProperty({
+    ctas: buildProperty({
+      dataType: 'array',
+      name: 'Call-to-Actions',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          label: buildProperty({
+            dataType: 'string',
+            name: 'Button Label'
+          }),
+          url: buildProperty({
+            dataType: 'string',
+            name: 'Button URL'
+          }),
+          external: buildProperty({
+            dataType: 'boolean',
+            name: 'External Link'
+          })
+        }
+      })
+    }),
+    relatedEventsMode: buildProperty({
       dataType: 'string',
-      name: 'CTA Button URL'
+      name: 'Related Events Mode',
+      enumValues: {
+        auto: 'Auto (link to /events)',
+        manual: 'Manual (custom Luma URLs)'
+      },
+      defaultValue: 'auto'
+    }),
+    relatedEvents: buildProperty({
+      dataType: 'array',
+      name: 'Related Events (Luma URLs)',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Luma Event URL'
+      })
+    }),
+    seo: buildProperty({
+      dataType: 'map',
+      name: 'SEO',
+      properties: {
+        title: buildProperty({
+          dataType: 'string',
+          name: 'SEO Title'
+        }),
+        description: buildProperty({
+          dataType: 'string',
+          name: 'SEO Description',
+          multiline: true
+        }),
+        ogImage: buildProperty({
+          dataType: 'string',
+          name: 'OG Image URL'
+        })
+      }
     }),
     order: buildProperty({
       dataType: 'number',
@@ -804,13 +1055,115 @@ export const experiencesCollection = buildCollection<Experience>({
       }),
       description: 'Tags for filtering and search'
     }),
+    // Legacy fields for backward compatibility
+    subtitle: buildProperty({
+      dataType: 'string',
+      name: 'Subtitle (Legacy)'
+    }),
+    description: buildProperty({
+      dataType: 'string',
+      name: 'Description (Legacy)',
+      multiline: true
+    }),
+    shortDescription: buildProperty({
+      dataType: 'string',
+      name: 'Short Description (Legacy)',
+      multiline: true
+    }),
+    image: buildProperty({
+      dataType: 'string',
+      name: 'Featured Image URL (Legacy)'
+    }),
+    duration: buildProperty({
+      dataType: 'string',
+      name: 'Duration (Legacy)'
+    }),
+    format_legacy: buildProperty({
+      dataType: 'string',
+      name: 'Format (Legacy)',
+      enumValues: {
+        online: 'Online',
+        in_person: 'In Person',
+        hybrid: 'Hybrid'
+      }
+    }),
+    price: buildProperty({
+      dataType: 'map',
+      name: 'Pricing (Legacy)',
+      properties: {
+        individual: buildProperty({
+          dataType: 'number',
+          name: 'Individual Price'
+        }),
+        organization: buildProperty({
+          dataType: 'number',
+          name: 'Organization Price'
+        })
+      }
+    }),
+    howItWorks: buildProperty({
+      dataType: 'array',
+      name: 'How It Works (Legacy)',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          step: buildProperty({
+            dataType: 'number',
+            name: 'Step Number'
+          }),
+          title: buildProperty({
+            dataType: 'string',
+            name: 'Step Title'
+          }),
+          description: buildProperty({
+            dataType: 'string',
+            name: 'Step Description',
+            multiline: true
+          })
+        }
+      })
+    }),
+    ctaText: buildProperty({
+      dataType: 'string',
+      name: 'CTA Button Text (Legacy)'
+    }),
+    ctaHref: buildProperty({
+      dataType: 'string',
+      name: 'CTA Button URL (Legacy)'
+    }),
+    upcomingEvents: buildProperty({
+      dataType: 'array',
+      name: 'Upcoming Events (Legacy)',
+      of: buildProperty({
+        dataType: 'string',
+        name: 'Event ID'
+      })
+    }),
+    faqs: buildProperty({
+      dataType: 'array',
+      name: 'FAQs (Legacy)',
+      of: buildProperty({
+        dataType: 'map',
+        properties: {
+          question: buildProperty({
+            dataType: 'string',
+            name: 'Question'
+          }),
+          answer: buildProperty({
+            dataType: 'string',
+            name: 'Answer',
+            multiline: true
+          })
+        }
+      })
+    }),
     published: buildProperty({
       dataType: 'boolean',
-      name: 'Published'
+      name: 'Published (Legacy)'
     }),
     featured: buildProperty({
       dataType: 'boolean',
-      name: 'Featured'
+      name: 'Featured (Legacy)'
     })
   }
 })
@@ -2130,6 +2483,7 @@ export const collections = [
   pageEventsCollection,
   pageTestimonialsCollection,
   pageContactCollection,
+  solutionsCollection,
   pageProgramsCollection,
   pageOrganizationsCollection,
   pageIndividualsCollection,

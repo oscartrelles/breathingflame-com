@@ -36,7 +36,7 @@ export const mockNavigation = {
     { label: 'For Individuals', pathOrUrl: '/individuals', external: false, order: 10 },
     { label: 'For Organizations', pathOrUrl: '/organizations', external: false, order: 20 },
     { label: 'Programs', pathOrUrl: '/programs', external: false, order: 30 },
-    { label: 'Blog', pathOrUrl: '/blog', external: false, order: 35 },
+    
     { label: 'About', pathOrUrl: '/about', external: false, order: 40 }
   ],
   primaryCTA: {
@@ -76,7 +76,7 @@ export const mockNavigation = {
       title: 'RESOURCES',
       order: 40,
       links: [
-        { label: 'Blog', pathOrUrl: '/blog', external: false, order: 5 },
+        
         { label: 'Ignite Your Flame', pathOrUrl: '/#ignite-your-flame', external: false, order: 10 },
         { label: 'Peak Energy Profiler', pathOrUrl: '/#peak-energy-profiler', external: false, order: 20 },
         { label: 'Reverse Aging Academy', pathOrUrl: 'https://reverseaging.academy', external: true, order: 30 }
@@ -178,17 +178,67 @@ export const mockHome = {
 export const mockPrograms = [
   {
     id: 'rac',
+    type: 'program' as const,
     slug: 'reverse-aging-challenge',
     title: 'Reverse Aging Challenge',
+    hero: {
+      headline: 'A 7-week reset for energy, resilience, and healthspan.',
+      subtext: 'Science-backed practices to restore vitality, reduce stress, and build sustainable habits.',
+      image: '/programs/rac.jpg'
+    },
+    summary: 'A 7-week reset that combines breathwork, movement, fasting, and mindset to restore energy and improve your healthspan.',
+    outcomes: [
+      'Reset your nervous system and reduce stress reactivity.',
+      'Increase daily energy and improve sleep quality.',
+      'Build resilience with breathwork and safe cold exposure.',
+      'Adopt simple nutrition and movement protocols for healthspan.',
+      'Create a personal blueprint you can sustain after the program.'
+    ],
+    modules: [
+      'Weekly live sessions: guided breathwork, mindset, and integration.',
+      'Resilience practices: breath, cold or contrast therapy (safely coached).',
+      'Lifestyle protocols: movement, fasting windows, recovery rituals.',
+      'Evidence briefings: what the science says (concise, practical).',
+      'Accountability & support: check-ins and progress tracking.'
+    ],
+    includes: [
+      '7 live sessions (online) + practice library',
+      'Implementation workbook and trackers',
+      'Community access for accountability',
+      'Optional in-person reset in Málaga'
+    ],
+    format: {
+      duration: '7 weeks',
+      delivery: 'Online cohort (optional in-person reset)',
+      location: 'Online + Málaga (optional)'
+    },
+    testimonials: [],
+    faq: [
+      { q: 'Is it safe for beginners?', a: 'Yes. All practices are scaled to your level. We provide clear safety guidance and contraindications.' },
+      { q: 'Do I need access to cold exposure?', a: 'We\'ll teach multiple options—from cold showers to guided ice baths. You can participate fully with just a shower at home.' },
+      { q: 'How much time per week?', a: 'Expect ~2 hours for the live session and 15–20 minutes per day for personal practice.' },
+      { q: 'What equipment do I need?', a: 'A quiet space, a mat or chair, and optional access to cold water or ice for contrast practice.' }
+    ],
+    ctas: [
+      { label: 'Explore the Online Course', url: 'https://reverseaging.academy', external: true },
+      { label: 'Apply for In-Person Reset', url: '/events', external: false }
+    ],
+    relatedEventsMode: 'auto' as const,
+    seo: {
+      title: 'Reverse Aging Challenge – 7-Week Healthspan Reset | Breathing Flame',
+      description: 'Boost energy, reduce stress, and build resilience in 7 weeks. Science-backed breathwork, cold exposure, and lifestyle protocols for healthspan.',
+      ogImage: mockSettings.seoDefaults.ogImage
+    },
+    tags: ['Longevity', 'Resilience', 'Individuals'],
+    order: 1,
+    // Legacy fields for backward compatibility
     subtitle: '7-Week Transformation',
     description: 'Turn back the clock on aging through breathwork, cold therapy, and mindfulness practices.',
-    shortDescription: 'Transform your body and mind with our comprehensive 10-week program.',
-    summary: 'A 7-week reset that combines breathwork, movement, fasting, and mindset to restore energy and improve your healthspan.',
+    shortDescription: 'Transform your body and mind with our comprehensive 7-week program.',
     image: '/programs/rac.jpg',
-    duration: '10 Weeks',
-    format: 'hybrid' as const,
+    duration: '7 Weeks',
+    format_legacy: 'hybrid' as const,
     price: { individual: 997, organization: 1997 },
-    outcomes: ['Increased energy', 'Better sleep', 'Reduced stress', 'Enhanced focus'],
     howItWorks: [
       { step: 1, title: 'Assessment', description: 'Complete our comprehensive assessment to identify your starting point.' },
       { step: 2, title: 'Daily Practice', description: 'Follow our daily breathwork and mindfulness routines.' },
@@ -198,23 +248,69 @@ export const mockPrograms = [
     ctaText: 'Start Challenge',
     ctaHref: '/programs/reverse-aging-challenge',
     faqs: [],
-    order: 1,
     published: true,
     featured: true
   },
   {
     id: 'unblocked',
+    type: 'program' as const,
     slug: 'unblocked-in-ten-weeks',
     title: 'Unblocked in Ten Weeks',
+    hero: {
+      headline: 'Clear the blocks. Build momentum.',
+      subtext: 'A structured 1:1 coaching program that removes personal and strategic blocks so you can move forward with clarity.',
+      image: '/programs/unblocked.jpg'
+    },
+    summary: 'A structured 1:1 coaching program that removes personal and strategic blocks, giving you clarity and momentum.',
+    outcomes: [
+      'Identify and dissolve hidden personal or strategic blocks.',
+      'Gain clarity on direction, priorities, and next steps.',
+      'Make confident decisions and follow through consistently.',
+      'Build simple systems to sustain momentum.'
+    ],
+    modules: [
+      'Clarity mapping: define outcomes and constraints.',
+      'Systemic exercises: reveal hidden dynamics and patterns.',
+      'Resilience tools: breathwork & nervous system resets.',
+      'Execution cycles: weekly focus, review, and course-correct.'
+    ],
+    includes: [
+      '10 weekly 1:1 coaching sessions',
+      'Between-session support (async)',
+      'Practice library (breath + clarity drills)',
+      'Personal action dashboard'
+    ],
+    format: {
+      duration: '10 weeks',
+      delivery: 'Private online coaching',
+      location: 'Online'
+    },
+    testimonials: [],
+    faq: [
+      { q: 'Who is it for?', a: 'Founders, leaders, and professionals who want to move past indecision, overwhelm, or strategic stuckness.' },
+      { q: 'What\'s expected of me?', a: '1 session per week plus 20–30 mins of focused actions between sessions.' },
+      { q: 'Can my company sponsor it?', a: 'Yes. We can invoice your organization and align goals with your manager if needed.' }
+    ],
+    ctas: [
+      { label: 'Apply for Unblocked', url: '/contact', external: false },
+      { label: 'Book a 15-min Intro Call', url: '/contact', external: false }
+    ],
+    relatedEventsMode: 'auto' as const,
+    seo: {
+      title: 'Unblocked in Ten Weeks – 1:1 Coaching for Clarity & Momentum | Breathing Flame',
+      description: 'Remove personal and strategic blocks, make confident decisions, and build momentum with a structured 10-week coaching program.',
+      ogImage: mockSettings.seoDefaults.ogImage
+    },
+    tags: ['Clarity', 'Performance', 'Individuals'],
+    order: 2,
+    // Legacy fields for backward compatibility
     subtitle: 'Break Through Barriers',
     description: 'Identify and overcome the mental, emotional, and energetic blocks that are holding you back from living your fullest life.',
     shortDescription: 'A structured coaching program to remove blocks and move forward with momentum.',
-    summary: 'A structured 1:1 coaching program that removes personal and strategic blocks, giving you clarity and momentum.',
     image: '/programs/unblocked.jpg',
     duration: '10 Weeks',
-    format: 'online' as const,
+    format_legacy: 'online' as const,
     price: { individual: 1497, organization: 2997 },
-    outcomes: ['Clear mental blocks', 'Increased confidence', 'Better decision making', 'Enhanced productivity'],
     howItWorks: [
       { step: 1, title: 'Block Assessment', description: 'Identify your specific mental and emotional blocks.' },
       { step: 2, title: 'Weekly Coaching', description: 'One-on-one coaching sessions to work through challenges.' },
@@ -224,23 +320,68 @@ export const mockPrograms = [
     ctaText: 'Get Unblocked',
     ctaHref: '/programs/unblocked-in-ten-weeks',
     faqs: [],
-    order: 2,
     published: true,
     featured: true
   },
   {
     id: 'unstoppable',
+    type: 'program' as const,
     slug: 'unstoppable',
     title: 'Unstoppable',
+    hero: {
+      headline: 'Go beyond breakthroughs. Sustain mastery.',
+      subtext: 'A follow-up program to lock in change, expand capacity, and perform consistently without burnout.',
+      image: '/programs/unstoppable.jpg'
+    },
+    summary: 'A follow-up program that helps you lock in change, sustain new habits, and expand your breakthroughs.',
+    outcomes: [
+      'Consolidate new habits and identity-level change.',
+      'Increase capacity under pressure with advanced resilience tools.',
+      'Design performance systems that protect recovery and focus.',
+      'Track leading indicators and adapt quickly.'
+    ],
+    modules: [
+      'Deep integration: habit architecture & identity work.',
+      'Advanced breath & cold: capacity, recovery, focus.',
+      'Performance systems: time, attention, energy.',
+      'Feedback loops: metrics, review, and refinement.'
+    ],
+    includes: [
+      'Bi-weekly coaching sessions (12–16 weeks)',
+      'Custom practice plan + adjustments',
+      'Accountability and check-ins',
+      'Access to select workshops'
+    ],
+    format: {
+      duration: '12–16 weeks',
+      delivery: 'Hybrid coaching + practice',
+      location: 'Online (with optional in-person sessions)'
+    },
+    testimonials: [],
+    faq: [
+      { q: 'Do I need to complete Unblocked or RAC first?', a: 'It\'s recommended but not required. We\'ll assess fit during the intro call.' },
+      { q: 'How is it different?', a: 'Unstoppable focuses on mastery—capacity under pressure, long-term systems, and consistent performance.' }
+    ],
+    ctas: [
+      { label: 'Join the Waitlist', url: '/contact', external: false },
+      { label: 'Talk to Oscar', url: '/contact', external: false }
+    ],
+    relatedEventsMode: 'auto' as const,
+    seo: {
+      title: 'Unstoppable – Performance Mastery Program | Breathing Flame',
+      description: 'Sustain breakthroughs with advanced resilience tools and performance systems. Designed for leaders who want consistent, long-term results.',
+      ogImage: mockSettings.seoDefaults.ogImage
+    },
+    tags: ['Performance', 'Resilience', 'Individuals'],
+    order: 3,
+    // Legacy fields for backward compatibility
     subtitle: 'Peak Performance',
     description: 'Achieve unstoppable momentum in all areas of your life through advanced breathwork techniques and peak performance strategies.',
     shortDescription: 'A follow-up program to help you lock in change and expand your breakthroughs.',
-    summary: 'A follow-up program that helps you lock in change, sustain new habits, and expand your breakthroughs.',
     image: '/programs/unstoppable.jpg',
-    duration: '12 Weeks',
-    format: 'hybrid' as const,
+    duration: '12–16 Weeks',
+    format_legacy: 'hybrid' as const,
     price: { individual: 1997, organization: 3997 },
-    outcomes: ['Peak performance', 'Unstoppable momentum', 'Advanced techniques', 'Lasting transformation'],
     howItWorks: [
       { step: 1, title: 'Foundation Review', description: 'Build on your previous program achievements.' },
       { step: 2, title: 'Advanced Techniques', description: 'Learn advanced breathwork and performance strategies.' },
@@ -250,7 +391,6 @@ export const mockPrograms = [
     ctaText: 'Become Unstoppable',
     ctaHref: '/programs/unstoppable',
     faqs: [],
-    order: 3,
     published: true,
     featured: true
   }
@@ -259,17 +399,58 @@ export const mockPrograms = [
 export const mockExperiences = [
   {
     id: 'whm',
+    type: 'experience' as const,
     slug: 'wim-hof-method',
-    title: 'Wim Hof Method Workshop',
+    title: 'Wim Hof Method Workshops',
+    hero: {
+      headline: 'Breath, mindset, and cold exposure — safely and powerfully.',
+      subtext: 'Learn proven tools to build resilience, boost energy, and improve focus in a single immersive session.',
+      image: '/experiences/whm.jpg'
+    },
+    summary: 'Discover the power of breath, mindset, and cold exposure to build resilience and boost energy in just one day.',
+    highlights: [
+      'Guided breathwork session: technique, safety, and practice.',
+      'Mindset & focus: tools to stay calm under pressure.',
+      'Cold exposure: coached, optional, and safely scaled.',
+      'Integration: how to continue at home.'
+    ],
+    audience: 'Adults 18+. No prior experience required. Safety guidance provided.',
+    includes: [
+      'Workshop instruction (3–5 hours)',
+      'Coached breathwork session',
+      'Optional ice bath with supervision',
+      'Post-workshop practice plan'
+    ],
+    format: {
+      duration: 'Half-day',
+      delivery: 'In-person workshop',
+      location: 'Málaga & select cities'
+    },
+    testimonials: [],
+    faq: [
+      { q: 'Is the ice bath required?', a: 'No. Cold exposure is optional and safely scaled. You can participate fully without it.' },
+      { q: 'Any health considerations?', a: 'We\'ll cover contraindications and safety. Always consult your physician if unsure.' }
+    ],
+    ctas: [
+      { label: 'Register for a Workshop', url: '/events', external: false },
+      { label: 'Bring WHM to Your Team', url: '/organizations', external: false }
+    ],
+    relatedEventsMode: 'auto' as const,
+    seo: {
+      title: 'Wim Hof Method Workshops – Resilience Training | Breathing Flame',
+      description: 'Learn breath, mindset, and cold exposure techniques to build resilience and boost energy. Safe, coached, and deeply impactful.',
+      ogImage: mockSettings.seoDefaults.ogImage
+    },
+    tags: ['Resilience', 'Individuals', 'Organizations'],
+    order: 1,
+    // Legacy fields for backward compatibility
     subtitle: 'Cold & Breathwork',
     description: 'Master the powerful combination of cold exposure and breathing techniques that boost immunity, reduce stress, and increase energy.',
     shortDescription: 'Breathwork, cold exposure, and mindset training to build resilience.',
-    summary: 'Discover the power of breath, mindset, and cold exposure to build resilience and boost energy in just one day.',
     image: '/experiences/whm.jpg',
-    duration: '2-4 Hours',
-    format: 'in-person' as const,
+    duration: 'Half-day',
+    format_legacy: 'in-person' as const,
     price: { individual: 197, organization: 497 },
-    highlights: ['Cold exposure training', 'Breathing techniques', 'Mindset development', 'Group energy'],
     howItWorks: [
       { step: 1, title: 'Introduction', description: 'Learn the science behind the Wim Hof Method.' },
       { step: 2, title: 'Breathing Practice', description: 'Master the specific breathing techniques.' },
@@ -279,7 +460,6 @@ export const mockExperiences = [
     ctaText: 'Experience Now',
     ctaHref: '/experiences/wim-hof-method',
     faqs: [],
-    order: 1,
     published: true,
     featured: true
   },
@@ -308,6 +488,154 @@ export const mockExperiences = [
     order: 2,
     published: true,
     featured: true
+  }
+]
+
+export const mockSolutions = [
+  {
+    id: 'sm-masterclass',
+    title: 'Stress Management Masterclass',
+    slug: 'stress-management-masterclass',
+    hero: {
+      headline: 'Train calm under pressure.',
+      subtext: 'Practical, science-based tools for teams to reduce stress reactivity, protect focus, and sustain performance.'
+    },
+    summary: 'Practical, science-based tools to reduce stress reactivity and protect focus.',
+    outcomes: [
+      'Reduce acute stress responses and decision fatigue.',
+      'Improve focus and execution during peak demand.',
+      'Common language and toolkit for team regulation.',
+      'Immediate practices that translate into the workday.'
+    ],
+    modules: [
+      'Understanding stress & performance: physiology in plain English.',
+      'Breathing protocols for calm & focus (live practice).',
+      'Micro-resets for meetings, deep work, and recovery.',
+      'Team agreements & implementation plan.'
+    ],
+    formats: ['60–90 min keynote', 'Half-day workshop', '3-part series (weekly)'],
+    includes: ['Practice library (video/audio)', 'Implementation worksheet', 'Optional follow-up Q&A'],
+    audience: 'Cross-functional teams, leaders, ICs under sustained pressure.',
+    ctas: [{ label: 'Book a Consultation', url: '/contact' }],
+    seo: { title: 'Stress Management Masterclass – Breathing Flame', description: 'Give your teams a practical toolkit to stay calm and effective under pressure.' },
+    tags: ['Organizations', 'Resilience', 'Leadership'],
+    order: 10
+  },
+  {
+    id: 'breathwork-teams',
+    title: 'Breathwork for Teams',
+    slug: 'breathwork-for-teams',
+    hero: {
+      headline: 'Energy, focus, and team cohesion.',
+      subtext: 'Guided breathwork sessions that reset the nervous system, improve focus, and build shared momentum.'
+    },
+    summary: 'Guided breathwork to reset, focus, and build cohesion.',
+    outcomes: [
+      'Immediate reduction in stress and tension.',
+      'Boosted energy and mental clarity.',
+      'Shared experience that improves morale and cohesion.',
+      'Simple daily practices for sustained benefit.'
+    ],
+    modules: [
+      'Primer: how breath affects state and cognition.',
+      'Guided breathwork session (scalable intensity).',
+      'Integration: translating insights into work.',
+      'Optional: cool-down or contrast practice.'
+    ],
+    formats: ['60-minute session', '90-minute session', 'Monthly series'],
+    includes: ['Pre-session guidelines', 'Aftercare & follow-up practices'],
+    audience: 'Teams needing reset, offsites, all-hands, kickoff events.',
+    ctas: [{ label: 'Bring Breathwork to Your Team', url: '/contact' }],
+    seo: { title: 'Breathwork for Teams – Breathing Flame', description: 'Reset stress, boost focus, and strengthen team cohesion with guided breathwork.' },
+    tags: ['Organizations', 'Resilience', 'Leadership'],
+    order: 20
+  },
+  {
+    id: 'whm-corporate',
+    title: 'Wim Hof Method Corporate Workshops',
+    slug: 'wim-hof-method-corporate',
+    hero: {
+      headline: 'Resilience training with breath, mindset, and cold—done safely.',
+      subtext: 'A coached, scalable WHM experience that builds confidence, energy, and stress-resilience for leaders and teams.'
+    },
+    summary: 'Coached WHM resilience training for leaders and teams.',
+    outcomes: [
+      'Improved stress tolerance and recovery.',
+      'Higher confidence and energy under pressure.',
+      'Shared growth experience that builds trust.',
+      'Clear safety protocols and optional cold exposure.'
+    ],
+    modules: [
+      'Breathwork technique & safety.',
+      'Mindset training for calm under pressure.',
+      'Cold exposure (optional, coached, scalable).',
+      'Integration plan for ongoing practice.'
+    ],
+    formats: ['Half-day workshop', 'Full-day workshop', 'Leadership offsite module'],
+    includes: ['Certified WHM instruction', 'Safety briefing & screening', 'Post-workshop practice plan'],
+    audience: 'Leadership teams and high-performance groups; suitable for beginners.',
+    ctas: [{ label: 'Request a Proposal', url: '/contact' }],
+    seo: { title: 'Wim Hof Method Corporate Workshops – Breathing Flame', description: 'Safe, coached WHM for teams: breath, mindset, and optional cold exposure to build resilience.' },
+    tags: ['Organizations', 'Resilience', 'Leadership'],
+    order: 30
+  },
+  {
+    id: 'business-constellations',
+    title: 'Business Constellations',
+    slug: 'business-constellations',
+    hero: {
+      headline: 'Reveal hidden dynamics. Make better decisions.',
+      subtext: 'A systemic facilitation process that surfaces unseen constraints and aligns teams around clear, effective action.'
+    },
+    summary: 'Systemic facilitation to surface constraints and align action.',
+    outcomes: [
+      'Clarity on root causes vs. surface symptoms.',
+      'Faster, better decisions with stakeholder alignment.',
+      'Reduced friction and clearer roles.',
+      'Actionable next steps grounded in reality.'
+    ],
+    modules: [
+      'Intake & desired outcomes.',
+      'System mapping & hypothesis.',
+      'Constellation facilitation (live).',
+      'Synthesis & action plan.'
+    ],
+    formats: ['Executive session (2–3 hours)', 'Half-day team session', 'Retreat module'],
+    includes: ['Pre-work interviews', 'Session materials', 'Written synthesis & recommendations'],
+    audience: 'Executive teams, cross-functional leadership, founders & boards.',
+    ctas: [{ label: 'Book a Consultation', url: '/contact' }],
+    seo: { title: 'Business Constellations – Breathing Flame', description: 'Use systemic facilitation to reveal hidden dynamics and align teams on effective action.' },
+    tags: ['Organizations', 'Leadership'],
+    order: 40
+  },
+  {
+    id: 'exec-leadership-coaching',
+    title: 'Executive & Leadership Coaching',
+    slug: 'executive-leadership-coaching',
+    hero: {
+      headline: 'Clearer thinking. Calmer leadership. Consistent results.',
+      subtext: '1:1 coaching that blends systemic insight with resilience tools to help leaders perform without burnout.'
+    },
+    summary: '1:1 coaching for clarity, calm, and consistent results.',
+    outcomes: [
+      'Better decision-making under uncertainty.',
+      'Improved emotional regulation and presence.',
+      'Sustainable performance habits.',
+      'Stronger stakeholder relationships.'
+    ],
+    modules: [
+      'Clarity goals & constraints.',
+      'Systemic mapping & experiments.',
+      'Resilience tools (breath & state).',
+      'Execution cadence & review.'
+    ],
+    formats: ['Bi-weekly coaching (12–16 weeks)', 'Executive intensive + follow-ups'],
+    includes: ['Between-session support (async)', 'Practice library', 'Periodic stakeholder sync (optional)'],
+    audience: 'Founders, executives, and senior leaders.',
+    ctas: [{ label: 'Talk to Oscar', url: '/contact' }],
+    seo: { title: 'Executive & Leadership Coaching – Breathing Flame', description: '1:1 coaching that combines systemic insight and resilience tools for leaders who want results without burnout.' },
+    tags: ['Organizations', 'Leadership'],
+    order: 50
   }
 ]
 
