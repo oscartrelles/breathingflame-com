@@ -13,7 +13,7 @@ import {
   Unsubscribe
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
-import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout, mockPageEvents, mockPageResources } from '@/services/mockData'
+import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout, mockPageEvents, mockPageResources, mockPageTestimonials, mockPageContact } from '@/services/mockData'
 import { Offering } from '@/types'
 
 // Generic hook for single document
@@ -262,6 +262,58 @@ export function useExperiences() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   
+  return { data, loading, error }
+}
+
+export function usePageTestimonials() {
+  const [data, setData] = useState(mockPageTestimonials)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+export function usePageContact() {
+  const [data, setData] = useState(mockPageContact)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+  
+  return { data, loading, error }
+}
+
+// Lightweight hooks for 404 page
+export function useAllOfferingsLite() {
+  const [data, setData] = useState<Array<{kind: 'program' | 'experience', title: string, slug: string}>>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    // Use mock data for now, but structure for Firestore
+    const programs = mockPrograms.map(p => ({ kind: 'program' as const, title: p.title, slug: p.slug }))
+    const experiences = mockExperiences.map(e => ({ kind: 'experience' as const, title: e.title, slug: e.slug }))
+    const merged = [...programs, ...experiences].slice(0, 6)
+    setData(merged)
+    setLoading(false)
+  }, [])
+
+  return { data, loading, error }
+}
+
+export function useLatestPostsLite(limit: number = 5) {
+  const [data, setData] = useState<Array<{title: string, slug: string, excerpt?: string, publishedAt: Date}>>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    // Use mock data for now, but structure for Firestore
+    const posts = mockPosts
+      .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+      .slice(0, limit)
+      .map(p => ({ title: p.title, slug: p.slug, excerpt: p.excerpt, publishedAt: p.publishedAt }))
+    setData(posts)
+    setLoading(false)
+  }, [limit])
+
   return { data, loading, error }
 }
 

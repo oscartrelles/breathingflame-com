@@ -958,3 +958,24 @@ export const mockPageResources = {
     subtext: 'Try a different tag or clear the search.'
   }
 }
+
+export const mockPageTestimonials = {
+  id: 'main',
+  hero: { headline: 'Testimonials', subtext: 'Real stories of resilience, clarity, and transformation.' },
+  intro: { title: 'What People Are Saying', body: 'From individuals to organizations, our clients consistently share the powerful impact of Breathing Flame programs, workshops, and retreats.' },
+  fallbackCTA: { label: 'Read Reviews on Google', url: 'https://g.page/r/CdczXTXsInRmEBM/review' },
+  seo: { title: 'Testimonials – Breathing Flame', description: 'See what individuals and organizations say about Breathing Flame’s programs, workshops, and retreats.', ogImage: mockSettings.seoDefaults.ogImage }
+}
+
+export const mockPageContact = {
+  id: 'main',
+  hero: { headline: 'Contact Us', subtext: 'We’d love to hear from you — whether you’re an individual seeking transformation or an organization building resilience.' },
+  intro: { title: 'Let’s Connect', body: 'Tell us a bit about what you’re looking for, and we’ll guide you to the right next step.' },
+  form: {
+    headline: 'Send us a message',
+    subtext: 'Fill out the form and we’ll get back to you as soon as possible.',
+    successMessage: 'Thanks for reaching out! We’ll be in touch shortly.',
+    errorMessage: 'Something went wrong. Please try again.'
+  },
+  seo: { title: 'Contact – Breathing Flame', description: 'Get in touch with Breathing Flame. Reach out to explore programs, events, and organizational solutions.', ogImage: mockSettings.seoDefaults.ogImage }
+}

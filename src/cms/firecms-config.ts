@@ -15,6 +15,8 @@ import {
   PagePrograms,
   PageResources,
   PageEvents,
+  PageTestimonials,
+  PageContact,
   About
 } from '@/types'
 
@@ -2061,6 +2063,64 @@ export const pageResourcesCollection = buildCollection<PageResources>({
   }
 })
 
+// Testimonials Page Collection (singleton)
+export const pageTestimonialsCollection = buildCollection<PageTestimonials>({
+  name: 'Testimonials Page',
+  singularName: 'Testimonials Page',
+  path: 'pageTestimonials',
+  icon: 'Reviews',
+  description: 'Configuration for the /testimonials page',
+  properties: {
+    hero: buildProperty({ dataType: 'map', name: 'Hero', properties: {
+      headline: buildProperty({ dataType: 'string', name: 'Headline', validation: { required: true } }),
+      subtext: buildProperty({ dataType: 'string', name: 'Subtext', multiline: true })
+    }}),
+    intro: buildProperty({ dataType: 'map', name: 'Intro', properties: {
+      title: buildProperty({ dataType: 'string', name: 'Title', validation: { required: true } }),
+      body: buildProperty({ dataType: 'string', name: 'Body', multiline: true })
+    }}),
+    fallbackCTA: buildProperty({ dataType: 'map', name: 'Fallback CTA', properties: {
+      label: buildProperty({ dataType: 'string', name: 'Label' }),
+      url: buildProperty({ dataType: 'string', name: 'URL' })
+    }}),
+    seo: buildProperty({ dataType: 'map', name: 'SEO', properties: {
+      title: buildProperty({ dataType: 'string', name: 'Title' }),
+      description: buildProperty({ dataType: 'string', name: 'Description', multiline: true }),
+      ogImage: buildProperty({ dataType: 'string', name: 'OG Image URL' })
+    }})
+  }
+})
+
+// Contact Page Collection (singleton)
+export const pageContactCollection = buildCollection<PageContact>({
+  name: 'Contact Page',
+  singularName: 'Contact Page',
+  path: 'pageContact',
+  icon: 'ContactPage',
+  description: 'Configuration for the /contact page',
+  properties: {
+    hero: buildProperty({ dataType: 'map', name: 'Hero', properties: {
+      headline: buildProperty({ dataType: 'string', name: 'Headline', validation: { required: true } }),
+      subtext: buildProperty({ dataType: 'string', name: 'Subtext', multiline: true })
+    }}),
+    intro: buildProperty({ dataType: 'map', name: 'Intro', properties: {
+      title: buildProperty({ dataType: 'string', name: 'Title', validation: { required: true } }),
+      body: buildProperty({ dataType: 'string', name: 'Body', multiline: true })
+    }}),
+    form: buildProperty({ dataType: 'map', name: 'Form', properties: {
+      headline: buildProperty({ dataType: 'string', name: 'Headline' }),
+      subtext: buildProperty({ dataType: 'string', name: 'Subtext', multiline: true }),
+      successMessage: buildProperty({ dataType: 'string', name: 'Success Message' }),
+      errorMessage: buildProperty({ dataType: 'string', name: 'Error Message' })
+    }}),
+    seo: buildProperty({ dataType: 'map', name: 'SEO', properties: {
+      title: buildProperty({ dataType: 'string', name: 'Title' }),
+      description: buildProperty({ dataType: 'string', name: 'Description', multiline: true }),
+      ogImage: buildProperty({ dataType: 'string', name: 'OG Image URL' })
+    }})
+  }
+})
+
 // Export all collections
 export const collections = [
   settingsCollection,
@@ -2068,6 +2128,8 @@ export const collections = [
   homeCollection,
   pageResourcesCollection,
   pageEventsCollection,
+  pageTestimonialsCollection,
+  pageContactCollection,
   pageProgramsCollection,
   pageOrganizationsCollection,
   pageIndividualsCollection,

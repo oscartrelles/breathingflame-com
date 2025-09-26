@@ -723,6 +723,27 @@ export interface PageResources {
   seo: { title: string; description: string; ogImage?: string }
 }
 
+export interface PageTestimonials {
+  id: string
+  hero: { headline: string; subtext: string }
+  intro: { title: string; body: string }
+  fallbackCTA?: { label: string; url: string }
+  seo: { title: string; description: string; ogImage?: string }
+}
+
+export interface PageContact {
+  id: string
+  hero: { headline: string; subtext: string }
+  intro: { title: string; body: string }
+  form: {
+    headline: string
+    subtext?: string
+    successMessage: string
+    errorMessage: string
+  }
+  seo: { title: string; description: string; ogImage?: string }
+}
+
 export interface About {
   id: string
   hero: {
