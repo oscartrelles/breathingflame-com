@@ -1,0 +1,68 @@
+{
+  "duplicates": [
+    {
+      "collection": "programs",
+      "slug": "reverse-aging-challenge",
+      "keptId": "rac",
+      "mergedIds": [
+        "reverse-aging-challenge"
+      ]
+    },
+    {
+      "collection": "experiences",
+      "slug": "wim-hof-method",
+      "keptId": "whm",
+      "mergedIds": [
+        "wim-hof-method"
+      ]
+    }
+  ],
+  "missingSEO": [],
+  "brokenTestimonialRefs": [],
+  "updatedLinks": [
+    {
+      "from": "#",
+      "to": "#"
+    },
+    {
+      "from": "#",
+      "to": "#"
+    },
+    {
+      "from": "#",
+      "to": "#"
+    },
+    {
+      "from": "#",
+      "to": "#"
+    },
+    {
+      "from": "#",
+      "to": "#"
+    },
+    {
+      "from": "#",
+      "to": "#"
+    }
+  ],
+  "placeholdersRemaining": [],
+  "removedLegacyFields": [],
+  "schemaMismatches": [],
+  "jsonLdReadiness": {
+    "programs": 3,
+    "experiences": 2,
+    "solutions": 5,
+    "posts": 3,
+    "pages": 8
+  },
+  "summary": {
+    "totalPrograms": 3,
+    "totalExperiences": 2,
+    "totalSolutions": 5,
+    "totalPosts": 3,
+    "totalTestimonials": 2,
+    "duplicatesRemoved": 2,
+    "seoAdded": 0,
+    "linksFixed": 6
+  }
+}

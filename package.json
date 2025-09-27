@@ -8,6 +8,8 @@
     "build": "npm run build:content && vite build",
     "build:content": "tsx scripts/generate-content.ts",
     "populate:firestore": "tsx scripts/populate-firestore.ts",
+    "validate-content": "./scripts/run-validate.sh",
+    "validate-content:apply": "./scripts/run-validate.sh --apply",
     "preview": "vite preview",
     "deploy": "firebase deploy",
     "deploy:hosting": "firebase deploy --only hosting",
