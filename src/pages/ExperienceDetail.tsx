@@ -57,7 +57,8 @@ export function ExperienceDetail() {
       <SEO data={{ 
         title: experience.seo.title, 
         description: experience.seo.description, 
-        image: experience.seo.ogImage 
+        image: experience.seo.ogImage,
+        canonical: `https://breathingflame.com/experiences/${experience.slug}`
       }} />
       
       {/* JSON-LD */}

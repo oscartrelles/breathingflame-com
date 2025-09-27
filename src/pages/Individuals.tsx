@@ -91,7 +91,7 @@ export function Individuals() {
               {pageData.hero.subtext}
             </p>
 
-            <div className={styles.heroCTA}>
+            <div className={`${styles.heroCTA} cta-container`}>
               {pageData.hero.ctas.map((cta, index) => (
                 <a
                   key={index}
@@ -125,12 +125,12 @@ export function Individuals() {
                 variants={reducedMotion ? {} : staggerChild}
                 whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
-                <div className={styles.pillarIcon}>
-                  <div className={styles.pillarIconInner}>
+              <div className={styles.pillarIcon}>
+                <div className={styles.pillarIconInner}>
                     <span>{block.title.charAt(0)}</span>
-                  </div>
                 </div>
-                
+              </div>
+              
                 <h3 className={styles.pillarTitle}>{block.title}</h3>
                 <p className={styles.pillarDescription}>{block.copy}</p>
               </motion.div>
@@ -141,14 +141,14 @@ export function Individuals() {
 
       {/* Programs Section */}
       {featuredPrograms.length > 0 && (
-        <section className="section section--sm">
-          <div className="container">
+      <section className="section section--sm">
+        <div className="container">
             <motion.div 
               className={styles.sectionHeader}
               {...useInViewAnimation()}
             >
               <h2 className={styles.sectionTitle}>{pageData.programs.headline}</h2>
-              <p className={styles.sectionDescription}>
+            <p className={styles.sectionDescription}>
                 {pageData.programs.subtext}
               </p>
             </motion.div>
@@ -166,41 +166,41 @@ export function Individuals() {
                   className={styles.programCard}
                   variants={reducedMotion ? {} : staggerChild}
                 >
-                  <div className={styles.programImage}>
+              <div className={styles.programImage}>
                     <img src={program.image} alt={program.title} />
-                  </div>
-                  
-                  <div className={styles.programContent}>
+              </div>
+              
+              <div className={styles.programContent}>
                     <h3 className={styles.programTitle}>{program.title}</h3>
                     <p className={styles.programSubtitle}>{program.subtitle}</p>
                     <p className={styles.programDescription}>{program.shortDescription}</p>
-                    
-                    <div className={styles.programMeta}>
+                
+                <div className={styles.programMeta}>
                       <span className={styles.programDuration}>{program.duration}</span>
-                      <span className={styles.programFormat}>{program.format}</span>
-                    </div>
-
+                      <span className={styles.programFormat}>{program.format?.delivery || program.format_legacy}</span>
+              </div>
+              
                     <a href={program.ctaHref} className="btn btn--secondary">
                       {program.ctaText || 'Learn More'}
-                    </a>
-                  </div>
+                </a>
+              </div>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
-        </section>
+        </div>
+      </section>
       )}
 
       {/* Experiences Section */}
       {featuredExperiences.length > 0 && (
-        <section className="section section--sm">
-          <div className="container">
+      <section className="section section--sm">
+        <div className="container">
             <motion.div 
               className={styles.sectionHeader}
               {...useInViewAnimation()}
             >
               <h2 className={styles.sectionTitle}>{pageData.experiences.headline}</h2>
-              <p className={styles.sectionDescription}>
+            <p className={styles.sectionDescription}>
                 {pageData.experiences.subtext}
               </p>
             </motion.div>
@@ -218,28 +218,28 @@ export function Individuals() {
                   className={styles.experienceCard}
                   variants={reducedMotion ? {} : staggerChild}
                 >
-                  <div className={styles.experienceImage}>
+              <div className={styles.experienceImage}>
                     <img src={experience.image} alt={experience.title} />
-                  </div>
-                  
-                  <div className={styles.experienceContent}>
+              </div>
+              
+              <div className={styles.experienceContent}>
                     <h3 className={styles.experienceTitle}>{experience.title}</h3>
                     <p className={styles.experienceSubtitle}>{experience.subtitle}</p>
                     <p className={styles.experienceDescription}>{experience.shortDescription}</p>
-                    
-                    <div className={styles.experienceMeta}>
+                
+                <div className={styles.experienceMeta}>
                       <span className={styles.experienceDuration}>{experience.duration}</span>
-                      <span className={styles.experienceFormat}>{experience.format}</span>
-                    </div>
+                      <span className={styles.experienceFormat}>{experience.format?.delivery || experience.format_legacy}</span>
+                </div>
 
                     <a href={experience.ctaHref} className="btn btn--secondary">
                       {experience.ctaText || 'Experience Now'}
-                    </a>
-                  </div>
+                </a>
+              </div>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
+            </div>
         </section>
       )}
 
@@ -287,14 +287,14 @@ export function Individuals() {
                         {testimonial.author.company && (
                           <p className={styles.testimonialAuthorCompany}>{testimonial.author.company}</p>
                         )}
-                      </div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+          </div>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
-        </section>
+        </div>
+      </section>
       )}
 
       {/* Resources Section */}
@@ -325,7 +325,7 @@ export function Individuals() {
                 variants={reducedMotion ? {} : staggerChild}
               >
                 <h3 className={styles.resourceTitle}>{resource.label}</h3>
-                <p className={styles.resourceDescription}>
+              <p className={styles.resourceDescription}>
                   Free assessment to help you understand your current state and next steps.
                 </p>
                 <a 
@@ -346,7 +346,7 @@ export function Individuals() {
                 variants={reducedMotion ? {} : staggerChild}
               >
                 <h3 className={styles.resourceTitle}>Latest Article</h3>
-                <p className={styles.resourceDescription}>
+              <p className={styles.resourceDescription}>
                   {featuredPost.excerpt}
                 </p>
                 <a href={`/blog/${featuredPost.slug}`} className="btn btn--outline">
@@ -370,7 +370,7 @@ export function Individuals() {
               {pageData.finalCTA.subtext}
             </p>
             
-            <div className={styles.ctaButtons}>
+            <div className={`${styles.ctaButtons} cta-container`}>
               {pageData.finalCTA.buttons.map((button, index) => (
                 <a
                   key={index}

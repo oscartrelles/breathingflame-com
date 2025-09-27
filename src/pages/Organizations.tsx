@@ -80,7 +80,7 @@ export function Organizations() {
               {pageData.hero.subtext}
             </p>
 
-            <div className={styles.heroCTA}>
+            <div className={`${styles.heroCTA} cta-container`}>
               {pageData.hero.ctas.map((cta, index) => (
                 <a
                   key={index}
@@ -324,7 +324,7 @@ export function Organizations() {
               {pageData.finalCTA.subtext}
             </p>
             
-            <div className={styles.ctaButtons}>
+            <div className={`${styles.ctaButtons} cta-container`}>
               {pageData.finalCTA.buttons.map((button, index) => (
                 <a
                   key={index}

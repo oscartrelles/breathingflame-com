@@ -2,18 +2,35 @@ import { useState, useEffect } from 'react'
 import { 
   doc, 
   collection, 
-  getDoc, 
-  getDocs, 
   query, 
-  where, 
-  orderBy, 
-  limit,
   onSnapshot,
-  DocumentData,
-  Unsubscribe
+  DocumentData
 } from 'firebase/firestore'
 import { db } from '@/services/firebase'
-import { mockSettings, mockNavigation, mockHome, mockPrograms, mockExperiences, mockTestimonials, mockPosts, mockPageIndividuals, mockPageOrganizations, mockPagePrograms, mockAbout, mockPageEvents, mockPageResources, mockPageTestimonials, mockPageContact, mockSolutions } from '@/services/mockData'
+// Mock data imports removed - now using static content
+import { 
+  useHome as useHomeContent,
+  usePrograms as useProgramsContent,
+  useExperiences as useExperiencesContent,
+  useSolutions as useSolutionsContent,
+  usePosts as usePostsContent,
+  useTestimonials as useTestimonialsContent,
+  useSettings as useSettingsContent,
+  useNavigation as useNavigationContent,
+  usePageIndividuals as usePageIndividualsContent,
+  usePageOrganizations as usePageOrganizationsContent,
+  usePagePrograms as usePageProgramsContent,
+  usePageEvents as usePageEventsContent,
+  usePageResources as usePageResourcesContent,
+  usePageTestimonials as usePageTestimonialsContent,
+  usePageContact as usePageContactContent,
+  usePageCommunity as usePageCommunityContent,
+  usePagePress as usePagePressContent,
+  useAbout as useAboutContent,
+  useAllOfferingsLite as useAllOfferingsLiteContent,
+  useLatestPostsLite as useLatestPostsLiteContent,
+  usePostBySlug as usePostBySlugContent
+} from './useContent'
 import { Offering } from '@/types'
 
 // Generic hook for single document
@@ -101,94 +118,52 @@ export function useCollection<T = DocumentData>(
 
 // Specific hooks for our CMS collections (using mock data for development)
 export function useSettings() {
-  const [data, setData] = useState(mockSettings)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useSettingsContent()
 }
 
 export function useNavigation() {
-  const [data, setData] = useState(mockNavigation)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useNavigationContent()
 }
 
 export function useHome() {
-  const [data, setData] = useState(mockHome)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useHomeContent()
 }
 
 export function usePrograms() {
-  const [data, setData] = useState(mockPrograms)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useProgramsContent()
 }
 
 
 export function usePosts() {
-  const [data, setData] = useState(mockPosts)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePostsContent()
 }
 
 export function useTestimonials() {
-  const [data, setData] = useState(mockTestimonials)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useTestimonialsContent()
 }
 
 export function useCaseStudies() {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return { data: [], loading: false, error: null }
 }
 
 export function useEvents() {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return { data: [], loading: false, error: null }
 }
 
 // Hook for getting a specific post by slug
 export function usePost(slug: string) {
-  const [data, setData] = useState(mockPosts.find(post => post.slug === slug) || null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePostBySlugContent(slug)
 }
 
 export function usePageResources() {
-  const [data, setData] = useState(mockPageResources)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageResourcesContent()
 }
 
 export function usePostsFiltered(params?: { tag?: string; search?: string; limit?: number; offset?: number }) {
   const { tag, search, limit, offset } = params || {}
-  const [data, setData] = useState(mockPosts)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-
-  let filtered = [...mockPosts]
+  const { data: posts, loading, error } = usePostsContent()
+  
+  let filtered = [...(posts || [])]
   if (tag && tag !== 'All') filtered = filtered.filter(p => p.tags?.includes(tag))
   if (search && search.trim()) {
     const q = search.toLowerCase()
@@ -202,141 +177,73 @@ export function usePostsFiltered(params?: { tag?: string; search?: string; limit
   const start = offset || 0
   const end = limit ? start + limit : undefined
   const slice = filtered.slice(start, end)
-
-  useEffect(() => { setData(slice) }, [])
   
-  return { data, loading, error, total: filtered.length }
+  return { data: slice, loading, error, total: filtered.length }
 }
 
 // Hook for getting featured testimonials
 export function useFeaturedTestimonials(limitCount: number = 6) {
-  const [data, setData] = useState(mockTestimonials.slice(0, limitCount))
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
+  const { data: testimonials, loading, error } = useTestimonialsContent()
+  const data = (testimonials || []).slice(0, limitCount)
   return { data, loading, error }
 }
 
 export function usePageIndividuals() {
-  const [data, setData] = useState(mockPageIndividuals)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageIndividualsContent()
 }
 
 export function usePageOrganizations() {
-  const [data, setData] = useState(mockPageOrganizations)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageOrganizationsContent()
 }
 
 export function usePagePrograms() {
-  const [data, setData] = useState(mockPagePrograms)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageProgramsContent()
 }
 
 export function useAbout() {
-  const [data, setData] = useState(mockAbout)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useAboutContent()
 }
 
 export function usePageEvents() {
-  const [data, setData] = useState(mockPageEvents)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageEventsContent()
 }
 
 export function useExperiences() {
-  const [data, setData] = useState(mockExperiences)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return useExperiencesContent()
 }
 
 export function usePageTestimonials() {
-  const [data, setData] = useState(mockPageTestimonials)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageTestimonialsContent()
 }
 
 export function usePageContact() {
-  const [data, setData] = useState(mockPageContact)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  
-  return { data, loading, error }
+  return usePageContactContent()
 }
 
 // Lightweight hooks for 404 page
 export function useAllOfferingsLite() {
-  const [data, setData] = useState<Array<{kind: 'program' | 'experience', title: string, slug: string}>>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-
-  useEffect(() => {
-    // Use mock data for now, but structure for Firestore
-    const programs = mockPrograms.map(p => ({ kind: 'program' as const, title: p.title, slug: p.slug }))
-    const experiences = mockExperiences.map(e => ({ kind: 'experience' as const, title: e.title, slug: e.slug }))
-    const merged = [...programs, ...experiences].slice(0, 6)
-    setData(merged)
-    setLoading(false)
-  }, [])
-
-  return { data, loading, error }
+  return useAllOfferingsLiteContent()
 }
 
-export function useLatestPostsLite(limit: number = 5) {
-  const [data, setData] = useState<Array<{title: string, slug: string, excerpt?: string, publishedAt: Date}>>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-
-  useEffect(() => {
-    // Use mock data for now, but structure for Firestore
-    const posts = mockPosts
-      .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
-      .slice(0, limit)
-      .map(p => ({ title: p.title, slug: p.slug, excerpt: p.excerpt, publishedAt: p.publishedAt }))
-    setData(posts)
-    setLoading(false)
-  }, [limit])
-
-  return { data, loading, error }
+export function useLatestPostsLite(_limit: number = 5) {
+  return useLatestPostsLiteContent()
 }
 
 // Solutions hooks
 export function useSolutions() {
-  const [data, setData] = useState(mockSolutions)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-  return { data, loading, error }
+  return useSolutionsContent()
 }
 
 export function useSolutionBySlug(slug: string) {
-  const { data } = useSolutions()
-  const solution = data.find(s => s.slug === slug) || null
-  return { data: solution, loading: false, error: null as Error | null }
+  const { data, loading, error } = useSolutions()
+  const solution = data?.find(s => s.slug === slug) || null
+  return { data: solution, loading, error }
 }
 
 export function useAllOfferings() {
-  const { data: programs } = usePrograms()
-  const { data: experiences } = useExperiences()
+  const { data: programs, loading: programsLoading, error: programsError } = usePrograms()
+  const { data: experiences, loading: experiencesLoading, error: experiencesError } = useExperiences()
   const [data, setData] = useState<Offering[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     if (programs && experiences) {
@@ -355,6 +262,22 @@ export function useAllOfferings() {
     }
   }, [programs, experiences])
 
-  return { data, loading, error }
+  return { 
+    data, 
+    loading: programsLoading || experiencesLoading, 
+    error: programsError || experiencesError 
+  }
+}
+
+// Community page hook
+export function usePageCommunity() {
+  const { data, loading, error } = usePageCommunityContent()
+  return { pageData: data, loading, error }
+}
+
+// Press page hook
+export function usePagePress() {
+  const { data, loading, error } = usePagePressContent()
+  return { pageData: data, loading, error }
 }
 

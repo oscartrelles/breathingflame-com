@@ -167,6 +167,25 @@ a:hover {
   min-height: 36px;
 }
 
+/* CTA Container Styles - For multiple CTAs */
+.cta-container {
+  display: flex;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-container--stacked {
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.cta-container--inline {
+  flex-direction: row;
+  gap: var(--spacing-4);
+}
+
 /* Forms */
 .form-group {
   margin-bottom: var(--spacing-6);
@@ -240,6 +259,12 @@ a:hover {
 main > section:first-child,
 main > div:first-child > section:first-child {
   padding-top: calc(var(--spacing-32) + var(--header-height));
+}
+
+/* Homepage hero should tuck behind header to hide video controls */
+.home-hero {
+  margin-top: calc(-1 * var(--header-height));
+  padding-top: var(--header-height);
 }
 
 .section--sm {

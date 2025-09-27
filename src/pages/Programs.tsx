@@ -324,7 +324,7 @@ function OfferingCard({ offering }: { offering: Offering }) {
         
         <div className={styles.cardMeta}>
           <span className={styles.cardDuration}>{offering.duration}</span>
-          <span className={styles.cardFormat}>{offering.format}</span>
+          <span className={styles.cardFormat}>{offering.format?.delivery || offering.format_legacy}</span>
         </div>
       </div>
     </a>

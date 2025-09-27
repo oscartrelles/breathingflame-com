@@ -120,10 +120,6 @@ export const settingsCollection = buildCollection<Settings>({
           dataType: 'boolean',
           name: 'Show Testimonials Section'
         }),
-        enableBlog: buildProperty({
-          dataType: 'boolean',
-          name: 'Enable Blog'
-        }),
         enableWhatsApp: buildProperty({
           dataType: 'boolean',
           name: 'Enable WhatsApp Community'

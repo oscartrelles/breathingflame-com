@@ -16,6 +16,10 @@
         "function": "contact"
       },
       {
+        "source": "/api/content-webhook",
+        "function": "contentWebhook"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

@@ -12,9 +12,7 @@ import { Home } from '@/pages/Home'
 import { Individuals } from '@/pages/Individuals'
 import { Organizations } from '@/pages/Organizations'
 import { Programs } from '@/pages/Programs'
-import { ProgramsListing } from '@/pages/ProgramsListing'
 import { ProgramDetail } from '@/pages/ProgramDetail'
-import { Experiences } from '@/pages/Experiences'
 import { ExperienceDetail } from '@/pages/ExperienceDetail'
 import { Resources } from '@/pages/Resources'
 import { ResourceDetail } from '@/pages/ResourceDetail'
@@ -24,11 +22,14 @@ import { Events } from '@/pages/Events'
 import { Testimonials } from '@/pages/Testimonials'
 import { About } from '@/pages/About'
 import { Contact } from '@/pages/Contact'
-import { Sitemap } from '@/pages/Sitemap'
 import { FreeConsultation } from '@/pages/FreeConsultation'
 import { Privacy } from '@/pages/Privacy'
 import { Terms } from '@/pages/Terms'
 import { NotFound } from '@/pages/NotFound'
+import Search from '@/pages/Search'
+import Community from '@/pages/Community'
+import Press from '@/pages/Press'
+import SchemaCheck from '@/pages/SchemaCheck'
 import { SolutionDetail } from '@/pages/SolutionDetail'
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/individuals" element={<Individuals />} />
           <Route path="/organizations" element={<Organizations />} />
-          <Route path="/programs" element={<ProgramsListing />} />
+          <Route path="/programs" element={<Programs />} />
           <Route path="/programs/:slug" element={<ProgramDetail />} />
           <Route path="/experiences/:slug" element={<ExperienceDetail />} />
           <Route path="/resources" element={<Resources />} />
@@ -57,8 +58,11 @@ function App() {
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/press" element={<Press />} />
+          <Route path="/_schema-check" element={<SchemaCheck />} />
           <Route path="/solutions/:slug" element={<SolutionDetail />} />
-          <Route path="/sitemap" element={<Sitemap />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/*" element={<NotFound />} />

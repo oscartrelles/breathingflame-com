@@ -40,6 +40,23 @@ export function About() {
     "sameAs": aboutData.founder.socials?.map(social => social.url) || []
   }
 
+  // JSON-LD Organization schema
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Breathing Flame",
+    "url": "https://breathingflame.com",
+    "description": "Science-backed, nature-powered practices for resilience, clarity, and transformation",
+    "sameAs": [
+      "https://www.youtube.com/@BreathingFlameTV",
+      "https://www.instagram.com/breathing.flame",
+      "https://www.linkedin.com/company/breathingflame/",
+      "https://www.tiktok.com/@breathingflame",
+      import.meta.env.VITE_MEDIUM_URL || '',
+      import.meta.env.VITE_SUBSTACK_URL || ''
+    ].filter(Boolean)
+  }
+
   return (
     <motion.div
       initial="initial"
@@ -51,7 +68,7 @@ export function About() {
           title: aboutData.seo.title,
           description: aboutData.seo.description,
           image: aboutData.seo.ogImage,
-          structuredData: [personSchema]
+          structuredData: [personSchema, organizationSchema]
         }}
       />
 

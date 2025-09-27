@@ -1,0 +1,1910 @@
+{
+  "home": {
+    "hero": {
+      "headline": "Resilience. Clarity. Transformation.",
+      "ctas": [
+        {
+          "label": "For Individuals",
+          "external": false,
+          "pathOrUrl": "/individuals"
+        },
+        {
+          "external": false,
+          "pathOrUrl": "/organizations",
+          "label": "For Organizations"
+        }
+      ],
+      "media": {
+        "overlayOpacity": 0.65,
+        "backgroundImage": "/hero-bg.jpg"
+      },
+      "subtext": "We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices."
+    },
+    "seo": {
+      "title": "Breathing Flame: Resilience, Clarity, and Transformation",
+      "ogImage": "/og-image.jpg",
+      "description": "Science-backed, nature-powered practices for resilience, clarity, and transformation. Programs and workshops for individuals and organizations."
+    },
+    "sections": {
+      "featured": {
+        "featuredPrograms": [
+          "rac",
+          "unblocked",
+          "unstoppable"
+        ],
+        "headline": "Explore Our Programs",
+        "featuredExperiences": [
+          "whm",
+          "9d-breathwork"
+        ],
+        "subtext": "From science-based healthspan practices to systemic coaching, we offer programs designed to unlock your full potential."
+      },
+      "featuredContent": {
+        "videoEmbed": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "headline": "Insights & Resources",
+        "subtext": "Learn how performance, resilience, and wellbeing come together to create lasting impact.",
+        "featuredArticleRef": "post-latest"
+      },
+      "testimonials": {
+        "testimonialsFeatured": [
+          "test1",
+          "test2",
+          "test3"
+        ],
+        "subtext": "Our clients—from entrepreneurs to teams—consistently highlight the power of resilience, clarity, and transformation.",
+        "headline": "What People Are Saying"
+      },
+      "organizations": {
+        "cards": [
+          {
+            "copy": "Equip your teams with practical tools to stay focused and resilient under pressure.",
+            "title": "Stress Management Masterclass",
+            "cta": {
+              "label": "Learn More",
+              "url": "/organizations"
+            }
+          },
+          {
+            "title": "Breathwork & WHM for Teams",
+            "cta": {
+              "url": "/organizations",
+              "label": "Learn More"
+            },
+            "copy": "Bring energizing and transformative practices into your workplace."
+          },
+          {
+            "title": "Business Constellations",
+            "copy": "Uncover hidden dynamics to improve leadership and decision-making.",
+            "cta": {
+              "label": "Learn More",
+              "url": "/organizations"
+            }
+          }
+        ],
+        "headline": "For Organizations"
+      },
+      "community": {
+        "headline": "Join Our Community",
+        "ctas": [
+          {
+            "label": "WhatsApp Community",
+            "pathOrUrl": "https://chat.whatsapp.com/your-group",
+            "external": true
+          },
+          {
+            "external": false,
+            "label": "Subscribe to Newsletter",
+            "pathOrUrl": "/resources#newsletter"
+          }
+        ]
+      },
+      "events": {
+        "fallbackCTA": {
+          "external": false,
+          "label": "See all events",
+          "pathOrUrl": "/events"
+        },
+        "headline": "Upcoming Events"
+      }
+    },
+    "id": "main",
+    "showEvents": true,
+    "orgPreviewCards": [],
+    "pillars": [
+      {
+        "icon": "R",
+        "copy": "Train your body and mind to handle stress, adapt to challenges, and sustain energy.",
+        "id": "resilience",
+        "color": "#ffb332",
+        "title": "Resilience"
+      },
+      {
+        "color": "#ffb332",
+        "title": "Clarity",
+        "copy": "Remove hidden blocks, align decisions, and focus on what truly matters.",
+        "id": "clarity",
+        "icon": "C"
+      },
+      {
+        "color": "#ffb332",
+        "icon": "T",
+        "copy": "Achieve breakthroughs and build lasting change in your life or organization.",
+        "title": "Transformation",
+        "id": "transformation"
+      }
+    ]
+  },
+  "programs": [
+    {
+      "id": "rac",
+      "hero": {
+        "headline": "A 7-week reset for energy, resilience, and healthspan.",
+        "image": "/programs/rac.jpg",
+        "subtext": "Science-backed practices to restore vitality, reduce stress, and build sustainable habits."
+      },
+      "seo": {
+        "description": "Boost energy, reduce stress, and build resilience in 7 weeks. Science-backed breathwork, cold exposure, and lifestyle protocols for healthspan.",
+        "title": "Reverse Aging Challenge – 7-Week Healthspan Reset | Breathing Flame",
+        "ogImage": "/og-image.jpg"
+      },
+      "shortDescription": "Transform your body and mind with our comprehensive 7-week program.",
+      "howItWorks": [
+        {
+          "step": 1,
+          "description": "Complete our comprehensive assessment to identify your starting point.",
+          "title": "Assessment"
+        },
+        {
+          "step": 2,
+          "description": "Follow our daily breathwork and mindfulness routines.",
+          "title": "Daily Practice"
+        },
+        {
+          "step": 3,
+          "description": "Join group coaching sessions for support and guidance.",
+          "title": "Weekly Coaching"
+        },
+        {
+          "description": "Experience profound changes in your energy and vitality.",
+          "title": "Transformation",
+          "step": 4
+        }
+      ],
+      "type": "program",
+      "subtitle": "7-Week Transformation",
+      "ctaHref": "/programs/reverse-aging-challenge",
+      "description": "Turn back the clock on aging through breathwork, cold therapy, and mindfulness practices.",
+      "ctaText": "Start Challenge",
+      "price": {
+        "organization": 1997,
+        "individual": 997
+      },
+      "ctas": [
+        {
+          "external": true,
+          "url": "https://reverseaging.academy",
+          "label": "Explore the Online Course"
+        },
+        {
+          "url": "/events",
+          "external": false,
+          "label": "Apply for In-Person Reset"
+        }
+      ],
+      "outcomes": [
+        "Reset your nervous system and reduce stress reactivity.",
+        "Increase daily energy and improve sleep quality.",
+        "Build resilience with breathwork and safe cold exposure.",
+        "Adopt simple nutrition and movement protocols for healthspan.",
+        "Create a personal blueprint you can sustain after the program."
+      ],
+      "format": {
+        "delivery": "Online cohort (optional in-person reset)",
+        "location": "Online + Málaga (optional)",
+        "duration": "7 weeks"
+      },
+      "published": true,
+      "duration": "7 Weeks",
+      "image": "/programs/rac.jpg",
+      "faq": [
+        {
+          "a": "Yes. All practices are scaled to your level. We provide clear safety guidance and contraindications.",
+          "q": "Is it safe for beginners?"
+        },
+        {
+          "a": "We'll teach multiple options—from cold showers to guided ice baths. You can participate fully with just a shower at home.",
+          "q": "Do I need access to cold exposure?"
+        },
+        {
+          "q": "How much time per week?",
+          "a": "Expect ~2 hours for the live session and 15–20 minutes per day for personal practice."
+        },
+        {
+          "q": "What equipment do I need?",
+          "a": "A quiet space, a mat or chair, and optional access to cold water or ice for contrast practice."
+        }
+      ],
+      "slug": "reverse-aging-challenge",
+      "testimonials": [],
+      "format_legacy": "hybrid",
+      "faqs": [],
+      "order": 1,
+      "relatedEventsMode": "auto",
+      "title": "Reverse Aging Challenge",
+      "featured": true,
+      "summary": "A 7-week reset that combines breathwork, movement, fasting, and mindset to restore energy and improve your healthspan.",
+      "tags": [
+        "Longevity",
+        "Resilience",
+        "Individuals"
+      ],
+      "includes": [
+        "7 live sessions (online) + practice library",
+        "Implementation workbook and trackers",
+        "Community access for accountability",
+        "Optional in-person reset in Málaga"
+      ],
+      "modules": [
+        "Weekly live sessions: guided breathwork, mindset, and integration.",
+        "Resilience practices: breath, cold or contrast therapy (safely coached).",
+        "Lifestyle protocols: movement, fasting windows, recovery rituals.",
+        "Evidence briefings: what the science says (concise, practical).",
+        "Accountability & support: check-ins and progress tracking."
+      ]
+    },
+    {
+      "id": "reverse-aging-challenge",
+      "faq": [
+        {
+          "question": "Is this program suitable for beginners?",
+          "answer": "Yes, the program is designed for all levels with modifications available."
+        }
+      ],
+      "outcomes": [
+        "Increased energy and vitality",
+        "Improved sleep quality",
+        "Enhanced mental clarity",
+        "Better stress management",
+        "Stronger immune system"
+      ],
+      "seo": {
+        "ogImage": "https://breathingflame.com/programs/reverse-aging-challenge.jpg",
+        "title": "Reverse Aging Challenge – 7-Week Healthspan Program",
+        "description": "Transform your biological age with our 7-week program combining breathwork, movement, fasting, and mindset practices."
+      },
+      "includes": [
+        "7 weekly group sessions",
+        "Personalized assessment",
+        "Breathwork techniques",
+        "Movement protocols",
+        "Nutrition guidance",
+        "Community support"
+      ],
+      "modules": [
+        "Week 1-2: Foundation & Assessment",
+        "Week 3-4: Breathwork & Movement",
+        "Week 5-6: Fasting & Nutrition",
+        "Week 7: Integration & Maintenance"
+      ],
+      "ctas": {
+        "secondary": {
+          "url": "/programs/reverse-aging-challenge",
+          "label": "Learn More",
+          "external": false
+        },
+        "primary": {
+          "label": "Start Your Journey",
+          "url": "/contact",
+          "external": false
+        }
+      },
+      "format": "7-week program with weekly sessions",
+      "summary": "A 7-week reset that combines breathwork, movement, fasting, and mindset to restore energy and improve your healthspan.",
+      "tags": [
+        "healthspan",
+        "breathwork",
+        "movement",
+        "fasting"
+      ],
+      "hero": {
+        "subtext": "A comprehensive program combining breathwork, movement, fasting, and mindset practices to restore energy and improve your healthspan.",
+        "headline": "Reverse Your Biological Age in 7 Weeks"
+      },
+      "slug": "reverse-aging-challenge",
+      "title": "Reverse Aging Challenge",
+      "order": 10,
+      "type": "program",
+      "testimonials": []
+    },
+    {
+      "id": "unblocked",
+      "duration": "10 Weeks",
+      "ctaText": "Get Unblocked",
+      "description": "Identify and overcome the mental, emotional, and energetic blocks that are holding you back from living your fullest life.",
+      "type": "program",
+      "format": {
+        "delivery": "Private online coaching",
+        "duration": "10 weeks",
+        "location": "Online"
+      },
+      "relatedEventsMode": "auto",
+      "slug": "unblocked-in-ten-weeks",
+      "tags": [
+        "Clarity",
+        "Performance",
+        "Individuals"
+      ],
+      "ctaHref": "/programs/unblocked-in-ten-weeks",
+      "order": 2,
+      "published": true,
+      "image": "/programs/unblocked.jpg",
+      "featured": true,
+      "faq": [
+        {
+          "a": "Founders, leaders, and professionals who want to move past indecision, overwhelm, or strategic stuckness.",
+          "q": "Who is it for?"
+        },
+        {
+          "q": "What's expected of me?",
+          "a": "1 session per week plus 20–30 mins of focused actions between sessions."
+        },
+        {
+          "a": "Yes. We can invoice your organization and align goals with your manager if needed.",
+          "q": "Can my company sponsor it?"
+        }
+      ],
+      "outcomes": [
+        "Identify and dissolve hidden personal or strategic blocks.",
+        "Gain clarity on direction, priorities, and next steps.",
+        "Make confident decisions and follow through consistently.",
+        "Build simple systems to sustain momentum."
+      ],
+      "seo": {
+        "ogImage": "/og-image.jpg",
+        "description": "Remove personal and strategic blocks, make confident decisions, and build momentum with a structured 10-week coaching program.",
+        "title": "Unblocked in Ten Weeks – 1:1 Coaching for Clarity & Momentum | Breathing Flame"
+      },
+      "title": "Unblocked in Ten Weeks",
+      "hero": {
+        "image": "/programs/unblocked.jpg",
+        "subtext": "A structured 1:1 coaching program that removes personal and strategic blocks so you can move forward with clarity.",
+        "headline": "Clear the blocks. Build momentum."
+      },
+      "shortDescription": "A structured coaching program to remove blocks and move forward with momentum.",
+      "modules": [
+        "Clarity mapping: define outcomes and constraints.",
+        "Systemic exercises: reveal hidden dynamics and patterns.",
+        "Resilience tools: breathwork & nervous system resets.",
+        "Execution cycles: weekly focus, review, and course-correct."
+      ],
+      "howItWorks": [
+        {
+          "title": "Block Assessment",
+          "description": "Identify your specific mental and emotional blocks.",
+          "step": 1
+        },
+        {
+          "step": 2,
+          "description": "One-on-one coaching sessions to work through challenges.",
+          "title": "Weekly Coaching"
+        },
+        {
+          "description": "Implement daily practices to maintain momentum.",
+          "title": "Daily Practices",
+          "step": 3
+        },
+        {
+          "description": "Experience major breakthroughs in your personal and professional life.",
+          "title": "Breakthrough",
+          "step": 4
+        }
+      ],
+      "testimonials": [],
+      "ctas": [
+        {
+          "label": "Apply for Unblocked",
+          "url": "/contact",
+          "external": false
+        },
+        {
+          "url": "/contact",
+          "label": "Book a 15-min Intro Call",
+          "external": false
+        }
+      ],
+      "format_legacy": "online",
+      "price": {
+        "organization": 2997,
+        "individual": 1497
+      },
+      "faqs": [],
+      "summary": "A structured 1:1 coaching program that removes personal and strategic blocks, giving you clarity and momentum.",
+      "subtitle": "Break Through Barriers",
+      "includes": [
+        "10 weekly 1:1 coaching sessions",
+        "Between-session support (async)",
+        "Practice library (breath + clarity drills)",
+        "Personal action dashboard"
+      ]
+    },
+    {
+      "id": "unstoppable",
+      "image": "/programs/unstoppable.jpg",
+      "format_legacy": "hybrid",
+      "description": "Achieve unstoppable momentum in all areas of your life through advanced breathwork techniques and peak performance strategies.",
+      "tags": [
+        "Performance",
+        "Resilience",
+        "Individuals"
+      ],
+      "faq": [
+        {
+          "q": "Do I need to complete Unblocked or RAC first?",
+          "a": "It's recommended but not required. We'll assess fit during the intro call."
+        },
+        {
+          "q": "How is it different?",
+          "a": "Unstoppable focuses on mastery—capacity under pressure, long-term systems, and consistent performance."
+        }
+      ],
+      "includes": [
+        "Bi-weekly coaching sessions (12–16 weeks)",
+        "Custom practice plan + adjustments",
+        "Accountability and check-ins",
+        "Access to select workshops"
+      ],
+      "price": {
+        "individual": 1997,
+        "organization": 3997
+      },
+      "type": "program",
+      "title": "Unstoppable",
+      "howItWorks": [
+        {
+          "title": "Foundation Review",
+          "description": "Build on your previous program achievements.",
+          "step": 1
+        },
+        {
+          "description": "Learn advanced breathwork and performance strategies.",
+          "step": 2,
+          "title": "Advanced Techniques"
+        },
+        {
+          "title": "Momentum Building",
+          "description": "Create unstoppable momentum in all life areas.",
+          "step": 3
+        },
+        {
+          "description": "Achieve mastery level performance and transformation.",
+          "step": 4,
+          "title": "Mastery"
+        }
+      ],
+      "ctas": [
+        {
+          "external": false,
+          "label": "Join the Waitlist",
+          "url": "/contact"
+        },
+        {
+          "url": "/contact",
+          "label": "Talk to Oscar",
+          "external": false
+        }
+      ],
+      "testimonials": [],
+      "order": 3,
+      "subtitle": "Peak Performance",
+      "hero": {
+        "headline": "Go beyond breakthroughs. Sustain mastery.",
+        "subtext": "A follow-up program to lock in change, expand capacity, and perform consistently without burnout.",
+        "image": "/programs/unstoppable.jpg"
+      },
+      "published": true,
+      "faqs": [],
+      "summary": "A follow-up program that helps you lock in change, sustain new habits, and expand your breakthroughs.",
+      "ctaText": "Become Unstoppable",
+      "featured": true,
+      "seo": {
+        "title": "Unstoppable – Performance Mastery Program | Breathing Flame",
+        "description": "Sustain breakthroughs with advanced resilience tools and performance systems. Designed for leaders who want consistent, long-term results.",
+        "ogImage": "/og-image.jpg"
+      },
+      "relatedEventsMode": "auto",
+      "shortDescription": "A follow-up program to help you lock in change and expand your breakthroughs.",
+      "modules": [
+        "Deep integration: habit architecture & identity work.",
+        "Advanced breath & cold: capacity, recovery, focus.",
+        "Performance systems: time, attention, energy.",
+        "Feedback loops: metrics, review, and refinement."
+      ],
+      "duration": "12–16 Weeks",
+      "ctaHref": "/programs/unstoppable",
+      "outcomes": [
+        "Consolidate new habits and identity-level change.",
+        "Increase capacity under pressure with advanced resilience tools.",
+        "Design performance systems that protect recovery and focus.",
+        "Track leading indicators and adapt quickly."
+      ],
+      "slug": "unstoppable",
+      "format": {
+        "duration": "12–16 weeks",
+        "location": "Online (with optional in-person sessions)",
+        "delivery": "Hybrid coaching + practice"
+      }
+    }
+  ],
+  "experiences": [
+    {
+      "id": "9d-breathwork",
+      "order": 2,
+      "summary": "An immersive sound and breath experience that helps you release stress, reset your nervous system, and reconnect deeply.",
+      "highlights": [
+        "Deep healing",
+        "Sound therapy",
+        "Nervous system reset",
+        "Emotional release"
+      ],
+      "title": "9D Breathwork Journey",
+      "description": "Experience profound healing and transformation through this powerful breathwork practice that combines music, guidance, and deep breathing.",
+      "ctaHref": "/experiences/9d-breathwork",
+      "format": "in-person",
+      "shortDescription": "Immersive, sound-based breathwork to reset your nervous system and reconnect deeply.",
+      "faqs": [],
+      "ctaText": "Book Journey",
+      "slug": "9d-breathwork",
+      "published": true,
+      "subtitle": "Deep Healing",
+      "duration": "90 Minutes",
+      "price": {
+        "organization": 347,
+        "individual": 147
+      },
+      "image": "/experiences/9d-breathwork.jpg",
+      "featured": true,
+      "howItWorks": [
+        {
+          "description": "Set intentions and prepare for the journey.",
+          "step": 1,
+          "title": "Preparation"
+        },
+        {
+          "step": 2,
+          "title": "Breathing Practice",
+          "description": "Follow guided breathing patterns with music."
+        },
+        {
+          "title": "Integration",
+          "step": 3,
+          "description": "Process and integrate the experience."
+        },
+        {
+          "step": 4,
+          "title": "Sharing",
+          "description": "Share insights and experiences with the group."
+        }
+      ]
+    },
+    {
+      "id": "whm",
+      "ctaText": "Experience Now",
+      "seo": {
+        "ogImage": "/og-image.jpg",
+        "description": "Learn breath, mindset, and cold exposure techniques to build resilience and boost energy. Safe, coached, and deeply impactful.",
+        "title": "Wim Hof Method Workshops – Resilience Training | Breathing Flame"
+      },
+      "title": "Wim Hof Method Workshops",
+      "price": {
+        "individual": 197,
+        "organization": 497
+      },
+      "slug": "wim-hof-method",
+      "audience": "Adults 18+. No prior experience required. Safety guidance provided.",
+      "ctaHref": "/experiences/wim-hof-method",
+      "format": {
+        "duration": "Half-day",
+        "location": "Málaga & select cities",
+        "delivery": "In-person workshop"
+      },
+      "description": "Master the powerful combination of cold exposure and breathing techniques that boost immunity, reduce stress, and increase energy.",
+      "published": true,
+      "shortDescription": "Breathwork, cold exposure, and mindset training to build resilience.",
+      "highlights": [
+        "Guided breathwork session: technique, safety, and practice.",
+        "Mindset & focus: tools to stay calm under pressure.",
+        "Cold exposure: coached, optional, and safely scaled.",
+        "Integration: how to continue at home."
+      ],
+      "subtitle": "Cold & Breathwork",
+      "duration": "Half-day",
+      "faqs": [],
+      "hero": {
+        "headline": "Breath, mindset, and cold exposure — safely and powerfully.",
+        "subtext": "Learn proven tools to build resilience, boost energy, and improve focus in a single immersive session.",
+        "image": "/experiences/whm.jpg"
+      },
+      "relatedEventsMode": "auto",
+      "ctas": [
+        {
+          "label": "Register for a Workshop",
+          "url": "/events",
+          "external": false
+        },
+        {
+          "external": false,
+          "label": "Bring WHM to Your Team",
+          "url": "/organizations"
+        }
+      ],
+      "featured": true,
+      "faq": [
+        {
+          "a": "No. Cold exposure is optional and safely scaled. You can participate fully without it.",
+          "q": "Is the ice bath required?"
+        },
+        {
+          "a": "We'll cover contraindications and safety. Always consult your physician if unsure.",
+          "q": "Any health considerations?"
+        }
+      ],
+      "image": "/experiences/whm.jpg",
+      "howItWorks": [
+        {
+          "step": 1,
+          "title": "Introduction",
+          "description": "Learn the science behind the Wim Hof Method."
+        },
+        {
+          "description": "Master the specific breathing techniques.",
+          "step": 2,
+          "title": "Breathing Practice"
+        },
+        {
+          "description": "Experience controlled cold exposure safely.",
+          "step": 3,
+          "title": "Cold Exposure"
+        },
+        {
+          "step": 4,
+          "description": "Learn how to integrate practices into daily life.",
+          "title": "Integration"
+        }
+      ],
+      "format_legacy": "in-person",
+      "testimonials": [],
+      "includes": [
+        "Workshop instruction (3–5 hours)",
+        "Coached breathwork session",
+        "Optional ice bath with supervision",
+        "Post-workshop practice plan"
+      ],
+      "tags": [
+        "Resilience",
+        "Individuals",
+        "Organizations"
+      ],
+      "summary": "Discover the power of breath, mindset, and cold exposure to build resilience and boost energy in just one day.",
+      "order": 1,
+      "type": "experience"
+    },
+    {
+      "id": "wim-hof-method",
+      "ctas": {
+        "primary": {
+          "url": "/contact",
+          "external": false,
+          "label": "Book Your Spot"
+        }
+      },
+      "seo": {
+        "ogImage": "https://breathingflame.com/experiences/wim-hof-method.jpg",
+        "description": "Learn the Wim Hof Method in our intensive 4-hour workshop. Master breathing, cold exposure, and mindset training.",
+        "title": "Wim Hof Method Workshop – Build Resilience & Energy"
+      },
+      "audience": "Anyone looking to build resilience and boost energy",
+      "testimonials": [],
+      "type": "experience",
+      "summary": "Discover the power of breath, mindset, and cold exposure to build resilience and boost energy in just one day.",
+      "format": "4-hour intensive workshop",
+      "title": "Wim Hof Method Workshop",
+      "highlights": [
+        "Breathing techniques for energy and focus",
+        "Cold exposure for resilience",
+        "Mindset training for mental strength",
+        "Immediate results and long-term benefits"
+      ],
+      "slug": "wim-hof-method",
+      "hero": {
+        "subtext": "Learn the powerful combination of breathing techniques, cold exposure, and mindset training to build resilience and boost energy.",
+        "headline": "Master the Wim Hof Method"
+      },
+      "includes": [
+        "4-hour intensive workshop",
+        "Breathing technique instruction",
+        "Guided cold exposure",
+        "Mindset training exercises",
+        "Take-home practice guide"
+      ],
+      "faq": [
+        {
+          "question": "Do I need any prior experience?",
+          "answer": "No prior experience is needed. We'll guide you through everything step by step."
+        }
+      ],
+      "tags": [
+        "breathwork",
+        "cold-exposure",
+        "resilience",
+        "energy"
+      ],
+      "order": 10
+    }
+  ],
+  "solutions": [
+    {
+      "id": "breathwork-teams",
+      "hero": {
+        "headline": "Energy, focus, and team cohesion.",
+        "subtext": "Guided breathwork sessions that reset the nervous system, improve focus, and build shared momentum."
+      },
+      "formats": [
+        "60-minute session",
+        "90-minute session",
+        "Monthly series"
+      ],
+      "summary": "Guided breathwork to reset, focus, and build cohesion.",
+      "ctas": [
+        {
+          "label": "Bring Breathwork to Your Team",
+          "url": "/contact"
+        }
+      ],
+      "order": 20,
+      "includes": [
+        "Pre-session guidelines",
+        "Aftercare & follow-up practices"
+      ],
+      "tags": [
+        "Organizations",
+        "Resilience",
+        "Leadership"
+      ],
+      "outcomes": [
+        "Immediate reduction in stress and tension.",
+        "Boosted energy and mental clarity.",
+        "Shared experience that improves morale and cohesion.",
+        "Simple daily practices for sustained benefit."
+      ],
+      "slug": "breathwork-for-teams",
+      "title": "Breathwork for Teams",
+      "seo": {
+        "description": "Reset stress, boost focus, and strengthen team cohesion with guided breathwork.",
+        "title": "Breathwork for Teams – Breathing Flame"
+      },
+      "audience": "Teams needing reset, offsites, all-hands, kickoff events.",
+      "modules": [
+        "Primer: how breath affects state and cognition.",
+        "Guided breathwork session (scalable intensity).",
+        "Integration: translating insights into work.",
+        "Optional: cool-down or contrast practice."
+      ]
+    },
+    {
+      "id": "business-constellations",
+      "outcomes": [
+        "Clarity on root causes vs. surface symptoms.",
+        "Faster, better decisions with stakeholder alignment.",
+        "Reduced friction and clearer roles.",
+        "Actionable next steps grounded in reality."
+      ],
+      "slug": "business-constellations",
+      "summary": "Systemic facilitation to surface constraints and align action.",
+      "hero": {
+        "headline": "Reveal hidden dynamics. Make better decisions.",
+        "subtext": "A systemic facilitation process that surfaces unseen constraints and aligns teams around clear, effective action."
+      },
+      "includes": [
+        "Pre-work interviews",
+        "Session materials",
+        "Written synthesis & recommendations"
+      ],
+      "title": "Business Constellations",
+      "audience": "Executive teams, cross-functional leadership, founders & boards.",
+      "ctas": [
+        {
+          "url": "/contact",
+          "label": "Book a Consultation"
+        }
+      ],
+      "formats": [
+        "Executive session (2–3 hours)",
+        "Half-day team session",
+        "Retreat module"
+      ],
+      "tags": [
+        "Organizations",
+        "Leadership"
+      ],
+      "seo": {
+        "title": "Business Constellations – Breathing Flame",
+        "description": "Use systemic facilitation to reveal hidden dynamics and align teams on effective action."
+      },
+      "modules": [
+        "Intake & desired outcomes.",
+        "System mapping & hypothesis.",
+        "Constellation facilitation (live).",
+        "Synthesis & action plan."
+      ],
+      "order": 40
+    },
+    {
+      "id": "exec-leadership-coaching",
+      "audience": "Founders, executives, and senior leaders.",
+      "order": 50,
+      "ctas": [
+        {
+          "label": "Talk to Oscar",
+          "url": "/contact"
+        }
+      ],
+      "seo": {
+        "description": "1:1 coaching that combines systemic insight and resilience tools for leaders who want results without burnout.",
+        "title": "Executive & Leadership Coaching – Breathing Flame"
+      },
+      "formats": [
+        "Bi-weekly coaching (12–16 weeks)",
+        "Executive intensive + follow-ups"
+      ],
+      "outcomes": [
+        "Better decision-making under uncertainty.",
+        "Improved emotional regulation and presence.",
+        "Sustainable performance habits.",
+        "Stronger stakeholder relationships."
+      ],
+      "slug": "executive-leadership-coaching",
+      "tags": [
+        "Organizations",
+        "Leadership"
+      ],
+      "summary": "1:1 coaching for clarity, calm, and consistent results.",
+      "hero": {
+        "headline": "Clearer thinking. Calmer leadership. Consistent results.",
+        "subtext": "1:1 coaching that blends systemic insight with resilience tools to help leaders perform without burnout."
+      },
+      "title": "Executive & Leadership Coaching",
+      "includes": [
+        "Between-session support (async)",
+        "Practice library",
+        "Periodic stakeholder sync (optional)"
+      ],
+      "modules": [
+        "Clarity goals & constraints.",
+        "Systemic mapping & experiments.",
+        "Resilience tools (breath & state).",
+        "Execution cadence & review."
+      ]
+    },
+    {
+      "id": "sm-masterclass",
+      "formats": [
+        "60–90 min keynote",
+        "Half-day workshop",
+        "3-part series (weekly)"
+      ],
+      "summary": "Practical, science-based tools to reduce stress reactivity and protect focus.",
+      "seo": {
+        "description": "Give your teams a practical toolkit to stay calm and effective under pressure.",
+        "title": "Stress Management Masterclass – Breathing Flame"
+      },
+      "outcomes": [
+        "Reduce acute stress responses and decision fatigue.",
+        "Improve focus and execution during peak demand.",
+        "Common language and toolkit for team regulation.",
+        "Immediate practices that translate into the workday."
+      ],
+      "hero": {
+        "subtext": "Practical, science-based tools for teams to reduce stress reactivity, protect focus, and sustain performance.",
+        "headline": "Train calm under pressure."
+      },
+      "modules": [
+        "Understanding stress & performance: physiology in plain English.",
+        "Breathing protocols for calm & focus (live practice).",
+        "Micro-resets for meetings, deep work, and recovery.",
+        "Team agreements & implementation plan."
+      ],
+      "ctas": [
+        {
+          "url": "/contact",
+          "label": "Book a Consultation"
+        }
+      ],
+      "includes": [
+        "Practice library (video/audio)",
+        "Implementation worksheet",
+        "Optional follow-up Q&A"
+      ],
+      "slug": "stress-management-masterclass",
+      "order": 10,
+      "audience": "Cross-functional teams, leaders, ICs under sustained pressure.",
+      "title": "Stress Management Masterclass",
+      "tags": [
+        "Organizations",
+        "Resilience",
+        "Leadership"
+      ]
+    },
+    {
+      "id": "whm-corporate",
+      "audience": "Leadership teams and high-performance groups; suitable for beginners.",
+      "formats": [
+        "Half-day workshop",
+        "Full-day workshop",
+        "Leadership offsite module"
+      ],
+      "seo": {
+        "description": "Safe, coached WHM for teams: breath, mindset, and optional cold exposure to build resilience.",
+        "title": "Wim Hof Method Corporate Workshops – Breathing Flame"
+      },
+      "hero": {
+        "headline": "Resilience training with breath, mindset, and cold—done safely.",
+        "subtext": "A coached, scalable WHM experience that builds confidence, energy, and stress-resilience for leaders and teams."
+      },
+      "ctas": [
+        {
+          "url": "/contact",
+          "label": "Request a Proposal"
+        }
+      ],
+      "outcomes": [
+        "Improved stress tolerance and recovery.",
+        "Higher confidence and energy under pressure.",
+        "Shared growth experience that builds trust.",
+        "Clear safety protocols and optional cold exposure."
+      ],
+      "includes": [
+        "Certified WHM instruction",
+        "Safety briefing & screening",
+        "Post-workshop practice plan"
+      ],
+      "order": 30,
+      "modules": [
+        "Breathwork technique & safety.",
+        "Mindset training for calm under pressure.",
+        "Cold exposure (optional, coached, scalable).",
+        "Integration plan for ongoing practice."
+      ],
+      "summary": "Coached WHM resilience training for leaders and teams.",
+      "slug": "wim-hof-method-corporate",
+      "tags": [
+        "Organizations",
+        "Resilience",
+        "Leadership"
+      ],
+      "title": "Wim Hof Method Corporate Workshops"
+    }
+  ],
+  "posts": [
+    {
+      "id": "post1",
+      "readingTime": 8,
+      "slug": "the-science-of-breathwork",
+      "excerpt": "Discover the physiological and psychological benefits of breathwork practices and how they can enhance your performance, reduce stress, and improve overall wellbeing.",
+      "tags": [
+        "breathwork",
+        "science",
+        "wellness",
+        "performance"
+      ],
+      "publishedAt": {
+        "seconds": 1705708800,
+        "nanoseconds": 0
+      },
+      "updatedAt": {
+        "seconds": 1705708800,
+        "nanoseconds": 0
+      },
+      "content": "# The Science of Breathwork\n\nBreathwork isn't just a wellness trend—it's a scientifically-backed practice that can fundamentally change how your body and mind function. In this comprehensive guide, we'll explore the research behind conscious breathing and its profound effects on your health and performance.\n\n## The Physiology of Breathing\n\nWhen you breathe consciously, you're not just taking in oxygen. You're activating the autonomic nervous system, specifically the parasympathetic nervous system, which is responsible for rest, recovery, and healing.\n\n### Key Physiological Changes\n\n- **Heart Rate Variability (HRV)**: Conscious breathing increases HRV, a key marker of cardiovascular health and stress resilience\n- **Cortisol Reduction**: Studies show that breathwork can reduce cortisol levels by up to 40%\n- **Immune Function**: Deep breathing stimulates the lymphatic system and enhances immune response\n- **Neuroplasticity**: Regular practice can literally rewire your brain for better emotional regulation\n\n## The Wim Hof Method: A Case Study\n\nThe Wim Hof Method combines breathing techniques with cold exposure and meditation. Research has shown that practitioners can:\n\n- Control their immune response\n- Increase brown fat production\n- Improve focus and mental clarity\n- Reduce inflammation markers\n\n## Practical Applications\n\n### For Stress Management\n- 4-7-8 breathing technique\n- Box breathing for anxiety\n- Coherent breathing for emotional balance\n\n### For Performance\n- Power breathing before workouts\n- Recovery breathing between sets\n- Focus breathing for mental clarity\n\n## Getting Started\n\nBegin with just 5 minutes of conscious breathing daily. Focus on:\n\n1. **Diaphragmatic breathing**: Breathe into your belly, not your chest\n2. **Extended exhales**: Make your exhale longer than your inhale\n3. **Consistency**: Practice at the same time each day\n\nThe science is clear: breathwork is one of the most powerful tools we have for optimizing our physical and mental health. Start small, stay consistent, and watch as your life transforms one breath at a time.",
+      "featuredImage": "/blog/breathwork-science.jpg",
+      "author": {
+        "bio": "Breathing Flame Lead Researcher and Certified Breathwork Instructor",
+        "name": "Dr. Sarah Martinez",
+        "avatar": "/avatars/sarah-martinez.jpg"
+      },
+      "seo": {
+        "metaDescription": "Discover the scientific research behind breathwork practices and how conscious breathing can enhance your performance, reduce stress, and improve wellbeing.",
+        "metaTitle": "The Science of Breathwork: Transform Your Body and Mind",
+        "ogImage": "/blog/breathwork-science-og.jpg"
+      },
+      "title": "The Science of Breathwork: How Conscious Breathing Transforms Your Body and Mind",
+      "published": true
+    },
+    {
+      "id": "post2",
+      "publishedAt": {
+        "seconds": 1705276800,
+        "nanoseconds": 0
+      },
+      "updatedAt": {
+        "seconds": 1705276800,
+        "nanoseconds": 0
+      },
+      "content": "# Building Resilience Through Cold Therapy\n\nCold therapy, also known as cold exposure or cryotherapy, is one of the most powerful tools for building both mental and physical resilience. When practiced safely and consistently, it can transform your relationship with stress and discomfort.\n\n## The Science of Cold Adaptation\n\nCold exposure triggers a cascade of physiological responses designed to protect and strengthen your body:\n\n### Immediate Effects\n- **Vasoconstriction**: Blood vessels constrict to preserve core temperature\n- **Increased Heart Rate**: Your heart works harder to maintain circulation\n- **Release of Stress Hormones**: Adrenaline and noradrenaline surge through your system\n\n### Long-term Adaptations\n- **Brown Fat Activation**: Cold exposure increases brown adipose tissue, which burns calories to generate heat\n- **Improved Circulation**: Regular cold exposure strengthens your cardiovascular system\n- **Enhanced Immune Function**: Cold therapy can boost your immune response and reduce inflammation\n\n## Mental Resilience Benefits\n\nThe mental benefits of cold therapy are perhaps even more profound than the physical ones:\n\n- **Stress Inoculation**: Regular exposure to controlled stress builds your capacity to handle life's challenges\n- **Mental Toughness**: Learning to stay calm in uncomfortable situations transfers to all areas of life\n- **Emotional Regulation**: Cold therapy can help you develop better control over your emotional responses\n\n## Getting Started Safely\n\n### Beginner Protocol\n1. **Start with cold showers**: Begin with 30 seconds of cold water at the end of your regular shower\n2. **Gradually increase duration**: Add 10-15 seconds each week\n3. **Focus on your breathing**: Use breathwork techniques to stay calm and centered\n4. **Listen to your body**: Never push beyond your comfort zone too quickly\n\n### Intermediate Practices\n- **Ice baths**: 2-5 minutes in water between 50-60°F\n- **Cold plunges**: Natural bodies of water when available\n- **Cryotherapy chambers**: Professional cold therapy sessions\n\n## Safety Considerations\n\nAlways consult with a healthcare provider before starting cold therapy, especially if you have:\n- Cardiovascular conditions\n- High blood pressure\n- Raynaud's disease\n- Pregnancy\n\n## The Wim Hof Method Integration\n\nCombining cold therapy with the Wim Hof breathing method can amplify the benefits:\n\n1. **Preparation breathing**: 3-4 rounds of power breathing\n2. **Cold exposure**: Start with 1-2 minutes\n3. **Recovery breathing**: Focus on slow, deep breaths\n4. **Reflection**: Notice how you feel physically and mentally\n\n## Building Your Practice\n\n### Week 1-2: Foundation\n- Cold showers: 30-60 seconds\n- Focus on breathing and staying calm\n- Document your experience\n\n### Week 3-4: Progression\n- Cold showers: 1-2 minutes\n- Add ice to your bath water\n- Practice in different environments\n\n### Month 2+: Mastery\n- Ice baths: 2-5 minutes\n- Cold water swimming\n- Advanced breathing techniques\n\n## The Transformation\n\nAfter 30 days of consistent practice, you'll notice:\n\n- **Improved sleep quality**\n- **Enhanced mood and energy**\n- **Better stress management**\n- **Increased confidence**\n- **Stronger immune system**\n\nCold therapy isn't about being tough—it's about learning to be comfortable with discomfort. This skill transfers to every area of your life, making you more resilient, confident, and capable of handling whatever challenges come your way.\n\nStart small, stay consistent, and watch as your relationship with stress transforms.",
+      "title": "Building Resilience Through Cold Therapy: A Complete Guide",
+      "author": {
+        "bio": "Certified Wim Hof Instructor and Cold Therapy Specialist",
+        "avatar": "/avatars/marcus-thompson.jpg",
+        "name": "Marcus Thompson"
+      },
+      "published": true,
+      "featuredImage": "/blog/cold-therapy.jpg",
+      "seo": {
+        "ogImage": "/blog/cold-therapy-og.jpg",
+        "metaTitle": "Building Resilience Through Cold Therapy: Complete Guide",
+        "metaDescription": "Learn how cold exposure builds mental and physical resilience, boosts immunity, and enhances wellbeing through controlled stress adaptation."
+      },
+      "slug": "building-resilience-through-cold-therapy",
+      "excerpt": "Learn how cold exposure can build mental and physical resilience, boost your immune system, and enhance your overall wellbeing through controlled stress adaptation.",
+      "readingTime": 12,
+      "tags": [
+        "cold-therapy",
+        "resilience",
+        "wellness",
+        "wim-hof"
+      ]
+    },
+    {
+      "id": "post3",
+      "slug": "mindfulness-for-busy-professionals",
+      "seo": {
+        "metaDescription": "Discover practical mindfulness techniques for busy professionals. Learn 5-minute practices that reduce stress and improve focus without overwhelming your schedule.",
+        "metaTitle": "Mindfulness for Busy Professionals: 5-Minute Practices",
+        "ogImage": "/blog/mindfulness-professionals-og.jpg"
+      },
+      "featuredImage": "/blog/mindfulness-professionals.jpg",
+      "content": "# Mindfulness for Busy Professionals\n\nIn today's fast-paced world, finding time for mindfulness can feel like just another item on an endless to-do list. But what if I told you that effective mindfulness doesn't require hours of meditation or a complete lifestyle overhaul?\n\n## The 5-Minute Rule\n\nThe key to sustainable mindfulness for busy professionals is the 5-minute rule: start with just 5 minutes daily. This approach is:\n\n- **Achievable**: Anyone can find 5 minutes\n- **Sustainable**: Builds a habit without overwhelming your schedule\n- **Effective**: Even short practices create measurable benefits\n\n## Micro-Mindfulness Techniques\n\n### 1. The Breathing Space (2-3 minutes)\nPerfect for between meetings or during transitions:\n\n1. **Stop**: Pause whatever you're doing\n2. **Breathe**: Take 3 deep, conscious breaths\n3. **Notice**: Observe your thoughts, emotions, and physical sensations\n4. **Choose**: Decide how you want to respond to the next moment\n\n### 2. The Mindful Minute (1 minute)\nUse this during any brief pause:\n\n- Set a timer for 60 seconds\n- Focus entirely on your breath\n- When your mind wanders, gently return to breathing\n- Notice the quality of your attention\n\n### 3. Walking Meditation (5 minutes)\nTransform your daily walks into mindfulness practice:\n\n- Walk at a natural pace\n- Focus on the sensation of your feet touching the ground\n- Notice the rhythm of your steps\n- Observe your surroundings without judgment\n\n## Desk-Based Practices\n\n### The 4-7-8 Breathing Technique\nIdeal for stress management at your desk:\n\n1. Inhale for 4 counts\n2. Hold for 7 counts\n3. Exhale for 8 counts\n4. Repeat 4 times\n\n### The Body Scan (3-5 minutes)\nA quick check-in with your body:\n\n1. Start at the top of your head\n2. Slowly scan down through your body\n3. Notice any tension or discomfort\n4. Breathe into areas of tension\n5. End at your feet\n\n## Technology-Assisted Mindfulness\n\n### Apps for Busy Professionals\n- **Headspace**: Short, guided meditations\n- **Calm**: Quick stress-relief sessions\n- **Insight Timer**: Free, customizable timers\n- **Ten Percent Happier**: Practical, science-based approach\n\n### Smartphone Reminders\n- Set hourly breathing reminders\n- Use calendar alerts for mindfulness breaks\n- Create a \"mindfulness\" folder with quick practices\n\n## The Science Behind Micro-Practices\n\nResearch shows that even brief mindfulness practices can:\n\n- **Reduce cortisol levels** by up to 25%\n- **Improve focus and attention** within 2 weeks\n- **Enhance emotional regulation** in high-stress situations\n- **Boost immune function** with regular practice\n\n## Creating Your Practice\n\n### Week 1: Foundation\n- Choose one technique\n- Practice for 5 minutes daily\n- Set a specific time and place\n- Track your consistency\n\n### Week 2: Expansion\n- Add a second technique\n- Practice at different times of day\n- Notice patterns in your stress levels\n- Adjust your approach as needed\n\n### Week 3: Integration\n- Combine techniques\n- Practice during transitions\n- Use mindfulness in challenging situations\n- Share your experience with others\n\n### Week 4: Mastery\n- Develop your own micro-practices\n- Teach others what you've learned\n- Create a sustainable routine\n- Celebrate your progress\n\n## Common Challenges and Solutions\n\n### \"I don't have time\"\n**Solution**: Start with 1-minute practices. You have time for one minute.\n\n### \"My mind won't stop racing\"\n**Solution**: That's normal. The goal isn't to stop thoughts—it's to notice them without judgment.\n\n### \"I keep forgetting to practice\"\n**Solution**: Set specific triggers (after coffee, before lunch, etc.) and use reminders.\n\n### \"I don't feel any different\"\n**Solution**: Give it 2 weeks. The benefits are cumulative and often subtle at first.\n\n## The Ripple Effect\n\nAs you develop your mindfulness practice, you'll notice changes in:\n\n- **Decision-making**: More thoughtful, less reactive\n- **Relationships**: Better listening, more empathy\n- **Performance**: Improved focus, reduced errors\n- **Wellbeing**: Less stress, more satisfaction\n\n## Your Next Steps\n\n1. **Choose one technique** from this article\n2. **Set a 5-minute timer** for tomorrow\n3. **Practice consistently** for one week\n4. **Notice the changes** in your daily experience\n5. **Share your success** with your team or colleagues\n\nRemember: mindfulness isn't about perfection—it's about presence. Even 5 minutes of imperfect practice is better than no practice at all.\n\nStart today. Your future self will thank you.",
+      "title": "Mindfulness for Busy Professionals: 5-Minute Practices That Actually Work",
+      "readingTime": 10,
+      "publishedAt": {
+        "seconds": 1704844800,
+        "nanoseconds": 0
+      },
+      "tags": [
+        "mindfulness",
+        "stress-management",
+        "productivity",
+        "wellness"
+      ],
+      "updatedAt": {
+        "seconds": 1704844800,
+        "nanoseconds": 0
+      },
+      "excerpt": "Discover practical mindfulness techniques designed for busy professionals who need effective stress management and mental clarity without adding more to their already packed schedules.",
+      "author": {
+        "avatar": "/avatars/elena-rodriguez.jpg",
+        "name": "Dr. Elena Rodriguez",
+        "bio": "Corporate Wellness Consultant and Mindfulness Expert"
+      },
+      "published": true
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "test1",
+      "text": "The Reverse Aging Challenge completely transformed my life. I have more energy than I've had in years and feel like a completely different person.",
+      "featured": true,
+      "verified": true,
+      "createdAt": {
+        "seconds": 1705276800,
+        "nanoseconds": 0
+      },
+      "tags": [
+        "energy",
+        "transformation"
+      ],
+      "rating": 5,
+      "author": {
+        "company": "Tech Corp",
+        "title": "Marketing Director",
+        "avatar": "/avatars/sarah.jpg",
+        "name": "Sarah Johnson"
+      }
+    },
+    {
+      "id": "test2",
+      "createdAt": {
+        "seconds": 1704844800,
+        "nanoseconds": 0
+      },
+      "tags": [
+        "stress",
+        "focus"
+      ],
+      "rating": 5,
+      "featured": true,
+      "verified": true,
+      "text": "The breathwork techniques I learned have been game-changing for my stress levels. I feel more centered and focused than ever before.",
+      "author": {
+        "title": "CEO",
+        "company": "Startup Inc",
+        "name": "Michael Chen",
+        "avatar": "/avatars/michael.jpg"
+      }
+    }
+  ],
+  "settings": {
+    "brandFlags": {
+      "enableWhatsApp": true,
+      "showEvents": true,
+      "showTestimonials": true,
+      "enableBlog": true
+    },
+    "masterTagline": "Resilience. Clarity. Transformation.",
+    "contact": {
+      "email": "info@breathingflame.com",
+      "address": "Málaga, Spain",
+      "phone": "+34 611 00 64 08"
+    },
+    "seoDefaults": {
+      "metaDescription": "Perform at your best. Live with clarity. Transform your life through breathwork, mindfulness, and transformative experiences.",
+      "metaTitle": "Breathing Flame - Resilience. Clarity. Transformation.",
+      "ogImage": "/og-image.jpg"
+    },
+    "id": "site",
+    "socials": {
+      "linkedin": "https://linkedin.com/company/breathingflame",
+      "twitter": "https://twitter.com/breathingflame",
+      "instagram": "https://instagram.com/breathing.flame",
+      "youtube": "https://youtube.com/@BreathingFlameTV",
+      "facebook": "https://facebook.com/breathingflame"
+    },
+    "siteTitle": "Breathing Flame"
+  },
+  "navigation": {
+    "headerLinks": [
+      {
+        "external": false,
+        "label": "For Individuals",
+        "pathOrUrl": "/individuals",
+        "order": 10
+      },
+      {
+        "label": "For Organizations",
+        "pathOrUrl": "/organizations",
+        "order": 20,
+        "external": false
+      },
+      {
+        "label": "Programs",
+        "order": 30,
+        "external": false,
+        "pathOrUrl": "/programs"
+      },
+      {
+        "label": "About",
+        "pathOrUrl": "/about",
+        "order": 40,
+        "external": false
+      }
+    ],
+    "id": "main",
+    "footerGroups": [
+      {
+        "order": 10,
+        "title": "RESILIENCE",
+        "links": [
+          {
+            "external": false,
+            "pathOrUrl": "/programs/reverse-aging-challenge",
+            "label": "The Reverse Aging Challenge",
+            "order": 10
+          },
+          {
+            "pathOrUrl": "/experiences/wim-hof-method",
+            "label": "Wim Hof Method Workshops",
+            "order": 20,
+            "external": false
+          },
+          {
+            "label": "9D Breathwork Journeys",
+            "external": false,
+            "order": 30,
+            "pathOrUrl": "/experiences/9d-breathwork"
+          }
+        ]
+      },
+      {
+        "links": [
+          {
+            "label": "Unblocked in Ten Weeks",
+            "order": 10,
+            "external": false,
+            "pathOrUrl": "/programs/unblocked-in-ten-weeks"
+          },
+          {
+            "label": "Unstoppable",
+            "order": 20,
+            "external": false,
+            "pathOrUrl": "/programs/unstoppable"
+          },
+          {
+            "pathOrUrl": "/organizations#business-constellations",
+            "order": 30,
+            "label": "Business Constellations",
+            "external": false
+          }
+        ],
+        "order": 20,
+        "title": "CLARITY"
+      },
+      {
+        "links": [
+          {
+            "label": "For Individuals",
+            "pathOrUrl": "/individuals",
+            "order": 10,
+            "external": false
+          },
+          {
+            "external": false,
+            "label": "For Organizations",
+            "pathOrUrl": "/organizations",
+            "order": 20
+          },
+          {
+            "pathOrUrl": "/about",
+            "external": false,
+            "order": 30,
+            "label": "About Breathing Flame"
+          }
+        ],
+        "title": "TRANSFORMATION",
+        "order": 30
+      },
+      {
+        "title": "RESOURCES",
+        "links": [
+          {
+            "pathOrUrl": "/#ignite-your-flame",
+            "external": false,
+            "label": "Ignite Your Flame",
+            "order": 10
+          },
+          {
+            "external": false,
+            "order": 20,
+            "pathOrUrl": "/#peak-energy-profiler",
+            "label": "Peak Energy Profiler"
+          },
+          {
+            "order": 30,
+            "external": true,
+            "label": "Reverse Aging Academy",
+            "pathOrUrl": "https://reverseaging.academy"
+          }
+        ],
+        "order": 40
+      }
+    ],
+    "anchors": [
+      {
+        "order": 10,
+        "label": "Ignite Your Flame",
+        "hash": "#ignite-your-flame"
+      },
+      {
+        "hash": "#peak-energy-profiler",
+        "label": "Peak Energy Profiler",
+        "order": 20
+      }
+    ],
+    "primaryCTA": {
+      "label": "Book a Meeting",
+      "pathOrUrl": "/contact",
+      "external": false
+    }
+  },
+  "pageIndividuals": {
+    "programs": {
+      "subtext": "Whether you want to reset your energy, gain clarity in your next step, or sustain breakthroughs, our programs give you a clear path forward.",
+      "programRefs": [
+        "rac",
+        "unblocked",
+        "unstoppable"
+      ],
+      "headline": "Programs for Lasting Change"
+    },
+    "experiences": {
+      "experienceRefs": [
+        "whm",
+        "9d-breathwork"
+      ],
+      "headline": "Immersive Experiences",
+      "subtext": "Explore powerful tools in single-day or short-format journeys that give you immediate results and open new doors."
+    },
+    "resources": {
+      "featuredPostRef": "post1",
+      "subtext": "Get started with free tools and practices you can use right away.",
+      "resourceLinks": [
+        {
+          "external": false,
+          "pathOrUrl": "/resources/ignite-your-flame",
+          "label": "Ignite Your Flame"
+        },
+        {
+          "external": false,
+          "pathOrUrl": "/resources/peak-energy-profiler",
+          "label": "Peak Energy Profiler"
+        }
+      ],
+      "headline": "Free Resources"
+    },
+    "introBlocks": [
+      {
+        "copy": "Build physical and emotional strength with breathwork, cold exposure, and other natural tools that train your body to handle stress.",
+        "title": "Resilience"
+      },
+      {
+        "title": "Clarity",
+        "copy": "Discover and release hidden blocks, so you can make decisions with confidence and focus on what matters most."
+      },
+      {
+        "copy": "Turn short-term breakthroughs into long-term change with sustainable practices you can integrate into everyday life.",
+        "title": "Transformation"
+      }
+    ],
+    "id": "main",
+    "hero": {
+      "headline": "Perform at your best. Live with clarity. Transform your life.",
+      "ctas": [
+        {
+          "external": false,
+          "pathOrUrl": "/programs",
+          "label": "Explore Programs"
+        },
+        {
+          "label": "Upcoming Events",
+          "pathOrUrl": "/events",
+          "external": false
+        }
+      ],
+      "subtext": "Breathing Flame helps you reset your body, mind, and habits through science-backed practices that build resilience, reveal clarity, and create lasting transformation."
+    },
+    "testimonials": {
+      "subtext": "Our clients often describe these programs as \"life-changing\" — but don't take our word for it.",
+      "testimonialRefs": [
+        "test1",
+        "test2",
+        "test3"
+      ],
+      "headline": "Stories of Transformation"
+    },
+    "finalCTA": {
+      "buttons": [
+        {
+          "label": "Explore Programs",
+          "external": false,
+          "pathOrUrl": "/programs"
+        },
+        {
+          "pathOrUrl": "/contact",
+          "external": false,
+          "label": "Book a Call"
+        }
+      ],
+      "subtext": "Choose the path that feels right for you and take the first step today.",
+      "headline": "Ready to start your transformation?"
+    },
+    "seo": {
+      "title": "Programs & Experiences for Individuals – Breathing Flame",
+      "ogImage": "/og-image.jpg",
+      "description": "Unlock resilience, clarity, and transformation with science-backed practices, programs, and workshops designed for personal growth."
+    }
+  },
+  "pageOrganizations": {
+    "hero": {
+      "headline": "Resilient teams. Clear leaders. Transformative cultures.",
+      "subtext": "Breathing Flame helps organizations reduce stress, strengthen performance, and build cultures where people thrive.",
+      "ctas": [
+        {
+          "pathOrUrl": "/contact",
+          "label": "Book a Consultation",
+          "external": false
+        },
+        {
+          "label": "Download Program Guide",
+          "pathOrUrl": "/resources#whitepaper",
+          "external": false
+        }
+      ]
+    },
+    "seo": {
+      "title": "Organizational Performance & Wellbeing – Breathing Flame",
+      "description": "Science-backed programs for resilient teams, clear leaders, and transformative cultures. Workshops, coaching, and systemic facilitation for organizations.",
+      "ogImage": "/og-image.jpg"
+    },
+    "results": {
+      "testimonialRefs": [
+        "test1",
+        "test2",
+        "test3"
+      ],
+      "headline": "Results in Action",
+      "subtext": "Organizations we've worked with report calmer, more focused teams and leaders who see the bigger picture."
+    },
+    "formats": [
+      "On-site workshops",
+      "Online and hybrid sessions",
+      "Leadership retreats",
+      "Ongoing coaching"
+    ],
+    "resources": {
+      "headline": "Resources for Leaders",
+      "subtext": "Explore insights and practical tools designed for leaders and HR teams.",
+      "featuredPostRef": "post1",
+      "resourceLinks": [
+        {
+          "label": "The Business Case for Resilience at Work",
+          "external": false,
+          "pathOrUrl": "/resources#whitepaper"
+        }
+      ]
+    },
+    "id": "main",
+    "solutions": [
+      {
+        "title": "Stress Management Masterclass",
+        "copy": "Practical, science-based tools for focus and energy.",
+        "cta": {
+          "label": "Learn More",
+          "url": "/organizations"
+        }
+      },
+      {
+        "title": "Breathwork & WHM for Teams",
+        "copy": "Bring energizing and transformative practices into your workplace.",
+        "cta": {
+          "label": "Learn More",
+          "url": "/organizations"
+        }
+      },
+      {
+        "copy": "Uncover hidden dynamics in leadership and decision-making.",
+        "title": "Business Constellations",
+        "cta": {
+          "label": "Learn More",
+          "url": "/organizations"
+        }
+      },
+      {
+        "title": "Executive & Leadership Coaching",
+        "copy": "Develop clear, resilient leaders who inspire transformation.",
+        "cta": {
+          "url": "/organizations",
+          "label": "Learn More"
+        }
+      }
+    ],
+    "finalCTA": {
+      "headline": "Bring resilience and performance to your organization.",
+      "subtext": "Let's design a solution that fits your culture and goals.",
+      "buttons": [
+        {
+          "pathOrUrl": "/contact",
+          "label": "Book a Consultation",
+          "external": false
+        },
+        {
+          "external": false,
+          "pathOrUrl": "/resources#whitepaper",
+          "label": "Download Program Guide"
+        }
+      ]
+    },
+    "businessDrivers": [
+      {
+        "copy": "Give your teams tools to stay energized and effective, even under pressure.",
+        "title": "Performance"
+      },
+      {
+        "title": "Resilience",
+        "copy": "Equip people with science-based practices that reduce stress and improve adaptability."
+      },
+      {
+        "title": "Wellbeing",
+        "copy": "Build healthier cultures where productivity and personal sustainability go hand in hand."
+      }
+    ]
+  },
+  "pagePrograms": {
+    "filters": {
+      "showPrograms": true,
+      "defaultTab": "all",
+      "showExperiences": true,
+      "showAll": true
+    },
+    "search": {
+      "placeholder": "Search programs…",
+      "enabled": true
+    },
+    "id": "main",
+    "hero": {
+      "headline": "Explore Our Programs",
+      "ctas": [
+        {
+          "pathOrUrl": "/individuals",
+          "label": "For Individuals",
+          "external": false
+        },
+        {
+          "external": false,
+          "label": "For Organizations",
+          "pathOrUrl": "/organizations"
+        }
+      ],
+      "subtext": "From healthspan practices to systemic coaching, discover offerings designed to elevate performance, build resilience, and create lasting transformation."
+    },
+    "seo": {
+      "ogImage": "/og-image.jpg",
+      "description": "Science-backed programs and immersive experiences for individuals and organizations: Reverse Aging Challenge, Unblocked, WHM, 9D, and more.",
+      "title": "Programs & Experiences – Breathing Flame"
+    }
+  },
+  "pageEvents": {
+    "intro": {
+      "body": "Our events give you an immersive experience of the tools we teach—whether it’s a Wim Hof Method workshop, a 9D Breathwork Journey, or a transformational retreat. Every session is a chance to reset, recharge, and reconnect with what matters.",
+      "title": "Join Us Live"
+    },
+    "pinned": [],
+    "hero": {
+      "headline": "Upcoming Events",
+      "subtext": "Workshops, breathwork journeys, and retreats that help you build resilience, clarity, and transformation."
+    },
+    "seo": {
+      "description": "Join live workshops, breathwork sessions, and retreats designed to build resilience, clarity, and transformation.",
+      "title": "Events – Breathing Flame",
+      "ogImage": "/og-image.jpg"
+    },
+    "embed": {
+      "border": "1px solid #bfcbda88",
+      "borderRadius": "8px",
+      "height": 900,
+      "url": "https://luma.com/embed/calendar/cal-V27tG2UMiGzbGHH/events"
+    },
+    "id": "main",
+    "fallbackCTA": {
+      "url": "https://luma.com/calendar/cal-V27tG2UMiGzbGHH/events",
+      "label": "Open Calendar on Luma"
+    }
+  },
+  "pageResources": {
+    "newsletter": {
+      "ctaUrl": "/resources#newsletter",
+      "enabled": true,
+      "ctaLabel": "Subscribe",
+      "headline": "Subscribe to the Breathing Flame Letter",
+      "subtext": "Monthly insights, tools, and event invites — focused on performance, resilience, and healthspan. No spam.",
+      "idAnchor": "newsletter"
+    },
+    "filters": {
+      "enabled": true,
+      "tags": [
+        "Performance",
+        "Resilience",
+        "Longevity"
+      ]
+    },
+    "hero": {
+      "headline": "Resources",
+      "subtext": "Practical, evidence-based insights to help you build performance, resilience, and healthspan."
+    },
+    "search": {
+      "enabled": true,
+      "placeholder": "Search articles…"
+    },
+    "emptyState": {
+      "subtext": "Try a different tag or clear the search.",
+      "title": "No posts found"
+    },
+    "id": "main",
+    "seo": {
+      "description": "Evidence-based articles and videos on performance, resilience, and healthspan.",
+      "title": "Resources – Breathing Flame",
+      "ogImage": "/og-image.jpg"
+    }
+  },
+  "pageTestimonials": {
+    "intro": {
+      "body": "From individuals to organizations, our clients consistently share the powerful impact of Breathing Flame programs, workshops, and retreats.",
+      "title": "What People Are Saying"
+    },
+    "fallbackCTA": {
+      "url": "https://g.page/r/CdczXTXsInRmEBM/review",
+      "label": "Read Reviews on Google"
+    },
+    "seo": {
+      "ogImage": "/og-image.jpg",
+      "title": "Testimonials – Breathing Flame",
+      "description": "See what individuals and organizations say about Breathing Flame’s programs, workshops, and retreats."
+    },
+    "hero": {
+      "subtext": "Real stories of resilience, clarity, and transformation.",
+      "headline": "Testimonials"
+    },
+    "id": "main"
+  },
+  "pageContact": {
+    "hero": {
+      "headline": "Contact Us",
+      "subtext": "We’d love to hear from you — whether you’re an individual seeking transformation or an organization building resilience."
+    },
+    "intro": {
+      "body": "Tell us a bit about what you’re looking for, and we’ll guide you to the right next step.",
+      "title": "Let’s Connect"
+    },
+    "id": "main",
+    "form": {
+      "headline": "Send us a message",
+      "successMessage": "Thanks for reaching out! We’ll be in touch shortly.",
+      "errorMessage": "Something went wrong. Please try again.",
+      "subtext": "Fill out the form and we’ll get back to you as soon as possible."
+    },
+    "seo": {
+      "ogImage": "/og-image.jpg",
+      "description": "Get in touch with Breathing Flame. Reach out to explore programs, events, and organizational solutions.",
+      "title": "Contact – Breathing Flame"
+    }
+  },
+  "pageCommunity": {
+    "seo": {
+      "title": "Community – Breathing Flame",
+      "description": "Join our WhatsApp community, see the event calendar, and follow Breathing Flame across YouTube, Instagram, LinkedIn, TikTok, Medium, and Substack.",
+      "ogImage": "/og-image.jpg"
+    },
+    "hero": {
+      "headline": "Join the Community",
+      "subtext": "Connect with people building resilience, clarity, and transformation — online and in person."
+    },
+    "sections": [
+      {
+        "cards": [
+          {
+            "badge": "Join",
+            "icon": "whatsapp",
+            "url": "#",
+            "sublabel": "Breathing Flame",
+            "order": 10,
+            "external": true,
+            "label": "WhatsApp Community"
+          },
+          {
+            "order": 20,
+            "url": "https://luma.com/calendar/cal-V27tG2UMiGzbGHH/events",
+            "badge": "See events",
+            "external": true,
+            "label": "Luma Calendar",
+            "icon": "calendar"
+          },
+          {
+            "label": "Meetup – Group 1",
+            "icon": "calendar",
+            "url": "#",
+            "external": true,
+            "order": 30
+          },
+          {
+            "label": "Meetup – Group 2",
+            "url": "#",
+            "external": true,
+            "order": 40,
+            "icon": "calendar"
+          },
+          {
+            "order": 50,
+            "external": true,
+            "label": "Meetup – Group 3",
+            "url": "#",
+            "icon": "calendar"
+          }
+        ],
+        "title": "Groups & Calendars",
+        "order": 10
+      },
+      {
+        "order": 20,
+        "cards": [
+          {
+            "order": 10,
+            "external": true,
+            "icon": "youtube",
+            "badge": "Watch",
+            "url": "https://www.youtube.com/@BreathingFlameTV",
+            "label": "YouTube"
+          },
+          {
+            "label": "Instagram",
+            "icon": "instagram",
+            "order": 20,
+            "url": "https://www.instagram.com/breathing.flame",
+            "external": true
+          },
+          {
+            "icon": "linkedin",
+            "external": true,
+            "url": "https://www.linkedin.com/company/breathingflame/",
+            "label": "LinkedIn",
+            "order": 30
+          },
+          {
+            "order": 40,
+            "icon": "tiktok",
+            "external": true,
+            "label": "TikTok",
+            "url": "https://www.tiktok.com/@breathingflame"
+          }
+        ],
+        "title": "Social & Video"
+      },
+      {
+        "cards": [
+          {
+            "url": "/resources#newsletter",
+            "label": "Newsletter",
+            "icon": "mail",
+            "badge": "Subscribe",
+            "external": false,
+            "order": 10
+          },
+          {
+            "icon": "medium",
+            "order": 20,
+            "url": "#",
+            "external": true,
+            "label": "Medium"
+          },
+          {
+            "order": 30,
+            "icon": "substack",
+            "label": "Substack",
+            "url": "#",
+            "external": true
+          }
+        ],
+        "title": "Articles & Newsletter",
+        "order": 30
+      }
+    ],
+    "intro": {
+      "body": "Find our WhatsApp groups, event calendar, and social channels. Say hello, join a session, and stay in the loop.",
+      "title": "Where We Hang Out"
+    }
+  },
+  "pagePress": {
+    "intro": {
+      "body": "Breathing Flame and founder Oscar Trelles have been featured in media outlets worldwide, sharing insights on resilience, performance, and wellbeing.",
+      "title": "Media Mentions"
+    },
+    "mentions": [
+      {
+        "title": "Shared insights on the five-finger breathing technique",
+        "date": "2025-09-20",
+        "excerpt": "Oscar Trelles explained how a simple hand-focused breathing method can help calm the nervous system before sleep.",
+        "image": "/assets/press/gb-news-logo.png",
+        "url": "https://www.gbnews.com/health/how-to-sleep-hand-breath-technique",
+        "outlet": "GB News"
+      }
+    ],
+    "pressKit": {
+      "assets": [
+        {
+          "url": "/assets/press/breathingflame-logos.zip",
+          "label": "Logo Pack (PNG/SVG)",
+          "type": "logo"
+        },
+        {
+          "url": "/assets/press/oscar-trelles-bio.pdf",
+          "label": "Founder Bio (PDF)",
+          "type": "pdf"
+        },
+        {
+          "url": "/assets/press/photos.zip",
+          "type": "photo",
+          "label": "Photos (JPEG)"
+        }
+      ],
+      "headline": "Press Kit",
+      "description": "Download official assets including logos, photos, and founder bio."
+    },
+    "seo": {
+      "description": "Find Breathing Flame's media mentions, press kit, and contact information for journalists.",
+      "title": "Press & Media – Breathing Flame",
+      "ogImage": "/og-image.jpg"
+    },
+    "contact": {
+      "phone": "+34 611 00 64 08",
+      "email": "press@breathingflame.com",
+      "headline": "Press Contact",
+      "subtext": "For interviews, speaking, or collaborations, please reach out directly."
+    },
+    "hero": {
+      "headline": "Press & Media",
+      "subtext": "Media mentions, brand assets, and press contact for Breathing Flame."
+    }
+  },
+  "about": {
+    "proof": {
+      "ratingText": "⭐ 5.0 on Google",
+      "logos": []
+    },
+    "story": {
+      "title": "Our Story",
+      "body": "Breathing Flame exists to help humans perform better and live better—without burning out.\n\nWe combine evidence-based methods with immersive experiences to build resilience, reveal clarity, and create lasting transformation for individuals and organizations."
+    },
+    "finalCTA": {
+      "buttons": [
+        {
+          "url": "/individuals",
+          "external": false,
+          "label": "For Individuals"
+        },
+        {
+          "url": "/organizations",
+          "external": false,
+          "label": "For Organizations"
+        },
+        {
+          "external": false,
+          "url": "/contact",
+          "label": "Contact"
+        }
+      ],
+      "subtext": "Whether you're an individual or an organization, we'll help you build resilience, clarity, and transformation.",
+      "headline": "Ready to work together?"
+    },
+    "hero": {
+      "subtext": "Resilience. Clarity. Transformation. We help people and organizations unlock performance and wellbeing through science-backed, nature-powered practices.",
+      "headline": "About Breathing Flame"
+    },
+    "id": "main",
+    "seo": {
+      "ogImage": "/og-image.jpg",
+      "description": "Breathing Flame helps people and organizations unlock performance and wellbeing through science-backed, nature-powered practices.",
+      "title": "About – Breathing Flame"
+    },
+    "approach": {
+      "intro": "Our approach integrates physiological training, mindset work, and systemic insight.",
+      "pillars": [
+        {
+          "copy": "Train your body and mind to handle stress, adapt to challenges, and sustain energy.",
+          "title": "Resilience"
+        },
+        {
+          "copy": "Remove hidden blocks and align decisions with what truly matters.",
+          "title": "Clarity"
+        },
+        {
+          "title": "Transformation",
+          "copy": "Turn breakthroughs into sustainable change with practices you can integrate every day."
+        }
+      ]
+    },
+    "founder": {
+      "title": "Founder and Curriculum Director",
+      "socials": [
+        {
+          "label": "LinkedIn",
+          "url": "https://www.linkedin.com/in/oscartrelles"
+        }
+      ],
+      "bio": "Oscar blends breathwork, the Wim Hof Method, systemic coaching, and performance frameworks to help clients reset their nervous system, make clear decisions, and sustain meaningful change.\n\nHis work ranges from 1:1 coaching to organizational workshops and retreats.",
+      "credentials": [
+        "Certified Wim Hof Method Instructor",
+        "Systemic/Constellations Facilitator",
+        "Corporate and Entrepreneurial Coaching"
+      ],
+      "name": "Oscar Trelles"
+    },
+    "collaborators": []
+  },
+  "lastUpdated": "2025-09-26T15:25:15.354Z"
+}

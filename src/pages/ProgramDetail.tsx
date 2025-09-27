@@ -65,7 +65,8 @@ export function ProgramDetail() {
       <SEO data={{ 
         title: program.seo.title, 
         description: program.seo.description, 
-        image: program.seo.ogImage 
+        image: program.seo.ogImage,
+        canonical: `https://breathingflame.com/programs/${program.slug}`
       }} />
       
       {/* JSON-LD */}

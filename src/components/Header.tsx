@@ -21,10 +21,24 @@ interface HeaderProps {
  */
 export function Header({ className = '' }: HeaderProps) {
   const location = useLocation()
-  const { data: navigation } = useNavigation()
+  const { data: navigation, loading, error } = useNavigation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
 
   // Handle scroll effect for sticky header
   useEffect(() => {
@@ -125,32 +139,94 @@ export function Header({ className = '' }: HeaderProps) {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button / Close Button */}
             <button
-              className={`${styles.mobileMenuButton} ${isMobileMenuOpen ? styles.open : ''}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle mobile menu"
+              aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+              className={styles.mobileMenuButton}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'white',
+                fontSize: '24px',
+                cursor: 'pointer',
+                padding: '8px'
+              }}
             >
-              <span></span>
-              <span></span>
-              <span></span>
+              {isMobileMenuOpen ? '✕' : '☰'}
             </button>
           </div>
 
-          {/* Mobile Navigation */}
-          <nav className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.open : ''}`}>
-            {navigation?.headerLinks
-              ?.sort((a, b) => (a.order || 0) - (b.order || 0))
-              ?.map((link) => (
-                <div key={link.label} className={styles.mobileNavItem}>
+          {/* Mobile Navigation Overlay */}
+          <nav 
+            style={{
+              position: 'fixed',
+              top: '80px', // Start below the header
+              left: '0',
+              right: '0',
+              bottom: '0',
+              width: '100vw',
+              height: 'calc(100vh - 80px)',
+              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+              zIndex: 9998,
+              opacity: isMobileMenuOpen ? 1 : 0,
+              visibility: isMobileMenuOpen ? 'visible' : 'hidden',
+              transition: 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+          >
+            {/* Mobile Menu Content */}
+            <div style={{
+              padding: '40px 20px',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start'
+            }}>
+              {/* Menu Items Container with Animation */}
+              <div style={{
+                backgroundColor: '#000000',
+                padding: '30px',
+                borderRadius: '12px',
+                width: '350px',
+                transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
+                transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
+              }}>
+                {navigation?.headerLinks
+                ?.sort((a, b) => (a.order || 0) - (b.order || 0))
+                ?.map((link, index) => (
+                <div 
+                  key={link.label} 
+                  style={{
+                    marginBottom: '20px',
+                    opacity: isMobileMenuOpen ? 1 : 0,
+                    transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(-30px)',
+                    transition: `opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
+                  }}
+                >
                   {link.external ? (
                     <a
                       href={link.pathOrUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`${styles.mobileNavLink} ${
-                        location.pathname === link.pathOrUrl ? styles.active : ''
-                      }`}
+                      style={{
+                        color: 'var(--color-text-primary)',
+                        textDecoration: 'none',
+                        fontSize: 'var(--font-size-2xl)',
+                        fontWeight: '900',
+                        fontFamily: 'var(--font-family-primary)',
+                        fontStyle: 'italic',
+                        letterSpacing: '-0.02em',
+                        textTransform: 'uppercase',
+                        display: 'block',
+                        padding: '12px 0',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                        transition: 'color 0.2s ease-in-out',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => e.target.style.color = '#ff6b35'}
+                      onMouseLeave={(e) => e.target.style.color = 'var(--color-text-primary)'}
                       onClick={() => trackButtonClick('mobile_nav_link', link.label)}
                     >
                       {link.label}
@@ -158,9 +234,31 @@ export function Header({ className = '' }: HeaderProps) {
                   ) : (
                     <Link
                       to={link.pathOrUrl}
-                      className={`${styles.mobileNavLink} ${
-                        location.pathname === link.pathOrUrl ? styles.active : ''
-                      }`}
+                      style={{
+                        color: location.pathname === link.pathOrUrl ? '#ff6b35' : 'var(--color-text-primary)',
+                        textDecoration: 'none',
+                        fontSize: 'var(--font-size-2xl)',
+                        fontWeight: '900',
+                        fontFamily: 'var(--font-family-primary)',
+                        fontStyle: 'italic',
+                        letterSpacing: '-0.02em',
+                        textTransform: 'uppercase',
+                        display: 'block',
+                        padding: '12px 0',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                        transition: 'color 0.2s ease-in-out',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (location.pathname !== link.pathOrUrl) {
+                          e.target.style.color = '#ff6b35'
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (location.pathname !== link.pathOrUrl) {
+                          e.target.style.color = 'var(--color-text-primary)'
+                        }
+                      }}
                       onClick={() => trackButtonClick('mobile_nav_link', link.label)}
                     >
                       {link.label}
@@ -168,32 +266,8 @@ export function Header({ className = '' }: HeaderProps) {
                   )}
                 </div>
               ))}
-
-
-            {/* Mobile CTA */}
-            {navigation?.primaryCTA && (
-              <div className={styles.mobileCTA}>
-                {navigation.primaryCTA.external ? (
-                  <a
-                    href={navigation.primaryCTA.pathOrUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn--primary btn--large"
-                    onClick={() => trackButtonClick('mobile_header_cta', 'external')}
-                  >
-                    {navigation.primaryCTA.label}
-                  </a>
-                ) : (
-                  <Link
-                    to={navigation.primaryCTA.pathOrUrl}
-                    className="btn btn--primary btn--large"
-                    onClick={() => trackButtonClick('mobile_header_cta', 'link')}
-                  >
-                    {navigation.primaryCTA.label}
-                  </Link>
-                )}
               </div>
-            )}
+            </div>
           </nav>
         </div>
       </header>

@@ -57,7 +57,7 @@ export function Home() {
       />
 
       {/* Hero Section with YouTube Video Background */}
-      <section className={styles.hero}>
+      <section className={`${styles.hero} home-hero`}>
         {/* YouTube Video Background */}
         <VideoBackground
           videoId="KcK67tYvPgA"
@@ -89,7 +89,7 @@ export function Home() {
             
 
             <motion.div 
-              className={styles.heroCTA}
+              className={`${styles.heroCTA} cta-container`}
               variants={reducedMotion ? {} : fadeInUp}
               transition={{ delay: 0.4 }}
             >
@@ -184,7 +184,7 @@ export function Home() {
                     
                     <div className={styles.programMeta}>
                       <span className={styles.programDuration}>{program.duration}</span>
-                      <span className={styles.programFormat}>{program.format}</span>
+                      <span className={styles.programFormat}>{program.format?.delivery || program.format_legacy}</span>
                     </div>
 
                     <a
@@ -226,7 +226,7 @@ export function Home() {
                     
                     <div className={styles.experienceMeta}>
                       <span className={styles.experienceDuration}>{experience.duration}</span>
-                      <span className={styles.experienceFormat}>{experience.format}</span>
+                      <span className={styles.experienceFormat}>{experience.format?.delivery || experience.format_legacy}</span>
                     </div>
 
                     <a

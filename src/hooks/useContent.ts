@@ -1,0 +1,348 @@
+import { useState, useEffect } from 'react';
+import { ContentData, ContentHookResult, Locale } from '../types/content';
+
+// Content cache
+let contentCache: { [key in Locale]?: ContentData } = {};
+let isLoading = false;
+
+// Load content for a specific locale
+async function loadContent(locale: Locale): Promise<ContentData> {
+  if (contentCache[locale]) {
+    return contentCache[locale]!;
+  }
+
+  if (isLoading) {
+    // Wait for ongoing load
+    return new Promise((resolve) => {
+      const checkCache = () => {
+        if (contentCache[locale]) {
+          resolve(contentCache[locale]!);
+        } else {
+          setTimeout(checkCache, 50);
+        }
+      };
+      checkCache();
+    });
+  }
+
+  isLoading = true;
+  
+  try {
+    const contentModule = await import(`../content/${locale}.json`);
+    const content = contentModule.default as ContentData;
+    contentCache[locale] = content;
+    return content;
+  } catch (error) {
+    console.warn(`Failed to load content for locale ${locale}, falling back to en`);
+    if (locale !== 'en') {
+      return loadContent('en');
+    }
+    throw error;
+  } finally {
+    isLoading = false;
+  }
+}
+
+// Main content hook
+export function useContent(locale: Locale = 'en'): ContentHookResult<ContentData> {
+  const [data, setData] = useState<ContentData | null>(contentCache[locale] || null);
+  const [loading, setLoading] = useState(!contentCache[locale]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (contentCache[locale]) {
+      setData(contentCache[locale]!);
+      setLoading(false);
+      return;
+    }
+
+    loadContent(locale)
+      .then((content) => {
+        setData(content);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [locale]);
+
+  return { data, loading, error };
+}
+
+// Individual content hooks for better performance
+export function useHome(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.home || null,
+    loading,
+    error
+  };
+}
+
+export function usePrograms(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.programs || [],
+    loading,
+    error
+  };
+}
+
+export function useExperiences(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.experiences || [],
+    loading,
+    error
+  };
+}
+
+export function useSolutions(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.solutions || [],
+    loading,
+    error
+  };
+}
+
+export function usePosts(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.posts || [],
+    loading,
+    error
+  };
+}
+
+export function useTestimonials(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.testimonials || [],
+    loading,
+    error
+  };
+}
+
+export function useSettings(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.settings || null,
+    loading,
+    error
+  };
+}
+
+export function useNavigation(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.navigation || null,
+    loading,
+    error
+  };
+}
+
+// Page-specific hooks
+export function usePageIndividuals(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageIndividuals || null,
+    loading,
+    error
+  };
+}
+
+export function usePageOrganizations(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageOrganizations || null,
+    loading,
+    error
+  };
+}
+
+export function usePagePrograms(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pagePrograms || null,
+    loading,
+    error
+  };
+}
+
+export function usePageEvents(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageEvents || null,
+    loading,
+    error
+  };
+}
+
+export function usePageResources(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageResources || null,
+    loading,
+    error
+  };
+}
+
+export function usePageTestimonials(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageTestimonials || null,
+    loading,
+    error
+  };
+}
+
+export function usePageContact(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageContact || null,
+    loading,
+    error
+  };
+}
+
+export function usePageCommunity(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageCommunity || null,
+    loading,
+    error
+  };
+}
+
+export function usePagePress(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pagePress || null,
+    loading,
+    error
+  };
+}
+
+export function useAbout(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.about || null,
+    loading,
+    error
+  };
+}
+
+// Utility hooks for specific data needs
+export function useAllOfferings(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data: programs, loading: programsLoading, error: programsError } = usePrograms(locale);
+  const { data: experiences, loading: experiencesLoading, error: experiencesError } = useExperiences(locale);
+  const { data: solutions, loading: solutionsLoading, error: solutionsError } = useSolutions(locale);
+
+  const [mergedData, setMergedData] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (programs && experiences && solutions) {
+      const merged = [
+        ...programs.map((p: any) => ({ ...p, kind: 'program' })),
+        ...experiences.map((e: any) => ({ ...e, kind: 'experience' })),
+        ...solutions.map((s: any) => ({ ...s, kind: 'solution' }))
+      ].sort((a, b) => {
+        if (a.order !== undefined && b.order !== undefined) {
+          return a.order - b.order;
+        }
+        return a.title.localeCompare(b.title);
+      });
+      setMergedData(merged);
+    }
+  }, [programs, experiences, solutions]);
+
+  return {
+    data: mergedData,
+    loading: programsLoading || experiencesLoading || solutionsLoading,
+    error: programsError || experiencesError || solutionsError
+  };
+}
+
+export function useAllOfferingsLite(locale: Locale = 'en'): ContentHookResult<any[]> {
+  return useAllOfferings(locale);
+}
+
+export function useLatestPostsLite(locale: Locale = 'en'): ContentHookResult<any[]> {
+  const { data, loading, error } = usePosts(locale);
+  
+  const [latestPosts, setLatestPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      const sorted = [...data]
+        .sort((a, b) => new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime())
+        .slice(0, 3);
+      setLatestPosts(sorted);
+    }
+  }, [data]);
+
+  return {
+    data: latestPosts,
+    loading,
+    error
+  };
+}
+
+// Hook for getting a specific item by slug
+export function useProgramBySlug(slug: string, locale: Locale = 'en'): ContentHookResult<any> {
+  const { data: programs, loading, error } = usePrograms(locale);
+  const [program, setProgram] = useState<any>(null);
+
+  useEffect(() => {
+    if (programs) {
+      const found = programs.find((p: any) => p.slug === slug);
+      setProgram(found || null);
+    }
+  }, [programs, slug]);
+
+  return { data: program, loading, error };
+}
+
+export function useExperienceBySlug(slug: string, locale: Locale = 'en'): ContentHookResult<any> {
+  const { data: experiences, loading, error } = useExperiences(locale);
+  const [experience, setExperience] = useState<any>(null);
+
+  useEffect(() => {
+    if (experiences) {
+      const found = experiences.find((e: any) => e.slug === slug);
+      setExperience(found || null);
+    }
+  }, [experiences, slug]);
+
+  return { data: experience, loading, error };
+}
+
+export function useSolutionBySlug(slug: string, locale: Locale = 'en'): ContentHookResult<any> {
+  const { data: solutions, loading, error } = useSolutions(locale);
+  const [solution, setSolution] = useState<any>(null);
+
+  useEffect(() => {
+    if (solutions) {
+      const found = solutions.find((s: any) => s.slug === slug);
+      setSolution(found || null);
+    }
+  }, [solutions, slug]);
+
+  return { data: solution, loading, error };
+}
+
+export function usePostBySlug(slug: string, locale: Locale = 'en'): ContentHookResult<any> {
+  const { data: posts, loading, error } = usePosts(locale);
+  const [post, setPost] = useState<any>(null);
+
+  useEffect(() => {
+    if (posts) {
+      const found = posts.find((p: any) => p.slug === slug);
+      setPost(found || null);
+    }
+  }, [posts, slug]);
+
+  return { data: post, loading, error };
+}

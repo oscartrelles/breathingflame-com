@@ -24,7 +24,6 @@ export interface Settings {
   brandFlags: {
     showEvents: boolean
     showTestimonials: boolean
-    enableBlog: boolean
     enableWhatsApp: boolean
   }
 }

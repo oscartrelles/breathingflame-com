@@ -36,7 +36,7 @@ export function SolutionDetail() {
 
   return (
     <>
-      <SEO data={{ title: solution.seo.title, description: solution.seo.description, image: solution.seo.ogImage }} />
+      <SEO data={{ title: solution.seo.title, description: solution.seo.description, image: solution.seo.ogImage, canonical: `https://breathingflame.com/solutions/${solution.slug}` }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
