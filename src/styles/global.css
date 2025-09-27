@@ -267,6 +267,17 @@ main > div:first-child > section:first-child {
   padding-top: var(--header-height);
 }
 
+/* All hero sections should tuck behind header to hide video controls */
+.individuals-hero,
+.organizations-hero,
+.programs-hero,
+.about-hero,
+.ignite-your-flame-hero,
+.peak-energy-profiler-hero {
+  margin-top: calc(-1 * var(--header-height));
+  padding-top: var(--header-height);
+}
+
 .section--sm {
   padding: var(--spacing-16) 0;
 }

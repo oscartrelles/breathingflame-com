@@ -1,30 +1,42 @@
 /* Organizations Page Styles */
 
-/* Hero Section */
+/* Hero Section with Video/Image Background */
 .hero {
-  background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-secondary) 100%);
-  padding: calc(var(--header-height) + var(--spacing-20)) 0 var(--spacing-20);
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  padding: 0; /* No padding - video should extend behind header */
+  margin: 0; /* No margin */
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
+.heroVideoBackground {
+  position: absolute !important;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 30% 20%, rgba(255, 179, 50, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
 }
 
 .heroContent {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: 10; /* Above video background, overlay, and header */
+  text-align: center;
+  max-width: 900px; /* Increased for more breathing room */
+  margin: 0 auto;
+  padding: var(--spacing-16) var(--spacing-6) var(--spacing-16); /* Horizontal padding for mobile */
+  padding-top: calc(var(--header-height) + var(--spacing-8)); /* Reduced top padding for better visual balance */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .heroTitle {
@@ -51,6 +63,10 @@
   .heroSubtitle {
     font-size: var(--font-size-xl);
   }
+}
+
+.heroCTA {
+  margin-top: var(--spacing-8);
 }
 
 .heroDescription {

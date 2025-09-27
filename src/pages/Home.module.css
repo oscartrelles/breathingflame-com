@@ -30,7 +30,7 @@
   max-width: 900px; /* Increased for more breathing room */
   margin: 0 auto;
   padding: var(--spacing-16) var(--spacing-6) var(--spacing-16); /* Horizontal padding for mobile */
-  padding-top: calc(var(--header-height) + var(--spacing-16)); /* Ensure content is below header */
+  padding-top: calc(var(--header-height) + var(--spacing-8)); /* Reduced top padding for better visual balance */
   display: flex;
   flex-direction: column;
   align-items: center;

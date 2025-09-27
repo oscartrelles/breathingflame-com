@@ -1476,6 +1476,22 @@ export const pageProgramsCollection = buildCollection<PagePrograms>({
           multiline: true,
           description: 'Hero subtext/description'
         }),
+        background: buildProperty({
+          dataType: 'map',
+          name: 'Background Media',
+          properties: {
+            videoId: buildProperty({
+              dataType: 'string',
+              name: 'YouTube Video ID',
+              description: 'YouTube video ID for background (e.g., "KcK67tYvPgA")'
+            }),
+            imageUrl: buildProperty({
+              dataType: 'string',
+              name: 'Background Image URL',
+              description: 'Fallback image URL if no video is provided'
+            })
+          }
+        }),
         ctas: buildProperty({
           dataType: 'array',
           name: 'Call-to-Action Buttons',
@@ -1597,6 +1613,22 @@ export const pageOrganizationsCollection = buildCollection<PageOrganizations>({
           name: 'Subtext',
           multiline: true,
           description: 'Hero subtext/description'
+        }),
+        background: buildProperty({
+          dataType: 'map',
+          name: 'Background Media',
+          properties: {
+            videoId: buildProperty({
+              dataType: 'string',
+              name: 'YouTube Video ID',
+              description: 'YouTube video ID for background (e.g., "KcK67tYvPgA")'
+            }),
+            imageUrl: buildProperty({
+              dataType: 'string',
+              name: 'Background Image URL',
+              description: 'Fallback image URL if no video is provided'
+            })
+          }
         }),
         ctas: buildProperty({
           dataType: 'array',
@@ -1834,6 +1866,22 @@ export const pageIndividualsCollection = buildCollection<PageIndividuals>({
           multiline: true,
           description: 'Hero subtext/description'
         }),
+        background: buildProperty({
+          dataType: 'map',
+          name: 'Background Media',
+          properties: {
+            videoId: buildProperty({
+              dataType: 'string',
+              name: 'YouTube Video ID',
+              description: 'YouTube video ID for background (e.g., "KcK67tYvPgA")'
+            }),
+            imageUrl: buildProperty({
+              dataType: 'string',
+              name: 'Background Image URL',
+              description: 'Fallback image URL if no video is provided'
+            })
+          }
+        }),
         ctas: buildProperty({
           dataType: 'array',
           name: 'Call-to-Action Buttons',
@@ -2055,9 +2103,21 @@ export const aboutCollection = buildCollection<About>({
           multiline: true,
           validation: { required: true }
         }),
-        image: buildProperty({
-          dataType: 'string',
-          name: 'Hero Image URL'
+        background: buildProperty({
+          dataType: 'map',
+          name: 'Background Media',
+          properties: {
+            videoId: buildProperty({
+              dataType: 'string',
+              name: 'YouTube Video ID',
+              description: 'YouTube video ID for background (e.g., "KcK67tYvPgA")'
+            }),
+            imageUrl: buildProperty({
+              dataType: 'string',
+              name: 'Background Image URL',
+              description: 'Fallback image URL if no video is provided'
+            })
+          }
         }),
         ctas: buildProperty({
           dataType: 'array',

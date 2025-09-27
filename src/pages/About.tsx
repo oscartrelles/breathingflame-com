@@ -1,8 +1,10 @@
 import { useAbout } from '@/hooks/useFirestore'
+import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
+  heroText,
   staggerContainer, 
   staggerChild,
   useInViewAnimation,
@@ -73,33 +75,17 @@ export function About() {
       />
 
       {/* Hero Section */}
-      <motion.section 
-        className={styles.hero}
-        {...useInViewAnimation()}
-      >
-        <div className="container">
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>{aboutData.hero.headline}</h1>
-            <p className={styles.heroSubtext}>{aboutData.hero.subtext}</p>
-            
-            {aboutData.hero.ctas && aboutData.hero.ctas.length > 0 && (
-              <div className={styles.heroCTAs}>
-                {aboutData.hero.ctas.map((cta, index) => (
-                  <a
-                    key={index}
-                    href={cta.url}
-                    className={`btn ${cta.external ? 'btn--secondary' : 'btn--primary'}`}
-                    target={cta.external ? '_blank' : undefined}
-                    rel={cta.external ? 'noopener noreferrer' : undefined}
-                  >
-                    {cta.label}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.section>
+      <HeroSection
+        title={aboutData.hero.headline}
+        subtitle={aboutData.hero.subtext}
+        videoId={aboutData.hero.background?.videoId}
+        ctas={aboutData.hero.ctas?.map(cta => ({
+          label: cta.label,
+          pathOrUrl: cta.url,
+          external: cta.external
+        }))}
+        className="about-hero"
+      />
 
       {/* Story Section */}
       <motion.section 

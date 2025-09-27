@@ -1,9 +1,11 @@
 import { useState, useMemo, useCallback } from 'react'
 import { usePagePrograms, useAllOfferings } from '@/hooks/useFirestore'
+import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
+  heroText,
   staggerContainer, 
   staggerChild,
   useInViewAnimation,
@@ -92,38 +94,13 @@ export function Programs() {
       />
 
       {/* Hero Section */}
-      <section className={styles.hero}>
-        <div className="container">
-          <motion.div 
-            className={styles.heroContent}
-            {...useInViewAnimation()}
-          >
-            <h1 className={styles.heroTitle}>
-              {pageData.hero.headline}
-            </h1>
-            
-            <p className={styles.heroSubtitle}>
-              {pageData.hero.subtext}
-            </p>
-
-            {pageData.hero.ctas && pageData.hero.ctas.length > 0 && (
-              <div className={styles.heroCTA}>
-                {pageData.hero.ctas.map((cta, index) => (
-                  <a
-                    key={index}
-                    href={cta.pathOrUrl}
-                    className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
-                    target={cta.external ? '_blank' : undefined}
-                    rel={cta.external ? 'noopener noreferrer' : undefined}
-                  >
-                    {cta.label}
-                  </a>
-                ))}
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+      <HeroSection
+        title={pageData.hero.headline}
+        subtitle={pageData.hero.subtext}
+        videoId={pageData.hero.background?.videoId}
+        ctas={pageData.hero.ctas}
+        className="programs-hero"
+      />
 
       {/* Controls Section */}
       <section className="section section--sm">
@@ -135,14 +112,14 @@ export function Programs() {
             {/* Filter Tabs */}
             <div className={styles.tabs} role="tablist">
               {pageData.filters.showAll && (
-                <button
+              <button
                   className={`${styles.tab} ${activeTab === 'all' ? styles.tabActive : ''}`}
                   role="tab"
                   aria-selected={activeTab === 'all'}
                   onClick={() => handleTabChange('all')}
                 >
                   All
-                </button>
+              </button>
               )}
               {pageData.filters.showPrograms && (
                 <button

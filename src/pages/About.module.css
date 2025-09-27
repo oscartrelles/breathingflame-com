@@ -24,35 +24,73 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Hero Section */
+/* Hero Section with Video/Image Background */
 .hero {
-  background: var(--color-background-secondary);
-  padding: calc(var(--header-height) + var(--spacing-48)) 0 var(--spacing-48);
-  text-align: center;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0; /* No padding - video should extend behind header */
+  margin: 0; /* No margin */
+}
+
+.heroVideoBackground {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
 }
 
 .heroContent {
-  max-width: 800px;
+  position: relative;
+  z-index: 10; /* Above video background, overlay, and header */
+  text-align: center;
+  max-width: 900px; /* Increased for more breathing room */
   margin: 0 auto;
+  padding: var(--spacing-16) var(--spacing-6) var(--spacing-16); /* Horizontal padding for mobile */
+  padding-top: calc(var(--header-height) + var(--spacing-8)); /* Reduced top padding for better visual balance */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .heroTitle {
-  font-family: var(--font-family-primary);
   font-size: var(--font-size-6xl);
-  font-weight: var(--font-weight-black);
-  color: var(--color-primary);
-  text-transform: uppercase;
-  font-style: italic;
-  letter-spacing: -0.02em;
-  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
   margin-bottom: var(--spacing-6);
+  line-height: var(--line-height-tight);
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: var(--font-size-4xl);
+  }
 }
 
 .heroSubtext {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-8);
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-4);
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (max-width: 768px) {
+  .heroSubtext {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.heroCTAs {
+  margin-top: var(--spacing-8);
 }
 
 .heroCTAs {

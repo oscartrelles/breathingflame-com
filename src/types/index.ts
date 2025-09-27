@@ -33,7 +33,10 @@ export interface About {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
     ctas?: {
       label: string
       url: string
@@ -218,7 +221,10 @@ export interface About {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
     ctas?: {
       label: string
       url: string
@@ -293,7 +299,10 @@ export interface Program {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
   }
   outcomes: string[]
   modules: string[]
@@ -344,7 +353,10 @@ export interface Experience {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
   }
   summary?: string
   highlights: string[]
@@ -509,7 +521,10 @@ export interface About {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
     ctas?: {
       label: string
       url: string
@@ -813,7 +828,10 @@ export interface About {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
     ctas?: {
       label: string
       url: string
@@ -928,7 +946,10 @@ export interface About {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
     ctas?: {
       label: string
       url: string
@@ -1044,7 +1065,10 @@ export interface About {
   hero: {
     headline: string
     subtext: string
-    image?: string
+    background?: {
+      videoId?: string
+      imageUrl?: string
+    }
     ctas?: {
       label: string
       url: string

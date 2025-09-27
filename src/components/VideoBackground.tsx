@@ -9,6 +9,7 @@ interface VideoBackgroundProps {
   overlayOpacity?: number
   startTime?: number // Start time in seconds
   endTime?: number   // End time in seconds
+  tuckedBehindHeader?: boolean // Tuck video behind header to hide YouTube UI
 }
 
 /**
@@ -29,12 +30,19 @@ export function VideoBackground({
   overlay = true,
   overlayOpacity = 0.4,
   startTime = 0,
-  endTime = 0
+  endTime = 0,
+  tuckedBehindHeader = false
 }: VideoBackgroundProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
+    // Check if YouTube API is already loaded
+    if (window.YT && window.YT.Player) {
+      setIsLoaded(true)
+      return
+    }
+
     // Load YouTube iframe API if not already loaded
     if (!window.YT) {
       const tag = document.createElement('script')
@@ -66,7 +74,7 @@ export function VideoBackground({
     console.warn('YouTube video failed to load:', videoId)
   }
 
-  const containerClasses = `${styles.videoContainer} ${className}`
+  const containerClasses = `${styles.videoContainer} ${tuckedBehindHeader ? styles.tuckedBehindHeader : ''} ${className}`
 
   return (
     <div className={containerClasses}>
@@ -80,6 +88,7 @@ export function VideoBackground({
           allow="autoplay; encrypted-media"
           allowFullScreen
           onError={handleError}
+          onLoad={() => setIsLoaded(true)}
         />
       </div>
 

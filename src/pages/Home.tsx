@@ -1,11 +1,10 @@
 import { useHome, usePrograms, useExperiences } from '@/hooks/useFirestore'
-import { VideoBackground } from '@/components/VideoBackground'
+import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { trackTypeformInteraction } from '@/components/Analytics'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
-  heroText, 
   staggerContainer, 
   staggerChild, 
   useInViewAnimation,
@@ -56,64 +55,17 @@ export function Home() {
         }}
       />
 
-      {/* Hero Section with YouTube Video Background */}
-      <section className={`${styles.hero} home-hero`}>
-        {/* YouTube Video Background */}
-        <VideoBackground
-          videoId="KcK67tYvPgA"
-          title="Breathing Flame Hero Video"
-          overlay={true}
-          overlayOpacity={0.65}
-          startTime={6}
-          endTime={80}
-          className={styles.heroVideoBackground}
-        />
-
-        {/* Hero Content Overlay */}
-        <div className={styles.heroContent}>
-          <div className="container">
-            <motion.h1 
-              className={styles.heroTitle}
-              variants={reducedMotion ? {} : heroText}
-            >
-              {homeData?.hero?.headline || 'Resilience. Clarity. Transformation.'}
-            </motion.h1>
-            
-            <motion.p 
-              className={styles.heroSubtitle}
-              variants={reducedMotion ? {} : fadeInUp}
-              transition={{ delay: 0.2 }}
-            >
-              {homeData?.hero?.subtext || 'We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices.'}
-            </motion.p>
-            
-
-            <motion.div 
-              className={`${styles.heroCTA} cta-container`}
-              variants={reducedMotion ? {} : fadeInUp}
-              transition={{ delay: 0.4 }}
-            >
-              {(homeData?.hero?.ctas || [
-                { label: 'For Individuals', pathOrUrl: '/individuals', external: false },
-                { label: 'For Organizations', pathOrUrl: '/organizations', external: false }
-              ]).map((cta: any, idx: number) => (
-                <motion.a
-                  key={idx}
-                  href={cta.pathOrUrl}
-                  className={`btn ${idx === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
-                  whileHover={reducedMotion ? {} : { scale: 1.02, y: -2 }}
-                  whileTap={reducedMotion ? {} : { scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                  target={cta.external ? '_blank' : undefined}
-                  rel={cta.external ? 'noopener noreferrer' : undefined}
-                >
-                  {cta.label}
-                </motion.a>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section */}
+      <HeroSection
+        title={homeData?.hero?.headline || 'Resilience. Clarity. Transformation.'}
+        subtitle={homeData?.hero?.subtext || 'We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices.'}
+        videoId="KcK67tYvPgA"
+        ctas={homeData?.hero?.ctas || [
+          { label: 'For Individuals', pathOrUrl: '/individuals', external: false },
+          { label: 'For Organizations', pathOrUrl: '/organizations', external: false }
+        ]}
+        className="home-hero"
+      />
 
       {/* Pillars Section - Staggered reveal like Positive Intelligence */}
       <section className="section section--lg">
