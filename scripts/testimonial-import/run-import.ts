@@ -154,9 +154,7 @@ async function handleExport(manager: TestimonialManager) {
   
   console.log(`✅ Testimonials exported to ${outputPath}`)
   console.log(`  - Total testimonials: ${exportData.testimonials.length}`)
-  console.log(`  - Program groups: ${Object.keys(exportData.programTestimonials).length}`)
-  console.log(`  - Experience groups: ${Object.keys(exportData.experienceTestimonials).length}`)
-  console.log(`  - Featured groups: ${Object.keys(exportData.featuredTestimonials).length}`)
+  console.log(`  - Playlists: ${Object.keys(exportData.playlists).length}`)
 }
 
 async function handleInit(manager: TestimonialManager) {

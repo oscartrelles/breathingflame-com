@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { TestimonialDisplay } from '@/components/TestimonialDisplay'
 import { usePrograms } from '@/hooks/useFirestore'
+import testimonialsData from '@/content/testimonials.json'
 
 export function ProgramDetail() {
   const { slug } = useParams<{ slug: string }>()
@@ -10,6 +12,13 @@ export function ProgramDetail() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
   const program = programs?.find(p => p.slug === slug)
+
+  // Get testimonials for this program from playlist
+  const allTestimonials = testimonialsData.testimonials || []
+  const programPlaylist = testimonialsData.playlists?.programs?.[slug || ''] || []
+  const programTestimonials = programPlaylist.map(id => 
+    allTestimonials.find(t => t.id === id)
+  ).filter(Boolean) as any[]
 
   // GA4 event on mount
   useEffect(() => {
@@ -44,7 +53,7 @@ export function ProgramDetail() {
     "@context": "https://schema.org",
     "@type": "Course",
     "name": program.title,
-    "description": program.hero.subtext,
+    "description": program.hero?.subtext || program.summary || program.title,
     "provider": {
       "@type": "Organization",
       "name": "Breathing Flame",
@@ -55,7 +64,7 @@ export function ProgramDetail() {
       "courseMode": "Online",
       "location": {
         "@type": "VirtualLocation",
-        "url": program.ctas.find(cta => cta.external)?.url || "https://breathingflame.com"
+        "url": program.ctas?.find(cta => cta.external)?.url || "https://breathingflame.com"
       }
     }]
   }
@@ -63,9 +72,9 @@ export function ProgramDetail() {
   return (
     <>
       <SEO data={{ 
-        title: program.seo.title, 
-        description: program.seo.description, 
-        image: program.seo.ogImage,
+        title: program.seo?.title || program.title, 
+        description: program.seo?.description || program.summary || program.title, 
+        image: program.seo?.ogImage,
         canonical: `https://breathingflame.com/programs/${program.slug}`
       }} />
       
@@ -89,14 +98,14 @@ export function ProgramDetail() {
                 marginBottom: 'var(--spacing-4)'
               }}
             >
-              {program.hero.headline}
+              {program.hero?.headline || program.title}
             </h1>
             <p className="text--lg" style={{ color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-6)' }}>
-              {program.hero.subtext}
+              {program.hero?.subtext || program.summary}
             </p>
             
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {program.ctas.map((cta, index) => (
+              {(program.ctas || []).map((cta, index) => (
                 <button
                   key={index}
                   className={index === 0 ? 'btn' : 'btn btn--secondary'}
@@ -313,6 +322,24 @@ export function ProgramDetail() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      {programTestimonials.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)', textAlign: 'center' }}>
+              What Our Clients Say
+            </h2>
+            <TestimonialDisplay 
+              testimonials={programTestimonials} 
+              layout="grid" 
+              showRating={true}
+              showTags={false}
+              showSource={false}
+            />
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       {program.faq && program.faq.length > 0 && (
         <section className="section">
@@ -376,7 +403,7 @@ export function ProgramDetail() {
               Join the Reverse Aging Challenge and start your journey to greater energy, resilience, and vitality.
             </p>
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {program.ctas.map((cta, index) => (
+              {(program.ctas || []).map((cta, index) => (
                 <button
                   key={index}
                   className={index === 0 ? 'btn' : 'btn btn--secondary'}

@@ -174,21 +174,12 @@ export class TestimonialImporter {
     for (const testimonial of testimonials) {
       try {
         // Check if testimonial already exists
-        let existingSnapshot
-        if (testimonial.source.url) {
-          const existingQuery = query(
-            collection(this.db, 'testimonials'),
-            where('sourceUrl', '==', testimonial.source.url)
-          )
-          existingSnapshot = await getDocs(existingQuery)
-        } else {
-          // If no source URL, check by ID
-          const existingQuery = query(
-            collection(this.db, 'testimonials'),
-            where('id', '==', testimonial.id)
-          )
-          existingSnapshot = await getDocs(existingQuery)
-        }
+        // 1) Prefer ID match to avoid collapsing multiple entries that share a generic source URL
+        let existingSnapshot = await getDocs(
+          query(collection(this.db, 'testimonials'), where('id', '==', testimonial.id))
+        )
+
+        // Do NOT fallback to sourceUrl: multiple LinkedIn rows share the same profile URL.
         
         const firestoreTestimonial: FirestoreTestimonial = {
           id: testimonial.id,
@@ -207,7 +198,7 @@ export class TestimonialImporter {
             seconds: Math.floor(testimonial.createdAt.getTime() / 1000),
             nanoseconds: (testimonial.createdAt.getTime() % 1000) * 1000000
           },
-          sourceUrl: testimonial.source.url || ''
+          sourceUrl: testimonial.source.url || `imported-${testimonial.id}`
         }
 
         if (existingSnapshot.empty) {
@@ -251,7 +242,8 @@ export class TestimonialImporter {
   async clearTestimonials(): Promise<void> {
     try {
       const testimonials = await this.getExistingTestimonials()
-      const batch = this.db.batch()
+      const { writeBatch } = await import('firebase/firestore')
+      const batch = writeBatch(this.db)
       
       for (const testimonial of testimonials) {
         const testimonialRef = doc(this.db, 'testimonials', testimonial.id)

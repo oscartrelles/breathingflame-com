@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { TestimonialDisplay } from '@/components/TestimonialDisplay'
 import { useExperiences } from '@/hooks/useFirestore'
+import testimonialsData from '@/content/testimonials.json'
 
 export function ExperienceDetail() {
   const { slug } = useParams<{ slug: string }>()
@@ -10,6 +12,13 @@ export function ExperienceDetail() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
   const experience = experiences?.find(e => e.slug === slug)
+
+  // Get testimonials for this experience from playlist
+  const allTestimonials = testimonialsData.testimonials || []
+  const experiencePlaylist = testimonialsData.playlists?.experiences?.[slug || ''] || []
+  const experienceTestimonials = experiencePlaylist.map(id => 
+    allTestimonials.find(t => t.id === id)
+  ).filter(Boolean) as any[]
 
   // GA4 event on mount
   useEffect(() => {
@@ -44,7 +53,7 @@ export function ExperienceDetail() {
     "@context": "https://schema.org",
     "@type": "Course",
     "name": experience.title,
-    "description": experience.hero.subtext,
+    "description": experience.hero?.subtext || experience.summary || experience.title,
     "provider": {
       "@type": "Organization",
       "name": "Breathing Flame",
@@ -55,9 +64,9 @@ export function ExperienceDetail() {
   return (
     <>
       <SEO data={{ 
-        title: experience.seo.title, 
-        description: experience.seo.description, 
-        image: experience.seo.ogImage,
+        title: experience.seo?.title || experience.title, 
+        description: experience.seo?.description || experience.summary || experience.title, 
+        image: experience.seo?.ogImage,
         canonical: `https://breathingflame.com/experiences/${experience.slug}`
       }} />
       
@@ -81,14 +90,14 @@ export function ExperienceDetail() {
                 marginBottom: 'var(--spacing-4)'
               }}
             >
-              {experience.hero.headline}
+              {experience.hero?.headline || experience.title}
             </h1>
             <p className="text--lg" style={{ color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-6)' }}>
-              {experience.hero.subtext}
+              {experience.hero?.subtext || experience.summary}
             </p>
             
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {experience.ctas.map((cta, index) => (
+              {(experience.ctas || []).map((cta, index) => (
                 <button
                   key={index}
                   className={index === 0 ? 'btn' : 'btn btn--secondary'}
@@ -291,6 +300,24 @@ export function ExperienceDetail() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      {experienceTestimonials.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)', textAlign: 'center' }}>
+              What Our Clients Say
+            </h2>
+            <TestimonialDisplay 
+              testimonials={experienceTestimonials} 
+              layout="grid" 
+              showRating={true}
+              showTags={false}
+              showSource={false}
+            />
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       {experience.faq && experience.faq.length > 0 && (
         <section className="section">
@@ -354,7 +381,7 @@ export function ExperienceDetail() {
               Join us for a transformative workshop that will build your resilience and boost your energy.
             </p>
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {experience.ctas.map((cta, index) => (
+              {(experience.ctas || []).map((cta, index) => (
                 <button
                   key={index}
                   className={index === 0 ? 'btn' : 'btn btn--secondary'}

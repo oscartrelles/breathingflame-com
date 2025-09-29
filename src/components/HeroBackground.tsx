@@ -7,7 +7,6 @@ interface HeroBackgroundProps {
   title?: string
   className?: string
   overlay?: boolean
-  overlayOpacity?: number
   startTime?: number
   endTime?: number
   tuckedBehindHeader?: boolean

@@ -1,7 +1,10 @@
 import { useHome, usePrograms, useExperiences } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
+import { TestimonialDisplay } from '@/components/TestimonialDisplay'
 import { trackTypeformInteraction } from '@/components/Analytics'
+import testimonialsData from '@/content/testimonials.json'
+
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -30,6 +33,14 @@ export function Home() {
   const { data: homeData } = useHome()
   const { data: programs } = usePrograms()
   const { data: experiences } = useExperiences()
+  
+  // Get home page testimonials from playlist
+  const allTestimonials = testimonialsData.testimonials || []
+  const homePlaylist = testimonialsData.playlists?.home || []
+  const homeTestimonials = homePlaylist.map(id => 
+    allTestimonials.find(t => t.id === id)
+  ).filter(Boolean) as any[]
+  
   const reducedMotion = useReducedMotion()
 
   // Get featured programs and experiences
@@ -59,7 +70,9 @@ export function Home() {
       <HeroSection
         title={homeData?.hero?.headline || 'Resilience. Clarity. Transformation.'}
         subtitle={homeData?.hero?.subtext || 'We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices.'}
-        videoId="KcK67tYvPgA"
+        videoId={homeData?.hero?.videoId}
+        videoEmbed={homeData?.hero?.videoEmbed}
+        imageUrl={homeData?.hero?.image}
         ctas={homeData?.hero?.ctas || [
           { label: 'For Individuals', pathOrUrl: '/individuals', external: false },
           { label: 'For Organizations', pathOrUrl: '/organizations', external: false }
@@ -203,16 +216,17 @@ export function Home() {
             <p className={styles.sectionDescription}>{homeData?.sections?.testimonials?.subtext || 'Our clients—from entrepreneurs to teams—consistently highlight the power of resilience, clarity, and transformation.'}</p>
           </div>
 
-          {/* Senja Testimonials Widget */}
-          <div className={styles.senjaContainer}>
-            <div 
-              className="senja-embed" 
-              data-id="81b3e80e-4b5d-4110-9928-fff9a187aa48" 
-              data-mode="shadow" 
-              data-lazyload="false" 
-              style={{ display: 'block', width: '100%' }}
-            ></div>
-          </div>
+          {/* Home Page Testimonials */}
+          {homeTestimonials.length > 0 && (
+            <TestimonialDisplay 
+              testimonials={homeTestimonials} 
+              layout="carousel" 
+              showRating={true}
+              showTags={false}
+              showSource={false}
+              maxItems={10}
+            />
+          )}
         </div>
       </section>
 

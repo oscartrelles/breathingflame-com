@@ -5,8 +5,24 @@ export function getReadTime(text: string): number {
   return Math.max(1, minutes)
 }
 
-export function formatDate(date: Date | string, tz: string = 'Europe/Madrid') {
-  const d = typeof date === 'string' ? new Date(date) : date
+export function formatDate(date: Date | string | undefined | null, tz: string = 'Europe/Madrid') {
+  if (!date) return 'No date'
+  
+  let d: Date
+  
+  if (typeof date === 'string') {
+    d = new Date(date)
+  } else if (date instanceof Date) {
+    d = date
+  } else {
+    return 'Invalid date'
+  }
+  
+  // Check if the date is valid
+  if (isNaN(d.getTime())) {
+    return 'Invalid date'
+  }
+  
   return new Intl.DateTimeFormat('en-GB', {
     day: '2-digit', month: 'short', year: 'numeric', timeZone: tz
   }).format(d)

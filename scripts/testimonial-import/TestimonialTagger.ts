@@ -280,6 +280,21 @@ export class TestimonialTagger {
     }
   }
 
+  async clearMappings(): Promise<void> {
+    try {
+      const { writeBatch } = await import('firebase/firestore')
+      const mappingsRef = collection(this.db, 'testimonialMappings')
+      const snapshot = await getDocs(mappingsRef)
+      const batch = writeBatch(this.db)
+      snapshot.docs.forEach(d => batch.delete(doc(this.db, 'testimonialMappings', d.id)))
+      await batch.commit()
+      console.log(`🗑️ Cleared ${snapshot.size} testimonial mappings`)
+    } catch (error) {
+      console.error('Error clearing testimonial mappings:', error)
+      throw error
+    }
+  }
+
   async getMappings(): Promise<TestimonialMapping[]> {
     try {
       const mappingsRef = collection(this.db, 'testimonialMappings')

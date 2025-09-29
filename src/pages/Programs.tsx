@@ -97,7 +97,9 @@ export function Programs() {
       <HeroSection
         title={pageData.hero.headline}
         subtitle={pageData.hero.subtext}
-        videoId={pageData.hero.background?.videoId}
+        videoId={pageData.hero.videoId}
+        videoEmbed={pageData.hero.videoEmbed}
+        imageUrl={pageData.hero.image}
         ctas={pageData.hero.ctas}
         className="programs-hero"
       />

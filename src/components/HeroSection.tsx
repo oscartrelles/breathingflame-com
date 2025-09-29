@@ -18,6 +18,7 @@ interface HeroSectionProps {
   title: string
   subtitle: string
   videoId?: string
+  videoEmbed?: string
   imageUrl?: string
   ctas?: CTA[]
   className?: string
@@ -37,6 +38,7 @@ export function HeroSection({
   title, 
   subtitle, 
   videoId, 
+  videoEmbed,
   imageUrl,
   ctas = [], 
   className = '' 
@@ -57,8 +59,22 @@ export function HeroSection({
         />
       )}
 
+      {/* Video Embed Background */}
+      {!videoId && videoEmbed && (
+        <div className={styles.heroVideoEmbedBackground}>
+          <iframe
+            src={videoEmbed}
+            title="Hero Background Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className={styles.heroVideoEmbed}
+          />
+        </div>
+      )}
+
       {/* Image Background */}
-      {!videoId && imageUrl && (
+      {!videoId && !videoEmbed && imageUrl && (
         <div 
           className={styles.heroImageBackground}
           style={{ backgroundImage: `url(${imageUrl})` }}
@@ -66,7 +82,7 @@ export function HeroSection({
       )}
 
       {/* Fallback Background */}
-      {!videoId && !imageUrl && (
+      {!videoId && !videoEmbed && !imageUrl && (
         <div className={styles.heroFallbackBackground} />
       )}
 

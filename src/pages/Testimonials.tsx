@@ -1,33 +1,42 @@
-import { useEffect } from 'react'
 import { SEO } from '@/components/SEO'
 import { usePageTestimonials } from '@/hooks/useFirestore'
+import { TestimonialDisplay } from '@/components/TestimonialDisplay'
+import testimonialsData from '@/content/testimonials.json'
+import styles from './Testimonials.module.css'
 
 export function Testimonials() {
   const { data: page } = usePageTestimonials()
-  const senjaId = '8491a872-ea22-420d-b7cc-0f2a1d9d042a'
-
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://widget.senja.io/widget/8491a872-ea22-420d-b7cc-0f2a1d9d042a/platform.js'
-    script.async = true
-    script.onerror = () => showFallback()
-    document.body.appendChild(script)
-
-    const timeout = setTimeout(() => showFallback(), 5000)
-    function showFallback() {
-      const container = document.getElementById('senja-fallback')
-      if (container && page?.fallbackCTA) {
-        container.innerHTML = `<a class="btn" href="${page.fallbackCTA.url}" target="_blank" rel="noopener noreferrer">${page.fallbackCTA.label}</a>`
-      }
-    }
-    return () => { clearTimeout(timeout); document.body.removeChild(script) }
-  }, [page?.fallbackCTA?.url])
 
   if (!page) return null
+
+  // Get all testimonials for the testimonials page
+  const allTestimonials = testimonialsData.testimonials || []
+  
+  // Organize testimonials by tags
+  const testimonialsByTag: Record<string, any[]> = {}
+  
+  allTestimonials.forEach(testimonial => {
+    testimonial.tags.forEach(tag => {
+      if (!testimonialsByTag[tag]) {
+        testimonialsByTag[tag] = []
+      }
+      testimonialsByTag[tag].push(testimonial)
+    })
+  })
+  
+  // Sort tags by number of testimonials
+  const sortedTags = Object.keys(testimonialsByTag).sort((a, b) => 
+    testimonialsByTag[b].length - testimonialsByTag[a].length
+  )
 
   return (
     <>
       <SEO data={{ title: page.seo.title, description: page.seo.description, image: page.seo.ogImage }} />
+      
+      {/* Debug info */}
+      <div style={{ background: 'red', color: 'white', padding: '10px', margin: '10px' }}>
+        DEBUG: Testimonials component loaded. Total: {allTestimonials.length}, Tags: {sortedTags.length}
+      </div>
 
       {/* Hero */}
       <section className="section">
@@ -47,13 +56,40 @@ export function Testimonials() {
         </div>
       </section>
 
-      {/* Senja Embed */}
+      {/* Testimonials by Tag */}
       <section className="section">
         <div className="container">
-          <div className="card" style={{ padding: 'var(--spacing-4)' }}>
-            <div className="senja-embed" data-id={senjaId} data-mode="shadow" data-lazyload="false" style={{ display: 'block', width: '100%' }} />
-            <div id="senja-fallback" style={{ textAlign: 'center', marginTop: 'var(--spacing-6)' }} />
-          </div>
+          {allTestimonials.length > 0 ? (
+            <div>
+              {sortedTags.map(tag => (
+                <div key={tag} style={{ marginBottom: 'var(--spacing-8)' }}>
+                  <h3 className="heading heading--lg" style={{ 
+                    color: 'var(--color-primary)', 
+                    marginBottom: 'var(--spacing-4)',
+                    textTransform: 'capitalize'
+                  }}>
+                    {tag} ({testimonialsByTag[tag].length})
+                  </h3>
+                  <TestimonialDisplay 
+                    testimonials={testimonialsByTag[tag]} 
+                    layout="grid" 
+                    showRating={true}
+                    showTags={false}
+                    showSource={false}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="card" style={{ padding: 'var(--spacing-6)', textAlign: 'center' }}>
+              <h3 className="heading heading--md" style={{ color: 'var(--color-text-secondary)' }}>
+                Loading testimonials...
+              </h3>
+              <p className="text--sm" style={{ color: 'var(--color-text-secondary)' }}>
+                Available: {allTestimonials.length}
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </>

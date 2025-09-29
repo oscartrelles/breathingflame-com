@@ -291,7 +291,7 @@ export function NotFound() {
       )}
 
       {/* Latest Articles */}
-      {latestPosts.length > 0 && (
+      {latestPosts && latestPosts.length > 0 && latestPosts.some(post => post && post.slug) && (
         <section className="section">
           <div className="container">
             <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
@@ -301,7 +301,7 @@ export function NotFound() {
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
               gap: 'var(--spacing-4)' 
             }}>
-              {latestPosts.map((post) => (
+              {latestPosts?.filter(post => post && post.slug).map((post) => (
                 <button
                   key={post.slug}
                   className="card"

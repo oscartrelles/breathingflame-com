@@ -41,10 +41,11 @@ export function TestimonialDisplay({
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    // Sort by priority (highest first) and limit items
+    // Sort by rating (highest first) and limit items
     const sorted = [...testimonials]
-      .sort((a, b) => (b.priority || 0) - (a.priority || 0))
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
       .slice(0, maxItems)
+    
     
     setDisplayedTestimonials(sorted)
   }, [testimonials, maxItems])
@@ -138,13 +139,16 @@ export function TestimonialDisplay({
   if (layout === 'carousel') {
     return (
       <div className={`${styles.carousel} ${className}`}>
-        <div className={styles.carouselContainer}>
+        <div 
+          className={styles.carouselContainer}
+          style={{
+            transform: `translateX(-${currentIndex * 100}%)`
+          }}
+        >
           {displayedTestimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
-              className={`${styles.carouselItem} ${
-                index === currentIndex ? styles.carouselItemActive : ''
-              }`}
+              className={styles.carouselItem}
             >
               {renderTestimonial(testimonial, index)}
             </div>

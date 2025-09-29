@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs'
+import { createHash } from 'crypto'
 import { parse } from 'csv-parse/sync'
 import { SenjaTestimonial, ImportConfig, SourceAdapter } from '../types'
 
@@ -25,13 +26,19 @@ export class SenjaCSVAdapter implements SourceAdapter {
       const records = parse(csvContent, {
         columns: true,
         skip_empty_lines: true,
-        trim: true
-      })
+        trim: true,
+        quote: '"',
+        escape: '"',
+        relax_column_count: true,
+        relax_quotes: true
+      }) as Array<Record<string, string>>
 
       console.log(`📊 Found ${records.length} records in CSV`)
 
       const testimonials: SenjaTestimonial[] = []
       const now = new Date()
+      let processedCount = 0
+      let skippedCount = 0
 
       for (const [index, record] of records.entries()) {
         try {
@@ -41,22 +48,26 @@ export class SenjaCSVAdapter implements SourceAdapter {
             continue
           }
 
-          // Generate unique ID from platform_id or create one
-          const id = record.platform_id || `senja-${index}-${Date.now()}`
+          // Generate stable unique ID: integration + platform_id + hash(text)
+          const integration = (record.integration || 'senja').toLowerCase()
+          const baseId = (record.platform_id || record.customer_name || `row${index}`).toString().trim().toLowerCase()
+          const normalize = (s: string) => (s || '').toString().replace(/^"|"$/g, '').replace(/\r\n|\n|\r/g, ' ').replace(/\s+/g, ' ').trim()
+          const textSig = createHash('md5').update(normalize(record.text || '')).digest('hex').slice(0, 10)
+          const id = `${integration}-${baseId}-${textSig}`
 
           // Parse rating (ensure it's a number)
-          const rating = parseInt(record.rating) || 5
+          const rating = parseInt(record.rating as unknown as string) || 5
 
           // Parse tags (comma-separated string)
-          const tags = record.tags ? record.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean) : []
+          const tags = record.tags ? (record.tags as string).split(',').map((tag: string) => tag.trim()).filter(Boolean) : []
 
           // Parse attachments (comma-separated string)
-          const attachments = record.attachments ? record.attachments.split(',').map((att: string) => att.trim()).filter(Boolean) : []
+          const attachments = record.attachments ? (record.attachments as string).split(',').map((att: string) => att.trim()).filter(Boolean) : []
 
           // Parse date
           let createdAt = now
           if (record.date) {
-            const parsedDate = new Date(record.date)
+            const parsedDate = new Date(record.date as string)
             if (!isNaN(parsedDate.getTime())) {
               createdAt = parsedDate
             }
@@ -108,15 +119,18 @@ export class SenjaCSVAdapter implements SourceAdapter {
           }
 
           testimonials.push(testimonial)
+          processedCount++
           console.log(`✅ Processed testimonial from ${testimonial.author.name}`)
 
         } catch (error) {
           console.error(`❌ Error processing record ${index + 1}:`, error)
+          skippedCount++
           continue
         }
       }
 
       console.log(`🎉 Successfully processed ${testimonials.length} testimonials from Senja CSV`)
+      console.log(`📊 Processing summary: ${processedCount} processed, ${skippedCount} skipped`)
       return testimonials
 
     } catch (error) {

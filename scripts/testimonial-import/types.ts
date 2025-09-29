@@ -187,5 +187,5 @@ export interface FirestoreTestimonial {
     seconds: number
     nanoseconds: number
   }
-  sourceUrl?: string
+  sourceUrl: string
 }

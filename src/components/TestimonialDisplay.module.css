@@ -17,21 +17,21 @@
   position: relative;
   overflow: hidden;
   margin: var(--spacing-6) 0;
+  width: 100%;
 }
 
 .carouselContainer {
   display: flex;
   transition: transform 0.3s ease-in-out;
+  width: 100%;
 }
 
 .carouselItem {
   min-width: 100%;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.carouselItemActive {
-  opacity: 1;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0 var(--spacing-4);
+  box-sizing: border-box;
 }
 
 .carouselControls {
@@ -74,6 +74,9 @@
   padding: var(--spacing-6);
   position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .testimonial:hover {
@@ -158,6 +161,10 @@
   margin: 0 0 var(--spacing-4) 0;
   font-style: italic;
   position: relative;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .quote::before {

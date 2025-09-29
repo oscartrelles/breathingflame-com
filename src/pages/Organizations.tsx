@@ -71,7 +71,9 @@ export function Organizations() {
       <HeroSection
         title={pageData.hero.headline}
         subtitle={pageData.hero.subtext}
-        videoId={pageData.hero.background?.videoId}
+        videoId={pageData.hero.videoId}
+        videoEmbed={pageData.hero.videoEmbed}
+        imageUrl={pageData.hero.image}
         ctas={pageData.hero.ctas}
         className="organizations-hero"
       />

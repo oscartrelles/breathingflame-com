@@ -17,7 +17,29 @@ export class DuplicateDetectorImpl implements DuplicateDetector {
     
     const unique: ImportedTestimonial[] = []
     const processed = new Set<string>()
+
+    // 1) Strict exact-match pass: author name + full text (trimmed)
+    const byExactKey = new Map<string, ImportedTestimonial>()
+    const normalize = (s: string) =>
+      (s || '')
+        .toString()
+        .replace(/^"|"$/g, '')
+        .replace(/\r\n|\n|\r/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+    for (const t of testimonials) {
+      const key = `${normalize(t.author.name)}|||${normalize(t.text)}`
+      if (!byExactKey.has(key)) {
+        byExactKey.set(key, t)
+      } else {
+        const original = byExactKey.get(key)!
+        // Mark as duplicate with max confidence for exact match
+        duplicates.push({ original, duplicate: t, confidence: 1 })
+        processed.add(t.id)
+      }
+    }
     
+    // 2) Similarity-based fallback for remaining items
     for (let i = 0; i < testimonials.length; i++) {
       const current = testimonials[i]
       

@@ -14,6 +14,17 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-DEMO',
 }
 
+// Debug: Log the Firebase config
+console.log('🔧 Firebase Config:', {
+  apiKey: firebaseConfig.apiKey ? 'SET' : 'MISSING',
+  authDomain: firebaseConfig.authDomain,
+  projectId: firebaseConfig.projectId,
+  storageBucket: firebaseConfig.storageBucket,
+  messagingSenderId: firebaseConfig.messagingSenderId,
+  appId: firebaseConfig.appId,
+  measurementId: firebaseConfig.measurementId,
+})
+
 // Initialize Firebase only if we have valid config
 let app: any = null
 let db: any = null
@@ -26,11 +37,12 @@ try {
     db = getFirestore(app)
     storage = getStorage(app)
     auth = getAuth(app)
+    console.log('✅ Firebase initialized successfully')
   } else {
-    console.log('Firebase not initialized - using mock data for development')
+    console.log('❌ Firebase not initialized - invalid API key')
   }
 } catch (error) {
-  console.log('Firebase initialization failed - using mock data for development:', error)
+  console.log('❌ Firebase initialization failed:', error)
 }
 
 export { db, storage, auth }

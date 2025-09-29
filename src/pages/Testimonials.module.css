@@ -1,0 +1,14 @@
+.programSection {
+  margin-bottom: var(--spacing-8);
+}
+
+.programSection:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .programSection {
+    margin-bottom: var(--spacing-6);
+  }
+}
+

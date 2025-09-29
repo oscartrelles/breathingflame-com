@@ -139,75 +139,72 @@ export class TestimonialManager {
 
   async exportTestimonialsForStaticSite(): Promise<{
     testimonials: any[]
-    programTestimonials: Record<string, any[]>
-    experienceTestimonials: Record<string, any[]>
-    featuredTestimonials: Record<string, any[]>
+    playlists: any
   }> {
     const testimonials = await this.importer.getExistingTestimonials()
-    const mappings = await this.tagger.getMappings()
-
-    const programTestimonials: Record<string, any[]> = {}
-    const experienceTestimonials: Record<string, any[]> = {}
-    const featuredTestimonials: Record<string, any[]> = {}
-
-    // Group testimonials by mappings
-    for (const mapping of mappings) {
-      const testimonial = testimonials.find(t => t.id === mapping.testimonialId)
-      if (!testimonial) continue
-
-      // Add to program groups
-      for (const programId of mapping.programs) {
-        if (!programTestimonials[programId]) {
-          programTestimonials[programId] = []
-        }
-        programTestimonials[programId].push({
-          ...testimonial,
-          priority: mapping.priority,
-          tags: mapping.tags
-        })
-      }
-
-      // Add to experience groups
-      for (const experienceId of mapping.experiences) {
-        if (!experienceTestimonials[experienceId]) {
-          experienceTestimonials[experienceId] = []
-        }
-        experienceTestimonials[experienceId].push({
-          ...testimonial,
-          priority: mapping.priority,
-          tags: mapping.tags
-        })
-      }
-
-      // Add to featured groups
-      for (const space of mapping.featuredSpaces) {
-        if (!featuredTestimonials[space]) {
-          featuredTestimonials[space] = []
-        }
-        featuredTestimonials[space].push({
-          ...testimonial,
-          priority: mapping.priority,
-          tags: mapping.tags
-        })
-      }
-    }
-
-    // Sort by priority
-    Object.keys(programTestimonials).forEach(key => {
-      programTestimonials[key].sort((a, b) => (b.priority || 0) - (a.priority || 0))
-    })
-    Object.keys(experienceTestimonials).forEach(key => {
-      experienceTestimonials[key].sort((a, b) => (b.priority || 0) - (a.priority || 0))
-    })
-    Object.keys(featuredTestimonials).forEach(key => {
-      featuredTestimonials[key].sort((a, b) => (b.priority || 0) - (a.priority || 0))
-    })
-
+    
+    // Generate intelligent playlists
+    const { PlaylistGenerator } = await import('./playlist-generator')
+    const generator = new PlaylistGenerator()
+    generator.setTestimonials(testimonials)
+    
+    const playlists = generator.generatePlaylists()
+    const report = generator.generateReport(playlists)
+    
+    console.log(report)
+    
     return {
       testimonials,
-      programTestimonials,
-      experienceTestimonials,
-      featuredTestimonials
+      playlists
+    }
+  }
+
+  // Maintenance helpers
+  async clearAllTestimonialData(): Promise<void> {
+    console.log('🗑️ Clearing testimonials, mappings, playlists, and avatars...')
+    await this.importer.clearTestimonials()
+    if (typeof (this.tagger as any).clearMappings === 'function') {
+      await (this.tagger as any).clearMappings()
+    }
+    // Clear generated playlist docs if they exist
+    try {
+      const { getFirestore, collection, getDocs, doc } = await import('firebase/firestore')
+      const { initializeApp } = await import('firebase/app')
+      const app = initializeApp({
+        apiKey: process.env.VITE_FIREBASE_API_KEY,
+        authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+      })
+      const db = getFirestore(app)
+      for (const colName of ['testimonialPlaylists', 'playlists']) {
+        try {
+          const snap = await getDocs(collection(db, colName))
+          // @ts-ignore batch on db
+          const batch = (db as any).batch()
+          snap.docs.forEach(d => batch.delete(doc(db, colName, d.id)))
+          await batch.commit()
+          console.log(`🗑️ Cleared ${snap.size} docs from ${colName}`)
+        } catch {}
+      }
+    } catch (e) {
+      console.warn('Skipping playlist cleanup:', e)
+    }
+
+    await this.deleteAvatars()
+    console.log('✅ Clear complete')
+  }
+
+  private async deleteAvatars(): Promise<void> {
+    const fs = await import('fs/promises')
+    const path = await import('path')
+    const dir = path.join(process.cwd(), 'public/images/reviews/avatars')
+    try {
+      const entries = await fs.readdir(dir)
+      const files = entries.filter(f => f !== 'default.svg')
+      await Promise.all(files.map(f => fs.rm(path.join(dir, f), { force: true })))
+      console.log(`🗑️ Deleted ${files.length} avatar files`)
+    } catch (e) {
+      console.error('Error deleting avatars:', e)
     }
   }
 }

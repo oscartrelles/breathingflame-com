@@ -17,6 +17,9 @@ export function IgniteYourFlame() {
       <HeroSection
         title="Ignite Your Flame"
         subtitle="Discover your inner fire and unlock your potential with our comprehensive assessment"
+        videoId=""
+        videoEmbed=""
+        imageUrl=""
         ctas={[
           {
             label: "Start Assessment",

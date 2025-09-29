@@ -17,6 +17,9 @@ export function PeakEnergyProfiler() {
       <HeroSection
         title="Peak Energy Profiler"
         subtitle="Understand your energy patterns and optimize your performance"
+        videoId=""
+        videoEmbed=""
+        imageUrl=""
         ctas={[
           {
             label: "Start Assessment",

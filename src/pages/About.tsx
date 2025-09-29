@@ -78,7 +78,9 @@ export function About() {
       <HeroSection
         title={aboutData.hero.headline}
         subtitle={aboutData.hero.subtext}
-        videoId={aboutData.hero.background?.videoId}
+        videoId={aboutData.hero.videoId}
+        videoEmbed={aboutData.hero.videoEmbed}
+        imageUrl={aboutData.hero.image}
         ctas={aboutData.hero.ctas?.map(cta => ({
           label: cta.label,
           pathOrUrl: cta.url,
