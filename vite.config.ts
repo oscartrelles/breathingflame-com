@@ -16,7 +16,7 @@ export default defineConfig({
             res.end('Method not allowed')
             return
           }
-          const script = path.join(process.cwd(), 'scripts', 'generate-static-content.ts')
+          const script = path.join(process.cwd(), 'scripts', 'generate-content.ts')
           exec(`npx tsx ${script}`, (error, stdout, stderr) => {
             if (error) {
               res.statusCode = 500
