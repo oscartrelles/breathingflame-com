@@ -56,25 +56,8 @@ export function Footer() {
   const { data: navigation } = useNavigation()
   const { data: settings } = useSettings()
 
-  // Group footer links by category
-  const groupedLinks = navigation?.footerLinks?.reduce((acc, link) => {
-    if (!acc[link.category]) {
-      acc[link.category] = []
-    }
-    acc[link.category].push(link)
-    return acc
-  }, {} as Record<string, typeof navigation.footerLinks>) || {}
-
   const handleLinkClick = (linkText: string, section: string) => {
     trackButtonClick('footer_link', `${section}_${linkText}`)
-  }
-
-  const handleSocialClick = (platform: string) => {
-    trackButtonClick('social_link', platform)
-  }
-
-  const handleTypeformClick = (anchor: string) => {
-    trackButtonClick('footer_typeform', anchor)
   }
 
   return (
@@ -187,15 +170,15 @@ export function Footer() {
                     {/* Footer Groups - Dynamic from CMS */}
                     <div className={styles.footerGroups}>
                       {navigation?.footerGroups
-                        ?.filter((group) => group.title !== 'CONNECT') // Explicitly exclude CONNECT
-                        ?.sort((a, b) => (a.order || 0) - (b.order || 0))
-                        ?.map((group) => (
+                        ?.filter((group: any) => group.title !== 'CONNECT') // Explicitly exclude CONNECT
+                        ?.sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+                        ?.map((group: any) => (
                           <div key={group.title} className={styles.footerGroup}>
                             <h3 className={styles.groupTitle}>{group.title}</h3>
                             <ul className={styles.groupLinks}>
                               {group.links
-                                ?.sort((a, b) => (a.order || 0) - (b.order || 0))
-                                ?.map((link) => (
+                                ?.sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+                                ?.map((link: any) => (
                                   <li key={link.label}>
                                     {link.external ? (
                                       <a
@@ -222,7 +205,7 @@ export function Footer() {
                                 ))}
                               {/* Ensure Events link under Transformation */}
                               {(['TRANSFORMATION', 'Transformation'].includes(group.title) &&
-                                !group.links?.some(l => !l.external && l.pathOrUrl === '/events')) && (
+                                !group.links?.some((l: any) => !l.external && l.pathOrUrl === '/events')) && (
                                   <li key="Events">
                                     <Link
                                       to="/events"
@@ -247,34 +230,31 @@ export function Footer() {
           </div>
           
           <div className={styles.legalLinks}>
-            <Link
-              to="/privacy"
-              className={styles.legalLink}
-              onClick={() => handleLinkClick('Privacy Policy', 'legal')}
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/terms"
-              className={styles.legalLink}
-              onClick={() => handleLinkClick('Terms of Service', 'legal')}
-            >
-              Terms of Service
-            </Link>
-            <Link
-              to="/sitemap"
-              className={styles.legalLink}
-              onClick={() => handleLinkClick('Sitemap', 'legal')}
-            >
-              Sitemap
-            </Link>
-            <Link
-              to="/contact"
-              className={styles.legalLink}
-              onClick={() => handleLinkClick('Contact', 'legal')}
-            >
-              Contact
-            </Link>
+            {navigation?.footerUtilityLinks
+              ?.sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+              ?.map((link: any) => (
+                link.external ? (
+                  <a
+                    key={link.label}
+                    href={link.pathOrUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.legalLink}
+                    onClick={() => handleLinkClick(link.label, 'legal')}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.pathOrUrl}
+                    className={styles.legalLink}
+                    onClick={() => handleLinkClick(link.label, 'legal')}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              ))}
           </div>
         </div>
       </div>
