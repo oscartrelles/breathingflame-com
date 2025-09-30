@@ -1,4 +1,3 @@
-import { VideoBackground } from './VideoBackground'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -14,12 +13,21 @@ interface CTA {
   onClick?: () => void
 }
 
+interface HeroMedia {
+  imageUrl?: string
+  videoEmbed?: string
+  videoId?: string
+}
+
 interface HeroSectionProps {
   title: string
   subtitle: string
+  // Legacy top-level props
   videoId?: string
   videoEmbed?: string
   imageUrl?: string
+  // New preferred structure
+  media?: HeroMedia
   ctas?: CTA[]
   className?: string
 }
@@ -37,52 +45,72 @@ interface HeroSectionProps {
 export function HeroSection({ 
   title, 
   subtitle, 
-  videoId, 
   videoEmbed,
   imageUrl,
+  media,
   ctas = [], 
   className = '' 
 }: HeroSectionProps) {
   const reducedMotion = useReducedMotion()
 
+  function ensureAutoplayEmbed(url: string | undefined): string | undefined {
+    if (!url) return url
+    try {
+      const u = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'https://example.com')
+      // Only handle youtube embeds; otherwise just append autoplay parameters
+      const pathname = u.pathname || ''
+      let videoIdFromPath = ''
+      const match = pathname.match(/\/embed\/([^/?#]+)/)
+      if (match && match[1]) videoIdFromPath = match[1]
+
+      // Required params for background playback
+      const params = u.searchParams
+      params.set('autoplay', '1')
+      params.set('mute', '1')
+      params.set('controls', '0')
+      params.set('playsinline', '1')
+      params.set('modestbranding', '1')
+      params.set('rel', '0')
+      params.set('showinfo', '0')
+      params.set('loop', '1')
+      if (videoIdFromPath) params.set('playlist', videoIdFromPath)
+
+      u.search = params.toString()
+      return u.toString()
+    } catch {
+      // If URL constructor fails (relative URL), fall back to appending params naïvely
+      const hasQuery = url.includes('?')
+      const base = url + (hasQuery ? '&' : '?')
+      return `${base}autoplay=1&mute=1&controls=0&playsinline=1&modestbranding=1&rel=0&loop=1`
+    }
+  }
+
   return (
     <section className={`${styles.hero} ${className}`}>
-      {/* Video Background */}
-      {videoId && (
-        <VideoBackground
-          videoId={videoId}
-          title="Hero Background Video"
-          overlay={false}
-          startTime={6}
-          endTime={80}
-          className={styles.heroVideoBackground}
-        />
-      )}
-
-      {/* Video Embed Background */}
-      {!videoId && videoEmbed && (
+      {/* Preferred: Video Embed Background */}
+      {Boolean((media?.videoEmbed ?? videoEmbed)?.trim()) && (
         <div className={styles.heroVideoEmbedBackground}>
           <iframe
-            src={videoEmbed}
+            src={ensureAutoplayEmbed((media?.videoEmbed ?? videoEmbed) as string)}
             title="Hero Background Video"
             frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
             className={styles.heroVideoEmbed}
           />
         </div>
       )}
 
-      {/* Image Background */}
-      {!videoId && !videoEmbed && imageUrl && (
+      {/* Fallback: Image Background */}
+      {!Boolean((media?.videoEmbed ?? videoEmbed)?.trim()) && Boolean((media?.imageUrl ?? imageUrl)?.trim()) && (
         <div 
           className={styles.heroImageBackground}
-          style={{ backgroundImage: `url(${imageUrl})` }}
+          style={{ backgroundImage: `url(${(media?.imageUrl ?? imageUrl) as string})` }}
         />
       )}
 
       {/* Fallback Background */}
-      {!videoId && !videoEmbed && !imageUrl && (
+      {!Boolean((media?.videoEmbed ?? videoEmbed)?.trim()) && !Boolean((media?.imageUrl ?? imageUrl)?.trim()) && (
         <div className={styles.heroFallbackBackground} />
       )}
 

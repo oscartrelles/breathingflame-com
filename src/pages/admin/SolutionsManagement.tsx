@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { AdminTopBar } from './AdminTopBar'
 import { db } from '@/services/firebase'
 import { collection, getDocs } from 'firebase/firestore'
 import styles from './ProgramsManagement.module.css'
@@ -76,24 +77,13 @@ export function SolutionsManagement() {
     <>
       <SEO data={{ title: 'Manage Solutions - Breathing Flame' }} />
       <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <h1>Solutions Management</h1>
-              <p>Manage all your B2B solutions, edit details, and create new ones.</p>
-            </div>
-            <div className={styles.headerActions}>
-              <Link to="/admin/solutions/new" className={styles.newProgramButton}>
-                + New Solution
-              </Link>
-              <button onClick={() => window.open('/', '_blank')} className={styles.viewSiteButton}>
-                View Site
-              </button>
-            </div>
-          </div>
-        </div>
+        <AdminTopBar 
+          backTo="/admin"
+          actions={(<Link to="/admin/solutions/new" className="btn btn--primary">+ New Solution</Link>)}
+        />
 
         <div className={styles.mainContent}>
+          <h1 className={styles.title}>Solutions Management</h1>
           <div className={styles.controls}>
             <input
               type="text"

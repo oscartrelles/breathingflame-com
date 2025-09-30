@@ -52,17 +52,14 @@ export const analytics = typeof window !== 'undefined' && import.meta.env.PROD
   ? getAnalytics(app) 
   : null
 
-// Connect to emulators in development
-if (import.meta.env.DEV && typeof window !== 'undefined') {
+// Connect to emulators only when explicitly enabled
+const useEmulators = import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true'
+if (import.meta.env.DEV && useEmulators && typeof window !== 'undefined') {
   try {
-    // Only connect if not already connected
-    if (!db._delegate._databaseId.projectId.includes('demo-')) {
-      connectFirestoreEmulator(db, 'localhost', 8080)
-      connectStorageEmulator(storage, 'localhost', 9199)
-      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
-    }
+    if (db) connectFirestoreEmulator(db, 'localhost', 8080)
+    if (storage) connectStorageEmulator(storage, 'localhost', 9199)
+    if (auth) connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
   } catch (error) {
-    // Emulators already connected or not running
     console.log('Firebase emulators not connected:', error)
   }
 }

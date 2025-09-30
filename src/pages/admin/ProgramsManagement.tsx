@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { AdminTopBar } from './AdminTopBar'
 import { db } from '@/services/firebase'
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore'
 import styles from './ProgramsManagement.module.css'
@@ -80,30 +81,10 @@ export function ProgramsManagement() {
       <SEO data={{ title: 'Programs Management - Breathing Flame' }} />
       
       <div className={styles.container}>
-        {/* Header */}
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <Link to="/admin" className={styles.backButton}>
-                <svg fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                </svg>
-                Back to Dashboard
-              </Link>
-              <h1 className={styles.title}>Programs Management</h1>
-            </div>
-            <div className={styles.headerActions}>
-              <Link to="/admin/programs/new" className={styles.createButton}>
-                <svg fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                </svg>
-                New Program
-              </Link>
-            </div>
-          </div>
-        </div>
+        <AdminTopBar backTo="/admin" actions={(<Link to="/admin/programs/new" className="btn btn--primary">New Program</Link>)} />
 
         <div className={styles.mainContent}>
+          <h1 className={styles.title}>Programs Management</h1>
           {/* Filters */}
           <div className={styles.filters}>
             <div className={styles.searchBox}>

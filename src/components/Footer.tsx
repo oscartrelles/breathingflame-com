@@ -92,10 +92,10 @@ export function Footer() {
               >
                 <img 
                   src="/bf-logo.png" 
-                  alt="Breathing Flame" 
+                  alt={settings?.siteTitle || 'Breathing Flame'} 
                   className={styles.logoImage}
                 />
-                <span className={styles.logoText}>Breathing Flame</span>
+                <span className={styles.logoText}>{settings?.siteTitle || 'Breathing Flame'}</span>
               </Link>
               
               {/* Social Links below logo */}

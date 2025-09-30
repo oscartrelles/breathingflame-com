@@ -68,43 +68,51 @@ async function generateContent(): Promise<void> {
         solutionsSnapshot,
         postsSnapshot,
         testimonialsSnapshot,
+        pagesSnapshot,
         settingsDoc,
-        navigationDoc,
-        homeDoc,
-        pageIndividualsDoc,
-        pageOrganizationsDoc,
-        pageProgramsDoc,
-        pageEventsDoc,
-        pageResourcesDoc,
-        pageTestimonialsDoc,
-        pageContactDoc,
-        pageCommunityDoc,
-        pagePressDoc,
-        aboutDoc
+        navigationDoc
       ] = await Promise.all([
         getDocs(collection(db, 'programs')),
         getDocs(collection(db, 'experiences')),
         getDocs(collection(db, 'solutions')),
         getDocs(collection(db, 'posts')),
         getDocs(collection(db, 'testimonials')),
+        getDocs(collection(db, 'pages')),
         getDoc(doc(db, 'settings', 'main')),
-        getDoc(doc(db, 'navigation', 'main')),
-        getDoc(doc(db, 'home', 'main')),
-        getDoc(doc(db, 'pageIndividuals', 'main')),
-        getDoc(doc(db, 'pageOrganizations', 'main')),
-        getDoc(doc(db, 'pagePrograms', 'main')),
-        getDoc(doc(db, 'pageEvents', 'main')),
-        getDoc(doc(db, 'pageResources', 'main')),
-        getDoc(doc(db, 'pageTestimonials', 'main')),
-        getDoc(doc(db, 'pageContact', 'main')),
-        getDoc(doc(db, 'pageCommunity', 'main')),
-        getDoc(doc(db, 'pagePress', 'main')),
-        getDoc(doc(db, 'about', 'main'))
+        getDoc(doc(db, 'navigation', 'main'))
       ]);
+
+      // Process pages collection - normalize hero.media and strip legacy media fields
+      const pagesData: any = {}
+      pagesSnapshot.docs.forEach(pageDoc => {
+        const pageId = pageDoc.id
+        const raw = { id: pageId, ...pageDoc.data() } as any
+        const hero = raw.hero || {}
+        const media = hero.media || {
+          imageUrl: hero.imageUrl || '',
+          videoEmbed: hero.videoEmbed || '',
+          videoId: hero.videoId || ''
+        }
+        const normalizedHero = {
+          ...hero,
+          media,
+        }
+        // Remove legacy fields
+        delete (normalizedHero as any).imageUrl
+        delete (normalizedHero as any).videoEmbed
+        delete (normalizedHero as any).videoId
+        const normalized = { ...raw, hero: normalizedHero }
+
+        // For pages that conflict with collection names, use different keys in en.json
+        const outputKey = pageId === 'programs' ? 'pagePrograms' : 
+                         pageId === 'testimonials' ? 'pageTestimonials' :
+                         pageId
+        pagesData[outputKey] = normalized
+      })
 
       // Process data
       content = {
-        home: homeDoc.exists() ? homeDoc.data() : null,
+        ...pagesData, // Spread all pages (home, about, individuals, etc.)
         programs: programsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
         experiences: experiencesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
         solutions: solutionsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
@@ -112,16 +120,6 @@ async function generateContent(): Promise<void> {
         testimonials: testimonialsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
         settings: settingsDoc.exists() ? settingsDoc.data() : null,
         navigation: navigationDoc.exists() ? navigationDoc.data() : null,
-        pageIndividuals: pageIndividualsDoc.exists() ? pageIndividualsDoc.data() : null,
-        pageOrganizations: pageOrganizationsDoc.exists() ? pageOrganizationsDoc.data() : null,
-        pagePrograms: pageProgramsDoc.exists() ? pageProgramsDoc.data() : null,
-        pageEvents: pageEventsDoc.exists() ? pageEventsDoc.data() : null,
-        pageResources: pageResourcesDoc.exists() ? pageResourcesDoc.data() : null,
-        pageTestimonials: pageTestimonialsDoc.exists() ? pageTestimonialsDoc.data() : null,
-        pageContact: pageContactDoc.exists() ? pageContactDoc.data() : null,
-        pageCommunity: pageCommunityDoc.exists() ? pageCommunityDoc.data() : null,
-        pagePress: pagePressDoc.exists() ? pagePressDoc.data() : null,
-        about: aboutDoc.exists() ? aboutDoc.data() : null,
         lastUpdated: new Date().toISOString()
       };
     } else {

@@ -1,0 +1,111 @@
+.bar {
+  background-color: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-divider);
+  padding: var(--spacing-4) 0;
+}
+
+.inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  text-decoration: none;
+}
+
+.logoIcon {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(to right, var(--color-primary), var(--color-primary-dark));
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+  font-weight: var(--font-weight-black);
+}
+
+.logoText {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.titleWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-body);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.btn {
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-medium);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  border: 1px solid var(--color-border);
+  background: var(--color-background-tertiary);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btnPrimary {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.back {
+  text-decoration: none;
+}
+
+

@@ -40,11 +40,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
+  /* Make the 16:9 iframe cover the container */
+  width: 177.78vh; /* 100 * 16/9 = 177.78% of viewport height */
   height: 100vh;
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
+  min-width: 100vw;
+  min-height: 56.25vw; /* 100 * 9/16 */
+  border: none;
+  pointer-events: none; /* Prevent catching clicks */
   border: none;
 }
 

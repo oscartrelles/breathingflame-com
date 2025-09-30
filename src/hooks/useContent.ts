@@ -82,8 +82,10 @@ export function useHome(locale: Locale = 'en'): ContentHookResult<any> {
 
 export function usePrograms(locale: Locale = 'en'): ContentHookResult<any[]> {
   const { data, loading, error } = useContent(locale);
+  // Check if programs is an array (collection) or object (page data)
+  const programsData = Array.isArray(data?.programs) ? data?.programs : [];
   return {
-    data: data?.programs || [],
+    data: programsData,
     loading,
     error
   };
@@ -91,8 +93,10 @@ export function usePrograms(locale: Locale = 'en'): ContentHookResult<any[]> {
 
 export function useExperiences(locale: Locale = 'en'): ContentHookResult<any[]> {
   const { data, loading, error } = useContent(locale);
+  // Check if experiences is an array (collection) or object (page data)
+  const experiencesData = Array.isArray(data?.experiences) ? data?.experiences : [];
   return {
-    data: data?.experiences || [],
+    data: experiencesData,
     loading,
     error
   };
@@ -100,8 +104,10 @@ export function useExperiences(locale: Locale = 'en'): ContentHookResult<any[]> 
 
 export function useSolutions(locale: Locale = 'en'): ContentHookResult<any[]> {
   const { data, loading, error } = useContent(locale);
+  // Check if solutions is an array (collection) or object (page data)
+  const solutionsData = Array.isArray(data?.solutions) ? data?.solutions : [];
   return {
-    data: data?.solutions || [],
+    data: solutionsData,
     loading,
     error
   };
@@ -147,7 +153,7 @@ export function useNavigation(locale: Locale = 'en'): ContentHookResult<any> {
 export function usePageIndividuals(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageIndividuals || null,
+    data: data?.pageIndividuals || data?.individuals || null,
     loading,
     error
   };
@@ -156,7 +162,7 @@ export function usePageIndividuals(locale: Locale = 'en'): ContentHookResult<any
 export function usePageOrganizations(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageOrganizations || null,
+    data: data?.pageOrganizations || data?.organizations || null,
     loading,
     error
   };
@@ -165,7 +171,7 @@ export function usePageOrganizations(locale: Locale = 'en'): ContentHookResult<a
 export function usePagePrograms(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pagePrograms || null,
+    data: data?.pagePrograms || data?.programsPage || null,
     loading,
     error
   };
@@ -174,7 +180,7 @@ export function usePagePrograms(locale: Locale = 'en'): ContentHookResult<any> {
 export function usePageEvents(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageEvents || null,
+    data: data?.pageEvents || data?.events || null,
     loading,
     error
   };
@@ -183,7 +189,7 @@ export function usePageEvents(locale: Locale = 'en'): ContentHookResult<any> {
 export function usePageResources(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageResources || null,
+    data: data?.pageResources || data?.resources || null,
     loading,
     error
   };
@@ -192,7 +198,7 @@ export function usePageResources(locale: Locale = 'en'): ContentHookResult<any> 
 export function usePageTestimonials(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageTestimonials || null,
+    data: data?.pageTestimonials || data?.testimonialsPage || null,
     loading,
     error
   };
@@ -201,7 +207,7 @@ export function usePageTestimonials(locale: Locale = 'en'): ContentHookResult<an
 export function usePageContact(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageContact || null,
+    data: data?.pageContact || data?.contact || null,
     loading,
     error
   };
@@ -210,7 +216,7 @@ export function usePageContact(locale: Locale = 'en'): ContentHookResult<any> {
 export function usePageCommunity(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pageCommunity || null,
+    data: data?.pageCommunity || data?.community || null,
     loading,
     error
   };
@@ -219,7 +225,7 @@ export function usePageCommunity(locale: Locale = 'en'): ContentHookResult<any> 
 export function usePagePress(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
-    data: data?.pagePress || null,
+    data: data?.pagePress || data?.press || null,
     loading,
     error
   };
@@ -229,6 +235,42 @@ export function useAbout(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
   return {
     data: data?.about || null,
+    loading,
+    error
+  };
+}
+
+export function usePageSearch(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageSearch || data?.search || null,
+    loading,
+    error
+  };
+}
+
+export function usePageNotFound(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.pageNotFound || data?.notFound || null,
+    loading,
+    error
+  };
+}
+
+export function useResourceIgniteYourFlame(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.igniteYourFlame || null,
+    loading,
+    error
+  };
+}
+
+export function useResourcePeakEnergyProfiler(locale: Locale = 'en'): ContentHookResult<any> {
+  const { data, loading, error } = useContent(locale);
+  return {
+    data: data?.peakEnergyProfiler || null,
     loading,
     error
   };

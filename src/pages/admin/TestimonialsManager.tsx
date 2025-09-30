@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { AdminTopBar } from './AdminTopBar'
 import { db } from '@/services/firebase'
 import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore'
-import styles from './TestimonialsManager.module.css'
+import styles from './ProgramsManagement.module.css'
 
 interface Testimonial {
   id: string
@@ -260,12 +261,10 @@ export function TestimonialsManager() {
 
   if (loading) {
     return (
-      <div className={styles.container}>
-        <div className={styles.loadingContainer}>
-          <div className="text-center">
-            <div className={styles.loadingSpinner}></div>
-            <p className={styles.loadingText}>Loading testimonials...</p>
-          </div>
+      <div className={styles.loading}>
+        <div className={styles.loadingContent}>
+          <div className={styles.spinner}></div>
+          <p className={styles.loadingText}>Loading testimonials...</p>
         </div>
       </div>
     )
@@ -274,262 +273,66 @@ export function TestimonialsManager() {
   return (
     <>
       <SEO data={{ title: 'Testimonials Manager - Breathing Flame' }} />
-      
       <div className={styles.container}>
-        {/* Header */}
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerTop}>
-              <div>
-                <h1 className={styles.headerTitle}>Testimonials Manager</h1>
-                <p className={styles.headerSubtitle}>Manage customer testimonials and reviews</p>
-              </div>
-              <div className={styles.headerActions}>
-                <button
-                  onClick={fetchTestimonials}
-                  className={styles.button}
-                >
-                  <span>🔄</span>
-                  Refresh
-                </button>
-                <button
-                  onClick={dedupeNow}
-                  className={styles.button}
-                >
-                  <span>🧹</span>
-                  Deduplicate
-                </button>
-                <Link
-                  to="/admin"
-                  className={styles.button}
-                >
-                  ← Back to Admin
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <AdminTopBar backTo="/admin" />
         <div className={styles.mainContent}>
-          {message && (
-            <div className={`${styles.message} ${
-              message.includes('Error') 
-                ? styles.messageError
-                : styles.messageSuccess
-            }`}>
-              {message}
+          <h1 className={styles.title}>Testimonials Manager</h1>
+          
+          {/* Filters */}
+          <div className={styles.filters}>
+            <div className={styles.searchBox}>
+              <svg className={styles.searchIcon} fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search testimonials..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+              />
             </div>
-          )}
-
-          {/* Stats */}
-          <div className={styles.statsGrid}>
-            <div className={styles.statCard}>
-              <div className={styles.statContent}>
-                <div className={styles.statInfo}>
-                  <p className={styles.statLabel}>Total Testimonials</p>
-                  <p className={styles.statValue}>{testimonials.length}</p>
-                </div>
-                <div className={styles.statIcon}>
-                  <span>💬</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className={styles.statCard}>
-              <div className={styles.statContent}>
-                <div className={styles.statInfo}>
-                  <p className={styles.statLabel}>High Score (8+)</p>
-                  <p className={styles.statValue}>
-                    {testimonials.filter(t => t.score >= 8).length}
-                  </p>
-                </div>
-                <div className={styles.statIcon}>
-                  <span>⭐</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className={styles.statCard}>
-              <div className={styles.statContent}>
-                <div className={styles.statInfo}>
-                  <p className={styles.statLabel}>5-Star Reviews</p>
-                  <p className={styles.statValue}>
-                    {testimonials.filter(t => t.rating === 5).length}
-                  </p>
-                </div>
-                <div className={styles.statIcon}>
-                  <span>🌟</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className={styles.statCard}>
-              <div className={styles.statContent}>
-                <div className={styles.statInfo}>
-                  <p className={styles.statLabel}>Unique Tags</p>
-                  <p className={styles.statValue}>{allTags.length}</p>
-                </div>
-                <div className={styles.statIcon}>
-                  <span>🏷️</span>
-                </div>
-              </div>
-            </div>
+            <select
+              value={filterTag}
+              onChange={(e) => setFilterTag(e.target.value)}
+              className={styles.statusFilter}
+            >
+              <option value="all">All Tags</option>
+              {allTags.map(tag => (
+                <option key={tag} value={tag}>{tag}</option>
+              ))}
+            </select>
           </div>
 
-          {/* Filters and Search */}
-          <div className={styles.filtersCard}>
-            <div className={styles.filtersContent}>
-              <div className={styles.searchContainer}>
-                <div className={styles.searchWrapper}>
-                  <div className={styles.searchIcon}>
-                    <span>🔍</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Search testimonials..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={styles.searchInput}
-                  />
-                </div>
-              </div>
-              
-              <div className={styles.selectContainer}>
-                <select
-                  value={filterTag}
-                  onChange={(e) => setFilterTag(e.target.value)}
-                  className={styles.select}
-                >
-                  <option value="all" className={styles.selectOption}>All Tags</option>
-                  {allTags.map(tag => (
-                    <option key={tag} value={tag} className={styles.selectOption}>{tag}</option>
-                  ))}
-                </select>
-              </div>
-              
-              <div className={styles.selectContainer}>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className={styles.select}
-                >
-                  <option value="score" className={styles.selectOption}>Sort by Score</option>
-                  <option value="rating" className={styles.selectOption}>Sort by Rating</option>
-                  <option value="name" className={styles.selectOption}>Sort by Name</option>
-                  <option value="date" className={styles.selectOption}>Sort by Date</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Bulk Actions */}
-          {selectedTestimonials.length > 0 && (
-            <div className={styles.bulkActions}>
-              <div className={styles.bulkContent}>
-                <p className={styles.bulkText}>
-                  {selectedTestimonials.length} testimonials selected
-                </p>
-                <div className={styles.bulkActionsGroup}>
-                  <button
-                    onClick={() => handleBulkAction('tag')}
-                    className={`${styles.bulkButton} ${styles.bulkButtonTag}`}
-                  >
-                    Add Tag
-                  </button>
-                  <button
-                    onClick={() => handleBulkAction('delete')}
-                    className={`${styles.bulkButton} ${styles.bulkButtonDelete}`}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Testimonials Grid */}
-          <div className={styles.testimonialsGrid}>
+          {/* Testimonials List */}
+          <div className={styles.programsList}>
             {filteredTestimonials.map((testimonial) => (
-              <div key={testimonial.id} className={styles.testimonialCard}>
-                <div className={styles.testimonialContent}>
-                  {/* Header */}
-                  <div className={styles.testimonialHeader}>
-                    <div className={styles.testimonialAuthor}>
-                      <img
-                        src={(testimonial.avatar || '').replace(/^"|"$/g, '') || '/images/reviews/avatars/default.svg'}
-                        alt={testimonial.name}
-                        className={styles.testimonialAvatar}
-                        onError={(e) => {
-                          const img = e.currentTarget as HTMLImageElement
-                          img.onerror = null
-                          img.src = '/images/reviews/avatars/default.svg'
-                        }}
-                      />
-                      <div className={styles.testimonialInfo}>
-                        <h3 className={styles.testimonialName}>{testimonial.name}</h3>
-                        {testimonial.source && testimonial.source !== 'Unknown' && (
-                          <p className={styles.testimonialSource}>{testimonial.source}</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className={styles.testimonialCheckbox}>
-                      <input
-                        type="checkbox"
-                        checked={selectedTestimonials.includes(testimonial.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedTestimonials([...selectedTestimonials, testimonial.id])
-                          } else {
-                            setSelectedTestimonials(selectedTestimonials.filter(id => id !== testimonial.id))
-                          }
-                        }}
-                        className={styles.checkbox}
-                      />
-                    </div>
+              <div key={testimonial.id} className={styles.programCard}>
+                <div className={styles.programInfo}>
+                  <h3 className={styles.programTitle}>{testimonial.name}</h3>
+                  <p className={styles.programSummary}>{testimonial.content}</p>
+                  <div className={styles.programMeta}>
+                    <span className={styles.status}>
+                      {testimonial.rating}★ {testimonial.source}
+                    </span>
+                    <span className={styles.updatedAt}>
+                      Updated: {new Date(testimonial.updatedAt).toLocaleDateString()}
+                    </span>
                   </div>
-
-                  {/* Rating */}
-                  <div className={styles.testimonialRating}>
-                    <div className={styles.ratingStars}>
-                      {getRatingStars(testimonial.rating)}
-                    </div>
-                    <div className={`${styles.score} ${getScoreColor(computeScore(testimonial))}`}>
-                      Score: {computeScore(testimonial)}/10
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <p className={styles.testimonialText}>
-                    {testimonial.content}
-                  </p>
-
-                  {/* Tags */}
-                  <div className={styles.testimonialTags}>
-                    {testimonial.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className={styles.tag}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Actions */}
-                  <div className={styles.testimonialActions}>
-                    <button
-                      onClick={() => navigate(`/admin/testimonials/${testimonial.id}`)}
-                      className={`${styles.actionButton} ${styles.actionButtonEdit}`}
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button
-                      onClick={() => window.open(`/testimonials#${testimonial.id}`, '_blank', 'noopener')}
-                      className={`${styles.actionButton} ${styles.actionButtonView}`}
-                    >
-                      👁️
-                    </button>
-                  </div>
+                </div>
+                <div className={styles.programActions}>
+                  <button
+                    onClick={() => navigate(`/admin/testimonials/${testimonial.id}`)}
+                    className={styles.editButton}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => window.open(`/testimonials#${testimonial.id}`, '_blank', 'noopener')}
+                    className={styles.deleteButton}
+                  >
+                    View
+                  </button>
                 </div>
               </div>
             ))}
@@ -537,14 +340,11 @@ export function TestimonialsManager() {
 
           {filteredTestimonials.length === 0 && (
             <div className={styles.emptyState}>
-              <div className={styles.emptyIcon}>💬</div>
-              <h3 className={styles.emptyTitle}>No testimonials found</h3>
-              <p className={styles.emptyText}>
-                {searchTerm || filterTag !== 'all' 
-                  ? 'Try adjusting your search or filters'
-                  : 'No testimonials available yet'
-                }
-              </p>
+              <svg className={styles.emptyIcon} fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <h3>No testimonials found</h3>
+              <p>Create your first testimonial to get started.</p>
             </div>
           )}
         </div>

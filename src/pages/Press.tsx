@@ -11,9 +11,9 @@ const Press: React.FC = () => {
     if (pageData) {
       // Inject Organization JSON-LD
       const orgLD = orgJSONLD({
-        name: 'Breathing Flame',
+        name: pageData?.organization?.name || 'Breathing Flame',
         url: 'https://breathingflame.com',
-        description: 'Science-backed, nature-powered practices for resilience, clarity, and transformation',
+        description: pageData?.organization?.description || 'Science-backed, nature-powered practices for resilience, clarity, and transformation',
         sameAs: [
           'https://www.youtube.com/@BreathingFlameTV',
           'https://www.instagram.com/breathing.flame',
@@ -31,7 +31,7 @@ const Press: React.FC = () => {
           description: mention.excerpt || '',
           url: mention.url,
           author: {
-            name: 'Oscar Trelles'
+            name: pageData?.founder?.name || 'Oscar Trelles'
           },
           datePublished: mention.date,
           image: mention.image
@@ -199,7 +199,7 @@ const Press: React.FC = () => {
               </div>
               <div className={styles.assetContent}>
                 <h3 className={styles.assetLabel}>{asset.label}</h3>
-                <span className={styles.assetType}>{asset.type || 'Download'}</span>
+                <span className={styles.assetType}>{asset.type || (pageData?.assets?.defaultType || 'Download')}</span>
               </div>
               <Download className={styles.downloadIcon} />
             </a>

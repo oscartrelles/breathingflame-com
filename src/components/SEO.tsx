@@ -26,9 +26,11 @@ export function SEO({ data }: SEOProps) {
   const fullUrl = `${baseUrl}${location.pathname}${location.search}`
 
   // Default SEO data from settings
+  const brandName = settings?.siteTitle || 'Breathing Flame'
+  const brandTagline = settings?.masterTagline || 'Resilience. Clarity. Transformation.'
   const defaultSeo = {
-    title: settings?.siteTitle || 'Breathing Flame',
-    description: settings?.seoDefaults?.metaDescription || 'Perform at your best. Live with clarity. Transform your life.',
+    title: brandName,
+    description: settings?.seoDefaults?.metaDescription || brandTagline,
     image: settings?.seoDefaults?.ogImage || `${baseUrl}/og-image.jpg`,
     type: 'website'
   }
@@ -48,10 +50,10 @@ export function SEO({ data }: SEOProps) {
     jsonLd.push({
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'Breathing Flame',
+      name: brandName,
       url: baseUrl,
       logo: `${baseUrl}/logo.png`,
-      description: 'Resilience. Clarity. Transformation.',
+      description: brandTagline,
       sameAs: [
         settings?.socials?.facebook,
         settings?.socials?.instagram,
@@ -65,12 +67,12 @@ export function SEO({ data }: SEOProps) {
     jsonLd.push({
       '@context': 'https://schema.org',
       '@type': 'Person',
-      name: 'Breathing Flame Founder',
+      name: settings?.founder?.name || `${brandName} Founder`,
       url: `${baseUrl}/about`,
-      jobTitle: 'Breathwork Expert & Transformation Coach',
+      jobTitle: settings?.founder?.jobTitle || 'Founder',
       worksFor: {
         '@type': 'Organization',
-        name: 'Breathing Flame'
+        name: brandName
       }
     })
 
@@ -78,7 +80,7 @@ export function SEO({ data }: SEOProps) {
     jsonLd.push({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: 'Breathing Flame',
+      name: brandName,
       url: baseUrl,
       potentialAction: {
         '@type': 'SearchAction',
@@ -96,7 +98,7 @@ export function SEO({ data }: SEOProps) {
         description: seoData.description,
         provider: {
           '@type': 'Organization',
-          name: 'Breathing Flame'
+          name: brandName
         },
         url: fullUrl
       })
@@ -112,7 +114,7 @@ export function SEO({ data }: SEOProps) {
         url: fullUrl,
         organizer: {
           '@type': 'Organization',
-          name: 'Breathing Flame'
+          name: brandName
         }
       })
     }
@@ -130,7 +132,7 @@ export function SEO({ data }: SEOProps) {
         },
         publisher: {
           '@type': 'Organization',
-          name: 'Breathing Flame',
+          name: brandName,
           logo: {
             '@type': 'ImageObject',
             url: `${baseUrl}/logo.png`
@@ -161,7 +163,7 @@ export function SEO({ data }: SEOProps) {
       <meta property="og:type" content={seoData.type || 'website'} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={seoData.image} />
-      <meta property="og:site_name" content="Breathing Flame" />
+      <meta property="og:site_name" content={brandName} />
       <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card Tags */}
@@ -174,7 +176,7 @@ export function SEO({ data }: SEOProps) {
 
       {/* Additional Meta Tags */}
       <meta name="robots" content="index, follow" />
-      <meta name="author" content="Breathing Flame" />
+      <meta name="author" content={brandName} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="theme-color" content="#ffb332" />
 

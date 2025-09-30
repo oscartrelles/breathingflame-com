@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { AdminTopBar } from './AdminTopBar'
 import { db } from '@/services/firebase'
 import { collection, getDocs } from 'firebase/firestore'
 import styles from './ProgramsManagement.module.css'
@@ -74,21 +75,10 @@ export function SettingsManagement() {
     <>
       <SEO data={{ title: 'Manage Settings - Breathing Flame' }} />
       <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <h1>Settings Management</h1>
-              <p>Manage your website settings and configuration.</p>
-            </div>
-            <div className={styles.headerActions}>
-              <button onClick={() => window.open('/', '_blank')} className={styles.viewSiteButton}>
-                View Site
-              </button>
-            </div>
-          </div>
-        </div>
+        <AdminTopBar backTo="/admin" />
 
         <div className={styles.mainContent}>
+          <h1 className={styles.title}>Settings Management</h1>
           <div className={styles.controls}>
             <input
               type="text"

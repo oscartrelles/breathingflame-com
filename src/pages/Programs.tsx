@@ -97,9 +97,11 @@ export function Programs() {
       <HeroSection
         title={pageData.hero.headline}
         subtitle={pageData.hero.subtext}
-        videoId={pageData.hero.videoId}
-        videoEmbed={pageData.hero.videoEmbed}
-        imageUrl={pageData.hero.image}
+        media={pageData.hero.media ?? {
+          imageUrl: pageData.hero.imageUrl,
+          videoEmbed: pageData.hero.videoEmbed,
+          videoId: pageData.hero.videoId,
+        }}
         ctas={pageData.hero.ctas}
         className="programs-hero"
       />
@@ -154,7 +156,7 @@ export function Programs() {
                   value={searchQuery}
                   onChange={handleSearchChange}
                   className={styles.searchInput}
-                  aria-label="Search programs"
+                  aria-label={pageData?.search?.ariaLabel || 'Search programs'}
                 />
               </div>
             )}
@@ -282,7 +284,7 @@ function OfferingCard({ offering }: { offering: Offering }) {
       <div className={styles.cardImage}>
         <img src={offering.image} alt={offering.title} />
         <div className={styles.cardEyebrow}>
-          {offering.kind === 'program' ? 'Program' : 'Experience'}
+          {offering.kind === 'program' ? (pageData?.typeLabels?.program || 'Program') : (pageData?.typeLabels?.experience || 'Experience')}
         </div>
       </div>
       

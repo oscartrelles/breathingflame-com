@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { AdminTopBar } from './AdminTopBar'
 import { db } from '@/services/firebase'
 import { collection, getDocs } from 'firebase/firestore'
 import styles from './ProgramsManagement.module.css'
@@ -20,32 +21,15 @@ export function PagesManagement() {
     const fetchPages = async () => {
       setIsLoading(true)
       try {
-        const pageCollections = [
-          'pageHome', 'pageAbout', 'pageIndividuals', 'pageOrganizations', 
-          'pagePrograms', 'pageResources', 'pageTestimonials', 'pageCommunity', 
-          'pagePress', 'pageContact', 'pageEvents', 'home', 'about', 'navigation'
-        ]
-        
-        const pagesData: Page[] = []
-        
-        for (const pageCollection of pageCollections) {
-          try {
-            const pageSnapshot = await getDocs(collection(db, pageCollection))
-            if (pageSnapshot.size > 0) {
-              const pageDoc = pageSnapshot.docs[0]
-              const pageData = pageDoc.data()
-              pagesData.push({
-                id: pageCollection,
-                title: pageData.hero?.headline || pageData.title || pageCollection.replace('page', ''),
-                updatedAt: pageData.updatedAt || new Date().toISOString(),
-                description: pageData.hero?.subtext || pageData.description
-              })
-            }
-          } catch (error) {
-            console.log(`Error fetching collection ${pageCollection}:`, error)
+        const snapshot = await getDocs(collection(db, 'pages'))
+        const pagesData: Page[] = snapshot.docs.map(d => {
+          const data: any = d.data()
+          return {
+            id: d.id,
+            title: data.hero?.headline || data.title || d.id,
+            updatedAt: data.updatedAt || new Date().toISOString()
           }
-        }
-        
+        })
         setPages(pagesData)
       } catch (error) {
         console.error('Error fetching pages:', error)
@@ -94,19 +78,7 @@ export function PagesManagement() {
     <>
       <SEO data={{ title: 'Manage Pages - Breathing Flame' }} />
       <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <h1>Pages Management</h1>
-              <p>Manage all your website pages and content.</p>
-            </div>
-            <div className={styles.headerActions}>
-              <button onClick={() => window.open('/', '_blank')} className={styles.viewSiteButton}>
-                View Site
-              </button>
-            </div>
-          </div>
-        </div>
+        <AdminTopBar title="Pages Management" subtitle="Manage all your website pages and content." />
 
         <div className={styles.mainContent}>
           <div className={styles.controls}>

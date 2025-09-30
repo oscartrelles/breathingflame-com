@@ -4,6 +4,7 @@ import { SEO } from '@/components/SEO'
 import { db } from '@/services/firebase'
 import { doc, setDoc, getDoc, getDocs, collection, query, orderBy, limit } from 'firebase/firestore'
 import styles from './DynamicEditor.module.css'
+import { AdminTopBar } from './AdminTopBar'
 
 interface FieldConfig {
   key: string
@@ -24,9 +25,8 @@ export function DynamicEditor() {
 
   // Define page collections (these are individual collections, not documents in a collection)
   const pageCollections = [
-    'pageHome', 'pageAbout', 'pageIndividuals', 'pageOrganizations',
-    'pagePrograms', 'pageResources', 'pageTestimonials', 'pageCommunity',
-    'pagePress', 'pageContact', 'pageEvents', 'home', 'about', 'navigation'
+    // Pages are now under the 'pages' collection; ids match document ids
+    'pages'
   ]
 
   // Extract collection name from the current URL path
@@ -41,12 +41,9 @@ export function DynamicEditor() {
     if (path.includes('/admin/navigation/')) return 'navigation'
     if (path.includes('/admin/settings/')) return 'settings'
     
-    // For pages, the collection name is the ID itself (e.g., pageIndividuals)
+    // For pages, use the 'pages' collection and the :id param as the document id
     if (path.includes('/admin/pages/')) {
-      const pathParts = path.split('/')
-      const pageId = pathParts[pathParts.length - 1]
-      console.log('🔍 Page ID extracted:', pageId)
-      return pageId
+      return 'pages'
     }
     
     return 'programs' // fallback
@@ -228,25 +225,14 @@ export function DynamicEditor() {
 
       console.log('🔍 Fetching document:', { collectionName, id })
 
-      if (pageCollections.includes(collectionName)) {
-        // For pages (which are collections), we get the first document in that collection
-        console.log('📄 Fetching page collection:', collectionName)
-        const pageSnapshot = await getDocs(collection(db, collectionName));
-        console.log('📄 Page collection size:', pageSnapshot.size)
-        if (pageSnapshot.size > 0) {
-          docData = pageSnapshot.docs[0].data();
-          console.log('✅ Page data found:', docData)
-        }
-      } else {
-        // For regular collections, fetch by document ID
-        console.log('📚 Fetching regular document:', collectionName, id)
-        const docRef = doc(db, collectionName, id)
-        const docSnap = await getDoc(docRef)
-        console.log('📚 Document exists:', docSnap.exists())
-        if (docSnap.exists()) {
-          docData = docSnap.data();
-          console.log('✅ Document data found:', docData)
-        }
+      // Fetch by collection/id for all collections now (including pages)
+      console.log('📚 Fetching document:', collectionName, id)
+      const docRef = doc(db, collectionName, id)
+      const docSnap = await getDoc(docRef)
+      console.log('📚 Document exists:', docSnap.exists())
+      if (docSnap.exists()) {
+        docData = docSnap.data();
+        console.log('✅ Document data found:', docData)
       }
 
       if (docData) {
@@ -287,20 +273,7 @@ export function DynamicEditor() {
         docToSave.createdAt = new Date().toISOString()
       }
 
-      if (pageCollections.includes(collectionName)) {
-        // For pages (which are collections), we update the first document in that collection
-        const pageSnapshot = await getDocs(collection(db, collectionName));
-        if (pageSnapshot.size > 0) {
-          const docRef = doc(db, collectionName, pageSnapshot.docs[0].id);
-          await setDoc(docRef, docToSave);
-        } else {
-          // If the collection is empty, create a new document with a default ID (e.g., 'main')
-          const docRef = doc(db, collectionName, 'main');
-          await setDoc(docRef, docToSave);
-        }
-      } else {
-        await setDoc(doc(db, collectionName, id || 'new'), docToSave)
-      }
+      await setDoc(doc(db, collectionName, id || 'new'), docToSave)
 
       // Trigger static content regeneration
       try {
@@ -316,9 +289,6 @@ export function DynamicEditor() {
       }
 
       setMessage('Document saved successfully!')
-      setTimeout(() => {
-        navigate(`/admin/${collectionName}`)
-      }, 1500)
     } catch (error) {
       console.error('Error saving document:', error)
       setMessage('Error saving document. Please try again.')
@@ -910,29 +880,15 @@ export function DynamicEditor() {
     <>
       <SEO data={{ title: `Edit ${collectionName} - Breathing Flame` }} />
       <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <h1>Edit {collectionName}</h1>
-              <p>Edit the document fields below</p>
-            </div>
-            <div className={styles.headerActions}>
-              <button
-                onClick={handleSave}
-                disabled={isLoading}
-                className={styles.saveButton}
-              >
-                {isLoading ? 'Saving...' : 'Save Changes'}
-              </button>
-              <button
-                onClick={() => navigate(`/admin/${collectionName}`)}
-                className={styles.cancelButton}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
+        <AdminTopBar 
+          title={`Edit ${collectionName}`}
+          subtitle="Edit the document fields below"
+          actions={(
+            <button onClick={handleSave} disabled={isLoading} className="btn btn--primary">
+              {isLoading ? 'Saving...' : 'Save Changes'}
+            </button>
+          )}
+        />
 
         <div className={styles.mainContent}>
           <div className={styles.form}>

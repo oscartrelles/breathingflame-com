@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { AdminTopBar } from './AdminTopBar'
 import { db } from '@/services/firebase'
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore'
-import styles from './ExperiencesManagement.module.css'
+import styles from './ProgramsManagement.module.css'
 
 interface Experience {
   id: string
@@ -80,30 +81,13 @@ export function ExperiencesManagement() {
       <SEO data={{ title: 'Experiences Management - Breathing Flame' }} />
       
       <div className={styles.container}>
-        {/* Header */}
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <Link to="/admin" className={styles.backButton}>
-                <svg fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                </svg>
-                Back to Dashboard
-              </Link>
-              <h1 className={styles.title}>Experiences Management</h1>
-            </div>
-            <div className={styles.headerActions}>
-              <Link to="/admin/experiences/new" className={styles.createButton}>
-                <svg fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                </svg>
-                New Experience
-              </Link>
-            </div>
-          </div>
-        </div>
+        <AdminTopBar 
+          backTo="/admin"
+          actions={(<Link to="/admin/experiences/new" className="btn btn--primary">New Experience</Link>)}
+        />
 
         <div className={styles.mainContent}>
+          <h1 className={styles.title}>Experiences Management</h1>
           {/* Filters */}
           <div className={styles.filters}>
             <div className={styles.searchBox}>
@@ -130,15 +114,15 @@ export function ExperiencesManagement() {
           </div>
 
           {/* Experiences List */}
-          <div className={styles.experiencesList}>
+          <div className={styles.programsList}>
             {filteredExperiences.map((experience) => (
-              <div key={experience.id} className={styles.experienceCard}>
-                <div className={styles.experienceInfo}>
-                  <h3 className={styles.experienceTitle}>{experience.title}</h3>
+              <div key={experience.id} className={styles.programCard}>
+                <div className={styles.programInfo}>
+                  <h3 className={styles.programTitle}>{experience.title}</h3>
                   {experience.summary && (
-                    <p className={styles.experienceSummary}>{experience.summary}</p>
+                    <p className={styles.programSummary}>{experience.summary}</p>
                   )}
-                  <div className={styles.experienceMeta}>
+                  <div className={styles.programMeta}>
                     <span className={`${styles.status} ${styles[experience.status]}`}>
                       {experience.status}
                     </span>
@@ -147,7 +131,7 @@ export function ExperiencesManagement() {
                     </span>
                   </div>
                 </div>
-                <div className={styles.experienceActions}>
+                <div className={styles.programActions}>
                   <Link
                     to={`/admin/experiences/${experience.id}`}
                     className={styles.editButton}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useNavigation } from '@/hooks/useFirestore'
+import { useNavigation, useSettings } from '@/hooks/useFirestore'
 import { trackButtonClick } from './Analytics'
 import styles from './Header.module.css'
 
@@ -22,6 +22,7 @@ interface HeaderProps {
 export function Header({ className = '' }: HeaderProps) {
   const location = useLocation()
   const { data: navigation, loading, error } = useNavigation()
+  const { data: settings } = useSettings()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -72,10 +73,10 @@ export function Header({ className = '' }: HeaderProps) {
             >
               <img 
                 src="/bf-logo.png" 
-                alt="Breathing Flame" 
+                alt={settings?.siteTitle || 'Breathing Flame'} 
                 className={styles.logoImage}
               />
-              <span className={styles.logoText}>Breathing Flame</span>
+              <span className={styles.logoText}>{settings?.siteTitle || 'Breathing Flame'}</span>
             </Link>
 
             {/* Right-aligned container for nav and CTA */}

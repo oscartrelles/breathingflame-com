@@ -37,7 +37,7 @@ export function About() {
     "url": "https://breathingflame.com/about",
     "affiliation": {
       "@type": "Organization",
-      "name": "Breathing Flame"
+      "name": aboutData.founder.affiliation?.name || "Breathing Flame"
     },
     "sameAs": aboutData.founder.socials?.map(social => social.url) || []
   }
@@ -46,9 +46,9 @@ export function About() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Breathing Flame",
+    "name": aboutData.organization?.name || "Breathing Flame",
     "url": "https://breathingflame.com",
-    "description": "Science-backed, nature-powered practices for resilience, clarity, and transformation",
+    "description": aboutData.organization?.description || "Science-backed, nature-powered practices for resilience, clarity, and transformation",
     "sameAs": [
       "https://www.youtube.com/@BreathingFlameTV",
       "https://www.instagram.com/breathing.flame",
@@ -78,9 +78,11 @@ export function About() {
       <HeroSection
         title={aboutData.hero.headline}
         subtitle={aboutData.hero.subtext}
-        videoId={aboutData.hero.videoId}
-        videoEmbed={aboutData.hero.videoEmbed}
-        imageUrl={aboutData.hero.image}
+        media={aboutData.hero.media ?? {
+          imageUrl: aboutData.hero.imageUrl,
+          videoEmbed: aboutData.hero.videoEmbed,
+          videoId: aboutData.hero.videoId,
+        }}
         ctas={aboutData.hero.ctas?.map(cta => ({
           label: cta.label,
           pathOrUrl: cta.url,
@@ -256,7 +258,7 @@ export function About() {
                       <img 
                         key={index}
                         src={logoUrl} 
-                        alt="Client logo"
+                        alt={aboutData.clients?.logoAlt || "Client logo"}
                         className={styles.logo}
                       />
                     ))}

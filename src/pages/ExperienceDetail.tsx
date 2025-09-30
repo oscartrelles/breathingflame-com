@@ -56,7 +56,7 @@ export function ExperienceDetail() {
     "description": experience.hero?.subtext || experience.summary || experience.title,
     "provider": {
       "@type": "Organization",
-      "name": "Breathing Flame",
+      "name": experience.seo?.providerName || "Breathing Flame",
       "url": "https://breathingflame.com"
     }
   }

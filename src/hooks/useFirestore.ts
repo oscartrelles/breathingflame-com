@@ -26,6 +26,10 @@ import {
   usePageContact as usePageContactContent,
   usePageCommunity as usePageCommunityContent,
   usePagePress as usePagePressContent,
+  usePageSearch as usePageSearchContent,
+  usePageNotFound as usePageNotFoundContent,
+  useResourcePeakEnergyProfiler as useResourcePeakEnergyProfilerContent,
+  useResourceIgniteYourFlame as useResourceIgniteYourFlameContent,
   useAbout as useAboutContent,
   useAllOfferingsLite as useAllOfferingsLiteContent,
   useLatestPostsLite as useLatestPostsLiteContent,
@@ -279,5 +283,24 @@ export function usePageCommunity() {
 export function usePagePress() {
   const { data, loading, error } = usePagePressContent()
   return { pageData: data, loading, error }
+}
+
+// Search page hook
+export function usePageSearch() {
+  return usePageSearchContent()
+}
+
+// 404 Not Found page hook
+export function usePageNotFound() {
+  return usePageNotFoundContent()
+}
+
+// Resource page hooks
+export function useResourceIgniteYourFlame() {
+  return useResourceIgniteYourFlameContent()
+}
+
+export function useResourcePeakEnergyProfiler() {
+  return useResourcePeakEnergyProfilerContent()
 }
 

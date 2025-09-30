@@ -24,7 +24,7 @@ export function Resources() {
   const collectionLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Resources',
+    name: page.seo?.title || 'Resources',
     about: page.filters?.tags || ['Performance', 'Resilience', 'Longevity'],
     url: 'https://breathingflame.com/resources'
   }
@@ -63,7 +63,7 @@ export function Resources() {
       <section className="section">
         <div className="container" style={{ display: 'grid', gap: 'var(--spacing-4)' }}>
           {page.filters?.enabled !== false && (
-            <div role="tablist" aria-label="Filter articles">
+            <div role="tablist" aria-label={page.filters?.ariaLabel || 'Filter articles'}>
               {tags.map(tag => (
                 <button
                   key={tag}
@@ -79,9 +79,9 @@ export function Resources() {
             </div>
           )}
           {page.search?.enabled !== false && (
-            <form onSubmit={onSearchSubmit} aria-label="Search resources">
-              <label htmlFor="resources-search" className="sr-only">Search articles</label>
-              <input id="resources-search" value={query} onChange={e => setQuery(e.target.value)} placeholder={page.search?.placeholder || 'Search articles…'} className="input" />
+            <form onSubmit={onSearchSubmit} aria-label={page.search?.ariaLabel || 'Search resources'}>
+              <label htmlFor="resources-search" className="sr-only">{page.search?.label || 'Search articles'}</label>
+              <input id="resources-search" value={query} onChange={e => setQuery(e.target.value)} placeholder={page.search?.placeholder} className="input" />
             </form>
           )}
         </div>

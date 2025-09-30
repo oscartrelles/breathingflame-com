@@ -1,29 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
-import { useAllOfferingsLite, useLatestPostsLite } from '@/hooks/useFirestore'
+import { useAllOfferingsLite, useLatestPostsLite, usePageNotFound, useNavigation } from '@/hooks/useFirestore'
 import { formatDate } from '@/utils/format'
 
-const KNOWN_ROUTES = [
-  { label: "Home", path: "/" },
-  { label: "For Individuals", path: "/individuals" },
-  { label: "For Organizations", path: "/organizations" },
-  { label: "Programs", path: "/programs" },
-  { label: "Events", path: "/events" },
-  { label: "Testimonials", path: "/testimonials" },
-  { label: "Resources", path: "/resources" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
-  { label: "Reverse Aging Challenge", path: "/programs/reverse-aging-challenge" },
-  { label: "Unblocked in Ten Weeks", path: "/programs/unblocked-in-ten-weeks" },
-  { label: "Unstoppable", path: "/programs/unstoppable" },
-  { label: "Wim Hof Method", path: "/experiences/wim-hof-method" },
-  { label: "9D Breathwork", path: "/experiences/9d-breathwork" }
-]
+function useKnownRoutes(navigation: any, pageData: any) {
+  const headerLinks = navigation?.headerLinks || []
+  const footerGroups = navigation?.footerGroups || []
+  const base = [{ label: pageData?.routes?.home || 'Home', path: '/' }]
+  const nav = headerLinks.map((l: any) => ({ label: l.label, path: l.pathOrUrl }))
+  const footer = footerGroups.flatMap((g: any) => (g.links || []).filter((l: any) => !l.external).map((l: any) => ({ label: l.label, path: l.pathOrUrl })))
+  const combined = [...base, ...nav, ...footer]
+  return Array.from(new Map(combined.map(r => [r.path, r])).values())
+}
 
 export function NotFound() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { data: pageData } = usePageNotFound()
+  const { data: navigation } = useNavigation()
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<{label: string, path: string, type: 'route' | 'post'}>>([])
@@ -57,7 +52,8 @@ export function NotFound() {
     const results: Array<{label: string, path: string, type: 'route' | 'post'}> = []
 
     // Search known routes
-    KNOWN_ROUTES.forEach(route => {
+    const ROUTES = useKnownRoutes(navigation, pageData)
+    ROUTES.forEach(route => {
       if (route.label.toLowerCase().includes(query) || route.path.toLowerCase().includes(query)) {
         results.push({ ...route, type: 'route' })
       }
@@ -120,8 +116,8 @@ export function NotFound() {
   return (
     <>
       <SEO data={{ 
-        title: 'Page Not Found - Breathing Flame', 
-        description: 'The page you\'re looking for doesn\'t exist. Explore our programs, resources, and experiences.' 
+        title: pageData?.seo?.title || 'Page Not Found - Breathing Flame', 
+        description: pageData?.seo?.description || 'The page you\'re looking for doesn\'t exist. Explore our programs, resources, and experiences.' 
       }} />
 
       {/* Hero */}
@@ -133,10 +129,10 @@ export function NotFound() {
             textTransform: 'uppercase',
             fontStyle: 'italic'
           }}>
-            Page not found
+            {pageData?.headline || 'Page not found'}
           </h1>
           <p className="text--lg" style={{ color: 'var(--color-text-secondary)' }}>
-            We can't find "{location.pathname}". Try one of these popular pages or search below.
+            {pageData?.subtext?.replace('{pathname}', location.pathname) || `We can't find "${location.pathname}". Try one of these popular pages or search below.`}
           </p>
         </div>
       </section>
@@ -146,18 +142,21 @@ export function NotFound() {
         <div className="container">
           <div className="card" style={{ padding: 'var(--spacing-6)', maxWidth: 600, margin: '0 auto' }}>
             <form onSubmit={handleSearchSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-              <label htmlFor="404-search" className="label">Search the site</label>
+              <label htmlFor="404-search" className="label">{pageData?.searchLabel || 'Search the site'}</label>
               <input
                 id="404-search"
                 type="text"
                 className="input"
-                placeholder="Search pages and articles…"
+                placeholder={pageData?.searchPlaceholder || 'Search pages and articles…'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 aria-describedby="search-results-count"
               />
               <div id="search-results-count" aria-live="polite" className="sr-only">
-                {searchResults.length > 0 ? `${searchResults.length} results found` : 'No results found'}
+                {searchResults.length > 0 
+                  ? (pageData?.resultsCount?.replace('{count}', searchResults.length.toString()) || `${searchResults.length} results found`) 
+                  : (pageData?.noResults || 'No results found')
+                }
               </div>
               
               {searchResults.length > 0 && (
@@ -184,7 +183,7 @@ export function NotFound() {
                     >
                       <div style={{ fontWeight: 'var(--font-weight-medium)' }}>{result.label}</div>
                       <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-muted)' }}>
-                        {result.path} • {result.type === 'route' ? 'Page' : 'Article'}
+                        {result.path} • {result.type === 'route' ? (pageData?.typeLabels?.page || 'Page') : (pageData?.typeLabels?.article || 'Article')}
                       </div>
                     </button>
                   ))}
@@ -199,7 +198,7 @@ export function NotFound() {
       <section className="section">
         <div className="container">
           <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
-            Popular Pages
+            {pageData?.sections?.popularPages?.headline || 'Popular Pages'}
           </h2>
           <div className="grid" style={{ 
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
@@ -248,7 +247,7 @@ export function NotFound() {
         <section className="section">
           <div className="container">
             <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
-              Programs & Workshops
+              {pageData?.sections?.programsWorkshops?.headline || 'Programs & Workshops'}
             </h2>
             <div className="grid" style={{ 
               gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
@@ -278,7 +277,7 @@ export function NotFound() {
                   aria-label={`Open ${offering.title} ${offering.kind}`}
                 >
                   <div className="eyebrow" style={{ color: 'var(--color-primary)' }}>
-                    {offering.kind === 'program' ? 'Program' : 'Experience'}
+                    {offering.kind === 'program' ? (pageData?.typeLabels?.program || 'Program') : (pageData?.typeLabels?.experience || 'Experience')}
                   </div>
                   <h3 className="heading heading--sm" style={{ color: 'var(--color-text-primary)' }}>
                     {offering.title}
@@ -295,7 +294,7 @@ export function NotFound() {
         <section className="section">
           <div className="container">
             <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
-              Latest from Resources
+              {pageData?.sections?.latestArticles?.headline || 'Latest from Resources'}
             </h2>
             <div className="grid" style={{ 
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
@@ -346,7 +345,7 @@ export function NotFound() {
       <section className="section">
         <div className="container">
           <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
-            Quick Assessments
+            {pageData?.sections?.quickAssessments?.headline || 'Quick Assessments'}
           </h2>
           <div className="card" style={{ padding: 'var(--spacing-6)' }}>
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', flexWrap: 'wrap' }}>
@@ -355,14 +354,14 @@ export function NotFound() {
                 className="btn btn--secondary"
                 style={{ textDecoration: 'none' }}
               >
-                Ignite Your Flame
+                {pageData?.sections?.quickAssessments?.igniteYourFlame || 'Ignite Your Flame'}
               </a>
               <a 
                 href="/#peak-energy-profiler" 
                 className="btn btn--secondary"
                 style={{ textDecoration: 'none' }}
               >
-                Peak Energy Profiler
+                {pageData?.sections?.quickAssessments?.peakEnergyProfiler || 'Peak Energy Profiler'}
               </a>
             </div>
           </div>
@@ -374,12 +373,20 @@ export function NotFound() {
         <div className="container">
           <div className="card" style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
             <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-4)' }}>
-              Still need help?
+              {pageData?.sections?.help?.headline || 'Still need help?'}
             </h2>
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/individuals" className="btn">For Individuals</a>
-              <a href="/organizations" className="btn">For Organizations</a>
-              <a href="/contact" className="btn btn--secondary">Contact</a>
+              {pageData?.sections?.help?.buttons ? (
+                pageData.sections.help.buttons.map((btn, idx) => (
+                  <a key={idx} href={btn.url} className={idx === 2 ? 'btn btn--secondary' : 'btn'}>{btn.label}</a>
+                ))
+              ) : (
+                <>
+                  <a href="/individuals" className="btn">For Individuals</a>
+                  <a href="/organizations" className="btn">For Organizations</a>
+                  <a href="/contact" className="btn btn--secondary">Contact</a>
+                </>
+              )}
             </div>
           </div>
         </div>

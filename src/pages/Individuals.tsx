@@ -1,5 +1,6 @@
 import { usePageIndividuals, usePrograms, useExperiences, useTestimonials, usePosts } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
+import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { SEO } from '@/components/SEO'
 import { motion } from 'framer-motion'
 import { 
@@ -82,9 +83,11 @@ export function Individuals() {
       <HeroSection
         title={pageData.hero.headline}
         subtitle={pageData.hero.subtext}
-        videoId={pageData.hero.videoId}
-        videoEmbed={pageData.hero.videoEmbed}
-        imageUrl={pageData.hero.image}
+        media={pageData.hero.media ?? {
+          imageUrl: pageData.hero.imageUrl,
+          videoEmbed: pageData.hero.videoEmbed,
+          videoId: pageData.hero.videoId,
+        }}
         ctas={pageData.hero.ctas}
         className="individuals-hero"
       />
@@ -162,7 +165,7 @@ export function Individuals() {
               </div>
               
                     <a href={program.ctaHref} className="btn btn--secondary">
-                      {program.ctaText || 'Learn More'}
+                      {program.ctaText}
                 </a>
               </div>
                 </motion.div>
@@ -214,7 +217,7 @@ export function Individuals() {
                 </div>
 
                     <a href={experience.ctaHref} className="btn btn--secondary">
-                      {experience.ctaText || 'Experience Now'}
+                      {experience.ctaText}
                 </a>
               </div>
                 </motion.div>
@@ -367,6 +370,15 @@ export function Individuals() {
           </motion.div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialsRail 
+        context={{ audience: 'individuals' }}
+        title={pageData?.sections?.testimonials?.title}
+        subtext={pageData?.sections?.testimonials?.subtext}
+        maxCount={6}
+        minRating={4}
+      />
     </motion.div>
   )
 }

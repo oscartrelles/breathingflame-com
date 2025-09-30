@@ -56,7 +56,7 @@ export function ProgramDetail() {
     "description": program.hero?.subtext || program.summary || program.title,
     "provider": {
       "@type": "Organization",
-      "name": "Breathing Flame",
+      "name": program.seo?.providerName || "Breathing Flame",
       "url": "https://breathingflame.com"
     },
     "hasCourseInstance": [{

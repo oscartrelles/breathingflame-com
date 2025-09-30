@@ -2,45 +2,38 @@ import { useState } from 'react'
 import { SEO } from '@/components/SEO'
 import { HeroSection } from '@/components/HeroSection'
 import { AssessmentOverlay } from '@/components/AssessmentOverlay'
+import { useResourcePeakEnergyProfiler } from '@/hooks/useFirestore'
 
 export function PeakEnergyProfiler() {
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false)
+  const { data: pageData } = useResourcePeakEnergyProfiler()
 
   return (
     <>
       <SEO
         data={{
-          title: 'Peak Energy Profiler - Self Assessment',
-          description: 'Take the Peak Energy Profiler to understand and optimize your energy.',
+          title: pageData?.seo?.title,
+          description: pageData?.seo?.description,
         }}
       />
       <HeroSection
-        title="Peak Energy Profiler"
-        subtitle="Understand your energy patterns and optimize your performance"
-        videoId=""
-        videoEmbed=""
-        imageUrl=""
-        ctas={[
-          {
-            label: "Start Assessment",
-            pathOrUrl: "#",
-            external: false,
-            onClick: () => setIsAssessmentOpen(true)
-          },
-          {
-            label: "Book Consultation",
-            pathOrUrl: "/contact",
-            external: false
-          }
-        ]}
+        title={pageData?.hero?.headline}
+        subtitle={pageData?.hero?.subtext}
+        videoId={pageData?.hero?.videoId || ""}
+        videoEmbed={pageData?.hero?.videoEmbed || ""}
+        imageUrl={pageData?.hero?.imageUrl || ""}
+        ctas={pageData?.hero?.ctas?.map((cta: any) => ({
+          ...cta,
+          onClick: cta.label === 'Start Assessment' ? () => setIsAssessmentOpen(true) : undefined
+        }))}
         className="peak-energy-profiler-hero"
       />
       
       <AssessmentOverlay
         isOpen={isAssessmentOpen}
         onClose={() => setIsAssessmentOpen(false)}
-        assessmentUrl="https://l8ndje95gwz.typeform.com/to/UeisAiij"
-        title="Peak Energy Profiler Assessment"
+        assessmentUrl={pageData?.assessmentUrl}
+        title={pageData?.assessmentTitle}
       />
     </>
   )

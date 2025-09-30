@@ -41,7 +41,7 @@ export function Events() {
                   </p>
                 )}
                 {evt.summary && <p style={{ marginTop: 'var(--spacing-3)' }}>{evt.summary}</p>}
-                <a className="btn" href={evt.url} target="_blank" rel="noopener noreferrer" aria-label={`Learn more about ${evt.title}`} style={{ marginTop: 'var(--spacing-4)' }}>Learn more</a>
+                <a className="btn" href={evt.url} target="_blank" rel="noopener noreferrer" aria-label={`${page.cta?.learnMoreAriaLabel || 'Learn more about'} ${evt.title}`} style={{ marginTop: 'var(--spacing-4)' }}>{page.cta?.learnMoreLabel || 'Learn more'}</a>
               </div>
             ))}
           </div>
@@ -56,7 +56,7 @@ export function Events() {
             height={page.embed.height ?? 900}
             border={page.embed.border ?? '1px solid #bfcbda88'}
             borderRadius={page.embed.borderRadius ?? '8px'}
-            title="Breathing Flame Events"
+            title={page.embed?.title || "Breathing Flame Events"}
           />
           {page.fallbackCTA && (
             <div style={{ textAlign: 'center', marginTop: 'var(--spacing-6)' }}>

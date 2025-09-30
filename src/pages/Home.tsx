@@ -2,6 +2,7 @@ import { useHome, usePrograms, useExperiences } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { TestimonialDisplay } from '@/components/TestimonialDisplay'
+import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { trackTypeformInteraction } from '@/components/Analytics'
 import testimonialsData from '@/content/testimonials.json'
 
@@ -60,23 +61,22 @@ export function Home() {
     >
       <SEO 
         data={{
-          title: homeData?.seo?.title || 'Breathing Flame - Resilience. Clarity. Transformation.',
-          description: homeData?.seo?.description || 'Perform at your best. Live with clarity. Transform your life through breathwork, mindfulness, and transformative experiences.',
-          image: homeData?.seo?.ogImage || '/og-image.jpg'
+          title: homeData?.seo?.title,
+          description: homeData?.seo?.description,
+          image: homeData?.seo?.ogImage
         }}
       />
 
       {/* Hero Section */}
       <HeroSection
-        title={homeData?.hero?.headline || 'Resilience. Clarity. Transformation.'}
-        subtitle={homeData?.hero?.subtext || 'We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices.'}
-        videoId={homeData?.hero?.videoId}
-        videoEmbed={homeData?.hero?.videoEmbed}
-        imageUrl={homeData?.hero?.image}
-        ctas={homeData?.hero?.ctas || [
-          { label: 'For Individuals', pathOrUrl: '/individuals', external: false },
-          { label: 'For Organizations', pathOrUrl: '/organizations', external: false }
-        ]}
+        title={homeData?.hero?.headline}
+        subtitle={homeData?.hero?.subtext}
+        media={homeData?.hero?.media ?? {
+          imageUrl: homeData?.hero?.imageUrl,
+          videoEmbed: homeData?.hero?.videoEmbed,
+          videoId: homeData?.hero?.videoId,
+        }}
+        ctas={homeData?.hero?.ctas}
         className="home-hero"
       />
 
@@ -87,8 +87,8 @@ export function Home() {
             className={styles.sectionHeader}
             {...useInViewAnimation()}
           >
-            <h2 className={styles.sectionTitle}>Our Three Pillars</h2>
-            <p className={styles.sectionDescription}>Resilience. Clarity. Transformation.</p>
+            <h2 className={styles.sectionTitle}>{homeData?.sections?.pillars?.headline}</h2>
+            <p className={styles.sectionDescription}>{homeData?.sections?.pillars?.subtext}</p>
           </motion.div>
 
           <motion.div 
@@ -156,7 +156,7 @@ export function Home() {
                       href={program.ctaHref}
                       className="btn btn--secondary"
                     >
-                      {program.ctaText || 'Learn More'}
+                      {program.ctaText}
                     </a>
                   </div>
                 </div>
@@ -198,7 +198,7 @@ export function Home() {
                       href={experience.ctaHref}
                       className="btn btn--secondary"
                     >
-                      {experience.ctaText || 'Experience Now'}
+                      {experience.ctaText}
                     </a>
                   </div>
                 </div>
@@ -212,8 +212,8 @@ export function Home() {
       <section className="section section--sm">
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>{homeData?.sections?.testimonials?.headline || 'What People Are Saying'}</h2>
-            <p className={styles.sectionDescription}>{homeData?.sections?.testimonials?.subtext || 'Our clients—from entrepreneurs to teams—consistently highlight the power of resilience, clarity, and transformation.'}</p>
+            <h2 className={styles.sectionTitle}>{homeData?.sections?.testimonials?.headline}</h2>
+            <p className={styles.sectionDescription}>{homeData?.sections?.testimonials?.subtext}</p>
           </div>
 
           {/* Home Page Testimonials */}
@@ -235,7 +235,7 @@ export function Home() {
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>{homeData?.sections?.organizations?.headline || 'For Organizations'}</h2>
+              <h2 className={styles.sectionTitle}>{homeData?.sections?.organizations?.headline}</h2>
               <p className={styles.sectionDescription}>
                 Build resilient teams and transformative cultures
               </p>
@@ -271,7 +271,7 @@ export function Home() {
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>{homeData?.sections?.community?.headline || 'Join Our Community'}</h2>
+              <h2 className={styles.sectionTitle}>{homeData?.sections?.community?.headline}</h2>
             </div>
             <div className={styles.communityCTAs}>
               {homeData.sections.community.ctas.map((cta, index) => (
@@ -290,6 +290,14 @@ export function Home() {
           </div>
         </section>
       )}
+
+      {/* Testimonials */}
+      <TestimonialsRail 
+        title={homeData?.sections?.testimonialsRail?.title}
+        subtext={homeData?.sections?.testimonialsRail?.subtext}
+        maxCount={6}
+        minRating={4}
+      />
 
     </motion.div>
   )

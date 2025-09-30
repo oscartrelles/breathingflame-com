@@ -11,16 +11,16 @@ const Community: React.FC = () => {
     if (pageData) {
       // Inject CollectionPage JSON-LD
       const collectionLD = collectionPageJSONLD(
-        'Community',
+        pageData?.seo?.title || 'Community',
         'https://breathingflame.com/community',
-        'Join our community channels and connect with people building resilience, clarity, and transformation'
+        pageData?.seo?.description || 'Join our community channels and connect with people building resilience, clarity, and transformation'
       );
       
       // Inject Organization JSON-LD with social profiles
       const orgLD = orgJSONLD({
-        name: 'Breathing Flame',
+        name: pageData?.organization?.name || 'Breathing Flame',
         url: 'https://breathingflame.com',
-        description: 'Science-backed, nature-powered practices for resilience, clarity, and transformation',
+        description: pageData?.organization?.description || 'Science-backed, nature-powered practices for resilience, clarity, and transformation',
         sameAs: [
           'https://www.youtube.com/@BreathingFlameTV',
           'https://www.instagram.com/breathing.flame',

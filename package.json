@@ -13,6 +13,9 @@
     "generate:static": "tsx scripts/generate-static-content.ts",
     "validate-content": "./scripts/run-validate.sh",
     "validate-content:apply": "./scripts/run-validate.sh --apply",
+    "content:backup": "tsx scripts/admin/backup-content.ts",
+    "content:export": "tsx scripts/generate-content.ts",
+    "content:refresh": "npm run content:backup && npm run content:export",
     "testimonials:import": "./scripts/testimonial-import/run-import.sh import",
     "testimonials:tag": "./scripts/testimonial-import/run-import.sh tag",
     "testimonials:report": "./scripts/testimonial-import/run-import.sh report",
@@ -24,7 +27,12 @@
     "deploy:functions": "firebase deploy --only functions",
     "firebase:emulators": "firebase emulators:start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --ext ts,tsx --fix"
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "sync:check": "tsx scripts/simple-sync-check.ts",
+    "hardcoded:check": "tsx scripts/find-hardcoded.ts",
+    "coverage": "tsx scripts/admin/coverage.ts",
+    "test:e2e": "playwright test --config=tests/playwright.config.ts",
+    "qa:all": "npm run parity && npm run coverage && npm run test:e2e"
   },
   "dependencies": {
     "@types/puppeteer": "^5.4.7",
@@ -33,7 +41,6 @@
     "date-fns": "^4.1.0",
     "firebase": "^10.7.1",
     "framer-motion": "^12.23.16",
-    "googleapis": "^160.0.0",
     "lucide-react": "^0.544.0",
     "puppeteer": "^24.22.3",
     "react": "^18.2.0",
@@ -43,6 +50,7 @@
     "react-router-dom": "^6.20.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.1",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

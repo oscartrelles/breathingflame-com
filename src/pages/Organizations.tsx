@@ -1,5 +1,6 @@
 import { usePageOrganizations, useTestimonials, usePosts, useSolutions } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
+import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { SEO } from '@/components/SEO'
 import { motion } from 'framer-motion'
 import { 
@@ -71,9 +72,11 @@ export function Organizations() {
       <HeroSection
         title={pageData.hero.headline}
         subtitle={pageData.hero.subtext}
-        videoId={pageData.hero.videoId}
-        videoEmbed={pageData.hero.videoEmbed}
-        imageUrl={pageData.hero.image}
+        media={pageData.hero.media ?? {
+          imageUrl: pageData.hero.imageUrl,
+          videoEmbed: pageData.hero.videoEmbed,
+          videoId: pageData.hero.videoId,
+        }}
         ctas={pageData.hero.ctas}
         className="organizations-hero"
       />
@@ -321,6 +324,15 @@ export function Organizations() {
           </motion.div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialsRail 
+        context={{ audience: 'organizations' }}
+        title={pageData?.sections?.testimonials?.title}
+        subtext={pageData?.sections?.testimonials?.subtext}
+        maxCount={6}
+        minRating={4}
+      />
     </motion.div>
   )
 }

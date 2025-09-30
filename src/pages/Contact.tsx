@@ -6,7 +6,7 @@ export function Contact() {
   const { data: page } = usePageContact()
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [loading, setLoading] = useState(false)
-  const [form, setForm] = useState({ name: '', email: '', type: 'General', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', type: page?.form?.defaultType || 'General', message: '' })
 
   if (!page) return null
 
@@ -23,7 +23,7 @@ export function Contact() {
       const json = await res.json()
       if (json.ok) {
         setStatus('success')
-        setForm({ name: '', email: '', type: 'General', message: '' })
+        setForm({ name: '', email: '', type: page?.form?.defaultType || 'General', message: '' })
         // @ts-ignore
         if (window?.gtag) window.gtag('event','contact_submit',{ type: form.type })
       } else {
@@ -73,30 +73,30 @@ export function Contact() {
 
             <form onSubmit={onSubmit} style={{ marginTop: 'var(--spacing-6)', display: 'grid', gap: 'var(--spacing-4)' }}>
               <div>
-                <label htmlFor="name" className="label">Name</label>
+                <label htmlFor="name" className="label">{page.form.fields?.name?.label || 'Name'}</label>
                 <input id="name" className="input" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
               </div>
               <div>
-                <label htmlFor="email" className="label">Email</label>
+                <label htmlFor="email" className="label">{page.form.fields?.email?.label || 'Email'}</label>
                 <input id="email" type="email" className="input" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
               </div>
               <div>
-                <label htmlFor="type" className="label">Inquiry type</label>
+                <label htmlFor="type" className="label">{page.form.fields?.type?.label || 'Inquiry type'}</label>
                 <select id="type" className="input" value={form.type} onChange={e => setForm({ ...form, type: e.target.value })}>
-                  <option>Individual</option>
-                  <option>Organization</option>
-                  <option>General</option>
+                  {(page.form.fields?.type?.options || ['Individual', 'Organization', 'General']).map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
                 </select>
               </div>
               <div>
-                <label htmlFor="message" className="label">Message</label>
+                <label htmlFor="message" className="label">{page.form.fields?.message?.label || 'Message'}</label>
                 <textarea id="message" className="input" rows={6} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
               </div>
-              <button className="btn" disabled={loading} aria-busy={loading}>{loading ? 'Sending…' : 'Send Message'}</button>
+              <button className="btn" disabled={loading} aria-busy={loading}>{loading ? (page.form.submitLoading || 'Sending…') : (page.form.submitLabel || 'Send Message')}</button>
             </form>
 
             <div className="text--sm" style={{ marginTop: 'var(--spacing-6)' }}>
-              Or email us at <a href="mailto:hello@breathingflame.com">hello@breathingflame.com</a> · WhatsApp community: <a href={import.meta.env.VITE_WHATSAPP_INDIVIDUALS || '#'} target="_blank" rel="noopener noreferrer">Join</a>
+              {page.alternativeContact?.text || 'Or email us at'} <a href={`mailto:${page.alternativeContact?.email || 'hello@breathingflame.com'}`}>{page.alternativeContact?.email || 'hello@breathingflame.com'}</a> · {page.alternativeContact?.whatsapp?.text || 'WhatsApp community'}: <a href={page.alternativeContact?.whatsapp?.url || import.meta.env.VITE_WHATSAPP_INDIVIDUALS || '#'} target="_blank" rel="noopener noreferrer">{page.alternativeContact?.whatsapp?.label || 'Join'}</a>
             </div>
           </div>
         </div>
