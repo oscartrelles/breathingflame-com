@@ -1,5 +1,48 @@
 /* Testimonial Display Component Styles */
 
+.container {
+  width: 100%;
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
+  text-align: center;
+}
+
+.subtext {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-6) 0;
+  text-align: center;
+  line-height: var(--line-height-relaxed);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8);
+  gap: var(--spacing-4);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -242,6 +285,26 @@
   text-decoration: underline;
 }
 
+.language {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+/* Touch-friendly carousel styles */
+.carousel {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.carouselButton {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .grid {
@@ -262,6 +325,16 @@
   .testimonialFooter {
     flex-direction: column;
     align-items: flex-start;
+  }
+  
+  .carouselButton {
+    width: 48px;
+    height: 48px;
+    font-size: var(--font-size-xl);
+  }
+  
+  .title {
+    font-size: var(--font-size-xl);
   }
 }
 

@@ -276,7 +276,14 @@ export function TestimonialsManager() {
       <div className={styles.container}>
         <AdminTopBar backTo="/admin" />
         <div className={styles.mainContent}>
-          <h1 className={styles.title}>Testimonials Manager</h1>
+          <div className={styles.headerSection}>
+            <h1 className={styles.title}>Testimonials Manager</h1>
+            <div className={styles.headerActions}>
+              <Link to="/admin/testimonials-migration" className={styles.migrationButton}>
+                🌐 Multilingual Migration
+              </Link>
+            </div>
+          </div>
           
           {/* Filters */}
           <div className={styles.filters}>

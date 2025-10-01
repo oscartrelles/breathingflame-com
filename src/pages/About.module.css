@@ -431,11 +431,12 @@
 
 /* Final CTA Section */
 .finalCTA {
-  background: var(--color-background-secondary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: var(--spacing-20) 0;
 }
 
 .finalCTAContent {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   text-align: center;
 }
@@ -444,7 +445,7 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-black);
-  color: var(--color-primary);
+  color: var(--color-background);
   text-transform: uppercase;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -453,7 +454,7 @@
 
 .finalCTASubtext {
   font-size: var(--font-size-lg);
-  color: var(--color-text-secondary);
+  color: rgba(0, 0, 0, 0.8);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-8);
 }

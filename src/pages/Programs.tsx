@@ -26,6 +26,15 @@ export function Programs() {
   const [searchQuery, setSearchQuery] = useState('')
   const [visibleCount, setVisibleCount] = useState(12)
 
+  // Show loading state if data is not available
+  if (!pageData) {
+    return (
+      <div className="container" style={{ padding: 'var(--spacing-20) 0', textAlign: 'center' }}>
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
+
   // Filter and search logic
   const filteredOfferings = useMemo(() => {
     if (!allOfferings) return []
@@ -181,7 +190,7 @@ export function Programs() {
                 variants={reducedMotion ? {} : staggerChild}
                 whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
-                <OfferingCard offering={offering} />
+                <OfferingCard offering={offering} pageData={pageData} />
                   </motion.div>
                 ))}
               </motion.div>
@@ -242,7 +251,7 @@ export function Programs() {
 }
 
 // Offering Card Component
-function OfferingCard({ offering }: { offering: Offering }) {
+function OfferingCard({ offering, pageData }: { offering: Offering; pageData: any }) {
   const handleClick = useCallback(() => {
     // Analytics event
     if (typeof window !== 'undefined' && (window as any).gtag) {

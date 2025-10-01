@@ -118,7 +118,12 @@ export function DynamicEditor() {
     const pageTags: string[] = (document.tags || []) as string[]
 
     const scored = testimonialsCorpus.map(t => {
-      const text: string = (t.text || '').toLowerCase()
+      // Use display text: original text for English, translated text for others
+      const displayText = (t.originalLanguage === 'eng' || !t.originalLanguage) 
+        ? (t.text || '') 
+        : (t.translatedText || t.text || '')
+      
+      const text: string = displayText.toLowerCase()
       const tags: string[] = (t.tags || [])
       const rating: number = t.rating || 5
       const createdAt = (t.createdAt && (t.createdAt.seconds ? new Date(t.createdAt.seconds * 1000) : new Date(t.createdAt))) || new Date(0)

@@ -16,8 +16,9 @@ export default defineConfig({
             res.end('Method not allowed')
             return
           }
-          const script = path.join(process.cwd(), 'scripts', 'generate-content.ts')
-          exec(`npx tsx ${script}`, (error, stdout, stderr) => {
+          const gen = path.join(process.cwd(), 'scripts', 'generate-content.ts')
+          const site = path.join(process.cwd(), 'scripts', 'generate-sitemap.ts')
+          exec(`npx tsx ${gen} && npx tsx ${site}`, (error, stdout, stderr) => {
             if (error) {
               res.statusCode = 500
               res.setHeader('Content-Type', 'application/json')
@@ -27,6 +28,40 @@ export default defineConfig({
             res.statusCode = 200
             res.setHeader('Content-Type', 'application/json')
             res.end(JSON.stringify({ success: true, output: stdout }))
+          })
+        })
+
+        server.middlewares.use('/api/migrate-testimonials', (req, res) => {
+          if (req.method !== 'POST') {
+            res.statusCode = 405
+            res.end('Method not allowed')
+            return
+          }
+          
+          res.setHeader('Content-Type', 'text/plain')
+          res.setHeader('Transfer-Encoding', 'chunked')
+          
+          const migrationScript = path.join(process.cwd(), 'scripts', 'admin', 'migrate-testimonials-multilingual.ts')
+          const child = exec(`npx tsx ${migrationScript}`)
+          
+          child.stdout?.on('data', (data) => {
+            res.write(data)
+          })
+          
+          child.stderr?.on('data', (data) => {
+            res.write(data)
+          })
+          
+          child.on('close', (code) => {
+            if (code === 0) {
+              res.end()
+            } else {
+              res.end(`\n❌ Migration failed with exit code ${code}`)
+            }
+          })
+          
+          child.on('error', (error) => {
+            res.end(`\n❌ Migration error: ${error.message}`)
           })
         })
       },

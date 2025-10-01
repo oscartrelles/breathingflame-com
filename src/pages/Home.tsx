@@ -2,7 +2,6 @@ import { useHome, usePrograms, useExperiences } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { TestimonialDisplay } from '@/components/TestimonialDisplay'
-import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { trackTypeformInteraction } from '@/components/Analytics'
 import testimonialsData from '@/content/testimonials.json'
 
@@ -43,6 +42,9 @@ export function Home() {
   ).filter(Boolean) as any[]
   
   const reducedMotion = useReducedMotion()
+
+  // Source pillars strictly from pages.home.pillars
+  const pillars: any[] = Array.isArray(homeData?.pillars) ? homeData!.pillars : []
 
   // Get featured programs and experiences
   const featuredPrograms = programs?.filter(program => 
@@ -87,8 +89,8 @@ export function Home() {
             className={styles.sectionHeader}
             {...useInViewAnimation()}
           >
-            <h2 className={styles.sectionTitle}>{homeData?.sections?.pillars?.headline}</h2>
-            <p className={styles.sectionDescription}>{homeData?.sections?.pillars?.subtext}</p>
+            <h2 className={styles.sectionTitle}>{homeData?.sections?.pillars?.headline || 'Resilience. Clarity. Transformation.'}</h2>
+            <p className={styles.sectionDescription}>{homeData?.sections?.pillars?.subtext || 'Three pillars that guide every program and experience we offer.'}</p>
           </motion.div>
 
           <motion.div 
@@ -98,7 +100,7 @@ export function Home() {
             whileInView="animate"
             viewport={{ once: true, amount: 0.3 }}
           >
-            {homeData?.pillars?.map((pillar, index) => (
+            {pillars.map((pillar: any, index: number) => (
               <motion.div 
                 key={pillar.id || index} 
                 className={styles.pillarCard}
@@ -111,7 +113,7 @@ export function Home() {
                     style={{ backgroundColor: pillar.color || '#ffb332' }}
                   >
                     <span className={styles.pillarIconText}>
-                      {pillar.icon || pillar.title.charAt(0)}
+                      {pillar.icon || (pillar.title ? pillar.title.charAt(0) : '')}
                     </span>
                   </div>
                 </div>
@@ -291,13 +293,6 @@ export function Home() {
         </section>
       )}
 
-      {/* Testimonials */}
-      <TestimonialsRail 
-        title={homeData?.sections?.testimonialsRail?.title}
-        subtext={homeData?.sections?.testimonialsRail?.subtext}
-        maxCount={6}
-        minRating={4}
-      />
 
     </motion.div>
   )

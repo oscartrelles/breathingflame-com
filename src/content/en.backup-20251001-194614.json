@@ -877,64 +877,305 @@
       }
     },
     "programs": {
+      "0": {
+        "testimonials": [],
+        "outcomes": [
+          "Increased energy and vitality",
+          "Improved sleep quality",
+          "Enhanced mental clarity",
+          "Better stress management",
+          "Stronger immune system"
+        ],
+        "includes": [
+          "7 weekly group sessions",
+          "Personalized assessment",
+          "Breathwork techniques",
+          "Movement protocols",
+          "Nutrition guidance",
+          "Community support"
+        ],
+        "order": 10,
+        "type": "program",
+        "title": "The Reverse Aging Challenge",
+        "ctaText": "Learn More",
+        "image": "/programs/reverse-aging-challenge.jpg",
+        "format": {
+          "delivery": "Hybrid coaching + practice"
+        },
+        "id": "reverse-aging-challenge",
+        "seo": {
+          "title": "Reverse Aging Challenge – 7-Week Healthspan Program",
+          "description": "Transform your biological age with our 7-week program combining breathwork, movement, fasting, and mindset practices.",
+          "ogImage": "https://breathingflame.com/programs/reverse-aging-challenge.jpg"
+        },
+        "ctas": {
+          "secondary": {
+            "label": "Learn More",
+            "url": "/programs/reverse-aging-challenge",
+            "external": false
+          },
+          "primary": {
+            "url": "/contact",
+            "label": "Start Your Journey",
+            "external": false
+          }
+        },
+        "hero": {
+          "headline": "Reverse Your Biological Age in 7 Weeks",
+          "subtext": "A comprehensive program combining breathwork, movement, fasting, and mindset practices to restore energy and improve your healthspan."
+        },
+        "updatedAt": "2025-09-28T09:35:57.774Z",
+        "summary": "A 7-week reset that combines breathwork, movement, fasting, and mindset to restore energy and improve your healthspan.",
+        "slug": "reverse-aging-challenge",
+        "tags": [
+          "healthspan",
+          "breathwork",
+          "movement",
+          "fasting"
+        ],
+        "subtitle": "7-Week Healthspan Reset",
+        "duration": "7 Weeks",
+        "shortDescription": "Combine breathwork, movement, fasting, and mindset to restore energy and improve healthspan.",
+        "faq": [
+          {
+            "answer": "Yes, the program is designed for all levels with modifications available.",
+            "question": "Is this program suitable for beginners?"
+          }
+        ],
+        "ctaHref": "/programs/reverse-aging-challenge",
+        "modules": [
+          "Week 1-2: Foundation & Assessment",
+          "Week 3-4: Breathwork & Movement",
+          "Week 5-6: Fasting & Nutrition",
+          "Week 7: Integration & Maintenance"
+        ]
+      },
+      "1": {
+        "id": "unblocked",
+        "howItWorks": [
+          {
+            "title": "Block Assessment",
+            "description": "Identify your specific mental and emotional blocks.",
+            "step": 1
+          },
+          {
+            "description": "One-on-one coaching sessions to work through challenges.",
+            "step": 2,
+            "title": "Weekly Coaching"
+          },
+          {
+            "step": 3,
+            "description": "Implement daily practices to maintain momentum.",
+            "title": "Daily Practices"
+          },
+          {
+            "title": "Breakthrough",
+            "step": 4,
+            "description": "Experience major breakthroughs in your personal and professional life."
+          }
+        ],
+        "image": "/programs/unblocked.jpg",
+        "includes": [
+          "10 weekly 1:1 coaching sessions",
+          "Between-session support (async)",
+          "Practice library (breath + clarity drills)",
+          "Personal action dashboard"
+        ],
+        "format_legacy": "online",
+        "order": 2,
+        "faqs": [],
+        "duration": "10 Weeks",
+        "relatedEventsMode": "auto",
+        "shortDescription": "A structured coaching program to remove blocks and move forward with momentum.",
+        "title": "Unblocked in Ten Weeks",
+        "faq": [
+          {
+            "q": "Who is it for?",
+            "a": "Founders, leaders, and professionals who want to move past indecision, overwhelm, or strategic stuckness."
+          },
+          {
+            "q": "What's expected of me?",
+            "a": "1 session per week plus 20–30 mins of focused actions between sessions."
+          },
+          {
+            "q": "Can my company sponsor it?",
+            "a": "Yes. We can invoice your organization and align goals with your manager if needed."
+          }
+        ],
+        "summary": "A structured 1:1 coaching program that removes personal and strategic blocks, giving you clarity and momentum.",
+        "type": "program",
+        "seo": {
+          "description": "Remove personal and strategic blocks, make confident decisions, and build momentum with a structured 10-week coaching program.",
+          "title": "Unblocked in Ten Weeks – 1:1 Coaching for Clarity & Momentum | Breathing Flame",
+          "ogImage": "/og-image.jpg"
+        },
+        "subtitle": "Break Through Barriers",
+        "hero": {
+          "subtext": "A structured 1:1 coaching program that removes personal and strategic blocks so you can move forward with clarity.",
+          "image": "/programs/unblocked.jpg",
+          "headline": "Clear the blocks. Build momentum."
+        },
+        "ctaHref": "/programs/unblocked-in-ten-weeks",
+        "outcomes": [
+          "Identify and dissolve hidden personal or strategic blocks.",
+          "Gain clarity on direction, priorities, and next steps.",
+          "Make confident decisions and follow through consistently.",
+          "Build simple systems to sustain momentum."
+        ],
+        "price": {
+          "organization": 2997,
+          "individual": 1497
+        },
+        "modules": [
+          "Clarity mapping: define outcomes and constraints.",
+          "Systemic exercises: reveal hidden dynamics and patterns.",
+          "Resilience tools: breathwork & nervous system resets.",
+          "Execution cycles: weekly focus, review, and course-correct."
+        ],
+        "testimonials": [],
+        "published": true,
+        "ctaText": "Get Unblocked",
+        "tags": [
+          "Clarity",
+          "Performance",
+          "Individuals"
+        ],
+        "slug": "unblocked-in-ten-weeks",
+        "format": {
+          "duration": "10 weeks",
+          "location": "Online",
+          "delivery": "Private online coaching"
+        },
+        "description": "Identify and overcome the mental, emotional, and energetic blocks that are holding you back from living your fullest life.",
+        "ctas": [
+          {
+            "external": false,
+            "label": "Apply for Unblocked",
+            "url": "/contact"
+          },
+          {
+            "url": "/contact",
+            "label": "Book a 15-min Intro Call",
+            "external": false
+          }
+        ],
+        "featured": true
+      },
+      "2": {
+        "ctaHref": "/programs/unstoppable",
+        "testimonials": [],
+        "modules": [
+          "Deep integration: habit architecture & identity work.",
+          "Advanced breath & cold: capacity, recovery, focus.",
+          "Performance systems: time, attention, energy.",
+          "Feedback loops: metrics, review, and refinement."
+        ],
+        "relatedEventsMode": "auto",
+        "ctaText": "Become Unstoppable",
+        "id": "unstoppable",
+        "published": true,
+        "ctas": [
+          {
+            "label": "Join the Waitlist",
+            "external": false,
+            "url": "/contact"
+          },
+          {
+            "label": "Talk to Oscar",
+            "external": false,
+            "url": "/contact"
+          }
+        ],
+        "hero": {
+          "image": "/programs/unstoppable.jpg",
+          "headline": "Go beyond breakthroughs. Sustain mastery.",
+          "subtext": "A follow-up program to lock in change, expand capacity, and perform consistently without burnout."
+        },
+        "format_legacy": "hybrid",
+        "description": "Achieve unstoppable momentum in all areas of your life through advanced breathwork techniques and peak performance strategies.",
+        "seo": {
+          "ogImage": "/og-image.jpg",
+          "description": "Sustain breakthroughs with advanced resilience tools and performance systems. Designed for leaders who want consistent, long-term results.",
+          "title": "Unstoppable – Performance Mastery Program | Breathing Flame"
+        },
+        "shortDescription": "A follow-up program to help you lock in change and expand your breakthroughs.",
+        "faq": [
+          {
+            "q": "Do I need to complete Unblocked or RAC first?",
+            "a": "It's recommended but not required. We'll assess fit during the intro call."
+          },
+          {
+            "q": "How is it different?",
+            "a": "Unstoppable focuses on mastery—capacity under pressure, long-term systems, and consistent performance."
+          }
+        ],
+        "type": "program",
+        "summary": "A follow-up program that helps you lock in change, sustain new habits, and expand your breakthroughs.",
+        "price": {
+          "individual": 1997,
+          "organization": 3997
+        },
+        "outcomes": [
+          "Consolidate new habits and identity-level change.",
+          "Increase capacity under pressure with advanced resilience tools.",
+          "Design performance systems that protect recovery and focus.",
+          "Track leading indicators and adapt quickly."
+        ],
+        "tags": [
+          "Performance",
+          "Resilience",
+          "Individuals"
+        ],
+        "slug": "unstoppable",
+        "faqs": [],
+        "image": "/programs/unstoppable.jpg",
+        "title": "Unstoppable",
+        "subtitle": "Peak Performance",
+        "includes": [
+          "Bi-weekly coaching sessions (12–16 weeks)",
+          "Custom practice plan + adjustments",
+          "Accountability and check-ins",
+          "Access to select workshops"
+        ],
+        "featured": true,
+        "order": 3,
+        "format": {
+          "location": "Online (with optional in-person sessions)",
+          "duration": "12–16 weeks",
+          "delivery": "Hybrid coaching + practice"
+        },
+        "duration": "12–16 Weeks",
+        "howItWorks": [
+          {
+            "description": "Build on your previous program achievements.",
+            "step": 1,
+            "title": "Foundation Review"
+          },
+          {
+            "step": 2,
+            "title": "Advanced Techniques",
+            "description": "Learn advanced breathwork and performance strategies."
+          },
+          {
+            "title": "Momentum Building",
+            "description": "Create unstoppable momentum in all life areas.",
+            "step": 3
+          },
+          {
+            "step": 4,
+            "description": "Achieve mastery level performance and transformation.",
+            "title": "Mastery"
+          }
+        ]
+      },
       "id": "programs",
       "hero": {
-        "headline": "Programs & Experiences",
-        "subtext": "What if the next 7 weeks — or even one afternoon — could change the way you handle life forever?",
         "media": {
           "imageUrl": "",
           "videoEmbed": "",
           "videoId": ""
         }
-      },
-      "intro": {
-        "title": "Programs & Experiences",
-        "body": "Our offerings combine science and practice to deliver real transformation. From deep coaching journeys to one-day immersions, each program helps you reset, build resilience, and perform better."
-      },
-      "outcomes": [
-        "Wake with more energy and focus.",
-        "Handle challenges calmly and confidently.",
-        "Build systems that sustain progress.",
-        "Reconnect with what really matters."
-      ],
-      "programsSection": {
-        "headline": "Choose your path — structured programs or powerful experiences.",
-        "programRefs": [
-          "reverse-aging-challenge",
-          "unblocked",
-          "unstoppable"
-        ]
-      },
-      "experiencesSection": {
-        "headline": "Powerful One-Day Experiences",
-        "experienceRefs": [
-          "wim-hof-workshop",
-          "breathwork-masterclass",
-          "cold-exposure-intro"
-        ]
-      },
-      "finalCTA": {
-        "headline": "Your path to resilience starts here",
-        "subtext": "Pick the program or experience that meets you where you are — and take the first step today.",
-        "buttons": [
-          {
-            "label": "Join a Program",
-            "url": "/programs",
-            "external": false
-          },
-          {
-            "label": "Book an Experience",
-            "url": "/events",
-            "external": false
-          }
-        ]
-      },
-      "seo": {
-        "title": "Programs & Experiences – Breathing Flame",
-        "description": "Explore Breathing Flame's programs and experiences — from 7-week coaching journeys to one-day immersions — all designed to build resilience, clarity, and performance.",
-        "ogImage": "/og-image.jpg"
-      },
-      "type": "landing"
+      }
     },
     "resources": {
       "id": "resources",
@@ -3823,83 +4064,12 @@
       },
       "id": "testimonials",
       "hero": {
-        "headline": "Testimonials",
-        "subtext": "What if the change you want is closer than you think? Hear from people and teams who've already made it happen.",
         "media": {
           "imageUrl": "",
           "videoEmbed": "",
           "videoId": ""
         }
-      },
-      "intro": {
-        "title": "Real results. Real people.",
-        "body": "From professionals regaining energy and clarity to leadership teams performing under pressure — these are stories of resilience, clarity, and transformation. Explore highlights below, then choose the path that fits you."
-      },
-      "blocks": [
-        {
-          "kind": "featured",
-          "title": "Highlights",
-          "subtext": "A quick look at what participants and clients say most often.",
-          "widget": {
-            "maxCount": 6,
-            "minRating": 4,
-            "preferFeatured": true,
-            "diversity": {
-              "byAuthor": true
-            }
-          }
-        },
-        {
-          "kind": "audience",
-          "title": "For Individuals",
-          "subtext": "Personal breakthroughs from our programs and experiences.",
-          "widget": {
-            "maxCount": 8,
-            "minRating": 4,
-            "context": {
-              "audience": "individuals"
-            }
-          }
-        },
-        {
-          "kind": "audience",
-          "title": "For Organizations",
-          "subtext": "Outcomes from leadership, teams, and company workshops.",
-          "widget": {
-            "maxCount": 8,
-            "minRating": 4,
-            "context": {
-              "audience": "organizations"
-            }
-          }
-        }
-      ],
-      "ctaBand": {
-        "headline": "Ready for your own story?",
-        "subtext": "Pick the path that meets you where you are.",
-        "buttons": [
-          {
-            "label": "Start Your Personal Reset",
-            "url": "/individuals",
-            "external": false
-          },
-          {
-            "label": "Build Resilient Teams",
-            "url": "/organizations",
-            "external": false
-          }
-        ]
-      },
-      "reviewCTA": {
-        "label": "Share your experience",
-        "url": "https://g.page/r/CdczXTXsInRmEBM/review"
-      },
-      "seo": {
-        "title": "Testimonials – Breathing Flame",
-        "description": "Stories from individuals and organizations who transformed stress into strength and clarity into action with Breathing Flame.",
-        "ogImage": "/og-image.jpg"
-      },
-      "type": "landing"
+      }
     }
   },
   "programs": [

@@ -34,6 +34,7 @@ import { SolutionDetail } from '@/pages/SolutionDetail'
 import { AdminDashboard } from '@/pages/admin/AdminDashboard'
 import { DynamicEditor } from '@/pages/admin/DynamicEditor'
 import { TestimonialsManager } from '@/pages/admin/TestimonialsManager'
+import TestimonialsMigration from '@/pages/admin/TestimonialsMigration'
 import { ProgramsManagement } from '@/pages/admin/ProgramsManagement'
 import { ExperiencesManagement } from '@/pages/admin/ExperiencesManagement'
 import { SolutionsManagement } from '@/pages/admin/SolutionsManagement'
@@ -62,6 +63,7 @@ function App() {
         <Route path="/admin/pages/:id" element={<DynamicEditor />} />
         <Route path="/admin/testimonials" element={<TestimonialsManager />} />
         <Route path="/admin/testimonials/:id" element={<DynamicEditor />} />
+        <Route path="/admin/testimonials-migration" element={<TestimonialsMigration />} />
         <Route path="/admin/navigation" element={<NavigationManagement />} />
         <Route path="/admin/navigation/:id" element={<DynamicEditor />} />
         <Route path="/admin/settings" element={<SettingsManagement />} />

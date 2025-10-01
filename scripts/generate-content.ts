@@ -24,24 +24,35 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 const db = getFirestore(app);
 
 interface ContentData {
-  home: any;
+  pages: {
+    home: any;
+    about: any;
+    individuals: any;
+    organizations: any;
+    programs: any;
+    events: any;
+    resources: any;
+    testimonials: any;
+    contact: any;
+    community: any;
+    press: any;
+    search: any;
+    notFound: any;
+  };
   programs: any[];
   experiences: any[];
   solutions: any[];
   posts: any[];
   testimonials: any[];
+  testimonialSummary: {
+    totalCount: number;
+    averageRating: number;
+    languages: string[];
+    withText: number;
+    withoutText: number;
+  };
   settings: any;
   navigation: any;
-  pageIndividuals: any;
-  pageOrganizations: any;
-  pagePrograms: any;
-  pageEvents: any;
-  pageResources: any;
-  pageTestimonials: any;
-  pageContact: any;
-  pageCommunity: any;
-  pagePress: any;
-  about: any;
   lastUpdated: string;
 }
 
@@ -84,9 +95,17 @@ async function generateContent(): Promise<void> {
 
       // Process pages collection - normalize hero.media and strip legacy media fields
       const pagesData: any = {}
+      
       pagesSnapshot.docs.forEach(pageDoc => {
         const pageId = pageDoc.id
         const raw = { id: pageId, ...pageDoc.data() } as any
+        
+        // Skip documents with numeric IDs (these are subdocuments, not page documents)
+        if (/^\d+$/.test(pageId)) {
+          return
+        }
+        
+        // Process as a page document
         const hero = raw.hero || {}
         const media = hero.media || {
           imageUrl: hero.imageUrl || '',
@@ -103,21 +122,59 @@ async function generateContent(): Promise<void> {
         delete (normalizedHero as any).videoId
         const normalized = { ...raw, hero: normalizedHero }
 
-        // For pages that conflict with collection names, use different keys in en.json
-        const outputKey = pageId === 'programs' ? 'pagePrograms' : 
-                         pageId === 'testimonials' ? 'pageTestimonials' :
-                         pageId
-        pagesData[outputKey] = normalized
+        // Strip any accidental numeric top-level keys (defensive against bad shapes)
+        Object.keys(normalized).forEach(k => {
+          if (/^\d+$/.test(k)) delete (normalized as any)[k]
+        })
+
+        // Store pages under their original names
+        pagesData[pageId] = normalized
       })
+
+      // Process testimonials with multilingual support
+      const rawTestimonials = testimonialsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      // Filter and process testimonials for en.json
+      const processedTestimonials = rawTestimonials
+        .filter(testimonial => {
+          // Only include testimonials that have text and are in English or have been translated
+          return testimonial.hasText && (
+            testimonial.language === 'eng' || 
+            (testimonial.language === 'spa' && testimonial.translatedText)
+          );
+        })
+        .map(testimonial => {
+          // Use translated text for Spanish testimonials, original text for English
+          const displayText = testimonial.language === 'spa' && testimonial.translatedText 
+            ? testimonial.translatedText 
+            : testimonial.text;
+          
+          return {
+            ...testimonial,
+            text: displayText,
+            originalLanguage: testimonial.language,
+            isTranslated: testimonial.language === 'spa' && !!testimonial.translatedText
+          };
+        });
+
+      // Create testimonial summary for star ratings (includes all testimonials)
+      const testimonialSummary = {
+        totalCount: rawTestimonials.length,
+        averageRating: 5.0, // All testimonials are 5 stars
+        languages: [...new Set(rawTestimonials.map(t => t.language).filter(Boolean))],
+        withText: rawTestimonials.filter(t => t.hasText).length,
+        withoutText: rawTestimonials.filter(t => !t.hasText).length
+      };
 
       // Process data
       content = {
-        ...pagesData, // Spread all pages (home, about, individuals, etc.)
+        pages: pagesData, // Wrap all pages under 'pages' key
         programs: programsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
         experiences: experiencesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
         solutions: solutionsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
         posts: postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-        testimonials: testimonialsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+        testimonials: processedTestimonials,
+        testimonialSummary,
         settings: settingsDoc.exists() ? settingsDoc.data() : null,
         navigation: navigationDoc.exists() ? navigationDoc.data() : null,
         lastUpdated: new Date().toISOString()

@@ -1,4 +1,4 @@
-import { usePageIndividuals, usePrograms, useExperiences, useTestimonials, usePosts } from '@/hooks/useFirestore'
+import { usePageIndividuals, usePrograms, useExperiences, usePosts } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { SEO } from '@/components/SEO'
@@ -30,7 +30,6 @@ export function Individuals() {
   const { data: pageData } = usePageIndividuals()
   const { data: programs } = usePrograms()
   const { data: experiences } = useExperiences()
-  const { data: testimonials } = useTestimonials()
   const { data: posts } = usePosts()
   const reducedMotion = useReducedMotion()
 
@@ -44,10 +43,6 @@ export function Individuals() {
     pageData?.experiences?.experienceRefs?.includes(experience.id)
   ) || []
 
-  // Get referenced testimonials
-  const featuredTestimonials = testimonials?.filter(testimonial => 
-    pageData?.testimonials?.testimonialRefs?.includes(testimonial.id)
-  ) || []
 
   // Get featured blog post
   const featuredPost = posts?.find(post => 
@@ -95,6 +90,16 @@ export function Individuals() {
       {/* Intro Blocks Section */}
       <section className="section">
         <div className="container">
+          <motion.div 
+            className={styles.sectionHeader}
+            {...useInViewAnimation()}
+          >
+            <h2 className={styles.sectionTitle}>Our Approach</h2>
+            <p className={styles.sectionDescription}>
+              Three pillars that guide everything we do
+            </p>
+          </motion.div>
+
           <motion.div 
             className={styles.pillarsGrid}
             variants={reducedMotion ? {} : staggerContainer}
@@ -227,59 +232,15 @@ export function Individuals() {
         </section>
       )}
 
-      {/* Testimonials Section */}
-      {featuredTestimonials.length > 0 && (
-        <section className="section section--sm">
-          <div className="container">
-            <motion.div 
-              className={styles.sectionHeader}
-              {...useInViewAnimation()}
-            >
-              <h2 className={styles.sectionTitle}>{pageData.testimonials.headline}</h2>
-              <p className={styles.sectionDescription}>
-                {pageData.testimonials.subtext}
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className={styles.testimonialsGrid}
-              variants={reducedMotion ? {} : staggerContainer}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              {featuredTestimonials.map((testimonial) => (
-                <motion.div 
-                  key={testimonial.id}
-                  className={styles.testimonialCard}
-                  variants={reducedMotion ? {} : staggerChild}
-                >
-                  <div className={styles.testimonialContent}>
-                    <p className={styles.testimonialText}>"{testimonial.text}"</p>
-                    
-                    <div className={styles.testimonialAuthor}>
-                      {testimonial.author.avatar && (
-                        <img 
-                          src={testimonial.author.avatar} 
-                          alt={testimonial.author.name}
-                          className={styles.testimonialAvatar}
-                        />
-                      )}
-                      <div className={styles.testimonialAuthorInfo}>
-                        <h4 className={styles.testimonialAuthorName}>{testimonial.author.name}</h4>
-                        <p className={styles.testimonialAuthorTitle}>{testimonial.author.title}</p>
-                        {testimonial.author.company && (
-                          <p className={styles.testimonialAuthorCompany}>{testimonial.author.company}</p>
-                        )}
-              </div>
-            </div>
-          </div>
-                </motion.div>
-              ))}
-            </motion.div>
-        </div>
-      </section>
-      )}
+      {/* Testimonials */}
+      <TestimonialsRail 
+        testimonialRefs={pageData?.testimonials?.testimonialRefs}
+        context={{ audience: 'individuals' }}
+        title={pageData?.testimonials?.headline}
+        subtext={pageData?.testimonials?.subtext}
+        maxCount={6}
+        minRating={4}
+      />
 
       {/* Resources Section */}
       <section className="section section--sm">
@@ -359,7 +320,7 @@ export function Individuals() {
                 <a
                   key={index}
                   href={button.pathOrUrl}
-                  className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
+                  className={`btn btn--on-accent ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
                   target={button.external ? '_blank' : undefined}
                   rel={button.external ? 'noopener noreferrer' : undefined}
                 >
@@ -370,15 +331,6 @@ export function Individuals() {
           </motion.div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      <TestimonialsRail 
-        context={{ audience: 'individuals' }}
-        title={pageData?.sections?.testimonials?.title}
-        subtext={pageData?.sections?.testimonials?.subtext}
-        maxCount={6}
-        minRating={4}
-      />
     </motion.div>
   )
 }

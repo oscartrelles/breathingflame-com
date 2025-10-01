@@ -1,14 +1,66 @@
-.programSection {
-  margin-bottom: var(--spacing-8);
+/* Testimonials page specific styles */
+.testimonialBlock {
+  margin-bottom: var(--spacing-12);
 }
 
-.programSection:last-child {
-  margin-bottom: 0;
+/* Brand styling for testimonial titles */
+.testimonialBlock :global(.title) {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
 }
 
-@media (max-width: 768px) {
-  .programSection {
-    margin-bottom: var(--spacing-6);
-  }
+/* Ensure proper contrast and readability */
+.testimonialBlock :global(.card) {
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
 }
 
+.testimonialBlock :global(.card:hover) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+/* Large opening quote mark */
+.testimonialBlock :global(.card::before) {
+  content: '"';
+  position: absolute;
+  top: -var(--spacing-2);
+  left: var(--spacing-4);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-6xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary);
+  line-height: 1;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+/* Ensure quote text is readable */
+.testimonialBlock :global(.quote) {
+  position: relative;
+  z-index: 1;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+}
+
+/* Star rating styling */
+.testimonialBlock :global(.rating) {
+  color: var(--color-primary);
+  font-size: var(--font-size-lg);
+}
+
+/* Author styling */
+.testimonialBlock :global(.author) {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}

@@ -286,7 +286,7 @@ export function About() {
                 <a
                   key={index}
                   href={button.url}
-                  className={`btn ${button.external ? 'btn--secondary' : 'btn--primary'}`}
+                  className={`btn btn--on-accent ${index === 0 ? 'btn--primary' : 'btn--secondary'}`}
                   target={button.external ? '_blank' : undefined}
                   rel={button.external ? 'noopener noreferrer' : undefined}
                 >

@@ -1,50 +1,60 @@
 import { SEO } from '@/components/SEO'
 import { usePageTestimonials } from '@/hooks/useFirestore'
-import { TestimonialDisplay } from '@/components/TestimonialDisplay'
-import testimonialsData from '@/content/testimonials.json'
+import { TestimonialsRail } from '@/components/TestimonialsRail'
+import { HeroSection } from '@/components/HeroSection'
+import { getTestimonialsJSONLD } from '@/seo/aggregate'
+import { useContent } from '@/hooks/useContent'
+import { Testimonial } from '@/lib/testimonials'
 import styles from './Testimonials.module.css'
 
 export function Testimonials() {
   const { data: page } = usePageTestimonials()
+  const { data: contentData } = useContent()
 
   if (!page) return null
 
-  // Get all testimonials for the testimonials page
-  const allTestimonials = testimonialsData.testimonials || []
-  
-  // Organize testimonials by tags
-  const testimonialsByTag: Record<string, any[]> = {}
-  
-  allTestimonials.forEach(testimonial => {
-    testimonial.tags.forEach(tag => {
-      if (!testimonialsByTag[tag]) {
-        testimonialsByTag[tag] = []
-      }
-      testimonialsByTag[tag].push(testimonial)
-    })
-  })
-  
-  // Sort tags by number of testimonials
-  const sortedTags = Object.keys(testimonialsByTag).sort((a, b) => 
-    testimonialsByTag[b].length - testimonialsByTag[a].length
-  )
+  // Convert testimonials data to our interface for JSON-LD
+  const allTestimonials: Testimonial[] = (contentData?.testimonials || []).map((testimonial: any) => ({
+    id: testimonial.id,
+    author: {
+      name: testimonial.author?.name || 'Anonymous',
+      role: testimonial.author?.title || testimonial.author?.role,
+      avatar: testimonial.author?.avatar
+    },
+    text: testimonial.text || '',
+    rating: testimonial.rating || 5,
+    tags: Array.isArray(testimonial.tags) ? testimonial.tags : [],
+    refs: {
+      programSlugs: testimonial.refs?.programSlugs || [],
+      experienceSlugs: testimonial.refs?.experienceSlugs || [],
+      solutionSlugs: testimonial.refs?.solutionSlugs || []
+    },
+    featured: testimonial.featured || false,
+    createdAt: testimonial.createdAt || new Date().toISOString(),
+    updatedAt: testimonial.updatedAt || new Date().toISOString()
+  }))
+
+  const jsonLD = getTestimonialsJSONLD(allTestimonials)
 
   return (
     <>
       <SEO data={{ title: page.seo.title, description: page.seo.description, image: page.seo.ogImage }} />
       
-      {/* Debug info */}
-      <div style={{ background: 'red', color: 'white', padding: '10px', margin: '10px' }}>
-        DEBUG: Testimonials component loaded. Total: {allTestimonials.length}, Tags: {sortedTags.length}
-      </div>
-
+      {/* JSON-LD */}
+      {jsonLD.map((ld, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+        />
+      ))}
+      
       {/* Hero */}
-      <section className="section">
-        <div className="container">
-          <h1 className="heading heading--xl" style={{ color: 'var(--color-primary)' }}>{page.hero.headline}</h1>
-          <p className="text--lg" style={{ color: 'var(--color-text-secondary)' }}>{page.hero.subtext}</p>
-        </div>
-      </section>
+      <HeroSection
+        title={page.hero.headline}
+        subtitle={page.hero.subtext}
+        media={page.hero.media}
+      />
 
       {/* Intro */}
       <section className="section">
@@ -56,42 +66,63 @@ export function Testimonials() {
         </div>
       </section>
 
-      {/* Testimonials by Tag */}
-      <section className="section">
+      {/* Testimonial Blocks */}
+      {page.blocks?.map((block, index) => (
+        <TestimonialsRail
+          key={index}
+          title={block.title}
+          subtext={block.subtext}
+          context={block.widget?.context}
+          maxCount={block.widget?.maxCount}
+          minRating={block.widget?.minRating}
+          className={styles.testimonialBlock}
+        />
+      ))}
+
+      {/* CTA Band */}
+      <section className="section" style={{ background: 'var(--color-primary)', color: 'white' }}>
         <div className="container">
-          {allTestimonials.length > 0 ? (
-            <div>
-              {sortedTags.map(tag => (
-                <div key={tag} style={{ marginBottom: 'var(--spacing-8)' }}>
-                  <h3 className="heading heading--lg" style={{ 
-                    color: 'var(--color-primary)', 
-                    marginBottom: 'var(--spacing-4)',
-                    textTransform: 'capitalize'
-                  }}>
-                    {tag} ({testimonialsByTag[tag].length})
-                  </h3>
-                  <TestimonialDisplay 
-                    testimonials={testimonialsByTag[tag]} 
-                    layout="grid" 
-                    showRating={true}
-                    showTags={false}
-                    showSource={false}
-                  />
-                </div>
+          <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
+            <h2 className="heading heading--xl" style={{ color: 'white', marginBottom: 'var(--spacing-4)' }}>
+              {page.ctaBand.headline}
+            </h2>
+            {page.ctaBand.subtext && (
+              <p className="text--lg" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: 'var(--spacing-8)' }}>
+                {page.ctaBand.subtext}
+              </p>
+            )}
+            <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {page.ctaBand.buttons.map((button, index) => (
+                <a
+                  key={index}
+                  href={button.url}
+                  className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large btn--on-accent`}
+                  target={button.external ? '_blank' : undefined}
+                  rel={button.external ? 'noopener noreferrer' : undefined}
+                >
+                  {button.label}
+                </a>
               ))}
             </div>
-          ) : (
-            <div className="card" style={{ padding: 'var(--spacing-6)', textAlign: 'center' }}>
-              <h3 className="heading heading--md" style={{ color: 'var(--color-text-secondary)' }}>
-                Loading testimonials...
-              </h3>
-              <p className="text--sm" style={{ color: 'var(--color-text-secondary)' }}>
-                Available: {allTestimonials.length}
-              </p>
-            </div>
-          )}
+          </div>
         </div>
       </section>
+
+      {/* Review CTA */}
+      {page.reviewCTA && (
+        <section className="section">
+          <div className="container" style={{ textAlign: 'center' }}>
+            <a 
+              className="btn btn--secondary" 
+              href={page.reviewCTA.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              {page.reviewCTA.label}
+            </a>
+          </div>
+        </section>
+      )}
     </>
   )
 }
