@@ -1,0 +1,75 @@
+/* Resource Card Component - Reusable for all pages */
+
+.resourceCard {
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-8);
+  text-align: center;
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 200px; /* Ensure minimum height for proper flexbox behavior */
+}
+
+.resourceCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: left; /* Left align content as shown in the image */
+}
+
+.resourceTitle {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-xl);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: var(--line-height-tight);
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.resourceDescription {
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-6);
+  flex-grow: 1; /* This pushes the CTA to the bottom */
+  font-size: var(--font-size-base);
+}
+
+.cardCTA {
+  margin-top: auto; /* This ensures the CTA is pushed to the bottom */
+  flex-shrink: 0; /* Prevent CTA from shrinking */
+}
+
+.cardCTA .btn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .resourceCard {
+    padding: var(--spacing-6);
+    min-height: 180px;
+  }
+  
+  .resourceTitle {
+    font-size: var(--font-size-lg);
+  }
+  
+  .resourceDescription {
+    font-size: var(--font-size-sm);
+  }
+}

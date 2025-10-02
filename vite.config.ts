@@ -64,7 +64,79 @@ export default defineConfig({
             res.end(`\n❌ Migration error: ${error.message}`)
           })
         })
-      },
+
+        // Contact form endpoint using MailerSend
+        server.middlewares.use('/api/contact', (req, res) => {
+          if (req.method !== 'POST') {
+            res.statusCode = 405
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({ ok: false, error: 'Method not allowed' }))
+            return
+          }
+
+          // Parse JSON body
+          let body = ''
+          req.on('data', chunk => {
+            body += chunk.toString()
+          })
+          
+          req.on('end', async () => {
+            try {
+              const { name, email, type, message, phone } = JSON.parse(body)
+          
+              if (!name || !email || !message) {
+                res.statusCode = 400
+                res.setHeader('Content-Type', 'application/json')
+                res.end(JSON.stringify({ ok: false, error: 'Missing required fields' }))
+                return
+              }
+
+              const apiKey = process.env.MAILERSEND_API_KEY
+              const sender = process.env.MAILERSEND_SENDER || 'noreply@breathingflame.com'
+              const receiver = process.env.CONTACT_RECEIVER || 'info@breathingflame.com'
+
+              if (!apiKey) {
+                res.statusCode = 500
+                res.setHeader('Content-Type', 'application/json')
+                res.end(JSON.stringify({ ok: false, error: 'MailerSend API key not configured' }))
+                return
+              }
+
+              const payload = {
+                from: { email: sender, name: 'Breathing Flame Contact Form' },
+                to: [{ email: receiver, name: 'Breathing Flame' }],
+                subject: `New Contact Form Submission – ${type || 'General'}`,
+                text: `Name: ${name}\nEmail: ${email}\nType: ${type}\n${phone ? `Phone: ${phone}\n` : ''}Message:\n${message}`,
+                reply_to: { email, name }
+              }
+
+              const response = await fetch('https://api.mailersend.com/v1/email', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${apiKey}`,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+              })
+
+              if (!response.ok) {
+                const errorText = await response.text()
+                throw new Error(`MailerSend error ${response.status}: ${errorText}`)
+              }
+
+              res.statusCode = 200
+              res.setHeader('Content-Type', 'application/json')
+              res.end(JSON.stringify({ ok: true, message: 'Contact form submitted successfully' }))
+
+            } catch (error) {
+              console.error('Contact form error:', error)
+              res.statusCode = 500
+              res.setHeader('Content-Type', 'application/json')
+              res.end(JSON.stringify({ ok: false, error: 'Failed to send email' }))
+            }
+          })
+        })
+      }
     },
   ],
   resolve: {

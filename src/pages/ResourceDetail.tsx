@@ -1,87 +1,221 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
+import { LoadingWrapper } from '@/components/LoadingWrapper'
+import { ErrorState } from '@/components/ErrorState'
 import { usePost } from '@/hooks/useFirestore'
 import { formatDate, getReadTime } from '@/utils/format'
+import styles from './ResourceDetail.module.css'
 
 export function ResourceDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const { data: post } = usePost(slug || '')
-  if (!post) return null
+  const { data: post, loading, error } = usePost(slug || '')
 
   useEffect(() => {
-    // @ts-ignore
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      // @ts-ignore
+    if (post && typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event','article_view',{ slug: post.slug, title: post.title, tags: post.tags })
     }
-  }, [post.slug])
+  }, [post?.slug, post?.title, post?.tags])
+
+  if (loading) return <LoadingWrapper />
+  if (error) return <ErrorState message="Failed to load article" />
+  if (!post) return <ErrorState message="Article not found" />
 
   const seoTitle = post.og?.title || post.seo?.metaTitle || post.title
   const seoDesc = post.og?.description || post.seo?.metaDescription || post.excerpt
   const seoImage = post.og?.image || post.seo?.ogImage || post.cover || post.featuredImage
 
+  // Format dates for JSON-LD
+  const formatDateForSchema = (date: any) => {
+    if (!date) return undefined
+    if (date instanceof Date) return date.toISOString()
+    if (typeof date === 'string') return new Date(date).toISOString()
+    if (date && typeof date === 'object' && date.seconds) {
+      return new Date(date.seconds * 1000 + (date.nanoseconds || 0) / 1000000).toISOString()
+    }
+    return undefined
+  }
+
   const articleLd = {
-    '@context':'https://schema.org',
-    '@type':'Article',
+    '@context': 'https://schema.org',
+    '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    author: { '@type':'Person', name: post.author?.name || 'Oscar Trelles' },
-    datePublished: post.publishedAt,
-    dateModified: post.updatedAt || post.publishedAt,
-    image: seoImage,
-    mainEntityOfPage: { '@type':'WebPage', '@id': post.canonicalUrl || `https://breathingflame.com/resources/${post.slug}` }
+    author: {
+      '@type': 'Person',
+      name: post.author?.name || 'Oscar Trelles',
+      ...(post.author?.avatar && { image: post.author.avatar }),
+      ...(post.author?.bio && { description: post.author.bio })
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Breathing Flame',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://breathingflame.com/logo.png'
+      },
+      url: 'https://breathingflame.com'
+    },
+    datePublished: formatDateForSchema(post.publishedAt),
+    dateModified: formatDateForSchema(post.updatedAt || post.publishedAt),
+    image: seoImage ? {
+      '@type': 'ImageObject',
+      url: seoImage,
+      ...(post.cover && { caption: post.title })
+    } : undefined,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': post.canonicalUrl || `https://breathingflame.com/resources/${post.slug}`
+    },
+    url: post.canonicalUrl || `https://breathingflame.com/resources/${post.slug}`,
+    ...(post.tags && post.tags.length > 0 && { 
+      keywords: post.tags.join(', ') 
+    }),
+    ...(post.readingTime && { 
+      timeRequired: `PT${post.readingTime}M` 
+    }),
+    articleSection: post.tags?.[0] || 'Wellness',
+    wordCount: post.content?.split(' ').length || 0
   }
   const videoLd = post.videoId ? {
-    '@context':'https://schema.org',
-    '@type':'VideoObject',
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
     name: post.title,
     description: post.excerpt,
     thumbnailUrl: seoImage,
-    uploadDate: post.publishedAt,
-    publisher: { '@type':'Organization', name:'Breathing Flame' }
+    uploadDate: formatDateForSchema(post.publishedAt),
+    publisher: {
+      '@type': 'Organization',
+      name: 'Breathing Flame',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://breathingflame.com/logo.png'
+      }
+    },
+    author: {
+      '@type': 'Person',
+      name: post.author?.name || 'Oscar Trelles'
+    },
+    url: `https://breathingflame.com/resources/${post.slug}`,
+    embedUrl: `https://www.youtube.com/embed/${post.videoId}`,
+    ...(post.tags && post.tags.length > 0 && { 
+      keywords: post.tags.join(', ') 
+    })
   } : null
 
   return (
     <>
       <SEO data={{ title: seoTitle, description: seoDesc, image: seoImage, canonical: post.canonicalUrl, structuredData: videoLd ? [articleLd, videoLd] : [articleLd] }} />
 
-      <div className="container">
-        <h1 className="heading heading--xl" style={{ color: 'var(--color-primary)' }}>{post.title}</h1>
-        <div className="text--sm" style={{ color: 'var(--color-text-muted)' }}>
-          {post.author?.name} · {formatDate(post.publishedAt)} · {getReadTime(post.content)} min read
-        </div>
+      <article className={styles.articleContainer}>
+        {/* Back to Resources Link */}
+        <Link to="/resources" className={styles.backLink}>
+          <svg className={styles.backLinkIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          Back to Resources
+        </Link>
+
+        {/* Article Header */}
+        <header className={styles.articleHeader}>
+          <h1 className={styles.articleTitle}>{post.title}</h1>
+          
+          <div className={styles.articleMeta}>
+            <span>{formatDate(post.publishedAt)}</span>
+            <span className={styles.articleMetaSeparator}>·</span>
+            <span>{getReadTime(post.content)} min read</span>
+          </div>
+
+          {/* Article Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <div className={styles.articleTags}>
+              {post.tags.map((tag, index) => (
+                <span key={index} className={styles.articleTag}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </header>
+
+        {/* Article Cover Image */}
         {post.cover && (
-          <img src={post.cover} alt={post.title} style={{ width:'100%', height: 380, objectFit:'cover', borderRadius: 'var(--radius-lg)', margin: 'var(--spacing-6) 0' }} />
+          <img 
+            src={post.cover} 
+            alt={post.title} 
+            className={styles.articleCover}
+          />
         )}
+
+        {/* Video Content */}
         {post.videoId && (
-          <div className="card" style={{ padding: 0, overflow:'hidden', marginBottom: 'var(--spacing-6)' }}>
+          <div className={styles.videoContainer}>
             <iframe
               src={`https://www.youtube.com/embed/${post.videoId}`}
               title={post.title}
-              width="100%"
-              height={420}
+              className={styles.videoIframe}
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
         )}
-        <div className="prose">
-          {post.content.split('\n\n').map((p, i) => (<p key={i}>{p}</p>))}
+
+        {/* Article Content */}
+        <div className={styles.articleContent}>
+          {post.content.split('\n\n').map((paragraph, index) => {
+            // Simple markdown-like parsing for better formatting
+            if (paragraph.startsWith('## ')) {
+              return <h2 key={index}>{paragraph.replace('## ', '')}</h2>
+            }
+            if (paragraph.startsWith('### ')) {
+              return <h3 key={index}>{paragraph.replace('### ', '')}</h3>
+            }
+            if (paragraph.startsWith('> ')) {
+              return <blockquote key={index}>{paragraph.replace('> ', '')}</blockquote>
+            }
+            return <p key={index}>{paragraph}</p>
+          })}
         </div>
+
+        {/* Author Section */}
+        {post.author && (
+          <div className={styles.authorSection}>
+            <div className={styles.authorCard}>
+              {post.author.avatar && (
+                <img 
+                  src={post.author.avatar} 
+                  alt={post.author.name} 
+                  className={styles.authorAvatar}
+                />
+              )}
+              <div className={styles.authorInfo}>
+                <h3 className={styles.authorName}>{post.author.name}</h3>
+                {post.author.bio && (
+                  <p className={styles.authorBio}>{post.author.bio}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         
-        {/* Simple in-article CTA heuristic */}
-        <div className="card" style={{ padding: 'var(--spacing-6)', marginTop: 'var(--spacing-8)' }}>
+        {/* Article CTA */}
+        <div className={styles.articleCTA}>
           {post.tags?.includes('Longevity') ? (
-            <a className="btn" href="/programs/reverse-aging-challenge">Explore the Reverse Aging Challenge</a>
+            <a className={styles.articleCTAButton} href="/programs/reverse-aging-challenge">
+              Explore the Reverse Aging Challenge
+            </a>
           ) : post.tags?.includes('Resilience') ? (
-            <a className="btn" href="/events">See upcoming experiences</a>
+            <a className={styles.articleCTAButton} href="/events">
+              See upcoming experiences
+            </a>
           ) : (
-            <a className="btn" href="/programs">Explore programs</a>
+            <a className={styles.articleCTAButton} href="/programs">
+              Explore programs
+            </a>
           )}
         </div>
-      </div>
+      </article>
     </>
   )
 }

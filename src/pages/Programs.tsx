@@ -2,6 +2,8 @@ import { useState, useMemo, useCallback } from 'react'
 import { usePagePrograms, useAllOfferings } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
+import { OfferingCard } from '@/components/OfferingCard'
+import { LoadingWrapper } from '@/components/LoadingWrapper'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -29,9 +31,13 @@ export function Programs() {
   // Show loading state if data is not available
   if (!pageData) {
     return (
-      <div className="container" style={{ padding: 'var(--spacing-20) 0', textAlign: 'center' }}>
-        <h1>Loading...</h1>
-      </div>
+      <LoadingWrapper
+        loading={true}
+        loadingMessage="Loading programs..."
+        variant="page"
+        loadingVariant="spinner"
+        loadingSize="lg"
+      />
     )
   }
 
@@ -96,22 +102,22 @@ export function Programs() {
     >
       <SEO 
         data={{
-          title: pageData.seo.title,
-          description: pageData.seo.description,
-          image: pageData.seo.ogImage
+          title: pageData.seo?.title,
+          description: pageData.seo?.description,
+          image: pageData.seo?.ogImage
         }}
       />
 
       {/* Hero Section */}
       <HeroSection
-        title={pageData.hero.headline}
-        subtitle={pageData.hero.subtext}
-        media={pageData.hero.media ?? {
-          imageUrl: pageData.hero.imageUrl,
-          videoEmbed: pageData.hero.videoEmbed,
-          videoId: pageData.hero.videoId,
+        title={pageData.hero?.headline}
+        subtitle={pageData.hero?.subtext}
+        media={pageData.hero?.media ?? {
+          imageUrl: pageData.hero?.imageUrl,
+          videoEmbed: pageData.hero?.videoEmbed,
+          videoId: pageData.hero?.videoId,
         }}
-        ctas={pageData.hero.ctas}
+        ctas={pageData.hero?.ctas}
         className="programs-hero"
       />
 
@@ -124,7 +130,7 @@ export function Programs() {
           >
             {/* Filter Tabs */}
             <div className={styles.tabs} role="tablist">
-              {pageData.filters.showAll && (
+              {pageData.filters?.showAll && (
               <button
                   className={`${styles.tab} ${activeTab === 'all' ? styles.tabActive : ''}`}
                   role="tab"
@@ -134,7 +140,7 @@ export function Programs() {
                   All
               </button>
               )}
-              {pageData.filters.showPrograms && (
+              {pageData.filters?.showPrograms && (
                 <button
                   className={`${styles.tab} ${activeTab === 'programs' ? styles.tabActive : ''}`}
                   role="tab"
@@ -144,7 +150,7 @@ export function Programs() {
                   Programs
                 </button>
               )}
-              {pageData.filters.showExperiences && (
+              {pageData.filters?.showExperiences && (
                 <button
                   className={`${styles.tab} ${activeTab === 'experiences' ? styles.tabActive : ''}`}
                   role="tab"
@@ -157,11 +163,11 @@ export function Programs() {
                     </div>
                     
             {/* Search Input */}
-            {pageData.search.enabled && (
+            {pageData.search?.enabled && (
               <div className={styles.search}>
                 <input
                   type="text"
-                  placeholder={pageData.search.placeholder}
+                  placeholder={pageData.search?.placeholder}
                   value={searchQuery}
                   onChange={handleSearchChange}
                   className={styles.searchInput}
@@ -191,8 +197,8 @@ export function Programs() {
                 whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
                 <OfferingCard offering={offering} pageData={pageData} />
-                  </motion.div>
-                ))}
+              </motion.div>
+            ))}
               </motion.div>
 
           {/* Load More Button */}
@@ -247,76 +253,5 @@ export function Programs() {
         </div>
       </section>
     </motion.div>
-  )
-}
-
-// Offering Card Component
-function OfferingCard({ offering, pageData }: { offering: Offering; pageData: any }) {
-  const handleClick = useCallback(() => {
-    // Analytics event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'programs_card_click', {
-        title: offering.title,
-        kind: offering.kind,
-        slug: offering.slug
-      })
-    }
-  }, [offering])
-
-  const getSummary = () => {
-    // 1. Check for summary field first
-    if (offering.summary) {
-      return offering.summary
-    }
-    
-    // 2. Programs: fallback to first outcome
-    if (offering.kind === 'program' && offering.outcomes && offering.outcomes.length > 0) {
-      return offering.outcomes[0]
-    }
-    
-    // 3. Experiences: fallback to first highlight
-    if (offering.kind === 'experience' && offering.highlights && offering.highlights.length > 0) {
-      return offering.highlights[0]
-    }
-    
-    // 4. Final fallback: shortDescription (equivalent to hero.subtext)
-    return offering.shortDescription
-  }
-
-  return (
-    <a
-      href={offering.ctaHref}
-      className={styles.cardLink}
-      onClick={handleClick}
-      aria-label={`Open ${offering.title} (${offering.kind})`}
-    >
-      <div className={styles.cardImage}>
-        <img src={offering.image} alt={offering.title} />
-        <div className={styles.cardEyebrow}>
-          {offering.kind === 'program' ? (pageData?.typeLabels?.program || 'Program') : (pageData?.typeLabels?.experience || 'Experience')}
-        </div>
-      </div>
-      
-      <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>{offering.title}</h3>
-        <p className={styles.cardSubtitle}>{offering.subtitle}</p>
-        <p className={styles.cardSummary}>{getSummary()}</p>
-        
-        {offering.tags && offering.tags.length > 0 && (
-          <div className={styles.cardTags}>
-            {offering.tags.slice(0, 3).map((tag, index) => (
-              <span key={index} className={styles.cardTag}>
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-        
-        <div className={styles.cardMeta}>
-          <span className={styles.cardDuration}>{offering.duration}</span>
-          <span className={styles.cardFormat}>{offering.format?.delivery || offering.format_legacy}</span>
-        </div>
-      </div>
-    </a>
   )
 }

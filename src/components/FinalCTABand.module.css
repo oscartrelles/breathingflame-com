@@ -1,0 +1,73 @@
+/* Final CTA Band Component - Reusable across all pages */
+
+.finalCTA {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: var(--spacing-20) 0;
+  text-align: center;
+}
+
+.finalCTAContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.finalCTAHeadline {
+  color: var(--color-background);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-4xl);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  .finalCTAHeadline {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.finalCTASubtext {
+  color: rgba(0, 0, 0, 0.8);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-8);
+}
+
+.finalCTAButtons {
+  display: flex;
+  gap: var(--spacing-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.finalCTAButtons .btn {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border-color: var(--color-background);
+}
+
+.finalCTAButtons .btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.finalCTAButtons .btn--secondary {
+  background-color: transparent;
+  color: var(--color-background);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.finalCTAButtons .btn--secondary:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .finalCTAButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+}

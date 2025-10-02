@@ -2,6 +2,10 @@ import { usePageOrganizations, useTestimonials, usePosts, useSolutions } from '@
 import { HeroSection } from '@/components/HeroSection'
 import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { SEO } from '@/components/SEO'
+import { OfferingCard } from '@/components/OfferingCard'
+import { PillarsGrid } from '@/components/PillarsGrid'
+import { ResourcesGrid } from '@/components/ResourcesGrid'
+import { FinalCTABand } from '@/components/FinalCTABand'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -82,45 +86,18 @@ export function Organizations() {
       />
 
       {/* Business Drivers Section */}
-      <section className="section">
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.sectionTitle}>Why It Matters</h2>
-            <p className={styles.sectionDescription}>
-              Real outcomes that impact your bottom line
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.businessDriversGrid}
-            variants={reducedMotion ? {} : staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            {pageData.businessDrivers.map((driver, index) => (
-              <motion.div 
-                key={index}
-                className={styles.driverCard}
-                variants={reducedMotion ? {} : staggerChild}
-                whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
-              >
-                <div className={styles.driverIcon}>
-                  <div className={styles.driverIconInner}>
-                    <span>{driver.title.charAt(0)}</span>
-          </div>
-            </div>
-
-                <h3 className={styles.driverTitle}>{driver.title}</h3>
-                <p className={styles.driverDescription}>{driver.copy}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      <PillarsGrid
+        pillars={pageData.businessDrivers?.map((driver: any) => ({
+          id: driver.id,
+          title: driver.title,
+          copy: driver.copy,
+          icon: driver.title?.charAt(0),
+          color: '#ffb332'
+        })) || []}
+        title="Why It Matters"
+        subtitle="Real outcomes that impact your bottom line"
+        reducedMotion={reducedMotion}
+      />
 
       {/* Solutions Section (from CMS solutions collection) */}
       <section className="section section--sm">
@@ -149,24 +126,16 @@ export function Organizations() {
                 variants={reducedMotion ? {} : staggerChild}
                 whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
               >
-                {solution.image && (
-                  <div className={styles.solutionImage}>
-                    <img src={solution.image} alt={solution.title} />
-                </div>
-                )}
-                
-                <div className={styles.solutionContent}>
-                  <div className={styles.solutionEyebrow}>Solution</div>
-                  <h3 className={styles.solutionTitle}>{solution.title}</h3>
-                  <p className={styles.solutionDescription}>{solution.summary || solution.hero?.subtext}</p>
-                  
-                  <a 
-                    href={`/solutions/${solution.slug}`} 
-                    className="btn btn--outline"
-                  >
-                    Learn More
-                  </a>
-                </div>
+                <OfferingCard 
+                  offering={{
+                    ...solution,
+                    kind: 'solution' as const,
+                    ctaText: 'Learn More',
+                    ctaHref: `/solutions/${solution.slug}`
+                  }} 
+                  pageData={pageData}
+                  customEyebrow="Solution"
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -238,95 +207,51 @@ export function Organizations() {
       />
 
       {/* Resources Section */}
-      <section className="section section--sm">
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.sectionTitle}>{pageData.resources.headline}</h2>
-            <p className={styles.sectionDescription}>
-              {pageData.resources.subtext}
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.resourcesGrid}
-            variants={reducedMotion ? {} : staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {/* Resource Links */}
-            {pageData.resources.resourceLinks.map((resource, index) => (
-              <motion.div 
-                key={index}
-                className={styles.resourceCard}
-                variants={reducedMotion ? {} : staggerChild}
-              >
-                <h3 className={styles.resourceTitle}>{resource.label}</h3>
-              <p className={styles.resourceDescription}>
-                  Comprehensive guide for leaders and HR teams.
-                </p>
-                <a 
-                  href={resource.pathOrUrl} 
-                  className="btn btn--outline"
-                  target={resource.external ? '_blank' : undefined}
-                  rel={resource.external ? 'noopener noreferrer' : undefined}
-                >
-                  Download Guide
-                </a>
-              </motion.div>
-            ))}
-
-            {/* Featured Blog Post */}
-            {featuredPost && (
-              <motion.div 
-                className={styles.resourceCard}
-                variants={reducedMotion ? {} : staggerChild}
-              >
-                <h3 className={styles.resourceTitle}>Latest Article</h3>
-                <p className={styles.resourceDescription}>
-                  {featuredPost.excerpt}
-                </p>
-                <a href={`/blog/${featuredPost.slug}`} className="btn btn--outline">
-                  Read Article
-                </a>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+      <ResourcesGrid
+        resources={[
+          // Resource Links
+          ...(pageData.resources?.resourceLinks?.map((resource: any) => ({
+            id: resource.id,
+            title: resource.label,
+            description: 'Comprehensive guide for leaders and HR teams.',
+            ctaText: 'Download Guide',
+            ctaHref: resource.pathOrUrl,
+            external: resource.external,
+            type: 'guide' as const
+          })) || []),
+          // Featured Blog Post
+          ...(featuredPost ? [{
+            id: 'featured-post',
+            title: 'Latest Article',
+            description: featuredPost.excerpt,
+            ctaText: 'Read Article',
+            ctaHref: `/blog/${featuredPost.slug}`,
+            external: false,
+            type: 'article' as const
+          }] : [])
+        ]}
+        title={pageData.resources?.headline}
+        subtitle={pageData.resources?.subtext}
+        reducedMotion={reducedMotion}
+      />
 
 
       {/* Final CTA Section */}
-      <section className={styles.ctaBand}>
-        <div className="container">
-          <motion.div 
-            className={styles.ctaContent}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.ctaTitle}>{pageData.finalCTA.headline}</h2>
-            <p className={styles.ctaDescription}>
-              {pageData.finalCTA.subtext}
-            </p>
-            
-            <div className={`${styles.ctaButtons} cta-container`}>
-              {pageData.finalCTA.buttons.map((button, index) => (
-                <a
-                  key={index}
-                  href={button.pathOrUrl}
-                  className={`btn btn--on-accent ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
-                  target={button.external ? '_blank' : undefined}
-                  rel={button.external ? 'noopener noreferrer' : undefined}
-                >
-                  {button.label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <FinalCTABand
+        headline={pageData.finalCTA?.headline}
+        subtext={pageData.finalCTA?.subtext}
+        buttons={pageData.finalCTA?.buttons?.map(button => ({
+          label: button.label,
+          url: button.pathOrUrl,
+          external: button.external || false
+        }))}
+        fallbackHeadline="Ready to Transform Your Organization?"
+        fallbackSubtext="Empower your team with resilience and peak performance."
+        fallbackButtons={[
+          { label: "Get Started", url: "/contact", external: false },
+          { label: "Learn More", url: "/organizations", external: false }
+        ]}
+      />
     </motion.div>
   )
 }

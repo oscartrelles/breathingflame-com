@@ -1,10 +1,14 @@
 import { SEO } from '@/components/SEO'
-import { useEffect, useMemo, useState } from 'react'
+import { LoadingWrapper } from '@/components/LoadingWrapper'
+import { ErrorState } from '@/components/ErrorState'
+import { FinalCTABand } from '@/components/FinalCTABand'
+import { useEffect, useState } from 'react'
 import { usePageResources, usePostsFiltered } from '@/hooks/useFirestore'
 import { formatDate, getReadTime } from '@/utils/format'
+import styles from './Resources.module.css'
 
 export function Resources() {
-  const { data: page } = usePageResources()
+  const { data: page, loading: pageLoading, error: pageError } = usePageResources()
   const [activeTag, setActiveTag] = useState<string>('All')
   const [query, setQuery] = useState('')
   const [debounced, setDebounced] = useState('')
@@ -15,89 +19,122 @@ export function Resources() {
     return () => clearTimeout(t)
   }, [query])
 
-  const { data: posts, total } = usePostsFiltered({ tag: activeTag, search: debounced, limit: visible, offset: 0 })
+  const { data: posts, total, loading: postsLoading, error: postsError } = usePostsFiltered({ 
+    tag: activeTag, 
+    search: debounced, 
+    limit: visible, 
+    offset: 0 
+  })
 
-  if (!page) return null
-
-  const tags = ['All', ...(page.filters?.tags || [])]
+  const tags = page?.filters?.tags ? ['All', ...page.filters.tags] : ['All']
 
   const collectionLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: page.seo?.title || 'Resources',
-    about: page.filters?.tags || ['Performance', 'Resilience', 'Longevity'],
+    name: page?.seo?.title || 'Resources',
+    about: page?.filters?.tags || [],
     url: 'https://breathingflame.com/resources'
   }
 
   function onTagClick(tag: string) {
     setActiveTag(tag)
-    // @ts-ignore
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      // @ts-ignore
       window.gtag('event', 'resources_filter', { tag })
     }
   }
 
   function onSearchSubmit(e: React.FormEvent) {
     e.preventDefault()
-    // @ts-ignore
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      // @ts-ignore
       window.gtag('event', 'resources_search', { query, resultsCount: total })
     }
   }
 
+  if (pageLoading) {
+    return <LoadingWrapper />
+  }
+
+  if (pageError || !page) {
+    return <ErrorState message="Failed to load resources page" />
+  }
+
   return (
     <>
-      <SEO data={{ title: page.seo.title, description: page.seo.description, image: page.seo.ogImage, structuredData: [collectionLd] }} />
+      <SEO data={{ 
+        title: page.seo?.title, 
+        description: page.seo?.description, 
+        image: page.seo?.ogImage, 
+        structuredData: [collectionLd] 
+      }} />
 
-      {/* Hero */}
-      <section className="section">
+      {/* Hero Section */}
+      <section className={`section ${styles.heroSection}`}>
         <div className="container">
-          <h1 className="heading heading--xl" style={{ color: 'var(--color-primary)' }}>{page.hero.headline}</h1>
-          <p className="text--lg" style={{ color: 'var(--color-text-secondary)' }}>{page.hero.subtext}</p>
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>{page.hero?.headline}</h1>
+            <p className={styles.heroSubtext}>{page.hero?.subtext}</p>
+          </div>
         </div>
       </section>
 
-      {/* Controls */}
-      <section className="section">
-        <div className="container" style={{ display: 'grid', gap: 'var(--spacing-4)' }}>
-          {page.filters?.enabled !== false && (
-            <div role="tablist" aria-label={page.filters?.ariaLabel || 'Filter articles'}>
-              {tags.map(tag => (
-                <button
-                  key={tag}
-                  role="tab"
-                  aria-selected={activeTag === tag}
-                  className={`chip ${activeTag === tag ? 'chip--active' : ''}`}
-                  onClick={() => onTagClick(tag)}
-                  style={{ marginRight: 'var(--spacing-2)' }}
-                >
-                  {tag}
-                </button>
-              ))}
+      {/* Intro Section */}
+      {page.intro && (
+        <section className={`section ${styles.introSection}`}>
+          <div className="container">
+            <div className={styles.introContent}>
+              <h2 className={styles.introTitle}>{page.intro.title}</h2>
+              <p className={styles.introBody}>{page.intro.body}</p>
             </div>
-          )}
-          {page.search?.enabled !== false && (
-            <form onSubmit={onSearchSubmit} aria-label={page.search?.ariaLabel || 'Search resources'}>
-              <label htmlFor="resources-search" className="sr-only">{page.search?.label || 'Search articles'}</label>
-              <input id="resources-search" value={query} onChange={e => setQuery(e.target.value)} placeholder={page.search?.placeholder} className="input" />
-            </form>
-          )}
+          </div>
+        </section>
+      )}
+
+      {/* Controls Section */}
+      <section className={`section ${styles.controlsSection}`}>
+        <div className="container">
+          <div className={styles.controlsContainer}>
+            {page.filters?.enabled !== false && (
+              <div role="tablist" aria-label={page.filters?.ariaLabel || 'Filter articles'} className={styles.filterTabs}>
+                {tags.map(tag => (
+                  <button
+                    key={tag}
+                    role="tab"
+                    aria-selected={activeTag === tag}
+                    className={`${styles.filterTab} ${activeTag === tag ? styles.active : ''}`}
+                    onClick={() => onTagClick(tag)}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            )}
+            {page.search?.enabled !== false && (
+              <form onSubmit={onSearchSubmit} aria-label={page.search?.ariaLabel || 'Search resources'} className={styles.searchForm}>
+                <label htmlFor="resources-search" className="sr-only">{page.search?.label || 'Search articles'}</label>
+                <input 
+                  id="resources-search" 
+                  value={query} 
+                  onChange={e => setQuery(e.target.value)} 
+                  placeholder={page.search?.placeholder} 
+                  className={styles.searchInput}
+                />
+              </form>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* Featured */}
-      {page.featuredPostRef && (
-        <section className="section">
+      {/* Featured Post Section */}
+      {page.featuredPostRef && posts && (
+        <section className={`section ${styles.featuredSection}`}>
           <div className="container">
             {posts.filter(p => p.id === page.featuredPostRef).map(p => (
-              <a key={p.id} className="card" href={`/resources/${p.slug}`} style={{ display: 'block', padding: '0' }}>
-                {p.cover && <img src={p.cover} alt={p.title} style={{ width: '100%', height: 280, objectFit: 'cover', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)' }} />}
-                <div style={{ padding: 'var(--spacing-6)' }}>
-                  <div className="eyebrow">{p.tags?.[0]}</div>
-                  <h3 className="heading heading--lg" style={{ color: 'var(--color-primary)' }}>{p.title}</h3>
-                  <p className="text--md" style={{ color: 'var(--color-text-secondary)' }}>{p.excerpt}</p>
+              <a key={p.id} href={`/resources/${p.slug}`} className={styles.featuredCard}>
+                {p.cover && <img src={p.cover} alt={p.title} className={styles.featuredImage} />}
+                <div className={styles.featuredContent}>
+                  <div className={styles.featuredEyebrow}>{p.tags?.[0]}</div>
+                  <h3 className={styles.featuredTitle}>{p.title}</h3>
+                  <p className={styles.featuredExcerpt}>{p.excerpt}</p>
                 </div>
               </a>
             ))}
@@ -105,41 +142,77 @@ export function Resources() {
         </section>
       )}
 
-      {/* Grid */}
-      <section className="section">
-        <div className="container grid" style={{ gap: 'var(--spacing-6)', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))' }}>
-          {posts.map(p => (
-            <a key={p.id} href={`/resources/${p.slug}`} className="card" style={{ display: 'block', padding: 0 }} aria-label={`Open article ${p.title}`}>
-              {p.cover && <img src={p.cover} alt={p.title} style={{ width: '100%', height: 180, objectFit: 'cover', borderTopLeftRadius: 'var(--radius-lg)', borderTopRightRadius: 'var(--radius-lg)' }} />}
-              <div style={{ padding: 'var(--spacing-4)' }}>
-                <div className="eyebrow">{p.tags?.[0]}</div>
-                <h3 className="heading heading--md" style={{ color: 'var(--color-text-primary)' }}>{p.title}</h3>
-                <p className="text--sm" style={{ color: 'var(--color-text-secondary)' }}>{p.excerpt}</p>
-                <div className="text--xs" style={{ color: 'var(--color-text-muted)', marginTop: 'var(--spacing-2)' }}>
-                  {formatDate(p.publishedAt)} · {getReadTime(p.content)} min read
-                </div>
+      {/* Articles Grid Section */}
+      <section className={`section ${styles.articlesSection}`}>
+        <div className="container">
+          {postsLoading ? (
+            <LoadingWrapper />
+          ) : postsError ? (
+            <ErrorState message="Failed to load articles" />
+          ) : posts && posts.length > 0 ? (
+            <>
+              <div className={styles.articlesGrid}>
+                {posts.map(p => (
+                  <a key={p.id} href={`/resources/${p.slug}`} className={styles.articleCard} aria-label={`Open article ${p.title}`}>
+                    {p.cover && <img src={p.cover} alt={p.title} className={styles.articleImage} />}
+                    <div className={styles.articleContent}>
+                      <div className={styles.articleEyebrow}>{p.tags?.[0]}</div>
+                      <h3 className={styles.articleTitle}>{p.title}</h3>
+                      <p className={styles.articleExcerpt}>{p.excerpt}</p>
+                      <div className={styles.articleMeta}>
+                        <span>{formatDate(p.publishedAt)}</span>
+                        <span>·</span>
+                        <span>{getReadTime(p.content)} min read</span>
+                      </div>
+                    </div>
+                  </a>
+                ))}
               </div>
-            </a>
-          ))}
+              {visible < (total || 0) && (
+                <div className={styles.loadMoreSection}>
+                  <button className={styles.loadMoreButton} onClick={() => setVisible(v => v + 12)}>
+                    Load more
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className={styles.emptyState}>
+              <h3 className={styles.emptyStateTitle}>{page.emptyState?.title || 'No posts found'}</h3>
+              <p className={styles.emptyStateSubtext}>{page.emptyState?.subtext || 'Try a different tag or clear the search.'}</p>
+            </div>
+          )}
         </div>
-        {visible < (total || 0) && (
-          <div style={{ textAlign: 'center', marginTop: 'var(--spacing-8)' }}>
-            <button className="btn" onClick={() => setVisible(v => v + 12)}>Load more</button>
-          </div>
-        )}
       </section>
 
-      {/* Newsletter */}
+      {/* Newsletter Section */}
       {page.newsletter?.enabled !== false && (
-        <section id={page.newsletter.idAnchor || 'newsletter'} className="section">
-          <div className="container">
-            <div className="card" style={{ padding: 'var(--spacing-6)', textAlign: 'center' }}>
-              <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)' }}>{page.newsletter.headline}</h2>
-              <p className="text--md" style={{ color: 'var(--color-text-secondary)' }}>{page.newsletter.subtext}</p>
-              <a className="btn" href={page.newsletter.ctaUrl} onClick={() => { /* @ts-ignore */ if (window?.gtag) window.gtag('event','newsletter_click',{ location:'resources' }) }}>{page.newsletter.ctaLabel}</a>
+        <section id={page.newsletter.idAnchor || 'newsletter'} className={`section ${styles.newsletterSection}`}>
+      <div className="container">
+            <div className={styles.newsletterCard}>
+              <h2 className={styles.newsletterTitle}>{page.newsletter.headline}</h2>
+              <p className={styles.newsletterSubtext}>{page.newsletter.subtext}</p>
+              <a 
+                className={styles.newsletterButton} 
+                href={page.newsletter.ctaUrl} 
+                onClick={() => { 
+                  if (window?.gtag) window.gtag('event','newsletter_click',{ location:'resources' }) 
+                }}
+              >
+                {page.newsletter.ctaLabel}
+              </a>
             </div>
-          </div>
+      </div>
         </section>
+      )}
+
+      {/* Final CTA Band */}
+      {page.finalCTA && (
+        <FinalCTABand 
+          headline={page.finalCTA.headline}
+          subtext={page.finalCTA.subtext}
+          buttons={page.finalCTA.buttons}
+        />
       )}
     </>
   )

@@ -384,49 +384,7 @@
   margin-bottom: var(--spacing-6);
 }
 
-/* CTA Band */
-.ctaBand {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  padding: var(--spacing-20) 0;
-  text-align: center;
-}
-
-.ctaContent {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.ctaTitle {
-  color: var(--color-background);
-  margin-bottom: var(--spacing-4);
-  font-size: var(--font-size-4xl);
-}
-
-@media (max-width: 768px) {
-  .ctaTitle {
-    font-size: var(--font-size-3xl);
-  }
-}
-
-.ctaDescription {
-  color: rgba(0, 0, 0, 0.8);
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-8);
-}
-
-.ctaButtons {
-  display: flex;
-  gap: var(--spacing-4);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.ctaButtons .btn {
-  background-color: var(--color-background);
-  color: var(--color-primary);
-  border-color: var(--color-background);
-}
+/* CTA Band styles moved to FinalCTABand component */
 
 /* Testimonials Section */
 .testimonialsGrid {

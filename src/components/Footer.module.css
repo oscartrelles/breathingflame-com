@@ -286,3 +286,137 @@
 .legalLink:hover {
   color: var(--color-primary);
 }
+
+/* Enhanced Responsive Design */
+@media (max-width: 640px) {
+  .footer {
+    margin-top: var(--spacing-16);
+  }
+  
+  .footerContent {
+    padding: var(--spacing-12) 0 var(--spacing-6);
+  }
+  
+  .footerMain {
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .brandSection {
+    text-align: center;
+    align-items: center;
+    gap: var(--spacing-3);
+  }
+  
+  .logo {
+    gap: var(--spacing-1);
+  }
+  
+  .logoText {
+    font-size: var(--font-size-lg);
+  }
+  
+  .logoSubtext {
+    font-size: var(--font-size-xs);
+  }
+  
+  .socialLinks {
+    gap: var(--spacing-3);
+  }
+  
+  .socialLink {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-sm);
+  }
+  
+  .footerLinks {
+    gap: var(--spacing-6);
+  }
+  
+  .footerColumn {
+    text-align: center;
+  }
+  
+  .footerColumnTitle {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-3);
+  }
+  
+  .footerColumnLinks {
+    gap: var(--spacing-2);
+  }
+  
+  .footerLink {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-1) 0;
+  }
+  
+  .footerBottom {
+    flex-direction: column;
+    gap: var(--spacing-3);
+    text-align: center;
+  }
+  
+  .footerCopyright {
+    font-size: var(--font-size-xs);
+  }
+  
+  .legalLinks {
+    gap: var(--spacing-3);
+  }
+  
+  .legalLink {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    margin-top: var(--spacing-12);
+  }
+  
+  .footerContent {
+    padding: var(--spacing-8) 0 var(--spacing-4);
+  }
+  
+  .footerMain {
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .logoText {
+    font-size: var(--font-size-base);
+  }
+  
+  .socialLink {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-xs);
+  }
+  
+  .footerLinks {
+    gap: var(--spacing-4);
+  }
+  
+  .footerColumnTitle {
+    font-size: var(--font-size-sm);
+  }
+  
+  .footerLink {
+    font-size: var(--font-size-xs);
+  }
+  
+  .footerBottom {
+    gap: var(--spacing-2);
+  }
+  
+  .footerCopyright {
+    font-size: var(--font-size-xs);
+  }
+  
+  .legalLinks {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+}

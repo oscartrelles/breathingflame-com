@@ -1,0 +1,376 @@
+/* Responsive Container Component - Standardized responsive behavior */
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==========================================================================
+   CONTAINER VARIANTS
+   ========================================================================== */
+
+/* Section variant - standard page sections */
+.section {
+  padding: var(--spacing-12) 0;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: var(--spacing-16) 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--spacing-20) 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section {
+    padding: var(--spacing-24) 0;
+  }
+}
+
+/* Card variant - for card containers */
+.card {
+  padding: var(--spacing-4);
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    padding: var(--spacing-8);
+  }
+}
+
+/* Hero variant - for hero sections */
+.hero {
+  padding: var(--spacing-16) 0;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .hero {
+    padding: var(--spacing-20) 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: var(--spacing-24) 0;
+  }
+}
+
+/* Content variant - for content areas */
+.content {
+  padding: var(--spacing-8) 0;
+}
+
+@media (min-width: 640px) {
+  .content {
+    padding: var(--spacing-12) 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    padding: var(--spacing-16) 0;
+  }
+}
+
+/* ==========================================================================
+   CONTAINER SIZES
+   ========================================================================== */
+
+/* Small size */
+.sm {
+  max-width: 640px;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .sm {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+/* Medium size (default) */
+.md {
+  max-width: 768px;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .md {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+@media (min-width: 768px) {
+  .md {
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
+  }
+}
+
+/* Large size */
+.lg {
+  max-width: 1024px;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .lg {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg {
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
+  }
+}
+
+/* Extra large size */
+.xl {
+  max-width: 1280px;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .xl {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .xl {
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl {
+    padding-left: var(--spacing-12);
+    padding-right: var(--spacing-12);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE GRID UTILITIES
+   ========================================================================== */
+
+/* Grid responsive behavior */
+.grid {
+  display: grid;
+  gap: var(--spacing-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    gap: var(--spacing-8);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid--4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Auto-fit grid for cards */
+.grid-auto {
+  display: grid;
+  gap: var(--spacing-6);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (min-width: 640px) {
+  .grid-auto {
+    gap: var(--spacing-8);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE FLEX UTILITIES
+   ========================================================================== */
+
+/* Flex responsive behavior */
+.flex {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+  .flex {
+    flex-direction: row;
+    gap: var(--spacing-6);
+  }
+}
+
+/* Flex wrap responsive */
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .flex-wrap {
+    gap: var(--spacing-6);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================================== */
+
+/* Heading responsive scale */
+.heading {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: var(--line-height-tight);
+  margin: 0;
+}
+
+.heading--xl {
+  font-size: var(--font-size-3xl);
+}
+
+.heading--2xl {
+  font-size: var(--font-size-4xl);
+}
+
+.heading--3xl {
+  font-size: var(--font-size-5xl);
+}
+
+.heading--4xl {
+  font-size: var(--font-size-6xl);
+}
+
+@media (min-width: 640px) {
+  .heading--xl {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .heading--2xl {
+    font-size: var(--font-size-5xl);
+  }
+  
+  .heading--3xl {
+    font-size: var(--font-size-6xl);
+  }
+  
+  .heading--4xl {
+    font-size: var(--font-size-7xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading--xl {
+    font-size: var(--font-size-5xl);
+  }
+  
+  .heading--2xl {
+    font-size: var(--font-size-6xl);
+  }
+  
+  .heading--3xl {
+    font-size: var(--font-size-7xl);
+  }
+  
+  .heading--4xl {
+    font-size: var(--font-size-8xl);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE SPACING
+   ========================================================================== */
+
+/* Margin responsive scale */
+.margin-responsive {
+  margin: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .margin-responsive {
+    margin: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .margin-responsive {
+    margin: var(--spacing-8);
+  }
+}
+
+/* Padding responsive scale */
+.padding-responsive {
+  padding: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+  .padding-responsive {
+    padding: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .padding-responsive {
+    padding: var(--spacing-8);
+  }
+}

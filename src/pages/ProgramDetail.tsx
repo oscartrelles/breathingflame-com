@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
 import { TestimonialDisplay } from '@/components/TestimonialDisplay'
+import { FinalCTABand } from '@/components/FinalCTABand'
+import { LoadingWrapper } from '@/components/LoadingWrapper'
 import { usePrograms } from '@/hooks/useFirestore'
+import { motion } from 'framer-motion'
+import { useInViewAnimation } from '@/utils/animations'
 import testimonialsData from '@/content/testimonials.json'
 
 export function ProgramDetail() {
@@ -12,6 +16,22 @@ export function ProgramDetail() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
   const program = programs?.find(p => p.slug === slug)
+
+  // Helper function to normalize CTAs structure
+  const normalizeCTAs = (ctas: any) => {
+    if (!ctas) return []
+    if (Array.isArray(ctas)) return ctas
+    if (typeof ctas === 'object') {
+      // Handle object structure with primary/secondary
+      const normalized = []
+      if (ctas.primary) normalized.push(ctas.primary)
+      if (ctas.secondary) normalized.push(ctas.secondary)
+      return normalized
+    }
+    return []
+  }
+
+  const programCTAs = normalizeCTAs(program?.ctas)
 
   // Get testimonials for this program from playlist
   const allTestimonials = testimonialsData.testimonials || []
@@ -45,9 +65,47 @@ export function ProgramDetail() {
     }
   }
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error loading program</div>
-  if (!program) return <div>Program not found</div>
+  // Handle loading, error, and not found states
+  if (loading) {
+    return (
+      <LoadingWrapper
+        loading={true}
+        loadingMessage="Loading program details..."
+        variant="page"
+        loadingVariant="spinner"
+        loadingSize="lg"
+      />
+    )
+  }
+
+  if (error) {
+    return (
+      <LoadingWrapper
+        loading={false}
+        error={error}
+        errorTitle="Failed to load program"
+        errorMessage="We couldn't load the program details. Please try again."
+        onRetry={() => window.location.reload()}
+        retryText="Reload Page"
+        variant="page"
+        showErrorDetails={process.env.NODE_ENV === 'development'}
+      />
+    )
+  }
+
+  if (!program) {
+    return (
+      <LoadingWrapper
+        loading={false}
+        error="Program not found"
+        errorTitle="Program Not Found"
+        errorMessage="The program you're looking for doesn't exist or has been removed."
+        onRetry={() => navigate('/programs')}
+        retryText="View All Programs"
+        variant="page"
+      />
+    )
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -64,7 +122,7 @@ export function ProgramDetail() {
       "courseMode": "Online",
       "location": {
         "@type": "VirtualLocation",
-        "url": program.ctas?.find(cta => cta.external)?.url || "https://breathingflame.com"
+        "url": programCTAs.find(cta => cta.external)?.url || "https://breathingflame.com"
       }
     }]
   }
@@ -105,7 +163,7 @@ export function ProgramDetail() {
             </p>
             
             <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {(program.ctas || []).map((cta, index) => (
+              {programCTAs.map((cta, index) => (
                 <button
                   key={index}
                   className={index === 0 ? 'btn' : 'btn btn--secondary'}
@@ -393,30 +451,16 @@ export function ProgramDetail() {
       )}
 
       {/* Final CTA */}
-      <section className="section">
-        <div className="container">
-          <div className="card" style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
-            <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-4)' }}>
-              Ready to Transform Your Healthspan?
-            </h2>
-            <p className="text--md" style={{ color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-6)' }}>
-              Join the Reverse Aging Challenge and start your journey to greater energy, resilience, and vitality.
-            </p>
-            <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {(program.ctas || []).map((cta, index) => (
-                <button
-                  key={index}
-                  className={index === 0 ? 'btn' : 'btn btn--secondary'}
-                  onClick={() => handleCtaClick(cta.label, cta.url, cta.external || false)}
-                  style={{ textDecoration: 'none' }}
-                >
-                  {cta.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <FinalCTABand
+        headline={program.finalCTA?.headline || `Ready to Transform Your ${program.title}?`}
+        subtext={program.finalCTA?.subtext || `Join ${program.title} and start your journey to greater energy, resilience, and vitality.`}
+        buttons={programCTAs.map(cta => ({
+          label: cta.label,
+          url: cta.url,
+          external: cta.external || false
+        }))}
+        onButtonClick={handleCtaClick}
+      />
     </>
   )
 }

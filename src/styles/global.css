@@ -1,5 +1,7 @@
 /* Global Styles for Breathing Flame */
 
+@import './responsive.css';
+
 * {
   box-sizing: border-box;
 }

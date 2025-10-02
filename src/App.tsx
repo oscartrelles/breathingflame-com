@@ -5,6 +5,8 @@ import { Footer } from '@/components/Footer'
 import { CookieConsent } from '@/components/CookieConsent'
 import { SEO } from '@/components/SEO'
 import { Analytics } from '@/components/Analytics'
+import { AnimationProvider } from '@/components/AnimationProvider'
+import { AccessibilityProvider } from '@/components/AccessibilityProvider'
 import { useScrollToTop } from '@/hooks/useScrollToTop'
 
 // Pages
@@ -46,11 +48,12 @@ function App() {
   useScrollToTop()
 
   return (
-    <>
-      <SEO />
-      <Analytics />
-      <HashAnchorRouter />
-      <Routes>
+    <AccessibilityProvider>
+      <AnimationProvider>
+        <SEO />
+        <Analytics />
+        <HashAnchorRouter />
+        <Routes>
         {/* Admin routes - no header/footer */}
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/programs" element={<ProgramsManagement />} />
@@ -104,8 +107,9 @@ function App() {
             <CookieConsent />
           </>
         } />
-      </Routes>
-    </>
+        </Routes>
+      </AnimationProvider>
+    </AccessibilityProvider>
   )
 }
 

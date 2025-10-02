@@ -2,6 +2,10 @@ import { usePageIndividuals, usePrograms, useExperiences, usePosts } from '@/hoo
 import { HeroSection } from '@/components/HeroSection'
 import { TestimonialsRail } from '@/components/TestimonialsRail'
 import { SEO } from '@/components/SEO'
+import { OfferingCard } from '@/components/OfferingCard'
+import { PillarsGrid } from '@/components/PillarsGrid'
+import { ResourcesGrid } from '@/components/ResourcesGrid'
+import { FinalCTABand } from '@/components/FinalCTABand'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -88,45 +92,18 @@ export function Individuals() {
       />
 
       {/* Intro Blocks Section */}
-      <section className="section">
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.sectionTitle}>Our Approach</h2>
-            <p className={styles.sectionDescription}>
-              Three pillars that guide everything we do
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.pillarsGrid}
-            variants={reducedMotion ? {} : staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            {pageData.introBlocks.map((block, index) => (
-              <motion.div 
-                key={index}
-                className={styles.pillarCard}
-                variants={reducedMotion ? {} : staggerChild}
-                whileHover={reducedMotion ? {} : { y: -8, transition: { duration: 0.3 } }}
-              >
-              <div className={styles.pillarIcon}>
-                <div className={styles.pillarIconInner}>
-                    <span>{block.title.charAt(0)}</span>
-                </div>
-              </div>
-              
-                <h3 className={styles.pillarTitle}>{block.title}</h3>
-                <p className={styles.pillarDescription}>{block.copy}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      <PillarsGrid
+        pillars={pageData.introBlocks?.map((block: any) => ({
+          id: block.id,
+          title: block.title,
+          copy: block.copy,
+          icon: block.title?.charAt(0),
+          color: '#ffb332'
+        })) || []}
+        title="Our Approach"
+        subtitle="Three pillars that guide everything we do"
+        reducedMotion={reducedMotion}
+      />
 
       {/* Programs Section */}
       {featuredPrograms.length > 0 && (
@@ -155,24 +132,13 @@ export function Individuals() {
                   className={styles.programCard}
                   variants={reducedMotion ? {} : staggerChild}
                 >
-              <div className={styles.programImage}>
-                    <img src={program.image} alt={program.title} />
-              </div>
-              
-              <div className={styles.programContent}>
-                    <h3 className={styles.programTitle}>{program.title}</h3>
-                    <p className={styles.programSubtitle}>{program.subtitle}</p>
-                    <p className={styles.programDescription}>{program.shortDescription}</p>
-                
-                <div className={styles.programMeta}>
-                      <span className={styles.programDuration}>{program.duration}</span>
-                      <span className={styles.programFormat}>{program.format?.delivery || program.format_legacy}</span>
-              </div>
-              
-                    <a href={program.ctaHref} className="btn btn--secondary">
-                      {program.ctaText}
-                </a>
-              </div>
+                  <OfferingCard 
+                    offering={{
+                      ...program,
+                      kind: 'program' as const
+                    }} 
+                    pageData={pageData}
+                  />
                 </motion.div>
               ))}
             </motion.div>
@@ -207,24 +173,13 @@ export function Individuals() {
                   className={styles.experienceCard}
                   variants={reducedMotion ? {} : staggerChild}
                 >
-              <div className={styles.experienceImage}>
-                    <img src={experience.image} alt={experience.title} />
-              </div>
-              
-              <div className={styles.experienceContent}>
-                    <h3 className={styles.experienceTitle}>{experience.title}</h3>
-                    <p className={styles.experienceSubtitle}>{experience.subtitle}</p>
-                    <p className={styles.experienceDescription}>{experience.shortDescription}</p>
-                
-                <div className={styles.experienceMeta}>
-                      <span className={styles.experienceDuration}>{experience.duration}</span>
-                      <span className={styles.experienceFormat}>{experience.format?.delivery || experience.format_legacy}</span>
-                </div>
-
-                    <a href={experience.ctaHref} className="btn btn--secondary">
-                      {experience.ctaText}
-                </a>
-              </div>
+                  <OfferingCard 
+                    offering={{
+                      ...experience,
+                      kind: 'experience' as const
+                    }} 
+                    pageData={pageData}
+                  />
                 </motion.div>
               ))}
             </motion.div>
@@ -243,94 +198,50 @@ export function Individuals() {
       />
 
       {/* Resources Section */}
-      <section className="section section--sm">
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.sectionTitle}>{pageData.resources.headline}</h2>
-            <p className={styles.sectionDescription}>
-              {pageData.resources.subtext}
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.resourcesGrid}
-            variants={reducedMotion ? {} : staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {/* Assessment Links */}
-            {pageData.resources.resourceLinks.map((resource, index) => (
-              <motion.div 
-                key={index}
-                className={styles.resourceCard}
-                variants={reducedMotion ? {} : staggerChild}
-              >
-                <h3 className={styles.resourceTitle}>{resource.label}</h3>
-              <p className={styles.resourceDescription}>
-                  Free assessment to help you understand your current state and next steps.
-                </p>
-                <a 
-                  href={resource.pathOrUrl} 
-                  className="btn btn--outline"
-                  target={resource.external ? '_blank' : undefined}
-                  rel={resource.external ? 'noopener noreferrer' : undefined}
-                >
-                  Take Assessment
-                </a>
-              </motion.div>
-            ))}
-
-            {/* Featured Blog Post */}
-            {featuredPost && (
-              <motion.div 
-                className={styles.resourceCard}
-                variants={reducedMotion ? {} : staggerChild}
-              >
-                <h3 className={styles.resourceTitle}>Latest Article</h3>
-              <p className={styles.resourceDescription}>
-                  {featuredPost.excerpt}
-                </p>
-                <a href={`/blog/${featuredPost.slug}`} className="btn btn--outline">
-                  Read Article
-                </a>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+      <ResourcesGrid
+        resources={[
+          // Assessment Links
+          ...(pageData.resources?.resourceLinks?.map((resource: any) => ({
+            id: resource.id,
+            title: resource.label,
+            description: 'Free assessment to help you understand your current state and next steps.',
+            ctaText: 'Take Assessment',
+            ctaHref: resource.pathOrUrl,
+            external: resource.external,
+            type: 'assessment' as const
+          })) || []),
+          // Featured Blog Post
+          ...(featuredPost ? [{
+            id: 'featured-post',
+            title: 'Latest Article',
+            description: featuredPost.excerpt,
+            ctaText: 'Read Article',
+            ctaHref: `/blog/${featuredPost.slug}`,
+            external: false,
+            type: 'article' as const
+          }] : [])
+        ]}
+        title={pageData.resources?.headline}
+        subtitle={pageData.resources?.subtext}
+        reducedMotion={reducedMotion}
+      />
 
       {/* Final CTA Section */}
-      <section className={styles.ctaBand}>
-        <div className="container">
-          <motion.div 
-            className={styles.ctaContent}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.ctaTitle}>{pageData.finalCTA.headline}</h2>
-            <p className={styles.ctaDescription}>
-              {pageData.finalCTA.subtext}
-            </p>
-            
-            <div className={`${styles.ctaButtons} cta-container`}>
-              {pageData.finalCTA.buttons.map((button, index) => (
-                <a
-                  key={index}
-                  href={button.pathOrUrl}
-                  className={`btn btn--on-accent ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large`}
-                  target={button.external ? '_blank' : undefined}
-                  rel={button.external ? 'noopener noreferrer' : undefined}
-                >
-                  {button.label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <FinalCTABand
+        headline={pageData.finalCTA?.headline}
+        subtext={pageData.finalCTA?.subtext}
+        buttons={pageData.finalCTA?.buttons?.map(button => ({
+          label: button.label,
+          url: button.pathOrUrl,
+          external: button.external || false
+        }))}
+        fallbackHeadline="Ready to Transform Your Life?"
+        fallbackSubtext="Start your journey to greater energy, resilience, and vitality."
+        fallbackButtons={[
+          { label: "Get Started", url: "/programs", external: false },
+          { label: "Learn More", url: "/about", external: false }
+        ]}
+      />
     </motion.div>
   )
 }

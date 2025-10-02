@@ -1,0 +1,187 @@
+/* Offering Card Component - Reusable for Programs, Experiences, and Solutions */
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  min-height: 400px; /* Ensure minimum height for proper flexbox behavior */
+  background: var(--color-background-secondary);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  border: 1px solid var(--color-border);
+}
+
+.cardLink:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+}
+
+.cardImage {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(45deg, var(--color-background-tertiary), var(--color-divider));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cardLink:hover .cardImage img {
+  transform: scale(1.05);
+}
+
+.cardEyebrow {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--color-primary);
+  color: var(--color-background);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardContent {
+  padding: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Take up remaining space */
+  min-height: 0; /* Allow flexbox to work properly */
+}
+
+.cardTitle {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-xl);
+}
+
+.cardSubtitle {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-3);
+}
+
+.cardSummary {
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-4);
+  flex-grow: 1; /* This pushes the CTA to the bottom */
+}
+
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.cardTag {
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: 1px solid var(--color-border);
+}
+
+.cardMeta {
+  display: flex;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.cardDuration,
+.cardFormat {
+  padding: var(--spacing-1) var(--spacing-3);
+  background-color: var(--color-background-tertiary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardCTA {
+  margin-top: auto; /* This ensures the CTA is pushed to the bottom */
+  padding-top: var(--spacing-4);
+}
+
+.cardCTA .btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .cardLink {
+    min-height: 350px;
+  }
+  
+  .cardImage {
+    height: 160px;
+  }
+  
+  .cardContent {
+    padding: var(--spacing-4);
+  }
+  
+  .cardTitle {
+    font-size: var(--font-size-lg);
+  }
+  
+  .cardSubtitle {
+    font-size: var(--font-size-sm);
+  }
+  
+  .cardSummary {
+    font-size: var(--font-size-sm);
+  }
+  
+  .cardMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+  
+  .cardTag {
+    font-size: var(--font-size-xs);
+    padding: 0.125rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardLink {
+    min-height: 320px;
+  }
+  
+  .cardImage {
+    height: 140px;
+  }
+  
+  .cardContent {
+    padding: var(--spacing-3);
+  }
+  
+  .cardTitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .cardSummary {
+    font-size: var(--font-size-xs);
+  }
+}

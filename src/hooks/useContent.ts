@@ -215,8 +215,11 @@ export function usePageContact(locale: Locale = 'en'): ContentHookResult<any> {
 
 export function usePageCommunity(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
+  
+  const communityData = data?.pages?.community || data?.pageCommunity || data?.community || null;
+  
   return {
-    data: data?.pages?.community || data?.pageCommunity || data?.community || null,
+    data: communityData,
     loading,
     error
   };
@@ -388,3 +391,4 @@ export function usePostBySlug(slug: string, locale: Locale = 'en'): ContentHookR
 
   return { data: post, loading, error };
 }
+

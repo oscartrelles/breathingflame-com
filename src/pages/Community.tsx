@@ -1,48 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ExternalLink, Calendar, Users, Mail, Youtube, Instagram, Linkedin, MessageCircle, BookOpen, FileText } from 'lucide-react';
-import { usePageCommunity } from '../hooks/useFirestore';
-import { collectionPageJSONLD, orgJSONLD } from '../seo/jsonld';
+import { SEO } from '@/components/SEO';
+import { LoadingWrapper } from '@/components/LoadingWrapper';
+import { ErrorState } from '@/components/ErrorState';
+import { FinalCTABand } from '@/components/FinalCTABand';
+import { usePageCommunity } from '@/hooks/useFirestore';
 import styles from './Community.module.css';
 
 const Community: React.FC = () => {
-  const { pageData, loading, error } = usePageCommunity();
-
-  useEffect(() => {
-    if (pageData) {
-      // Inject CollectionPage JSON-LD
-      const collectionLD = collectionPageJSONLD(
-        pageData?.seo?.title || 'Community',
-        'https://breathingflame.com/community',
-        pageData?.seo?.description || 'Join our community channels and connect with people building resilience, clarity, and transformation'
-      );
-      
-      // Inject Organization JSON-LD with social profiles
-      const orgLD = orgJSONLD({
-        name: pageData?.organization?.name || 'Breathing Flame',
-        url: 'https://breathingflame.com',
-        description: pageData?.organization?.description || 'Science-backed, nature-powered practices for resilience, clarity, and transformation',
-        sameAs: [
-          'https://www.youtube.com/@BreathingFlameTV',
-          'https://www.instagram.com/breathing.flame',
-          'https://www.linkedin.com/company/breathingflame/',
-          'https://www.tiktok.com/@breathingflame',
-          import.meta.env.VITE_MEDIUM_URL || '',
-          import.meta.env.VITE_SUBSTACK_URL || ''
-        ].filter(Boolean)
-      });
-
-      // Inject both schemas
-      const script1 = document.createElement('script');
-      script1.type = 'application/ld+json';
-      script1.text = JSON.stringify(collectionLD);
-      document.head.appendChild(script1);
-
-      const script2 = document.createElement('script');
-      script2.type = 'application/ld+json';
-      script2.text = JSON.stringify(orgLD);
-      document.head.appendChild(script2);
-    }
-  }, [pageData]);
+  const { data: pageData, loading, error } = usePageCommunity();
 
   const getIcon = (iconName?: string) => {
     switch (iconName) {
@@ -71,43 +37,47 @@ const Community: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Loading community channels...</div>
-      </div>
-    );
+    return <LoadingWrapper />
   }
 
   if (error || !pageData) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.error}>Unable to load community information.</div>
-      </div>
-    );
+    return <ErrorState message="Failed to load community information" />
   }
 
   return (
-    <div className={styles.container}>
+    <>
+      <SEO data={{ 
+        title: pageData.seo?.title, 
+        description: pageData.seo?.description, 
+        image: pageData.seo?.ogImage 
+      }} />
+
       {/* Hero Section */}
-      <section className={styles.hero}>
-        <h1 className={styles.heroTitle}>{pageData.hero.headline}</h1>
-        <p className={styles.heroSubtext}>{pageData.hero.subtext}</p>
+      <section className={`section ${styles.heroSection}`}>
+        <div className="container">
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>{pageData.hero.headline}</h1>
+            <p className={styles.heroSubtext}>{pageData.hero.subtext}</p>
+          </div>
+        </div>
       </section>
 
       {/* Intro Section */}
       {pageData.intro && (
-        <section className={styles.intro}>
-          <h2 className={styles.introTitle}>{pageData.intro.title}</h2>
-          <div className={styles.introBody}>
-            {pageData.intro.body}
+        <section className={`section ${styles.introSection}`}>
+          <div className="container">
+            <div className={styles.introContent}>
+              <h2 className={styles.introTitle}>{pageData.intro.title}</h2>
+              <p className={styles.introBody}>{pageData.intro.body}</p>
+            </div>
           </div>
         </section>
       )}
 
       {/* Community Sections */}
-      <div className={styles.sections}>
-        {pageData.sections?.map((section, sectionIndex) => (
-          <section key={sectionIndex} className={styles.section}>
+      {pageData.sections?.map((section, sectionIndex) => (
+        <section key={sectionIndex} className={`section ${styles.section}`}>
+          <div className="container">
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>{section.title}</h2>
               {section.description && (
@@ -144,10 +114,19 @@ const Community: React.FC = () => {
                 </a>
               ))}
             </div>
-          </section>
-        ))}
-      </div>
-    </div>
+          </div>
+        </section>
+      ))}
+
+      {/* Final CTA Band */}
+      {pageData.finalCTA && (
+        <FinalCTABand 
+          headline={pageData.finalCTA.headline}
+          subtext={pageData.finalCTA.subtext}
+          buttons={pageData.finalCTA.buttons}
+        />
+      )}
+    </>
   );
 };
 

@@ -1,0 +1,75 @@
+/* Pillar Card Component - Reusable for all pages */
+
+.pillarCard {
+  text-align: center;
+  padding: var(--spacing-10); /* Increased padding for more breathing room */
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: all var(--duration-300) var(--ease-smooth); /* Enhanced transition */
+  will-change: transform, box-shadow; /* Optimize for animations */
+}
+
+.pillarCard:hover {
+  transform: translateY(-6px); /* Increased hover lift */
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+}
+
+.pillarIcon {
+  margin-bottom: var(--spacing-6);
+}
+
+.pillarIconInner {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: var(--color-background);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-primary);
+}
+
+.pillarIconText {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+}
+
+.pillarTitle {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-2xl);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.pillarDescription {
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-base);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pillarCard {
+    padding: var(--spacing-8);
+  }
+  
+  .pillarIconInner {
+    width: 60px;
+    height: 60px;
+    font-size: var(--font-size-xl);
+  }
+  
+  .pillarTitle {
+    font-size: var(--font-size-xl);
+  }
+}

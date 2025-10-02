@@ -1,0 +1,82 @@
+/* Pillars Grid Component - Reusable grid layout for pillars */
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-24); /* Increased from 16 to 24 for more breathing room */
+  max-width: 700px; /* Increased for better readability */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sectionTitle {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-4xl);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.sectionDescription {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Pillars Grid - Enhanced spacing like Positive Intelligence */
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
+}
+
+@media (min-width: 640px) {
+  .pillarsGrid {
+    gap: var(--spacing-10);
+  }
+}
+
+@media (min-width: 768px) {
+  .pillarsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-12);
+  }
+}
+
+@media (min-width: 1024px) {
+  .pillarsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-16);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .sectionHeader {
+    margin-bottom: var(--spacing-16);
+  }
+  
+  .sectionTitle {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .sectionDescription {
+    font-size: var(--font-size-base);
+  }
+  
+  .pillarsGrid {
+    gap: var(--spacing-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .sectionDescription {
+    font-size: var(--font-size-sm);
+  }
+}

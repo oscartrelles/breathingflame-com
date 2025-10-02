@@ -177,7 +177,22 @@ export function usePostsFiltered(params?: { tag?: string; search?: string; limit
       p.content.toLowerCase().includes(q)
     )
   }
-  filtered.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+  filtered.sort((a, b) => {
+    // Handle both Date objects and Firestore timestamp objects
+    const getTime = (publishedAt: any) => {
+      if (publishedAt instanceof Date) {
+        return publishedAt.getTime()
+      }
+      if (publishedAt && typeof publishedAt === 'object' && publishedAt.seconds) {
+        return publishedAt.seconds * 1000 + (publishedAt.nanoseconds || 0) / 1000000
+      }
+      if (typeof publishedAt === 'string') {
+        return new Date(publishedAt).getTime()
+      }
+      return 0
+    }
+    return getTime(b.publishedAt) - getTime(a.publishedAt)
+  })
   const start = offset || 0
   const end = limit ? start + limit : undefined
   const slice = filtered.slice(start, end)
@@ -216,6 +231,10 @@ export function useExperiences() {
   return useExperiencesContent()
 }
 
+export function useSolutions() {
+  return useSolutionsContent()
+}
+
 export function usePageTestimonials() {
   return usePageTestimonialsContent()
 }
@@ -233,10 +252,7 @@ export function useLatestPostsLite(_limit: number = 5) {
   return useLatestPostsLiteContent()
 }
 
-// Solutions hooks
-export function useSolutions() {
-  return useSolutionsContent()
-}
+// Solutions hooks - already defined above
 
 export function useSolutionBySlug(slug: string) {
   const { data, loading, error } = useSolutions()
@@ -276,13 +292,13 @@ export function useAllOfferings() {
 // Community page hook
 export function usePageCommunity() {
   const { data, loading, error } = usePageCommunityContent()
-  return { pageData: data, loading, error }
+  return { data, loading, error }
 }
 
 // Press page hook
 export function usePagePress() {
   const { data, loading, error } = usePagePressContent()
-  return { pageData: data, loading, error }
+  return { data, loading, error }
 }
 
 // Search page hook

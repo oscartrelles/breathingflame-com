@@ -5,7 +5,7 @@ export function getReadTime(text: string): number {
   return Math.max(1, minutes)
 }
 
-export function formatDate(date: Date | string | undefined | null, tz: string = 'Europe/Madrid') {
+export function formatDate(date: Date | string | undefined | null | { seconds: number; nanoseconds?: number }, tz: string = 'Europe/Madrid') {
   if (!date) return 'No date'
   
   let d: Date
@@ -14,6 +14,9 @@ export function formatDate(date: Date | string | undefined | null, tz: string = 
     d = new Date(date)
   } else if (date instanceof Date) {
     d = date
+  } else if (date && typeof date === 'object' && 'seconds' in date) {
+    // Handle Firestore timestamp objects
+    d = new Date(date.seconds * 1000 + (date.nanoseconds || 0) / 1000000)
   } else {
     return 'Invalid date'
   }

@@ -1,6 +1,8 @@
 import { useAbout } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
+import { PillarsGrid } from '@/components/PillarsGrid'
+import { FinalCTABand } from '@/components/FinalCTABand'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -172,30 +174,18 @@ export function About() {
       </motion.section>
 
       {/* Approach Section */}
-      <motion.section 
-        className={`section ${styles.approach}`}
-        {...useInViewAnimation()}
-      >
-        <div className="container">
-          <div className={styles.approachContent}>
-            <h2 className={styles.sectionTitle}>Our Approach</h2>
-            <p className={styles.approachIntro}>{aboutData.approach.intro}</p>
-            
-            <div className={styles.pillars}>
-              {aboutData.approach.pillars.map((pillar, index) => (
-                <motion.div
-                  key={index}
-                  className={styles.pillar}
-                  variants={reducedMotion ? {} : staggerChild}
-                >
-                  <h3 className={styles.pillarTitle}>{pillar.title}</h3>
-                  <p className={styles.pillarCopy}>{pillar.copy}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.section>
+      <PillarsGrid
+        pillars={aboutData.approach?.pillars?.map((pillar: any) => ({
+          id: pillar.id,
+          title: pillar.title,
+          copy: pillar.copy,
+          icon: pillar.title?.charAt(0),
+          color: '#ffb332'
+        })) || []}
+        title="Our Approach"
+        subtitle={aboutData.approach?.intro}
+        reducedMotion={reducedMotion}
+      />
 
       {/* Collaborators Section */}
       {aboutData.collaborators && aboutData.collaborators.length > 0 && (
@@ -271,32 +261,21 @@ export function About() {
       )}
 
       {/* Final CTA Section */}
-      <motion.section 
-        className={`section ${styles.finalCTA}`}
-        {...useInViewAnimation()}
-      >
-        <div className="container">
-          <div className={styles.finalCTAContent}>
-            <h2 className={styles.finalCTAHeadline}>{aboutData.finalCTA.headline}</h2>
-            {aboutData.finalCTA.subtext && (
-              <p className={styles.finalCTASubtext}>{aboutData.finalCTA.subtext}</p>
-            )}
-            <div className={styles.finalCTAButtons}>
-              {aboutData.finalCTA.buttons.map((button, index) => (
-                <a
-                  key={index}
-                  href={button.url}
-                  className={`btn btn--on-accent ${index === 0 ? 'btn--primary' : 'btn--secondary'}`}
-                  target={button.external ? '_blank' : undefined}
-                  rel={button.external ? 'noopener noreferrer' : undefined}
-                >
-                  {button.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.section>
+      <FinalCTABand
+        headline={aboutData.finalCTA?.headline}
+        subtext={aboutData.finalCTA?.subtext}
+        buttons={aboutData.finalCTA?.buttons?.map(button => ({
+          label: button.label,
+          url: button.url,
+          external: button.external || false
+        }))}
+        fallbackHeadline="Ready to Work Together?"
+        fallbackSubtext="Let's discuss how we can help you achieve your goals."
+        fallbackButtons={[
+          { label: "Get Started", url: "/contact", external: false },
+          { label: "Learn More", url: "/programs", external: false }
+        ]}
+      />
     </motion.div>
   )
 }

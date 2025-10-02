@@ -329,6 +329,40 @@
   letter-spacing: 0.05em;
 }
 
+/* Solutions Grid */
+.solutionsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+  .solutionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-12);
+  }
+}
+
+@media (min-width: 1024px) {
+  .solutionsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.solutionCard {
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.solutionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary);
+}
+
 /* Testimonials Grid */
 .testimonialsGrid {
   display: grid;
