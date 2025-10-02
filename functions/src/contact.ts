@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions'
 import * as corsLib from 'cors'
-import fetch from 'node-fetch'
 
 const cors = corsLib({ origin: true })
 
@@ -10,21 +9,23 @@ export const contact = functions.https.onRequest((req, res) => {
       res.status(405).end()
       return
     }
-    const { name, email, type, message } = req.body || {}
+
+    // Parse JSON body
+    const { name, email, type, message, phone } = req.body || {}
     if (!name || !email || !message) {
       res.status(400).json({ ok: false, error: 'Missing fields' })
       return
     }
 
     try {
-      const apiKey = process.env.MAILERSEND_API_KEY as string
-      const sender = process.env.MAILERSEND_SENDER as string
-      const receiver = process.env.CONTACT_RECEIVER as string
+      const apiKey = functions.config().mailersend.api_key
+      const sender = functions.config().mailersend.sender
+      const receiver = functions.config().mailersend.receiver
       const payload = {
         from: { email: sender, name: 'Breathing Flame Contact Form' },
         to: [{ email: receiver, name: 'Breathing Flame' }],
         subject: `New Contact Form Submission – ${type || 'General'}`,
-        text: `Name: ${name}\nEmail: ${email}\nType: ${type}\nMessage:\n${message}`,
+        text: `Name: ${name}\nEmail: ${email}\nType: ${type}\n${phone ? `Phone: ${phone}\n` : ''}Message:\n${message}`,
         reply_to: { email, name }
       }
 

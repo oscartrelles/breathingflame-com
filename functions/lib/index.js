@@ -1,13 +1,15 @@
 "use strict";
 var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sitemap = exports.cleanupAnalytics = exports.trackEvent = exports.newsletterSignup = exports.submitContactForm = void 0;
+exports.contact = exports.sitemap = exports.cleanupAnalytics = exports.trackEvent = exports.newsletterSignup = exports.submitContactForm = void 0;
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 // Initialize Firebase Admin
-admin.initializeApp();
+if (!admin.apps.length) {
+    admin.initializeApp();
+}
 // Initialize CORS
 const corsHandler = cors({ origin: true });
 // Email configuration
@@ -218,4 +220,6 @@ exports.cleanupAnalytics = functions.pubsub.schedule('0 2 * * 0').onRun(async (_
 // Sitemap function export
 var sitemap_1 = require("./sitemap");
 Object.defineProperty(exports, "sitemap", { enumerable: true, get: function () { return sitemap_1.sitemap; } });
+var contact_1 = require("./contact");
+Object.defineProperty(exports, "contact", { enumerable: true, get: function () { return contact_1.contact; } });
 //# sourceMappingURL=index.js.map

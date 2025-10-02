@@ -4,7 +4,9 @@ import * as nodemailer from 'nodemailer'
 import * as cors from 'cors'
 
 // Initialize Firebase Admin
-admin.initializeApp()
+if (!admin.apps.length) {
+  admin.initializeApp()
+}
 
 // Initialize CORS
 const corsHandler = cors({ origin: true })
@@ -248,5 +250,4 @@ export const cleanupAnalytics = functions.pubsub.schedule('0 2 * * 0').onRun(asy
 // Sitemap function export
 export { sitemap } from './sitemap'
 export { contact } from './contact'
-export { contentWebhook } from './content-webhook'
 
