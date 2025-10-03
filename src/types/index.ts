@@ -28,6 +28,27 @@ export interface Settings {
   }
 }
 
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
+}
+
 export interface About {
   id: string
   hero: {
@@ -89,6 +110,27 @@ export interface About {
     description: string
     ogImage?: string
   }
+}
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
 }
 
 export interface Navigation {
@@ -216,6 +258,27 @@ export interface OrgPreviewCard {
   }
 }
 
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
+}
+
 export interface About {
   id: string
   hero: {
@@ -277,6 +340,27 @@ export interface About {
     description: string
     ogImage?: string
   }
+}
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
 }
 
 export interface CommunityCTA {
@@ -579,6 +663,27 @@ export interface About {
   }
 }
 
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
+}
+
 export interface Testimonial {
   id: string
   rating: number
@@ -757,6 +862,27 @@ export interface PageEvents {
     url: string
   }
 }
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
+}
 export interface PagePrograms {
   id: string
   seo: {
@@ -783,6 +909,27 @@ export interface PagePrograms {
     enabled: boolean
     placeholder: string
   }
+}
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
 }
 
 export interface PageResources {
@@ -886,6 +1033,27 @@ export interface About {
   }
 }
 
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
+}
+
 export interface PageOrganizations {
   id: string
   seo: {
@@ -939,6 +1107,27 @@ export interface PageOrganizations {
       external: boolean
     }[]
   }
+}
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
 }
 
 export interface About {
@@ -1002,6 +1191,27 @@ export interface About {
     description: string
     ogImage?: string
   }
+}
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
 }
 
 export interface PageIndividuals {
@@ -1060,6 +1270,27 @@ export interface PageIndividuals {
   }
 }
 
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
+}
+
 export interface About {
   id: string
   hero: {
@@ -1121,5 +1352,26 @@ export interface About {
     description: string
     ogImage?: string
   }
+}
+
+// SEO Types
+export interface SeoData {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: string
+  canonical?: string
+  author?: string
+  publishedTime?: string
+  modifiedTime?: string
+  tags?: string[]
+  structuredData?: JsonLd[]
+}
+
+export interface JsonLd {
+  '@context': string
+  '@type': string
+  [key: string]: any
 }
 

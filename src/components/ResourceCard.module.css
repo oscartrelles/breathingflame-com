@@ -47,6 +47,14 @@
   font-size: var(--font-size-base);
 }
 
+.descriptionLine {
+  margin-bottom: var(--spacing-2);
+}
+
+.descriptionLine:last-child {
+  margin-bottom: 0;
+}
+
 .cardCTA {
   margin-top: auto; /* This ensures the CTA is pushed to the bottom */
   flex-shrink: 0; /* Prevent CTA from shrinking */

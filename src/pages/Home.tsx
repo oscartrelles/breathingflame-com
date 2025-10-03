@@ -62,7 +62,80 @@ export function Home() {
         data={{
           title: homeData?.seo?.title,
           description: homeData?.seo?.description,
-          image: homeData?.seo?.ogImage
+          image: homeData?.seo?.ogImage,
+          structuredData: [
+            // WebSite schema with search action
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Breathing Flame',
+              url: 'https://breathingflame.com',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://breathingflame.com/search?q={search_term_string}',
+                'query-input': 'required name=search_term_string'
+              }
+            },
+            // Organization schema
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Breathing Flame',
+              url: 'https://breathingflame.com',
+              logo: 'https://breathingflame.com/logo.png',
+              description: 'Resilience. Clarity. Transformation.',
+              sameAs: [
+                'https://www.instagram.com/breathing.flame',
+                'https://www.youtube.com/@BreathingFlameTV',
+                'https://www.linkedin.com/company/breathingflame/',
+                'https://www.tiktok.com/@breathingflame'
+              ]
+            },
+            // Service schemas for featured programs
+            ...featuredPrograms.map(program => ({
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              name: program.title,
+              description: program.summary || program.description,
+              provider: {
+                '@type': 'Organization',
+                name: 'Breathing Flame'
+              },
+              url: `https://breathingflame.com/programs/${program.slug}`,
+              ...(program.faq && program.faq.length > 0 && {
+                mainEntity: program.faq.map((faq: any) => ({
+                  '@type': 'Question',
+                  name: faq.question || faq.q,
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: faq.answer || faq.a
+                  }
+                }))
+              })
+            })),
+            // Service schemas for featured experiences
+            ...featuredExperiences.map(experience => ({
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              name: experience.title,
+              description: experience.summary || experience.description,
+              provider: {
+                '@type': 'Organization',
+                name: 'Breathing Flame'
+              },
+              url: `https://breathingflame.com/experiences/${experience.slug}`,
+              ...(experience.faq && experience.faq.length > 0 && {
+                mainEntity: experience.faq.map((faq: any) => ({
+                  '@type': 'Question',
+                  name: faq.question || faq.q,
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: faq.answer || faq.a
+                  }
+                }))
+              })
+            }))
+          ]
         }}
       />
 

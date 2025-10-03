@@ -104,8 +104,62 @@ export function Programs() {
         data={{
           title: pageData.seo?.title,
           description: pageData.seo?.description,
-          image: pageData.seo?.ogImage
+          image: pageData.seo?.ogImage,
+          structuredData: [
+            // CollectionPage schema
+            {
+              '@context': 'https://schema.org',
+              '@type': 'CollectionPage',
+              name: pageData.seo?.title || 'Programs & Experiences',
+              description: pageData.seo?.description,
+              url: 'https://breathingflame.com/programs',
+              mainEntity: {
+                '@type': 'ItemList',
+                numberOfItems: filteredOfferings.length,
+                itemListElement: filteredOfferings.slice(0, visibleCount).map((offering, index) => ({
+                  '@type': 'ListItem',
+                  position: index + 1,
+                  item: {
+                    '@type': 'Service',
+                    name: offering.title,
+                    description: offering.summary || offering.description,
+                    provider: {
+                      '@type': 'Organization',
+                      name: 'Breathing Flame'
+                    },
+                    url: `https://breathingflame.com/${offering.type}/${offering.slug}`,
+                    ...(offering.faq && offering.faq.length > 0 && {
+                      mainEntity: offering.faq.map((faq: any) => ({
+                        '@type': 'Question',
+                        name: faq.question || faq.q,
+                        acceptedAnswer: {
+                          '@type': 'Answer',
+                          text: faq.answer || faq.a
+                        }
+                      }))
+                    })
+                  }
+                }))
+              }
+            },
+            // Organization schema
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Breathing Flame',
+              url: 'https://breathingflame.com',
+              logo: 'https://breathingflame.com/logo.png',
+              description: 'Resilience. Clarity. Transformation.',
+              sameAs: [
+                'https://www.instagram.com/breathing.flame',
+                'https://www.youtube.com/@BreathingFlameTV',
+                'https://www.linkedin.com/company/breathingflame/',
+                'https://www.tiktok.com/@breathingflame'
+              ]
+            }
+          ]
         }}
+        pageData={pageData}
       />
 
       {/* Hero Section */}

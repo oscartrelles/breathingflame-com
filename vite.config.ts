@@ -151,6 +151,13 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
+      external: (id) => {
+        // Exclude admin files from production build
+        if (process.env.NODE_ENV === 'production' && id.includes('/admin/')) {
+          return true
+        }
+        return false
+      },
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],

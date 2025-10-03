@@ -2,7 +2,9 @@
 
 .finalCTA {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  padding: var(--spacing-20) 0;
+  /* Eliminate bottom gap above the footer */
+  padding-top: var(--spacing-20);
+  padding-bottom: 0;
   text-align: center;
 }
 

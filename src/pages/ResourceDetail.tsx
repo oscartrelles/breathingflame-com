@@ -1,4 +1,7 @@
 import { useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeSanitize from 'rehype-sanitize'
 import { useParams, Link } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
 import { LoadingWrapper } from '@/components/LoadingWrapper'
@@ -7,7 +10,7 @@ import { usePost } from '@/hooks/useFirestore'
 import { formatDate, getReadTime } from '@/utils/format'
 import styles from './ResourceDetail.module.css'
 
-export function ResourceDetail() {
+export function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>()
   const { data: post, loading, error } = usePost(slug || '')
 
@@ -65,9 +68,9 @@ export function ResourceDetail() {
     } : undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': post.canonicalUrl || `https://breathingflame.com/resources/${post.slug}`
+      '@id': post.canonicalUrl || `https://breathingflame.com/article/${post.slug}`
     },
-    url: post.canonicalUrl || `https://breathingflame.com/resources/${post.slug}`,
+    url: post.canonicalUrl || `https://breathingflame.com/article/${post.slug}`,
     ...(post.tags && post.tags.length > 0 && { 
       keywords: post.tags.join(', ') 
     }),
@@ -96,7 +99,7 @@ export function ResourceDetail() {
       '@type': 'Person',
       name: post.author?.name || 'Oscar Trelles'
     },
-    url: `https://breathingflame.com/resources/${post.slug}`,
+    url: `https://breathingflame.com/article/${post.slug}`,
     embedUrl: `https://www.youtube.com/embed/${post.videoId}`,
     ...(post.tags && post.tags.length > 0 && { 
       keywords: post.tags.join(', ') 
@@ -161,21 +164,18 @@ export function ResourceDetail() {
           </div>
         )}
 
-        {/* Article Content */}
+        {/* Article Content (Markdown) */}
         <div className={styles.articleContent}>
-          {post.content.split('\n\n').map((paragraph, index) => {
-            // Simple markdown-like parsing for better formatting
-            if (paragraph.startsWith('## ')) {
-              return <h2 key={index}>{paragraph.replace('## ', '')}</h2>
-            }
-            if (paragraph.startsWith('### ')) {
-              return <h3 key={index}>{paragraph.replace('### ', '')}</h3>
-            }
-            if (paragraph.startsWith('> ')) {
-              return <blockquote key={index}>{paragraph.replace('> ', '')}</blockquote>
-            }
-            return <p key={index}>{paragraph}</p>
-          })}
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeSanitize]}
+            components={{
+              a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer"/>,
+              img: ({node, ...props}) => <img {...props} loading="lazy" alt={(props.alt as string) || post.title} />
+            }}
+          >
+            {post.content || ''}
+          </ReactMarkdown>
         </div>
 
         {/* Author Section */}
@@ -201,19 +201,24 @@ export function ResourceDetail() {
         
         {/* Article CTA */}
         <div className={styles.articleCTA}>
-          {post.tags?.includes('Longevity') ? (
-            <a className={styles.articleCTAButton} href="/programs/reverse-aging-challenge">
-              Explore the Reverse Aging Challenge
+          <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a className={styles.articleCTAButton} href="/resources">
+              More Resources
             </a>
-          ) : post.tags?.includes('Resilience') ? (
-            <a className={styles.articleCTAButton} href="/events">
-              See upcoming experiences
-            </a>
-          ) : (
-            <a className={styles.articleCTAButton} href="/programs">
-              Explore programs
-            </a>
-          )}
+            {post.tags?.includes('Longevity') ? (
+              <a className={styles.articleCTAButton} href="/programs/reverse-aging-challenge">
+                Explore the Reverse Aging Challenge
+              </a>
+            ) : post.tags?.includes('Resilience') ? (
+              <a className={styles.articleCTAButton} href="/events">
+                See upcoming experiences
+              </a>
+            ) : (
+              <a className={styles.articleCTAButton} href="/programs">
+                Explore programs
+              </a>
+            )}
+          </div>
         </div>
       </article>
     </>

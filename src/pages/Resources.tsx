@@ -32,8 +32,36 @@ export function Resources() {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: page?.seo?.title || 'Resources',
+    description: page?.seo?.description,
     about: page?.filters?.tags || [],
-    url: 'https://breathingflame.com/resources'
+    url: 'https://breathingflame.com/resources',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: total || 0,
+      itemListElement: posts?.slice(0, visible).map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Article',
+          headline: post.title,
+          description: post.excerpt,
+          author: {
+            '@type': 'Person',
+            name: post.author?.name || 'Oscar Trelles',
+            ...(post.author?.avatar && { image: post.author.avatar })
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Breathing Flame',
+            logo: 'https://breathingflame.com/logo.png'
+          },
+          datePublished: post.publishedAt,
+          url: `https://breathingflame.com/article/${post.slug}`,
+          ...(post.tags && { keywords: post.tags.join(', ') }),
+          ...(post.readingTime && { timeRequired: `PT${post.readingTime}M` })
+        }
+      })) || []
+    }
   }
 
   function onTagClick(tag: string) {
@@ -129,7 +157,7 @@ export function Resources() {
         <section className={`section ${styles.featuredSection}`}>
           <div className="container">
             {posts.filter(p => p.id === page.featuredPostRef).map(p => (
-              <a key={p.id} href={`/resources/${p.slug}`} className={styles.featuredCard}>
+              <a key={p.id} href={`/article/${p.slug}`} className={styles.featuredCard}>
                 {p.cover && <img src={p.cover} alt={p.title} className={styles.featuredImage} />}
                 <div className={styles.featuredContent}>
                   <div className={styles.featuredEyebrow}>{p.tags?.[0]}</div>
@@ -153,7 +181,7 @@ export function Resources() {
             <>
               <div className={styles.articlesGrid}>
                 {posts.map(p => (
-                  <a key={p.id} href={`/resources/${p.slug}`} className={styles.articleCard} aria-label={`Open article ${p.title}`}>
+                  <a key={p.id} href={`/article/${p.slug}`} className={styles.articleCard} aria-label={`Open article ${p.title}`}>
                     {p.cover && <img src={p.cover} alt={p.title} className={styles.articleImage} />}
                     <div className={styles.articleContent}>
                       <div className={styles.articleEyebrow}>{p.tags?.[0]}</div>

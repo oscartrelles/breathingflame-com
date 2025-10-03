@@ -35,7 +35,7 @@ const SchemaCheck: React.FC = () => {
       '/solutions/business-constellations': ['Service'],
       '/solutions/executive-leadership-coaching': ['Service'],
       '/resources': ['CollectionPage'],
-      '/resources/test-article': ['Article'],
+      '/article/test-article': ['Article'],
       '/testimonials': ['CollectionPage'],
       '/contact': ['Organization'],
       '/community': ['CollectionPage', 'Organization']

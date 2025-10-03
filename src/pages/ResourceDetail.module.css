@@ -184,13 +184,13 @@
 
 /* Article CTA */
 .articleCTA {
-  background-color: var(--color-background-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-8);
-  margin: var(--spacing-12) 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: var(--spacing-8) 0;
   text-align: center;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
 }
 
 .articleCTAButton {
@@ -332,8 +332,8 @@
   }
   
   .articleCTA {
-    background-color: var(--color-background-secondary-dark);
-    border-color: var(--color-border-dark);
+    background-color: transparent;
+    border-color: transparent;
   }
   
   .articleContent code {

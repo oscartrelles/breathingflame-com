@@ -25,6 +25,7 @@ export function AdminDashboard() {
     experiences: 0,
     solutions: 0,
     pages: 0,
+    posts: 0,
     testimonials: 0,
     navigation: 0,
     settings: 0
@@ -165,6 +166,22 @@ export function AdminDashboard() {
         })
       })
 
+      // Fetch posts
+      console.log('📝 Fetching posts...')
+      const postsSnapshot = await getDocs(collection(db, 'posts'))
+      console.log(`Found ${postsSnapshot.size} posts`)
+      postsSnapshot.forEach((doc) => {
+        const post = doc.data()
+        adminItems.push({
+          id: doc.id,
+          title: post.title || 'Untitled Post',
+          type: 'post',
+          lastModified: post.updatedAt || new Date().toISOString(),
+          status: post.status || 'draft',
+          description: post.summary || post.description || 'Blog post'
+        })
+      })
+
       // Fetch settings
       console.log('⚙️ Fetching settings...')
       const settingsSnapshot = await getDocs(collection(db, 'settings'))
@@ -191,6 +208,7 @@ export function AdminDashboard() {
         experiences: adminItems.filter(item => item.type === 'experience').length,
         solutions: adminItems.filter(item => item.type === 'solution').length,
         pages: adminItems.filter(item => item.type === 'page').length,
+        posts: adminItems.filter(item => item.type === 'post').length,
         testimonials: adminItems.filter(item => item.type === 'testimonial').length,
         navigation: adminItems.filter(item => item.type === 'navigation').length,
         settings: adminItems.filter(item => item.type === 'settings').length
@@ -539,6 +557,48 @@ export function AdminDashboard() {
                   <div className={styles.divider}>
                     <div className={styles.actionRow}>
                       <span className={styles.actionLabel}>Recent reviews</span>
+                      <span className={styles.actionValue}>0 items need attention</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Posts Management */}
+                <div className={styles.card}>
+                  <div className={styles.cardHeader}>
+                    <div className={styles.cardTitle}>
+                      <div className={styles.cardIcon}>
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <h3 className={styles.cardTitleText}>Posts</h3>
+                    </div>
+                    <Link
+                      to="/admin/posts"
+                      className={styles.manageButton}
+                    >
+                      Manage →
+                    </Link>
+                  </div>
+                  
+                  <div className={styles.stats}>
+                    <div className={styles.statRow}>
+                      <span className={styles.statLabel}>Total Posts</span>
+                      <span className={styles.statValue}>{displayStats.posts || 0}</span>
+                    </div>
+                    <div className={styles.statRow}>
+                      <span className={styles.statLabel}>Published</span>
+                      <span className={styles.statValueSmall}>{Math.floor((displayStats.posts || 0) * 0.8)}</span>
+                    </div>
+                    <div className={styles.statRow}>
+                      <span className={styles.statLabel}>Drafts</span>
+                      <span className={styles.statValueGray}>{Math.floor((displayStats.posts || 0) * 0.2)}</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.divider}>
+                    <div className={styles.actionRow}>
+                      <span className={styles.actionLabel}>Recent posts</span>
                       <span className={styles.actionValue}>0 items need attention</span>
                     </div>
                   </div>

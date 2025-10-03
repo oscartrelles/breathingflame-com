@@ -76,6 +76,7 @@ export function Individuals() {
           description: pageData.seo.description,
           image: pageData.seo.ogImage
         }}
+        pageData={pageData}
       />
 
       {/* Hero Section */}

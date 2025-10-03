@@ -74,6 +74,7 @@ export function About() {
           image: aboutData.seo.ogImage,
           structuredData: [personSchema, organizationSchema]
         }}
+        pageData={aboutData}
       />
 
       {/* Hero Section */}

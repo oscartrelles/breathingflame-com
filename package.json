@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "npm run build:content && vite",
     "build": "npm run build:content && npm run testimonials:export && npm run sitemap && vite build",
+    "build:production": "NODE_ENV=production npm run build:content && npm run testimonials:export && npm run sitemap && vite build",
     "build:content": "tsx scripts/generate-content.ts",
     "populate:firestore": "tsx scripts/populate-firestore.ts",
     "sync:dev": "tsx scripts/sync-to-firestore-dev.ts",
@@ -53,7 +54,10 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
     "react-intersection-observer": "^9.16.0",
-    "react-router-dom": "^6.20.1"
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^6.20.1",
+    "rehype-sanitize": "^6.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.1",

@@ -130,8 +130,46 @@ export function Contact() {
         data={{ 
           title: pageData.seo?.title, 
           description: pageData.seo?.description, 
-          image: pageData.seo?.ogImage 
+          image: pageData.seo?.ogImage,
+          structuredData: [
+            // ContactPage schema
+            {
+              '@context': 'https://schema.org',
+              '@type': 'ContactPage',
+              name: pageData.seo?.title || 'Contact Us',
+              description: pageData.seo?.description,
+              url: 'https://breathingflame.com/contact',
+              mainEntity: {
+                '@type': 'Organization',
+                name: 'Breathing Flame',
+                url: 'https://breathingflame.com',
+                logo: 'https://breathingflame.com/logo.png',
+                description: 'Resilience. Clarity. Transformation.',
+                contactPoint: [
+                  {
+                    '@type': 'ContactPoint',
+                    telephone: pageData.contactInfo?.methods?.phone?.value || '+34 611 006 408',
+                    contactType: 'customer service',
+                    availableLanguage: 'English'
+                  },
+                  {
+                    '@type': 'ContactPoint',
+                    email: pageData.contactInfo?.methods?.email?.value || 'info@breathingflame.com',
+                    contactType: 'customer service',
+                    availableLanguage: 'English'
+                  }
+                ],
+                sameAs: [
+                  'https://www.instagram.com/breathing.flame',
+                  'https://www.youtube.com/@BreathingFlameTV',
+                  'https://www.linkedin.com/company/breathingflame/',
+                  'https://www.tiktok.com/@breathingflame'
+                ]
+              }
+            }
+          ]
         }} 
+        pageData={pageData}
       />
       
 

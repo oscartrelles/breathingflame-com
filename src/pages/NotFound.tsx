@@ -105,7 +105,7 @@ export function NotFound() {
   }
 
   const handleArticleClick = (slug: string) => {
-    navigate(`/resources/${slug}`)
+    navigate(`/article/${slug}`)
     // @ts-ignore
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       // @ts-ignore

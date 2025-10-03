@@ -5,6 +5,7 @@ import { useSettings } from '@/hooks/useFirestore'
 
 interface SEOProps {
   data?: Partial<SeoData>
+  pageData?: any // For page-level FAQ data
 }
 
 /**
@@ -17,7 +18,7 @@ interface SEOProps {
  * - JSON-LD structured data
  * - Canonical URLs
  */
-export function SEO({ data }: SEOProps) {
+export function SEO({ data, pageData }: SEOProps) {
   const location = useLocation()
   const { data: settings } = useSettings()
 
@@ -44,6 +45,12 @@ export function SEO({ data }: SEOProps) {
 
   // Generate JSON-LD structured data
   const generateJsonLd = (): JsonLd[] => {
+    // If structuredData is provided in props, use it
+    if (data?.structuredData && data.structuredData.length > 0) {
+      return data.structuredData
+    }
+
+    // Otherwise, generate default schemas
     const jsonLd: JsonLd[] = []
 
     // Organization schema
@@ -142,6 +149,22 @@ export function SEO({ data }: SEOProps) {
         dateModified: data.modifiedTime,
         url: fullUrl,
         image: seoData.image
+      })
+    }
+
+    // FAQPage schema for pages with FAQs
+    if (pageData?.faq?.items && pageData.faq.items.length > 0) {
+      jsonLd.push({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: pageData.faq.items.map((item: any) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.a
+          }
+        }))
       })
     }
 

@@ -9,10 +9,11 @@ import { AdminTopBar } from './AdminTopBar'
 interface FieldConfig {
   key: string
   label: string
-  type: 'text' | 'textarea' | 'number' | 'boolean' | 'url' | 'email' | 'date' | 'array' | 'object'
+  type: 'text' | 'textarea' | 'number' | 'boolean' | 'url' | 'email' | 'date' | 'datetime' | 'array' | 'object'
   required?: boolean
   placeholder?: string
   helpText?: string
+  rows?: number
   arrayItemType?: 'text' | 'object'
   objectFields?: FieldConfig[]
   nested?: boolean
@@ -37,6 +38,7 @@ export function DynamicEditor() {
     if (path.includes('/admin/programs/')) return 'programs'
     if (path.includes('/admin/experiences/')) return 'experiences'
     if (path.includes('/admin/solutions/')) return 'solutions'
+    if (path.includes('/admin/posts/')) return 'posts'
     if (path.includes('/admin/testimonials/')) return 'testimonials'
     if (path.includes('/admin/navigation/')) return 'navigation'
     if (path.includes('/admin/settings/')) return 'settings'
@@ -58,11 +60,52 @@ export function DynamicEditor() {
   const [latestArticleUrl, setLatestArticleUrl] = useState<string>("")
   const [testimonialsCorpus, setTestimonialsCorpus] = useState<any[]>([])
 
+  // Provide sensible defaults so new documents render fields immediately
+  const getDefaultDocumentForCollection = (collection: string) => {
+    switch (collection) {
+      case 'posts':
+        return {
+          title: '',
+          slug: '',
+          summary: '',
+          description: '',
+          status: 'draft',
+          author: { name: '' },
+          tags: [],
+          featured: false,
+          publishedAt: new Date().toISOString(),
+          seo: {
+            title: '',
+            description: '',
+            ogImage: ''
+          }
+        }
+      case 'programs':
+      case 'experiences':
+      case 'solutions':
+        return {
+          title: '',
+          slug: '',
+          summary: '',
+          hero: { headline: '', subtext: '' },
+          outcomes: [],
+          howItWorks: [],
+          includes: [],
+          format: { duration: '', delivery: '', location: '' },
+          status: 'draft',
+          faq: { title: '', subtitle: '', items: [] },
+          finalCTA: { headline: '', subtext: '', buttons: [] }
+        }
+      default:
+        return {}
+    }
+  }
+
   useEffect(() => {
     console.log('🔄 useEffect triggered:', { collectionName, id, isNew })
     if (isNew) {
       console.log('📝 Creating new document')
-      setDocument({})
+      setDocument(getDefaultDocumentForCollection(collectionName))
       setIsLoading(false)
     } else {
       console.log('📖 Fetching existing document')
@@ -71,11 +114,11 @@ export function DynamicEditor() {
     // Prefetch latest article URL for suggestions
     fetchLatestArticleUrl()
     fetchTestimonials()
-  }, [id])
+  }, [id, collectionName])
 
   const fetchLatestArticleUrl = async () => {
     if (!db) return
-    const tryCollections = ['resources', 'articles', 'posts']
+    const tryCollections = ['articles', 'posts']
     for (const coll of tryCollections) {
       try {
         const q = query(collection(db, coll), orderBy('updatedAt', 'desc'), limit(1))
@@ -84,7 +127,7 @@ export function DynamicEditor() {
           const data = snap.docs[0].data() as any
           const slug = data.slug || data.id || ''
           if (slug) {
-            const url = coll === 'resources' ? `/resources/${slug}` : `/${coll}/${slug}`
+            const url = coll === 'articles' ? `/article/${slug}` : `/${coll}/${slug}`
             setLatestArticleUrl(url)
             return
           }
@@ -248,7 +291,7 @@ export function DynamicEditor() {
         console.log('📄 FAQ data:', docData.faq)
         console.log('📄 FAQ data type:', typeof docData.faq)
         console.log('📄 FAQ data length:', docData.faq?.length)
-        console.log('📄 FAQ data items:', docData.faq?.map((item: any, index: number) => ({ index, item })))
+        console.log('📄 FAQ data items:', docData.faq?.items?.map((item: any, index: number) => ({ index, item })))
         setDocument(docData)
         console.log('✅ Document set successfully')
       } else {
@@ -441,23 +484,98 @@ export function DynamicEditor() {
         {
           let dateValue = ''
           if (value) {
-            const d = new Date(value)
-            if (!isNaN(d.getTime())) {
-              dateValue = d.toISOString().split('T')[0]
-            } else if (typeof value === 'string' && /\d{4}-\d{2}-\d{2}/.test(value)) {
-              dateValue = value.slice(0, 10)
+            // Handle Firestore timestamp objects
+            if (value && typeof value === 'object' && 'seconds' in value && 'nanoseconds' in value) {
+              const d = new Date(value.seconds * 1000 + value.nanoseconds / 1000000)
+              if (!isNaN(d.getTime())) {
+                dateValue = d.toISOString().split('T')[0]
+              }
             } else {
-              dateValue = ''
+              const d = new Date(value)
+              if (!isNaN(d.getTime())) {
+                dateValue = d.toISOString().split('T')[0]
+              } else if (typeof value === 'string' && /\d{4}-\d{2}-\d{2}/.test(value)) {
+                dateValue = value.slice(0, 10)
+              } else {
+                dateValue = ''
+              }
             }
           }
           return (
             <input
               type="date"
               value={dateValue}
-              onChange={(e) => updateField(path, e.target.value)}
+              onChange={(e) => {
+                // Convert to Firestore timestamp format when saving
+                const isoString = e.target.value ? new Date(e.target.value).toISOString() : ''
+                updateField(path, isoString)
+              }}
               className={styles.input}
               required={config.required}
             />
+          )
+        }
+
+      case 'datetime':
+        {
+          let datetimeValue = ''
+          if (value) {
+            // Handle Firestore timestamp objects
+            if (value && typeof value === 'object' && 'seconds' in value && 'nanoseconds' in value) {
+              const d = new Date(value.seconds * 1000 + value.nanoseconds / 1000000)
+              if (!isNaN(d.getTime())) {
+                // Convert to local datetime string for input
+                const year = d.getFullYear()
+                const month = String(d.getMonth() + 1).padStart(2, '0')
+                const day = String(d.getDate()).padStart(2, '0')
+                const hours = String(d.getHours()).padStart(2, '0')
+                const minutes = String(d.getMinutes()).padStart(2, '0')
+                datetimeValue = `${year}-${month}-${day}T${hours}:${minutes}`
+              }
+            } else {
+              const d = new Date(value)
+              if (!isNaN(d.getTime())) {
+                // Convert to local datetime string for input
+                const year = d.getFullYear()
+                const month = String(d.getMonth() + 1).padStart(2, '0')
+                const day = String(d.getDate()).padStart(2, '0')
+                const hours = String(d.getHours()).padStart(2, '0')
+                const minutes = String(d.getMinutes()).padStart(2, '0')
+                datetimeValue = `${year}-${month}-${day}T${hours}:${minutes}`
+              } else if (typeof value === 'string' && value.includes('T')) {
+                datetimeValue = value.slice(0, 16) // YYYY-MM-DDTHH:MM
+              } else {
+                datetimeValue = ''
+              }
+            }
+          }
+          return (
+            <div className={styles.datetimeContainer}>
+              <input
+                type="datetime-local"
+                value={datetimeValue}
+                onChange={(e) => {
+                  // Convert to ISO string for storage
+                  const isoString = e.target.value ? new Date(e.target.value).toISOString() : ''
+                  updateField(path, isoString)
+                }}
+                className={styles.input}
+                required={config.required}
+              />
+              <div className={styles.datetimeHelp}>
+                {value && (
+                  <small className={styles.helpText}>
+                    Stored as: {(() => {
+                      if (value && typeof value === 'object' && 'seconds' in value && 'nanoseconds' in value) {
+                        const d = new Date(value.seconds * 1000 + value.nanoseconds / 1000000)
+                        return d.toLocaleString()
+                      }
+                      return new Date(value).toLocaleString()
+                    })()}
+                  </small>
+                )}
+              </div>
+            </div>
           )
         }
 
@@ -468,7 +586,7 @@ export function DynamicEditor() {
             onChange={(e) => updateField(path, e.target.value)}
             className={styles.textarea}
             placeholder={config.placeholder}
-            rows={4}
+            rows={config.rows || 12}
             required={config.required}
           />
         )
@@ -480,6 +598,16 @@ export function DynamicEditor() {
           <div className={styles.arrayField}>
             <div className={styles.arrayHeader}>
               <span className={styles.arrayCount}>{arrayValue.length} items</span>
+              {(path === 'testimonials' || path.endsWith('.testimonials')) && (
+                <div className={styles.objectActions}>
+                  <button type="button" className={styles.addButton} onClick={suggestTestimonials}>
+                    Suggest Top 3
+                  </button>
+                  <button type="button" className={styles.addButton} onClick={replaceWithSuggestions}>
+                    Replace with suggestions
+                  </button>
+                </div>
+              )}
               <button
                 type="button"
                 onClick={() => addArrayItem(path, config.arrayItemType === 'object' ? {} : '')}
@@ -566,14 +694,18 @@ export function DynamicEditor() {
                 </div>
               )}
             </div>
-            {isExpanded && config.objectFields && (
+            {isExpanded && (
               <div className={styles.objectFields}>
-                {config.objectFields.map(field => (
-                  <div key={field.key} className={styles.formGroup}>
-                    <label className={styles.label}>{field.label}</label>
-                    {renderField(field, `${path}.${field.key}`)}
-                  </div>
-                ))}
+                {config.objectFields && config.objectFields.length > 0 ? (
+                  config.objectFields.map(field => (
+                    <div key={field.key} className={styles.formGroup}>
+                      <label className={styles.label}>{field.label}</label>
+                      {renderField(field, `${path}.${field.key}`)}
+                    </div>
+                  ))
+                ) : (
+                  <div className={styles.emptyObject}>No fields. Use Add Key to create one.</div>
+                )}
               </div>
             )}
           </div>
@@ -650,13 +782,38 @@ export function DynamicEditor() {
           })
         }
       } else if (value && typeof value === 'object' && !(value instanceof Date)) {
-        // For objectFields, generate RELATIVE keys so renderField composes `${parent}.${child}` correctly
-        configs.push({
-          key: path,
-          label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
-          type: 'object',
-          objectFields: buildFieldConfigsFromDocument(value, '')
-        })
+        // Skip Firestore timestamp objects - they should be treated as date/datetime fields
+        if (value && typeof value === 'object' && 'seconds' in value && 'nanoseconds' in value) {
+          // This is a Firestore timestamp, treat it as a datetime field
+          let type: FieldConfig['type'] = 'datetime'
+          if (
+            key.toLowerCase() === 'date' ||
+            key.toLowerCase().endsWith('date') ||
+            key.toLowerCase().endsWith('createdat') ||
+            key.toLowerCase().endsWith('updatedat') ||
+            key.toLowerCase().endsWith('publishedat')
+          ) {
+            // Check if it's a datetime (has time component) or just a date
+            const dateValue = new Date(value.seconds * 1000 + value.nanoseconds / 1000000)
+            const hasTime = dateValue.getHours() !== 0 || dateValue.getMinutes() !== 0 || dateValue.getSeconds() !== 0
+            type = hasTime ? 'datetime' : 'date'
+          }
+          
+          configs.push({
+            key: path,
+            label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
+            type,
+            placeholder: `Enter ${key.toLowerCase()}...`
+          })
+        } else {
+          // For objectFields, generate RELATIVE keys so renderField composes `${parent}.${child}` correctly
+          configs.push({
+            key: path,
+            label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
+            type: 'object',
+            objectFields: buildFieldConfigsFromDocument(value, '')
+          })
+        }
       } else {
         let type: FieldConfig['type'] = 'text'
         if (typeof value === 'number') type = 'number'
@@ -671,130 +828,52 @@ export function DynamicEditor() {
             key.toLowerCase().endsWith('updatedat') ||
             key.toLowerCase().endsWith('publishedat')
           ) &&
-          (typeof value === 'string' || value instanceof Date) &&
+          (
+            // String or Date
+            (typeof value === 'string' || value instanceof Date) ||
+            // Firestore timestamp object
+            (value && typeof value === 'object' && 'seconds' in value && 'nanoseconds' in value)
+          ) &&
           !isNaN(new Date(value as any).getTime())
         ) {
-          type = 'date'
+          // Check if it's a datetime (has time component) or just a date
+          const dateValue = new Date(value as any)
+          const hasTime = dateValue.getHours() !== 0 || dateValue.getMinutes() !== 0 || dateValue.getSeconds() !== 0
+          type = hasTime ? 'datetime' : 'date'
         }
         else if (key.toLowerCase().includes('description') || key.toLowerCase().includes('content') || key.toLowerCase().includes('text') || key.toLowerCase().includes('body')) type = 'textarea'
 
-        configs.push({
+        const cfg: FieldConfig = {
           key: path,
           label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
           type,
           placeholder: `Enter ${key.toLowerCase()}...`
-        })
+        }
+        // Markdown legend and taller editor for posts content
+        if (collectionName === 'posts' && key.toLowerCase() === 'content' && type === 'textarea') {
+          cfg.helpText = 'Markdown supported: headings (#, ##, ###), bold (**text**), italics (*text*), links [text](url), lists (-, 1.), blockquotes (>), code (`inline`, ```fenced```), tables, task lists. Images ![alt](url).'
+          cfg.rows = 18
+        }
+        configs.push(cfg)
       }
     }
     return configs
   }
 
-  // Define comprehensive field mappings for different collection types
-  const getFieldMappings = (collectionName: string): FieldConfig[] => {
-    if (pageCollections.includes(collectionName)) {
-      // Build from the actual loaded document for pages so nothing is missed
-      const built = buildFieldConfigsFromDocument(document)
-      // Ensure some common top-level fields show first in a friendly order if present
-      const order = ['hero', 'intro', 'outcomes', 'introBlocks', 'testimonials', 'experiences', 'programs', 'resources', 'finalCTA', 'seo', 'id']
-      const byKey = new Map(built.map(c => [c.key, c]))
-      const ordered: FieldConfig[] = []
-      for (const key of order) {
-        if (byKey.has(key)) ordered.push(byKey.get(key) as FieldConfig)
-      }
-      for (const cfg of built) {
-        if (!order.includes(cfg.key)) ordered.push(cfg)
-      }
-      return ordered
-    } else if (collectionName === 'programs') {
-      // Program-specific field mappings
-      return [
-        {
-          key: 'hero',
-          label: 'Hero Section',
-          type: 'object',
-          objectFields: [
-            { key: 'headline', label: 'Headline', type: 'text' },
-            { key: 'subtext', label: 'Subtext', type: 'textarea' },
-            { key: 'videoEmbed', label: 'Video Embed URL', type: 'url' },
-            { key: 'imageUrl', label: 'Image URL', type: 'url' }
-          ]
-        },
-        {
-          key: 'seo',
-          label: 'SEO',
-          type: 'object',
-          objectFields: [
-            { key: 'title', label: 'Title', type: 'text' },
-            { key: 'description', label: 'Description', type: 'textarea' },
-            { key: 'ogImage', label: 'OG Image', type: 'url' }
-          ]
-        },
-        { key: 'title', label: 'Title', type: 'text' },
-        { key: 'summary', label: 'Summary', type: 'textarea' },
-        { key: 'description', label: 'Description', type: 'textarea' },
-        { key: 'format', label: 'Format', type: 'text' },
-        { key: 'duration', label: 'Duration', type: 'text' },
-        { key: 'order', label: 'Order', type: 'number' },
-        {
-          key: 'outcomes',
-          label: 'Outcomes',
-          type: 'array',
-          arrayItemType: 'text'
-        },
-        {
-          key: 'includes',
-          label: 'Includes',
-          type: 'array',
-          arrayItemType: 'text'
-        },
-        {
-          key: 'modules',
-          label: 'Modules',
-          type: 'array',
-          arrayItemType: 'text'
-        },
-        {
-          key: 'faq',
-          label: 'FAQ',
-          type: 'array',
-          arrayItemType: 'object',
-          objectFields: [
-            { key: 'question', label: 'Question', type: 'text' },
-            { key: 'answer', label: 'Answer', type: 'textarea' }
-          ]
-        },
-        {
-          key: 'ctas',
-          label: 'Call to Actions',
-          type: 'object',
-          objectFields: [
-            {
-              key: 'primary',
-              label: 'Primary CTA',
-              type: 'object',
-              objectFields: [
-                { key: 'label', label: 'Label', type: 'text' },
-                { key: 'url', label: 'URL', type: 'url' },
-                { key: 'external', label: 'External Link', type: 'boolean' }
-              ]
-            },
-            {
-              key: 'secondary',
-              label: 'Secondary CTA',
-              type: 'object',
-              objectFields: [
-                { key: 'label', label: 'Label', type: 'text' },
-                { key: 'url', label: 'URL', type: 'url' },
-                { key: 'external', label: 'External Link', type: 'boolean' }
-              ]
-            }
-          ]
-        }
-      ]
-    } else {
-      // Fallback to dynamic generation
-      return generateFieldConfigs(document)
+  // Always derive field mappings from the current document (fully dynamic)
+  const getFieldMappings = (_collectionName: string): FieldConfig[] => {
+    const built = buildFieldConfigsFromDocument(document)
+    // Prefer a friendly order when present
+    const order = ['id', 'title', 'slug', 'hero', 'intro', 'summary', 'description', 'format', 'duration', 'order', 'outcomes', 'includes', 'modules', 'tags', 'faq', 'ctas', 'testimonials', 'finalCTA', 'relatedEventsMode', 'relatedEvents', 'seo']
+    const byKey = new Map(built.map(c => [c.key, c]))
+    const ordered: FieldConfig[] = []
+    for (const key of order) {
+      if (byKey.has(key)) ordered.push(byKey.get(key) as FieldConfig)
     }
+    for (const cfg of built) {
+      if (!order.includes(cfg.key)) ordered.push(cfg)
+    }
+    return ordered
   }
 
   const generateFieldConfigs = (obj: any, parentPath: string = ''): FieldConfig[] => {
@@ -823,12 +902,12 @@ export function DynamicEditor() {
           })
         }
       } else if (value && typeof value === 'object' && !(value instanceof Date)) {
-        // Nested object
+        // Nested object - use RELATIVE keys for child fields so renderField composes paths correctly
         configs.push({
           key: path,
           label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
           type: 'object',
-          objectFields: generateFieldConfigs(value, path)
+          objectFields: generateFieldConfigs(value, '')
         })
       } else {
         // Primitive field

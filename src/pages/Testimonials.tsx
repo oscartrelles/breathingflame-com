@@ -38,16 +38,12 @@ export function Testimonials() {
 
   return (
     <>
-      <SEO data={{ title: page.seo.title, description: page.seo.description, image: page.seo.ogImage }} />
-      
-      {/* JSON-LD */}
-      {jsonLD.map((ld, index) => (
-        <script
-          key={index}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
-        />
-      ))}
+      <SEO data={{ 
+        title: page.seo.title, 
+        description: page.seo.description, 
+        image: page.seo.ogImage,
+        structuredData: jsonLD
+      }} />
       
       {/* Hero */}
       <HeroSection

@@ -49,7 +49,52 @@ const Community: React.FC = () => {
       <SEO data={{ 
         title: pageData.seo?.title, 
         description: pageData.seo?.description, 
-        image: pageData.seo?.ogImage 
+        image: pageData.seo?.ogImage,
+        structuredData: [
+          // CollectionPage schema
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: pageData.seo?.title || 'Community',
+            description: pageData.seo?.description,
+            url: 'https://breathingflame.com/community',
+            mainEntity: {
+              '@type': 'ItemList',
+              numberOfItems: pageData.sections?.reduce((total, section) => total + (section.cards?.length || 0), 0) || 0,
+              itemListElement: pageData.sections?.flatMap((section, sectionIndex) => 
+                section.cards?.map((card, cardIndex) => ({
+                  '@type': 'ListItem',
+                  position: (sectionIndex * 10) + cardIndex + 1,
+                  item: {
+                    '@type': 'Service',
+                    name: card.label,
+                    description: card.sublabel,
+                    url: card.url,
+                    provider: {
+                      '@type': 'Organization',
+                      name: 'Breathing Flame'
+                    }
+                  }
+                })) || []
+              ) || []
+            }
+          },
+          // Organization schema
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Breathing Flame',
+            url: 'https://breathingflame.com',
+            logo: 'https://breathingflame.com/logo.png',
+            description: 'Resilience. Clarity. Transformation.',
+            sameAs: [
+              'https://www.instagram.com/breathing.flame',
+              'https://www.youtube.com/@BreathingFlameTV',
+              'https://www.linkedin.com/company/breathingflame/',
+              'https://www.tiktok.com/@breathingflame'
+            ]
+          }
+        ]
       }} />
 
       {/* Hero Section */}

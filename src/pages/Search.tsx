@@ -91,7 +91,7 @@ const Search: React.FC = () => {
           id: `post-${post.slug}`,
           title: post.title,
           description: post.excerpt || '',
-          url: `/resources/${post.slug}`,
+          url: `/article/${post.slug}`,
           type: 'post'
         });
       }

@@ -203,19 +203,7 @@ export function Footer() {
                                     )}
                                   </li>
                                 ))}
-                              {/* Ensure Events link under Transformation */}
-                              {(['TRANSFORMATION', 'Transformation'].includes(group.title) &&
-                                !group.links?.some((l: any) => !l.external && l.pathOrUrl === '/events')) && (
-                                  <li key="Events">
-                                    <Link
-                                      to="/events"
-                                      className={styles.footerLink}
-                                      onClick={() => trackButtonClick('footer_link', `${group.title}_Events`)}
-                                    >
-                                      Events
-                                    </Link>
-                                  </li>
-                                )}
+                              {/* Removed hardcoded fallback 'Events' link to avoid forcing it into the footer */}
                             </ul>
                           </div>
                         ))}

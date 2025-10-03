@@ -57,20 +57,28 @@ export function ResourceCard({
     >
       <div className={styles.cardContent}>
         <h3 className={styles.resourceTitle}>{resource.title}</h3>
-        <p className={styles.resourceDescription}>{resource.description}</p>
-        
-        <div className={styles.cardCTA}>
-          <a 
-            href={resource.ctaHref}
-            className="btn btn--outline"
-            target={resource.external ? '_blank' : undefined}
-            rel={resource.external ? 'noopener noreferrer' : undefined}
-            onClick={handleClick}
-            aria-label={`Open ${resource.title}`}
-          >
-            {resource.ctaText}
-          </a>
+        <div className={styles.resourceDescription}>
+          {resource.description.split('\n').map((line, index) => (
+            <div key={index} className={styles.descriptionLine}>
+              {line}
+            </div>
+          ))}
         </div>
+        
+        {resource.ctaText && (
+          <div className={styles.cardCTA}>
+            <a 
+              href={resource.ctaHref}
+              className="btn btn--outline"
+              target={resource.external ? '_blank' : undefined}
+              rel={resource.external ? 'noopener noreferrer' : undefined}
+              onClick={handleClick}
+              aria-label={`Open ${resource.title}`}
+            >
+              {resource.ctaText}
+            </a>
+          </div>
+        )}
       </div>
     </AnimatedCard>
   )
