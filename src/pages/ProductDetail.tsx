@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 import { SEO } from '@/components/SEO'
 import { FinalCTABand } from '@/components/FinalCTABand'
 import { HeroSection } from '@/components/HeroSection'
-import { TestimonialsRail } from '@/components/TestimonialsRail'
-import { TestimonialDisplay } from '@/components/TestimonialDisplay'
+import { TestimonialComponent } from '@/components/TestimonialComponent'
 import { ProductDetailGrid, createProductGridItems } from '@/components/ProductDetailGrid'
 import { usePrograms, useExperiences, useSolutions } from '@/hooks/useFirestore'
 import { useContent } from '@/hooks/useContent'
@@ -18,6 +17,7 @@ interface ProductDetailProps {
 export function ProductDetail({ productType }: ProductDetailProps) {
   const { slug } = useParams()
   const { data: content } = useContent('en')
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
   // Load collections
   const { data: programs } = usePrograms()
@@ -32,8 +32,6 @@ export function ProductDetail({ productType }: ProductDetailProps) {
     if (productType === 'solution') return (solutions || []).find((s: any) => s.slug === slug) || null
     return null
   }, [productType, slug, programs, experiences, solutions])
-
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
   // Labels from item.ui or global defaults (no hardcoded fallback text)
   const ui = {
@@ -87,7 +85,8 @@ export function ProductDetail({ productType }: ProductDetailProps) {
       {(testimonialRefs && testimonialRefs.length > 0) && (
         <section className="section">
           <div className="container">
-            <TestimonialsRail
+            <TestimonialComponent
+              mode="grid"
               testimonialRefs={testimonialRefs}
               context={{ 
                 [`${productType}Slug`]: product.slug 

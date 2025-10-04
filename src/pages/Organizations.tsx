@@ -1,6 +1,6 @@
 import { usePageOrganizations, useTestimonials, usePosts, useSolutions } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
-import { TestimonialsRail } from '@/components/TestimonialsRail'
+import { TestimonialComponent } from '@/components/TestimonialComponent'
 import { SEO } from '@/components/SEO'
 import { OfferingCard } from '@/components/OfferingCard'
 import { PillarsGrid } from '@/components/PillarsGrid'
@@ -39,12 +39,12 @@ export function Organizations() {
 
   // Get referenced testimonials
   const featuredTestimonials = testimonials?.filter(testimonial => 
-    pageData?.results?.testimonialRefs?.includes(testimonial.id)
+    pageData?.sections?.testimonials?.testimonialRefs?.includes(testimonial.id)
   ) || []
 
   // Get featured blog post
   const featuredPost = posts?.find(post => 
-    post.id === pageData?.resources?.featuredPostRef
+    post.id === pageData?.sections?.resources?.featuredPostRef
   )
 
   if (!pageData) {
@@ -74,33 +74,35 @@ export function Organizations() {
       />
 
       {/* Hero Section */}
-      <HeroSection
-        title={pageData.hero.headline}
-        subtitle={pageData.hero.subtext}
-        media={pageData.hero.media ?? {
-          imageUrl: pageData.hero.imageUrl,
-          videoEmbed: pageData.hero.videoEmbed,
-          videoId: pageData.hero.videoId,
-        }}
-        ctas={pageData.hero.ctas}
-        className="organizations-hero"
-      />
+      {pageData.sections?.hero?.visible !== false && (
+        <HeroSection
+          title={pageData.sections.hero.headline}
+          subtitle={pageData.sections.hero.subtext}
+          media={pageData.sections.hero.media}
+          ctas={pageData.sections.hero.ctas}
+          className="organizations-hero"
+        />
+      )}
 
-      {/* Business Drivers Section */}
+      {/* Pillars Section */}
+      {pageData.sections?.pillars?.visible !== false && (
       <PillarsGrid
-        pillars={pageData.businessDrivers?.map((driver: any) => ({
-          id: driver.id,
-          title: driver.title,
-          copy: driver.copy,
-          icon: driver.title?.charAt(0),
-          color: '#ffb332'
-        })) || []}
-        title="Why It Matters"
-        subtitle="Real outcomes that impact your bottom line"
+        pillars={
+          (pageData.sections.pillars.pillars as any[]).map((p: any) => ({
+            id: p.title?.toLowerCase() || '',
+            title: p.title,
+            copy: p.copy,
+            icon: p.title?.charAt(0),
+            color: '#ffb332'
+          }))
+        }
+        title={pageData.sections.pillars.headline}
+        subtitle={pageData.sections.pillars.subtext}
         reducedMotion={reducedMotion}
-      />
+      />)}
 
-      {/* Solutions Section (from CMS solutions collection) */}
+      {/* Solutions Section */}
+      {(pageData.sections?.solutions?.visible !== false) && (
       <section className="section section--sm">
         <div className="container">
           <motion.div 
@@ -142,76 +144,27 @@ export function Organizations() {
           </motion.div>
         </div>
       </section>
-
-      {/* Results Section */}
-      {featuredTestimonials.length > 0 && (
-      <section className="section section--sm">
-        <div className="container">
-            <motion.div 
-              className={styles.sectionHeader}
-              {...useInViewAnimation()}
-            >
-              <h2 className={styles.sectionTitle}>{pageData.results.headline}</h2>
-            <p className={styles.sectionDescription}>
-                {pageData.results.subtext}
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className={styles.testimonialsGrid}
-              variants={reducedMotion ? {} : staggerContainer}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              {featuredTestimonials.map((testimonial) => (
-                <motion.div 
-                  key={testimonial.id}
-                  className={styles.testimonialCard}
-                  variants={reducedMotion ? {} : staggerChild}
-                >
-                  <div className={styles.testimonialContent}>
-                    <p className={styles.testimonialText}>"{testimonial.text}"</p>
-                    
-                    <div className={styles.testimonialAuthor}>
-                      {testimonial.author.avatar && (
-                        <img 
-                          src={testimonial.author.avatar} 
-                          alt={testimonial.author.name}
-                          className={styles.testimonialAvatar}
-                        />
-                      )}
-                      <div className={styles.testimonialAuthorInfo}>
-                        <h4 className={styles.testimonialAuthorName}>{testimonial.author.name}</h4>
-                        <p className={styles.testimonialAuthorTitle}>{testimonial.author.title}</p>
-                        {testimonial.author.company && (
-                          <p className={styles.testimonialAuthorCompany}>{testimonial.author.company}</p>
-                        )}
-            </div>
-              </div>
-            </div>
-                </motion.div>
-              ))}
-            </motion.div>
-        </div>
-      </section>
       )}
 
       {/* Testimonials */}
-      <TestimonialsRail 
-        testimonialRefs={pageData?.testimonials?.testimonialRefs}
+      {(pageData.sections?.testimonials?.visible !== false) && (
+      <TestimonialComponent 
+        mode="grid"
+        testimonialRefs={pageData.sections.testimonials.testimonialRefs}
         context={{ audience: 'organizations' }}
-        title={pageData?.testimonials?.headline}
-        subtext={pageData?.testimonials?.subtext}
+        title={pageData.sections.testimonials.headline}
+        subtext={pageData.sections.testimonials.subtext}
         maxCount={6}
         minRating={4}
       />
+      )}
 
       {/* Resources Section */}
+      {(pageData.sections?.resources?.visible !== false) && (
       <ResourcesGrid
         resources={[
           // Resource Links
-          ...(pageData.resources?.resourceLinks?.map((resource: any) => ({
+          ...(pageData.sections.resources.resourceLinks?.map((resource: any) => ({
             id: resource.id,
             title: resource.label,
             description: 'Comprehensive guide for leaders and HR teams.',
@@ -231,17 +184,19 @@ export function Organizations() {
             type: 'article' as const
           }] : [])
         ]}
-        title={pageData.resources?.headline}
-        subtitle={pageData.resources?.subtext}
+        title={pageData.sections.resources.headline}
+        subtitle={pageData.sections.resources.subtext}
         reducedMotion={reducedMotion}
       />
+      )}
 
 
       {/* Final CTA Section */}
+      {(pageData.sections?.finalCTA?.visible !== false) && (
       <FinalCTABand
-        headline={pageData.finalCTA?.headline}
-        subtext={pageData.finalCTA?.subtext}
-        buttons={pageData.finalCTA?.buttons?.map(button => ({
+        headline={pageData.sections.finalCTA.headline}
+        subtext={pageData.sections.finalCTA.subtext}
+        buttons={pageData.sections.finalCTA.buttons?.map(button => ({
           label: button.label,
           url: button.pathOrUrl,
           external: button.external || false
@@ -253,6 +208,7 @@ export function Organizations() {
           { label: "Learn More", url: "/organizations", external: false }
         ]}
       />
+      )}
     </motion.div>
   )
 }

@@ -3,6 +3,7 @@ import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { PillarsGrid } from '@/components/PillarsGrid'
 import { FinalCTABand } from '@/components/FinalCTABand'
+import { TestimonialComponent } from '@/components/TestimonialComponent'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -31,17 +32,18 @@ export function About() {
   }
 
   // JSON-LD Person schema for founder
+  const founder = aboutData.sections?.founder
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": aboutData.founder.name,
-    "jobTitle": aboutData.founder.title,
+    "name": founder.name,
+    "jobTitle": founder.title,
     "url": "https://breathingflame.com/about",
     "affiliation": {
       "@type": "Organization",
-      "name": aboutData.founder.affiliation?.name || "Breathing Flame"
+      "name": founder.affiliation?.name || "Breathing Flame"
     },
-    "sameAs": aboutData.founder.socials?.map(social => social.url) || []
+    "sameAs": (founder.socials || []).map((social: any) => social.url) || []
   }
 
   // JSON-LD Organization schema
@@ -79,14 +81,10 @@ export function About() {
 
       {/* Hero Section */}
       <HeroSection
-        title={aboutData.hero.headline}
-        subtitle={aboutData.hero.subtext}
-        media={aboutData.hero.media ?? {
-          imageUrl: aboutData.hero.imageUrl,
-          videoEmbed: aboutData.hero.videoEmbed,
-          videoId: aboutData.hero.videoId,
-        }}
-        ctas={aboutData.hero.ctas?.map(cta => ({
+        title={aboutData.sections.hero.headline}
+        subtitle={aboutData.sections.hero.subtext}
+        media={aboutData.sections.hero.media}
+        ctas={aboutData.sections.hero.ctas?.map((cta: any) => ({
           label: cta.label,
           pathOrUrl: cta.url,
           external: cta.external
@@ -95,23 +93,26 @@ export function About() {
       />
 
       {/* Story Section */}
+      {(aboutData?.sections?.story?.visible !== false) && (
       <motion.section 
         className={`section ${styles.story}`}
         {...useInViewAnimation()}
       >
         <div className="container">
           <div className={styles.storyContent}>
-            <h2 className={styles.sectionTitle}>{aboutData.story.title}</h2>
+            <h2 className={styles.sectionTitle}>{aboutData.sections?.story?.title || aboutData.story.title}</h2>
             <div className={styles.storyBody}>
-              {aboutData.story.body.split('\n\n').map((paragraph, index) => (
+              {(aboutData.sections?.story?.body || aboutData.story.body).split('\n\n').map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
           </div>
         </div>
       </motion.section>
+      )}
 
       {/* Founder Section */}
+      {aboutData.sections?.founder?.visible !== false && (
       <motion.section 
         className={`section ${styles.founder}`}
         {...useInViewAnimation()}
@@ -122,10 +123,10 @@ export function About() {
               <h2 className={styles.sectionTitle}>Meet the Founder</h2>
               <div className={styles.founderDetails}>
                 <div className={styles.founderText}>
-                  <h3 className={styles.founderName}>{aboutData.founder.name}</h3>
-                  <p className={styles.founderTitle}>{aboutData.founder.title}</p>
+                  <h3 className={styles.founderName}>{aboutData.sections.founder.name}</h3>
+                  <p className={styles.founderTitle}>{aboutData.sections.founder.title}</p>
                   <div className={styles.founderBio}>
-                    {aboutData.founder.bio.split('\n\n').map((paragraph, index) => (
+                    {aboutData.sections.founder.bio.split('\n\n').map((paragraph: string, index: number) => (
                       <p key={index}>{paragraph}</p>
                     ))}
                   </div>
@@ -133,17 +134,17 @@ export function About() {
                   <div className={styles.credentials}>
                     <h4>Credentials</h4>
                     <ul>
-                      {aboutData.founder.credentials.map((credential, index) => (
+                      {aboutData.sections.founder.credentials.map((credential: string, index: number) => (
                         <li key={index}>{credential}</li>
                       ))}
                     </ul>
                   </div>
 
-                  {aboutData.founder.socials && aboutData.founder.socials.length > 0 && (
+                  {aboutData.sections.founder.socials && aboutData.sections.founder.socials.length > 0 && (
                     <div className={styles.socials}>
                       <h4>Connect</h4>
                       <div className={styles.socialLinks}>
-                        {aboutData.founder.socials.map((social, index) => (
+                        {aboutData.sections.founder.socials.map((social: any, index: number) => (
                           <a
                             key={index}
                             href={social.url}
@@ -159,11 +160,11 @@ export function About() {
                   )}
                 </div>
                 
-                {aboutData.founder.headshot && (
+                {aboutData.sections.founder.headshot && (
                   <div className={styles.founderImage}>
                     <img 
-                      src={aboutData.founder.headshot} 
-                      alt={aboutData.founder.name}
+                      src={aboutData.sections.founder.headshot} 
+                      alt={aboutData.sections.founder.name}
                       className={styles.headshot}
                     />
                   </div>
@@ -173,23 +174,26 @@ export function About() {
           </div>
         </div>
       </motion.section>
+      )}
 
       {/* Approach Section */}
+      {(aboutData?.sections?.approach?.visible !== false) && (
       <PillarsGrid
-        pillars={aboutData.approach?.pillars?.map((pillar: any) => ({
+        pillars={(aboutData.sections?.approach?.pillars || aboutData.approach?.pillars || []).map((pillar: any) => ({
           id: pillar.id,
           title: pillar.title,
           copy: pillar.copy,
           icon: pillar.title?.charAt(0),
           color: '#ffb332'
         })) || []}
-        title="Our Approach"
-        subtitle={aboutData.approach?.intro}
+        title={aboutData.sections?.approach?.title || 'Our Approach'}
+        subtitle={aboutData.sections?.approach?.intro || aboutData.approach?.intro}
         reducedMotion={reducedMotion}
       />
+      )}
 
       {/* Collaborators Section */}
-      {aboutData.collaborators && aboutData.collaborators.length > 0 && (
+      {(aboutData.sections?.collaborators?.visible !== false) && (aboutData.sections?.collaborators?.items || aboutData.collaborators) && ((aboutData.sections?.collaborators?.items || aboutData.collaborators).length > 0) && (
         <motion.section 
           className={`section ${styles.collaborators}`}
           {...useInViewAnimation()}
@@ -198,7 +202,7 @@ export function About() {
             <div className={styles.collaboratorsContent}>
               <h2 className={styles.sectionTitle}>Our Collaborators</h2>
               <div className={styles.collaboratorsGrid}>
-                {aboutData.collaborators.map((collaborator, index) => (
+                {(aboutData.sections?.collaborators?.items || aboutData.collaborators).map((collaborator: any, index: number) => (
                   <div key={index} className={styles.collaborator}>
                     {collaborator.logoUrl && (
                       <img 
@@ -227,41 +231,31 @@ export function About() {
         </motion.section>
       )}
 
-      {/* Proof Section */}
-      {aboutData.proof && (aboutData.proof.ratingText || (aboutData.proof.logos && aboutData.proof.logos.length > 0)) && (
+      {/* Proof Section - Now using unified TestimonialComponent */}
+      {(aboutData?.sections?.proof?.visible !== false) && (
         <motion.section 
-          className={`section ${styles.proof}`}
+          className="section"
           {...useInViewAnimation()}
         >
           <div className="container">
-            <div className={styles.proofContent}>
-              {aboutData.proof.ratingText && (
-                <div className={styles.rating}>
-                  <p className={styles.ratingText}>{aboutData.proof.ratingText}</p>
-                </div>
-              )}
-              
-              {aboutData.proof.logos && aboutData.proof.logos.length > 0 && (
-                <div className={styles.logos}>
-                  <h3>Trusted by</h3>
-                  <div className={styles.logosGrid}>
-                    {aboutData.proof.logos.map((logoUrl, index) => (
-                      <img 
-                        key={index}
-                        src={logoUrl} 
-                        alt={aboutData.clients?.logoAlt || "Client logo"}
-                        className={styles.logo}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            <TestimonialComponent
+              mode="proof"
+              title={aboutData?.sections?.proof?.headline}
+              subtext={aboutData?.sections?.proof?.subtext}
+              showRating={true}
+              showTags={false}
+              showSource={false}
+              showLanguage={false}
+              maxTextLength={300}
+              showReadMore={false}
+              className={styles.proof}
+            />
           </div>
         </motion.section>
       )}
 
       {/* Final CTA Section */}
+      {(aboutData?.sections?.finalCTA?.visible !== false) && (
       <FinalCTABand
         headline={aboutData.finalCTA?.headline}
         subtext={aboutData.finalCTA?.subtext}
@@ -277,6 +271,7 @@ export function About() {
           { label: "Learn More", url: "/programs", external: false }
         ]}
       />
+      )}
     </motion.div>
   )
 }

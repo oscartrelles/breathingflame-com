@@ -1,7 +1,8 @@
 import { SEO } from '@/components/SEO'
 import { usePageTestimonials } from '@/hooks/useFirestore'
-import { TestimonialsRail } from '@/components/TestimonialsRail'
+import { TestimonialComponent } from '@/components/TestimonialComponent'
 import { HeroSection } from '@/components/HeroSection'
+import { FinalCTABand } from '@/components/FinalCTABand'
 import { getTestimonialsJSONLD } from '@/seo/aggregate'
 import { useContent } from '@/hooks/useContent'
 import { Testimonial } from '@/lib/testimonials'
@@ -45,79 +46,104 @@ export function Testimonials() {
         structuredData: jsonLD
       }} />
       
-      {/* Hero */}
-      <HeroSection
-        title={page.hero.headline}
-        subtitle={page.hero.subtext}
-        media={page.hero.media}
-      />
-
-      {/* Intro */}
-      <section className="section">
-        <div className="container">
-          <div className="card" style={{ padding: 'var(--spacing-6)' }}>
-            <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)' }}>{page.intro.title}</h2>
-            <p className="text--md" style={{ color: 'var(--color-text-secondary)' }}>{page.intro.body}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial Blocks */}
-      {page.blocks?.map((block, index) => (
-        <TestimonialsRail
-          key={index}
-          title={block.title}
-          subtext={block.subtext}
-          context={block.widget?.context}
-          maxCount={block.widget?.maxCount}
-          minRating={block.widget?.minRating}
-          className={styles.testimonialBlock}
+      {/* Hero Section */}
+      {(page.sections?.hero?.visible !== false) && page.sections?.hero && (
+        <HeroSection
+          title={page.sections.hero.headline}
+          subtitle={page.sections.hero.subtext}
+          media={page.sections.hero.media}
+          ctas={page.sections.hero.ctas}
         />
-      ))}
+      )}
 
-      {/* CTA Band */}
-      <section className="section" style={{ background: 'var(--color-primary)', color: 'white' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2 className="heading heading--xl" style={{ color: 'white', marginBottom: 'var(--spacing-4)' }}>
-              {page.ctaBand.headline}
-            </h2>
-            {page.ctaBand.subtext && (
-              <p className="text--lg" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: 'var(--spacing-8)' }}>
-                {page.ctaBand.subtext}
-              </p>
-            )}
-            <div style={{ display: 'flex', gap: 'var(--spacing-4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {page.ctaBand.buttons.map((button, index) => (
-                <a
-                  key={index}
-                  href={button.url}
-                  className={`btn ${index === 0 ? 'btn--primary' : 'btn--secondary'} btn--large btn--on-accent`}
-                  target={button.external ? '_blank' : undefined}
-                  rel={button.external ? 'noopener noreferrer' : undefined}
-                >
-                  {button.label}
-                </a>
-              ))}
+      {/* Intro Section */}
+      {(page.sections?.intro?.visible !== false) && page.sections?.intro && (
+        <section className="section">
+          <div className="container">
+            <div className="sectionHeader">
+              <h2 className="sectionTitle">{page.sections.intro.title}</h2>
+              <p className="sectionDescription">{page.sections.intro.body}</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Review CTA */}
-      {page.reviewCTA && (
+      {/* Highlights Section */}
+      {(page.sections?.highlights?.visible !== false) && page.sections?.highlights && (
         <section className="section">
-          <div className="container" style={{ textAlign: 'center' }}>
-            <a 
-              className="btn btn--secondary" 
-              href={page.reviewCTA.url} 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              {page.reviewCTA.label}
-            </a>
+          <div className="container">
+            <TestimonialComponent
+              mode="grid"
+              title={page.sections.highlights.title}
+              subtext={page.sections.highlights.subtext}
+              context={page.sections.highlights.widget?.context}
+              maxCount={page.sections.highlights.widget?.maxCount}
+              minRating={page.sections.highlights.widget?.minRating}
+              className={styles.testimonialBlock}
+            />
           </div>
         </section>
+      )}
+
+      {/* Individuals Section */}
+      {(page.sections?.individuals?.visible !== false) && page.sections?.individuals && (
+        <section className="section">
+          <div className="container">
+            <TestimonialComponent
+              mode="grid"
+              title={page.sections.individuals.title}
+              subtext={page.sections.individuals.subtext}
+              context={page.sections.individuals.widget?.context}
+              maxCount={page.sections.individuals.widget?.maxCount}
+              minRating={page.sections.individuals.widget?.minRating}
+              className={styles.testimonialBlock}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Organizations Section */}
+      {(page.sections?.organizations?.visible !== false) && page.sections?.organizations && (
+        <section className="section">
+          <div className="container">
+            <TestimonialComponent
+              mode="grid"
+              title={page.sections.organizations.title}
+              subtext={page.sections.organizations.subtext}
+              context={page.sections.organizations.widget?.context}
+              maxCount={page.sections.organizations.widget?.maxCount}
+              minRating={page.sections.organizations.widget?.minRating}
+              className={styles.testimonialBlock}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Review CTA */}
+      {(page.sections?.reviewCTA?.visible !== false) && page.sections?.reviewCTA && (
+        <section className="section">
+          <div className="container">
+            <div className={styles.reviewCTA}>
+              <a 
+                className="btn btn--secondary" 
+                href={page.sections.reviewCTA.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                {page.sections.reviewCTA.label}
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Final CTA Band */}
+      {(page.sections?.finalCTA?.visible !== false) && page.sections?.finalCTA && (
+        <FinalCTABand
+          headline={page.sections.finalCTA.headline}
+          subtext={page.sections.finalCTA.subtext}
+          buttons={page.sections.finalCTA.buttons}
+        />
       )}
     </>
   )

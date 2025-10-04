@@ -1,7 +1,7 @@
 import { useHome, usePrograms, useExperiences, useSolutions } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
-import { TestimonialDisplay } from '@/components/TestimonialDisplay'
+import { TestimonialComponent } from '@/components/TestimonialComponent'
 import { OfferingCard } from '@/components/OfferingCard'
 import { PillarsGrid } from '@/components/PillarsGrid'
 
@@ -26,17 +26,27 @@ import styles from './Home.module.css'
  * - CRITICAL: Two Typeform sections with hash anchors
  */
 export function Home() {
-  const { data: homeData } = useHome()
+  const { data: homeData, loading: homeLoading } = useHome()
   const { data: programs } = usePrograms()
   const { data: experiences } = useExperiences()
   const { data: solutions } = useSolutions()
   
-  // Testimonials are now handled by TestimonialDisplay component
+  // Testimonials are now handled by TestimonialComponent
   
   const reducedMotion = useReducedMotion()
 
-  // Source pillars strictly from pages.home.pillars
-  const pillars: any[] = Array.isArray(homeData?.pillars) ? homeData!.pillars : []
+  // Show loading state if homeData is not yet loaded
+  if (homeLoading || !homeData) {
+    return (
+      <div className="container" style={{ padding: 'var(--spacing-16) 0', textAlign: 'center' }}>
+        <div className="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
+
+  // Source pillars strictly from pages.home.sections.pillars
+  const pillars: any[] = Array.isArray(homeData?.sections?.pillars?.pillars) ? homeData!.sections.pillars.pillars : []
 
   // Get featured programs and experiences
   const featuredPrograms = programs?.filter(program => 
@@ -140,28 +150,28 @@ export function Home() {
       />
 
       {/* Hero Section */}
-      <HeroSection
-        title={homeData?.hero?.headline}
-        subtitle={homeData?.hero?.subtext}
-        media={homeData?.hero?.media ?? {
-          imageUrl: homeData?.hero?.imageUrl,
-          videoEmbed: homeData?.hero?.videoEmbed,
-          videoId: homeData?.hero?.videoId,
-        }}
-        ctas={homeData?.hero?.ctas}
-        className="home-hero"
-      />
+      {homeData?.sections?.hero?.visible !== false && homeData?.sections?.hero && (
+        <HeroSection
+          title={homeData?.sections?.hero?.headline}
+          subtitle={homeData?.sections?.hero?.subtext}
+          media={homeData?.sections?.hero?.media}
+          ctas={homeData?.sections?.hero?.ctas}
+          className="home-hero"
+        />
+      )}
 
       {/* Pillars Section - Staggered reveal like Positive Intelligence */}
-      <PillarsGrid
-        pillars={pillars}
-        title={homeData?.sections?.pillars?.headline || 'Resilience. Clarity. Transformation.'}
-        subtitle={homeData?.sections?.pillars?.subtext || 'Three pillars that guide every program and experience we offer.'}
-        reducedMotion={reducedMotion}
-      />
+      {homeData?.sections?.pillars?.visible !== false && homeData?.sections?.pillars && (
+        <PillarsGrid
+          pillars={pillars}
+          title={homeData?.sections?.pillars?.headline || 'Resilience. Clarity. Transformation.'}
+          subtitle={homeData?.sections?.pillars?.subtext || 'Three pillars that guide every program and experience we offer.'}
+          reducedMotion={reducedMotion}
+        />
+      )}
 
       {/* Featured Programs */}
-      {featuredPrograms.length > 0 && (
+      {(homeData?.sections?.featured?.visible !== false) && featuredPrograms.length > 0 && (
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
@@ -189,7 +199,7 @@ export function Home() {
       )}
 
       {/* Featured Experiences */}
-      {featuredExperiences.length > 0 && (
+      {(homeData?.sections?.featured?.visible !== false) && featuredExperiences.length > 0 && (
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
@@ -217,6 +227,7 @@ export function Home() {
       )}
 
       {/* Testimonials */}
+      {homeData?.sections?.testimonials?.visible !== false && (
       <section className="section section--sm">
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -225,22 +236,23 @@ export function Home() {
           </div>
 
           {/* Home Page Testimonials */}
-          <TestimonialDisplay 
-            layout="carousel" 
+          <TestimonialComponent 
+            mode="carousel" 
             showRating={true}
             showTags={false}
             showSource={false}
-            maxItems={10}
+            maxCount={10}
           />
         </div>
       </section>
+      )}
 
       {/* Solutions for Organizations */}
-      {featuredSolutions.length > 0 && (
+      {(homeData?.sections?.organizations?.visible !== false) && featuredSolutions.length > 0 && (
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>For Organizations</h2>
+              <h2 className={styles.sectionTitle}>{homeData?.sections?.organizations?.headline || 'Organizations'}</h2>
               <p className={styles.sectionDescription}>
                 Build resilient teams and transformative cultures
               </p>
@@ -264,14 +276,14 @@ export function Home() {
       )}
 
       {/* Community CTA */}
-      {homeData?.sections?.community?.ctas && homeData.sections.community.ctas.length > 0 && (
+      {(homeData?.sections?.community?.visible !== false) && homeData?.sections?.community?.ctas && homeData?.sections?.community?.ctas?.length > 0 && (
         <section className="section section--sm">
           <div className="container">
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>{homeData?.sections?.community?.headline}</h2>
             </div>
             <div className={styles.communityCTAs}>
-              {homeData.sections.community.ctas.map((cta: any, index: number) => (
+              {homeData?.sections?.community?.ctas?.map((cta: any, index: number) => (
                 <div key={index} className={styles.communityCTA}>
                   <a
                     href={cta.pathOrUrl}

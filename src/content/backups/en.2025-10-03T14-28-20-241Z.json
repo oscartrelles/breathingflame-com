@@ -2,102 +2,123 @@
   "pages": {
     "about": {
       "id": "about",
+      "hero": {
+        "subtext": "Resilience. Clarity. Transformation. We help people and organizations unlock performance and wellbeing through science-backed, nature-powered practices.",
+        "media": {
+          "videoEmbed": "",
+          "videoId": "",
+          "imageUrl": ""
+        },
+        "headline": "About Breathing Flame"
+      },
+      "finalCTA": {
+        "headline": "Ready to work together?",
+        "buttons": [
+          {
+            "external": false,
+            "url": "/individuals",
+            "label": "For Individuals"
+          },
+          {
+            "label": "For Organizations",
+            "url": "/organizations",
+            "external": false
+          },
+          {
+            "external": false,
+            "label": "Contact",
+            "url": "/contact"
+          }
+        ],
+        "subtext": "Whether you're an individual or an organization, we'll help you build resilience, clarity, and transformation."
+      },
+      "proof": {
+        "ratingText": "⭐ 5.0 on Google",
+        "logos": []
+      },
+      "approach": {
+        "pillars": [
+          {
+            "copy": "Train your body and mind to handle stress, adapt to challenges, and sustain energy.",
+            "title": "Resilience"
+          },
+          {
+            "title": "Clarity",
+            "copy": "Remove hidden blocks and align decisions with what truly matters."
+          },
+          {
+            "copy": "Turn breakthroughs into sustainable change with practices you can integrate every day.",
+            "title": "Transformation"
+          }
+        ],
+        "intro": "Our approach integrates physiological training, mindset work, and systemic insight."
+      },
       "type": "static",
+      "story": {
+        "body": "Breathing Flame exists to help humans perform better and live better, and without burning out.\n\nWe combine evidence-based methods with immersive experiences to build resilience, reveal clarity, and create lasting transformation for individuals and organizations.",
+        "title": "Our Story"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Learn more about our mission, methods, and team",
+        "items": [
+          {
+            "a": "Breathing Flame was founded by [Founder Name] after experiencing the transformative power of breathwork during a personal crisis. We've since helped thousands of people discover their inner strength.",
+            "q": "How did Breathing Flame get started?"
+          },
+          {
+            "a": "We combine ancient breathing techniques with modern neuroscience and psychology, creating a holistic approach that addresses both physical and emotional well-being.",
+            "q": "What makes your approach different?"
+          },
+          {
+            "a": "Yes, all our instructors are certified in breathwork and related modalities. Many hold additional certifications in psychology, yoga, or other healing arts.",
+            "q": "Are your instructors certified?"
+          },
+          {
+            "q": "What's your success rate?",
+            "a": "Over 90% of our clients report significant improvements in stress levels, focus, and overall well-being within the first month of practice."
+          },
+          {
+            "a": "Yes, we believe breathwork should be accessible to everyone. We offer scholarships and sliding scale options for those who need financial assistance.",
+            "q": "Do you offer scholarships or sliding scale pricing?"
+          },
+          {
+            "q": "How can I stay updated on new programs?",
+            "a": "Subscribe to our newsletter, follow us on social media, or check our website regularly for new programs, workshops, and special events."
+          }
+        ]
+      },
+      "founder": {
+        "bio": "Oscar blends breathwork, the Wim Hof Method, systemic coaching, and performance frameworks to help clients reset their nervous system, make clear decisions, and sustain meaningful change.\n\nHis work ranges from 1:1 coaching to organizational workshops and retreats.",
+        "name": "Oscar Trelles",
+        "socials": [
+          {
+            "url": "https://www.linkedin.com/in/oscartrelles",
+            "label": "LinkedIn"
+          },
+          {
+            "url": "https://instagram.com/oscartrelles",
+            "label": "instagram"
+          }
+        ],
+        "title": "Founder and Curriculum Director",
+        "credentials": [
+          "Certified Wim Hof Method Instructor",
+          "Systemic/Constellations Facilitator",
+          "Corporate and Entrepreneurial Coaching"
+        ]
+      },
       "seo": {
         "title": "About – Breathing Flame",
         "ogImage": "/og-image.jpg",
         "description": "Breathing Flame helps people and organizations unlock performance and wellbeing through science-backed, nature-powered practices."
       },
-      "sections": {
-      "hero": {
-          "visible": true,
-          "headline": "About Breathing Flame",
-        "subtext": "Resilience. Clarity. Transformation. We help people and organizations unlock performance and wellbeing through science-backed, nature-powered practices.",
-          "media": { "videoEmbed": "", "videoId": "", "imageUrl": "" },
-          "ctas": []
-        },
-        "story": {
-          "visible": true,
-          "title": "Our Story",
-          "body": "Breathing Flame exists to help humans perform better and live better, and without burning out.\n\nWe combine evidence-based methods with immersive experiences to build resilience, reveal clarity, and create lasting transformation for individuals and organizations."
-        },
-        "approach": {
-          "visible": true,
-          "intro": "Our approach integrates physiological training, mindset work, and systemic insight.",
-          "pillars": [
-            { "title": "Resilience", "copy": "Train your body and mind to handle stress, adapt to challenges, and sustain energy." },
-            { "title": "Clarity", "copy": "Remove hidden blocks and align decisions with what truly matters." },
-            { "title": "Transformation", "copy": "Turn breakthroughs into sustainable change with practices you can integrate every day." }
-          ]
-      },
-      "proof": {
-          "visible": true,
-        "ratingText": "⭐ 5.0 on Google",
-        "logos": []
-      },
-        "collaborators": {
-          "visible": true,
-          "items": []
-      },
-      "founder": {
-          "visible": true,
-        "name": "Oscar Trelles",
-        "title": "Founder and Curriculum Director",
-          "bio": "Oscar blends breathwork, the Wim Hof Method, systemic coaching, and performance frameworks to help clients reset their nervous system, make clear decisions, and sustain meaningful change.\n\nHis work ranges from 1:1 coaching to organizational workshops and retreats.",
-          "headshot": "/images/people/team/oscar-trelles.jpg",
-        "credentials": [
-          "Certified Wim Hof Method Instructor",
-          "Transformational Breathwork Facilitator",
-          "Certified Systemic Coach",
-          "Corporate and Entrepreneurial Coaching"
-          ],
-          "socials": [
-            { "label": "LinkedIn", "url": "https://www.linkedin.com/in/oscartrelles" },
-            { "label": "instagram", "url": "https://instagram.com/oscartrelles" },
-            { "label": "Medium", "url": "https://medium.com/@oscartrelles" },
-            { "label": "Substack", "url": "https://substack.com/@oscartrelles" }
-          ]
-        },
-        "faq": {
-          "visible": true,
-          "title": "Frequently Asked Questions",
-          "subtitle": "Learn more about our mission, methods, and team",
-          "items": [
-            { "q": "How did Breathing Flame get started?", "a": "Breathing Flame was founded by [Founder Name] after experiencing the transformative power of breathwork during a personal crisis. We've since helped thousands of people discover their inner strength." },
-            { "q": "What makes your approach different?", "a": "We combine ancient breathing techniques with modern neuroscience and psychology, creating a holistic approach that addresses both physical and emotional well-being." },
-            { "q": "Are your instructors certified?", "a": "Yes, all our instructors are certified in breathwork and related modalities. Many hold additional certifications in psychology, yoga, or other healing arts." },
-            { "q": "What's your success rate?", "a": "Over 90% of our clients report significant improvements in stress levels, focus, and overall well-being within the first month of practice." },
-            { "q": "Do you offer scholarships or sliding scale pricing?", "a": "Yes, we believe breathwork should be accessible to everyone. We offer scholarships and sliding scale options for those who need financial assistance." },
-            { "q": "How can I stay updated on new programs?", "a": "Subscribe to our newsletter, follow us on social media, or check our website regularly for new programs, workshops, and special events." }
-          ]
-        },
-        "finalCTA": {
-          "visible": true,
-          "headline": "Ready to work together?",
-          "subtext": "Whether you're an individual or an organization, we'll help you build resilience, clarity, and transformation.",
-          "buttons": [
-            { "label": "For Individuals", "url": "/individuals", "external": false },
-            { "label": "For Organizations", "url": "/organizations", "external": false },
-            { "label": "Contact", "url": "/contact", "external": false }
-          ]
-        }
-      }
+      "collaborators": []
     },
     "community": {
       "id": "community",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "headline": "Join the Movement",
-          "subtext": "What if transformation was easier — because you didn't have to do it alone?",
-          "media": { "videoId": "", "videoEmbed": "", "imageUrl": "" }
-        },
-        "intro": {
-          "visible": false,
-          "title": "Join the Movement",
-          "body": "Change sticks faster when you have others walking the path with you. The Breathing Flame community brings together individuals and organizations who want to live with more energy, clarity, and resilience. Whether online or in person, you'll find inspiration, accountability, and connection here."
-        },
-        "groupsAndCalendars": {
+      "sections": [
+        {
           "title": "Groups & Calendars",
           "cards": [
             {
@@ -129,10 +150,9 @@
             }
           ],
           "order": 10,
-          "description": "Stay connected through WhatsApp and join our upcoming sessions and events.",
-          "visible": true
+          "description": "Stay connected through WhatsApp and join our upcoming sessions and events."
         },
-        "socialAndVideo": {
+        {
           "order": 20,
           "title": "Social & Video",
           "description": "Follow us for ongoing insights, live sessions, and community stories.",
@@ -173,10 +193,9 @@
               "url": "https://www.tiktok.com/@breathingflame",
               "sublabel": "Quick tips and micro-practices."
             }
-          ],
-          "visible": true
+          ]
         },
-        "articlesAndNewsletter": {
+        {
           "cards": [
             {
               "badge": "Subscribe",
@@ -208,25 +227,44 @@
           ],
           "description": "Stay up to date with our deeper dives and never miss a new tool.",
           "order": 30,
-          "title": "Articles & Newsletter",
-          "visible": true
-        },
-        "finalCTA": {
-          "visible": true,
-          "headline": "Your community is waiting",
-          "subtext": "Join others who are building resilience, clarity, and transformation — and bring these tools into your daily life.",
-          "buttons": [
-            { "label": "Join the WhatsApp Community", "pathOrUrl": "#", "external": true },
-            { "label": "Subscribe to the Newsletter", "pathOrUrl": "/resources#newsletter", "external": false }
-          ]
+          "title": "Articles & Newsletter"
         }
+      ],
+      "hero": {
+        "subtext": "What if transformation was easier — because you didn't have to do it alone?",
+        "media": {
+          "videoId": "",
+          "videoEmbed": "",
+          "imageUrl": ""
+        },
+        "headline": "Join the Movement"
       },
       "seo": {
         "description": "Join the Breathing Flame community — WhatsApp, Meetups, events, and social channels where resilience, clarity, and transformation come to life.",
         "title": "Community – Breathing Flame",
         "ogImage": "/og-image.jpg"
       },
-      "type": "static"
+      "intro": {
+        "title": "Join the Movement",
+        "body": "Change sticks faster when you have others walking the path with you. The Breathing Flame community brings together individuals and organizations who want to live with more energy, clarity, and resilience. Whether online or in person, you'll find inspiration, accountability, and connection here."
+      },
+      "type": "static",
+      "finalCTA": {
+        "buttons": [
+          {
+            "label": "Join the WhatsApp Community",
+            "pathOrUrl": "#",
+            "external": true
+          },
+          {
+            "pathOrUrl": "/resources#newsletter",
+            "external": false,
+            "label": "Subscribe to the Newsletter"
+          }
+        ],
+        "headline": "Your community is waiting",
+        "subtext": "Join others who are building resilience, clarity, and transformation — and bring these tools into your daily life."
+      }
     },
     "contact": {
       "id": "contact",
@@ -235,23 +273,14 @@
         "ogImage": "/og-image.jpg",
         "description": "Get in touch with Breathing Flame. Reach out to explore programs, events, and organizational solutions."
       },
-
-      "type": "form",
-      "sections": {
       "hero": {
-          "visible": false,
-          "headline": "Contact",
-          "subtext": "Get in touch and we’ll respond within 24 hours.",
-          "media": { "imageUrl": "", "videoEmbed": "", "videoId": "" },
-          "ctas": []
-        },
-        "intro": {
-          "visible": true,
-          "title": "Let's Connect",
-          "body": "Tell us a bit about what you're looking for, and we'll guide you to the right next step."
+        "media": {
+          "imageUrl": "",
+          "videoEmbed": "",
+          "videoId": ""
+        }
       },
       "form": {
-          "visible": true,
         "fields": {
           "type": {
             "options": [
@@ -293,81 +322,132 @@
         "successMessage": "Thanks for reaching out! We'll be in touch shortly.",
         "subtext": "Fill out the form and we'll get back to you as soon as possible."
       },
+      "type": "form",
       "faq": {
-          "visible": false,
         "title": "Frequently Asked Questions",
         "subtitle": "Quick answers to common questions about getting in touch",
         "items": [
-            { "q": "What's the best way to reach you?", "a": "For general inquiries, use our contact form. For urgent matters, call us directly. We typically respond within 24 hours." },
-            { "q": "Do you offer consultations?", "a": "Yes, we offer free 15-minute consultations to help you choose the right program or answer specific questions about our services." },
-            { "q": "What information should I include in my message?", "a": "Please include your name, contact information, specific questions or goals, and any relevant background information about your experience with breathwork." },
-            { "q": "Do you have a physical location?", "a": "Yes, we have a studio in [Location]. We also offer sessions at your location for corporate clients and online sessions worldwide." },
-            { "q": "What are your business hours?", "a": "We're available Monday-Friday 9 AM - 6 PM, and weekends by appointment. Online sessions are available outside these hours." }
+          {
+            "a": "For general inquiries, use our contact form. For urgent matters, call us directly. We typically respond within 24 hours.",
+            "q": "What's the best way to reach you?"
+          },
+          {
+            "a": "Yes, we offer free 15-minute consultations to help you choose the right program or answer specific questions about our services.",
+            "q": "Do you offer consultations?"
+          },
+          {
+            "a": "Please include your name, contact information, specific questions or goals, and any relevant background information about your experience with breathwork.",
+            "q": "What information should I include in my message?"
+          },
+          {
+            "a": "Yes, we have a studio in [Location]. We also offer sessions at your location for corporate clients and online sessions worldwide.",
+            "q": "Do you have a physical location?"
+          },
+          {
+            "q": "What are your business hours?",
+            "a": "We're available Monday-Friday 9 AM - 6 PM, and weekends by appointment. Online sessions are available outside these hours."
+          }
         ]
       },
       "contactInfo": {
-          "visible": true,
         "headline": "Other Ways to Reach Us",
-          "subtext": "Prefer to connect directly? Here are other ways to get in touch.",
         "methods": [
-            { "type": "email", "description": "For general inquiries and questions", "label": "Email Us", "url": "mailto:info@breathingflame.com", "value": "info@breathingflame.com" },
-            { "type": "phone", "description": "Available Monday-Friday, 9AM-6PM CET", "label": "Call Us", "url": "tel:+34611006408", "value": "+34 611 00 64 08" },
-            { "type": "whatsapp", "description": "Connect with others on their transformation journey", "label": "WhatsApp Community", "url": "#", "value": "Join Our Community" }
-          ]
-        }
+          {
+            "type": "email",
+            "description": "For general inquiries and questions",
+            "label": "Email Us",
+            "url": "mailto:info@breathingflame.com",
+            "value": "info@breathingflame.com"
+          },
+          {
+            "value": "+34 611 00 64 08",
+            "description": "Available Monday-Friday, 9AM-6PM CET",
+            "type": "phone",
+            "label": "Call Us",
+            "url": "tel:+34611006408"
+          },
+          {
+            "description": "Connect with others on their transformation journey",
+            "type": "whatsapp",
+            "value": "Join Our Community",
+            "label": "WhatsApp Community",
+            "url": "#"
+          }
+        ],
+        "subtext": "Prefer to connect directly? Here are other ways to get in touch."
+      },
+      "intro": {
+        "title": "Let's Connect",
+        "body": "Tell us a bit about what you're looking for, and we'll guide you to the right next step."
       }
     },
     "events": {
       "id": "events",
+      "pinned": [],
       "seo": {
         "description": "Join live workshops, breathwork sessions, and retreats designed to build resilience, clarity, and transformation.",
         "title": "Events – Breathing Flame",
         "ogImage": "/og-image.jpg"
       },
+      "intro": {
+        "body": "Our events give you an immersive experience of the tools we teach—whether it’s a Wim Hof Method workshop, a 9D Breathwork Journey, or a transformational retreat. Every session is a chance to reset, recharge, and reconnect with what matters.",
+        "title": "Join Us Live"
+      },
       "type": "index",
-      "sections": {
-        "hero": {
-          "visible": false,
-          "headline": "Upcoming Events",
-          "subtext": "Workshops, breathwork journeys, and retreats that help you build resilience, clarity, and transformation.",
+      "hero": {
+        "headline": "Upcoming Events",
         "media": {
           "videoId": "",
           "imageUrl": "",
           "videoEmbed": ""
         },
-          "ctas": []
-        },
-        "intro": {
-          "visible": true,
-          "title": "Join Us Live",
-          "body": "Our events give you an immersive experience of the tools we teach—whether it's a Wim Hof Method workshop, a 9D Breathwork Journey, or a transformational retreat. Every session is a chance to reset, recharge, and reconnect with what matters."
+        "subtext": "Workshops, breathwork journeys, and retreats that help you build resilience, clarity, and transformation."
       },
       "embed": {
-          "visible": true,
         "url": "https://luma.com/embed/calendar/cal-V27tG2UMiGzbGHH/events",
         "border": "1px solid #bfcbda88",
         "height": 900,
         "borderRadius": "8px"
       },
       "fallbackCTA": {
-          "visible": true,
         "label": "Open Calendar on Luma",
         "url": "https://luma.com/calendar/cal-V27tG2UMiGzbGHH/events"
-        }
       }
     },
     "home": {
       "id": "home",
+      "pillars": [
+        {
+          "color": "#ffb332",
+          "title": "Resilience",
+          "icon": "R",
+          "copy": "Train your body and mind to handle stress, adapt to challenges, and sustain energy.",
+          "id": "resilience"
+        },
+        {
+          "color": "#ffb332",
+          "id": "clarity",
+          "copy": "Remove hidden blocks, align decisions, and focus on what truly matters.",
+          "icon": "C",
+          "title": "Clarity"
+        },
+        {
+          "title": "Transformation",
+          "copy": "Achieve breakthroughs and build lasting change in your life or organization.",
+          "color": "#ffb332",
+          "icon": "T",
+          "id": "transformation"
+        }
+      ],
       "seo": {
         "description": "Science-backed, nature-powered practices for resilience, clarity, and transformation. Programs and workshops for individuals and organizations.",
         "ogImage": "/og-image.jpg",
         "title": "Breathing Flame: Resilience, Clarity, and Transformation"
       },
       "type": "homepage",
-      "updatedAt": "2025-09-29T16:17:52.957Z",
-      "sections": {
+      "orgPreviewCards": [],
+      "showEvents": true,
       "hero": {
-          "visible": true,
         "headline": "Resilience. Clarity. Transformation.",
         "subtext": "We help individuals and organizations unlock performance, wellbeing, and long-term vitality through science-backed, nature-powered practices.",
         "ctas": [
@@ -388,41 +468,16 @@
           "imageUrl": "/hero-bg.jpg"
         }
       },
-        "pillars": {
-          "visible": true,
-          "pillars": [
-            {
-              "color": "#ffb332",
-              "title": "Resilience",
-              "icon": "R",
-              "copy": "Train your body and mind to handle stress, adapt to challenges, and sustain energy.",
-              "id": "resilience"
-            },
-            {
-              "color": "#ffb332",
-              "id": "clarity",
-              "copy": "Remove hidden blocks, align decisions, and focus on what truly matters.",
-              "icon": "C",
-              "title": "Clarity"
-            },
-            {
-              "title": "Transformation",
-              "copy": "Achieve breakthroughs and build lasting change in your life or organization.",
-              "color": "#ffb332",
-              "icon": "T",
-              "id": "transformation"
-            }
-          ]
-        },
+      "updatedAt": "2025-09-29T16:17:52.957Z",
+      "sections": {
         "testimonials": {
-          "testimonialsRefs": [
+          "testimonialsFeatured": [
             "test1",
             "test2",
             "test3"
           ],
           "headline": "What People Are Saying",
-          "subtext": "Our clients—from entrepreneurs to teams—consistently highlight the power of resilience, clarity, and transformation.",
-          "visible": true
+          "subtext": "Our clients—from entrepreneurs to teams—consistently highlight the power of resilience, clarity, and transformation."
         },
         "featured": {
           "headline": "Explore Our Programs",
@@ -435,8 +490,7 @@
             "reverse-aging-challenge",
             "unblocked",
             "unstoppable"
-          ],
-          "visible": true
+          ]
         },
         "community": {
           "ctas": [
@@ -451,8 +505,7 @@
               "label": "Subscribe to Newsletter"
             }
           ],
-          "headline": "Join Our Community",
-          "visible": true
+          "headline": "Join Our Community"
         },
         "organizations": {
           "cards": [
@@ -481,12 +534,9 @@
               "title": "Business Constellations"
             }
           ],
-          "headline": "For Organizations",
-          "visible": true
+          "headline": "For Organizations"
         },
         "events": {
-          "visible": true,
-          "showEvents": true,
           "headline": "Upcoming Events",
           "fallbackCTA": {
             "pathOrUrl": "/events",
@@ -498,8 +548,7 @@
           "videoEmbed": "https://www.youtube.com/embed/dQw4w9WgXcQ",
           "subtext": "Learn how performance, resilience, and wellbeing come together to create lasting impact.",
           "headline": "Insights & Resources",
-          "featuredArticleRef": "post-latest",
-          "visible": true
+          "featuredArticleRef": "post-latest"
         }
       }
     },
@@ -532,51 +581,20 @@
         },
         "headline": "Ignite Your Flame",
         "subtext": "Discover your inner fire and unlock your potential with our comprehensive assessment"
-      },
-      "sections": {}
+      }
     },
     "individuals": {
       "id": "individuals",
-      "seo": {
-        "description": "Breathing Flame helps individuals transform stress into resilience and clarity into action through coaching, programs, and immersive experiences.",
-        "title": "Programs & Experiences for Individuals – Breathing Flame",
-        "ogImage": "/og-image.jpg"
+      "programs": {
+        "headline": "Programs for Lasting Change",
+        "programRefs": [
+          "reverse-aging-challenge",
+          "unblocked",
+          "unstoppable"
+        ],
+        "subtext": "Whether you want to reset your energy, gain clarity in your next step, or sustain breakthroughs, our programs give you a clear path forward."
       },
-      "type": "landing",
-      "updatedAt": "2025-10-01T16:18:37.350Z",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "headline": "Transformation for Individuals",
-          "subtext": "What if you could wake with more energy, handle stress calmly, and feel more alive in your own skin?",
-          "media": {
-            "videoEmbed": "https://www.youtube.com/embed/KcK67tYvPgA",
-            "imageUrl": "",
-            "videoId": ""
-          },
-          "ctas": [
-            {
-              "external": false,
-              "pathOrUrl": "/programs",
-              "label": "See All Programs"
-            },
-            {
-              "label": "Book Your First Experience",
-              "pathOrUrl": "/events",
-              "external": false
-            }
-          ]
-        },
-        "intro": {
-          "visible": true,
-          "title": "Transformation for Individuals",
-          "body": "Breathing Flame helps you build resilience, clarity, and transformation through proven programs and immersive experiences. Whether you want to reset your health, cut through mental noise, or reconnect with yourself, we provide tools that make change stick."
-        },
-        "pillars": {
-          "visible": true,
-          "headline": "Resilience. Clarity. Transformation.",
-          "subtext": "Three pillars that guide every program and experience we offer.",
-          "pillars": [
+      "introBlocks": [
         {
           "title": "Resilience",
           "copy": "Build physical and emotional strength with breathwork, cold exposure, and other natural tools that train your body to handle stress."
@@ -589,20 +607,8 @@
           "copy": "Turn short-term breakthroughs into long-term change with sustainable practices you can integrate into everyday life.",
           "title": "Transformation"
         }
-          ]
-        },
-        "programs": {
-          "visible": true,
-          "headline": "Programs for Lasting Change",
-          "subtext": "Whether you want to reset your energy, gain clarity in your next step, or sustain breakthroughs, our programs give you a clear path forward.",
-          "programRefs": [
-            "reverse-aging-challenge",
-            "unblocked",
-            "unstoppable"
-          ]
-        },
+      ],
       "experiences": {
-          "visible": true,
         "headline": "Immersive Experiences",
         "subtext": "Choose your path, from 7-week transformations to powerful one-day experiences.",
         "experienceRefs": [
@@ -610,48 +616,8 @@
           "9d-breathwork"
         ]
       },
-        "resources": {
-          "visible": true,
-          "headline": "Free Resources",
-          "subtext": "Get started with free tools and practices you can use right away.",
-          "featuredPostRef": "post1",
-          "resourceLinks": [
-            {
-              "pathOrUrl": "/resources/ignite-your-flame",
-              "external": false,
-              "label": "Ignite Your Flame"
-            },
-            {
-              "pathOrUrl": "/resources/peak-energy-profiler",
-              "label": "Peak Energy Profiler",
-              "external": false
-            }
-          ]
-        },
-        "outcomes": {
-          "visible": true,
-          "outcomes": [
-            "Reset your body and mind. Feel younger and calmer.",
-            "Build clarity and confidence in your decisions.",
-            "Turn stress into a source of strength.",
-            "Create sustainable habits you actually enjoy."
-          ]
-        },
-        "testimonials": {
-          "visible": true,
-          "headline": "Stories of Transformation",
-          "subtext": "Our clients often describe these programs as \"life-changing\" — but don't take our word for it.",
-          "testimonialRefs": [
-            "senja-elizabeth-67de9b5974",
-            "google-ci9dqulrqunvzenodhljrjlvt21wuexytnpzmfpwvwtnnvqwmxhsrmxqtfu1v1ftyxab-c795e0286c",
-            "senja-laura sator-6ab31aa8b8"
-          ],
-          "generatedAt": "2025-09-29T15:21:31.869Z"
-        },
       "faq": {
-          "visible": true,
         "title": "Frequently Asked Questions",
-          "subtitle": "Common questions about personal transformation and our approach",
         "items": [
           {
             "q": "How long does it take to see results?",
@@ -673,12 +639,49 @@
             "a": "Absolutely! We provide guidance and resources for safe home practice, and many of our techniques are designed for daily use.",
             "q": "Can I practice these techniques at home?"
           }
+        ],
+        "subtitle": "Common questions about personal transformation and our approach"
+      },
+      "hero": {
+        "headline": "Transformation for Individuals",
+        "media": {
+          "videoEmbed": "https://www.youtube.com/embed/KcK67tYvPgA",
+          "imageUrl": ""
+        },
+        "subtext": "What if you could wake with more energy, handle stress calmly, and feel more alive in your own skin?",
+        "ctas": [
+          {
+            "external": false,
+            "pathOrUrl": "/programs",
+            "label": "See All Programs"
+          },
+          {
+            "label": "Book Your First Experience",
+            "pathOrUrl": "/events",
+            "external": false
+          }
+        ]
+      },
+      "resources": {
+        "headline": "Free Resources",
+        "subtext": "Get started with free tools and practices you can use right away.",
+        "featuredPostRef": "post1",
+        "resourceLinks": [
+          {
+            "pathOrUrl": "/resources/ignite-your-flame",
+            "external": false,
+            "label": "Ignite Your Flame"
+          },
+          {
+            "pathOrUrl": "/resources/peak-energy-profiler",
+            "label": "Peak Energy Profiler",
+            "external": false
+          }
         ]
       },
       "finalCTA": {
-          "visible": true,
+        "subtext": "Explore programs and experiences designed to help you thrive.",
         "headline": "Start your reset",
-          "subtext": "Explore programs and experiences designed to help you thrive.",
         "buttons": [
           {
             "label": "See All Programs",
@@ -691,7 +694,33 @@
             "pathOrUrl": "/events"
           }
         ]
-        }
+      },
+      "outcomes": [
+        "Reset your body and mind. Feel younger and calmer.",
+        "Build clarity and confidence in your decisions.",
+        "Turn stress into a source of strength.",
+        "Create sustainable habits you actually enjoy."
+      ],
+      "testimonials": {
+        "headline": "Stories of Transformation",
+        "subtext": "Our clients often describe these programs as \"life-changing\" — but don't take our word for it.",
+        "testimonialRefs": [
+          "senja-elizabeth-67de9b5974",
+          "google-ci9dqulrqunvzenodhljrjlvt21wuexytnpzmfpwvwtnnvqwmxhsrmxqtfu1v1ftyxab-c795e0286c",
+          "senja-laura sator-6ab31aa8b8"
+        ],
+        "generatedAt": "2025-09-29T15:21:31.869Z"
+      },
+      "intro": {
+        "title": "Transformation for Individuals",
+        "body": "Breathing Flame helps you build resilience, clarity, and transformation through proven programs and immersive experiences. Whether you want to reset your health, cut through mental noise, or reconnect with yourself, we provide tools that make change stick."
+      },
+      "updatedAt": "2025-10-01T16:18:37.350Z",
+      "type": "landing",
+      "seo": {
+        "description": "Breathing Flame helps individuals transform stress into resilience and clarity into action through coaching, programs, and immersive experiences.",
+        "title": "Programs & Experiences for Individuals – Breathing Flame",
+        "ogImage": "/og-image.jpg"
       }
     },
     "notFound": {
@@ -722,22 +751,18 @@
       },
       "sections": {
         "programsWorkshops": {
-          "headline": "Programs & Workshops",
-          "visible": true
+          "headline": "Programs & Workshops"
         },
         "popularPages": {
-          "headline": "Popular Pages",
-          "visible": true
+          "headline": "Popular Pages"
         },
         "latestArticles": {
-          "headline": "Latest from Resources",
-          "visible": true
+          "headline": "Latest from Resources"
         },
         "quickAssessments": {
           "peakEnergyProfiler": "Peak Energy Profiler",
           "headline": "Quick Assessments",
-          "igniteYourFlame": "Ignite Your Flame",
-          "visible": true
+          "igniteYourFlame": "Ignite Your Flame"
         },
         "help": {
           "headline": "Still need help?",
@@ -754,53 +779,23 @@
               "label": "Contact",
               "url": "/contact"
             }
-          ],
-          "visible": true
+          ]
         }
       }
     },
     "organizations": {
       "id": "organizations",
-      "seo": {
-        "description": "Breathing Flame helps organizations boost performance and wellbeing through resilience training, stress management, and leadership coaching.",
-        "ogImage": "/og-image.jpg",
-        "title": "Organizational Performance & Wellbeing – Breathing Flame"
+      "formats": [
+        "On-site workshops",
+        "Online and hybrid sessions",
+        "Leadership retreats",
+        "Ongoing coaching"
+      ],
+      "solutionsIntro": {
+        "subtext": "Our solutions are designed to integrate seamlessly into your organization's culture and goals.",
+        "headline": "From masterclasses to leadership coaching — choose the format that fits your needs."
       },
-      "type": "landing",
-      "updatedAt": "2025-10-01T16:56:34.336Z",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "headline": "Solutions for Organizations",
-          "subtext": "What if your teams could stay calm under pressure — and perform better because of it?",
-          "media": {
-            "imageUrl": "",
-            "videoId": "",
-            "videoEmbed": ""
-          },
-          "ctas": [
-            {
-              "label": "Book a Consultation",
-              "pathOrUrl": "/contact",
-              "external": false
-            },
-            {
-              "pathOrUrl": "/solutions",
-              "external": false,
-              "label": "Explore Solutions"
-            }
-          ]
-        },
-        "intro": {
-          "visible": true,
-          "title": "Solutions for Organizations",
-          "body": "Breathing Flame partners with organizations to build resilience, improve focus, and unlock sustainable performance. Our solutions turn stress management into a competitive advantage — helping people thrive, leaders make better decisions, and teams stay aligned."
-        },
-        "pillars": {
-          "visible": true,
-          "headline": "Resilience. Clarity. Transformation.",
-          "subtext": "Three pillars that drive organizational success.",
-          "pillars": [
+      "businessDrivers": [
         {
           "copy": "What if fewer stress-driven mistakes saved you real money?",
           "title": "Resilience"
@@ -813,21 +808,7 @@
           "copy": "What if leaders could handle pressure without burning out?",
           "title": "Transformation"
         }
-          ]
-        },
-        "solutionsIntro": {
-          "visible": true,
-          "headline": "From masterclasses to leadership coaching — choose the format that fits your needs.",
-          "subtext": "Our solutions are designed to integrate seamlessly into your organization's culture and goals.",
-          "formats": [
-            "On-site workshops",
-            "Online and hybrid sessions",
-            "Leadership retreats",
-            "Ongoing coaching"
-          ]
-        },
-        "solutions": {
-          "visible": true,
+      ],
       "solutions": [
         {
           "cta": {
@@ -861,36 +842,29 @@
             "url": "/solutions/executive-leadership-coaching"
           }
         }
-          ]
+      ],
+      "intro": {
+        "body": "Breathing Flame partners with organizations to build resilience, improve focus, and unlock sustainable performance. Our solutions turn stress management into a competitive advantage — helping people thrive, leaders make better decisions, and teams stay aligned.",
+        "title": "Solutions for Organizations"
       },
       "testimonials": {
-          "visible": true,
-          "headline": "Results in Action",
-          "subtext": "Organizations we've worked with report calmer, more focused teams and leaders who see the bigger picture.",
         "testimonialRefs": [
           "senja-elizabeth-67de9b5974",
           "google-chddsuhnmg9ns0vkdw5un2jbx29mmc1rrrab-597f7a889e",
           "linkedin-billfletcher-1dfee4776a"
         ],
-          "generatedAt": "2025-10-01T16:56:23.101Z"
-        },
-        "resources": {
-          "visible": true,
-          "headline": "Resources for Leaders",
-          "subtext": "Explore insights and practical tools designed for leaders and HR teams.",
-          "featuredPostRef": "post1",
-          "resourceLinks": [
-            {
-              "pathOrUrl": "/resources#whitepaper",
-              "external": false,
-              "label": "The Business Case for Resilience at Work"
-            }
-          ]
+        "subtext": "Organizations we've worked with report calmer, more focused teams and leaders who see the bigger picture.",
+        "generatedAt": "2025-10-01T16:56:23.101Z",
+        "headline": "Results in Action"
+      },
+      "type": "landing",
+      "updatedAt": "2025-10-01T16:56:34.336Z",
+      "seo": {
+        "description": "Breathing Flame helps organizations boost performance and wellbeing through resilience training, stress management, and leadership coaching.",
+        "ogImage": "/og-image.jpg",
+        "title": "Organizational Performance & Wellbeing – Breathing Flame"
       },
       "faq": {
-          "visible": true,
-          "title": "Frequently Asked Questions",
-          "subtitle": "Everything organizations need to know about our corporate solutions",
         "items": [
           {
             "a": "We work with companies of all sizes, from startups to Fortune 500s, across various industries including tech, healthcare, finance, and education.",
@@ -916,12 +890,11 @@
             "a": "Programs range from 4-12 weeks depending on your goals. We also offer intensive workshops and ongoing support options.",
             "q": "What's the typical program duration?"
           }
-          ]
+        ],
+        "subtitle": "Everything organizations need to know about our corporate solutions",
+        "title": "Frequently Asked Questions"
       },
       "finalCTA": {
-          "visible": true,
-          "headline": "Build resilient teams",
-          "subtext": "Book a consultation to explore solutions for your organization.",
         "buttons": [
           {
             "pathOrUrl": "/contact",
@@ -933,8 +906,42 @@
             "label": "Explore Solutions",
             "pathOrUrl": "/solutions"
           }
-          ]
-        }
+        ],
+        "headline": "Build resilient teams",
+        "subtext": "Book a consultation to explore solutions for your organization."
+      },
+      "resources": {
+        "resourceLinks": [
+          {
+            "pathOrUrl": "/resources#whitepaper",
+            "external": false,
+            "label": "The Business Case for Resilience at Work"
+          }
+        ],
+        "featuredPostRef": "post1",
+        "subtext": "Explore insights and practical tools designed for leaders and HR teams.",
+        "headline": "Resources for Leaders"
+      },
+      "hero": {
+        "ctas": [
+          {
+            "label": "Book a Consultation",
+            "pathOrUrl": "/contact",
+            "external": false
+          },
+          {
+            "pathOrUrl": "/solutions",
+            "external": false,
+            "label": "Explore Solutions"
+          }
+        ],
+        "subtext": "What if your teams could stay calm under pressure — and perform better because of it?",
+        "media": {
+          "imageUrl": "",
+          "videoId": "",
+          "videoEmbed": ""
+        },
+        "headline": "Solutions for Organizations"
       }
     },
     "peakEnergyProfiler": {
@@ -966,41 +973,54 @@
             "external": false
           }
         ]
-      },
-      "sections": {}
+      }
     },
     "press": {
       "id": "press",
-      "seo": {
-        "ogImage": "/og-image.jpg",
-        "title": "Press & Media – Breathing Flame",
-        "description": "Find Breathing Flame's press mentions, download media assets, and connect with our press team for interviews and collaborations."
+      "pressKit": {
+        "headline": "Download the Press Kit",
+        "description": "Logos, photos, and bio in one place for easy reference.",
+        "assets": [
+          {
+            "url": "/assets/press/breathingflame-logos.zip",
+            "label": "Logo Pack (PNG/SVG)",
+            "type": "logo"
+          },
+          {
+            "label": "Founder Bio (PDF)",
+            "type": "pdf",
+            "url": "/assets/press/oscar-trelles-bio.pdf"
+          },
+          {
+            "type": "photo",
+            "label": "Photos (JPEG)",
+            "url": "/assets/press/photos.zip"
+          }
+        ]
       },
-      "type": "static",
-      "sections": {
       "hero": {
-          "visible": true,
         "headline": "In the Media",
         "subtext": "What if resilience and clarity weren't just personal goals — but ideas the world was already talking about?",
         "media": {
           "videoId": "",
           "videoEmbed": "",
           "imageUrl": ""
-          },
-          "ctas": []
+        }
       },
       "intro": {
-          "visible": true,
-          "title": "In the Media",
-          "body": "Breathing Flame and founder Oscar Trelles have been featured in international outlets, sharing insights on resilience, performance, and wellbeing. Explore our latest media mentions and download our press kit."
+        "body": "Breathing Flame and founder Oscar Trelles have been featured in international outlets, sharing insights on resilience, performance, and wellbeing. Explore our latest media mentions and download our press kit.",
+        "title": "In the Media"
       },
       "mentionsIntro": {
-          "visible": true,
-          "headline": "Recent Media Mentions",
-          "subtext": "Here's where our ideas have been featured recently."
-        },
-        "mentions": {
-          "visible": true,
+        "subtext": "Here's where our ideas have been featured recently.",
+        "headline": "Recent Media Mentions"
+      },
+      "type": "static",
+      "seo": {
+        "ogImage": "/og-image.jpg",
+        "title": "Press & Media – Breathing Flame",
+        "description": "Find Breathing Flame's press mentions, download media assets, and connect with our press team for interviews and collaborations."
+      },
       "mentions": [
         {
           "outlet": "GB News",
@@ -1010,347 +1030,255 @@
           "excerpt": "Oscar Trelles explained how a simple hand-focused breathing method can help calm the nervous system before sleep.",
           "date": "2025-09-20"
         }
-          ]
-        },
-        "pressKit": {
-          "visible": true,
-          "headline": "Download the Press Kit",
-          "description": "Logos, photos, and bio in one place for easy reference.",
-          "assets": [
-            {
-              "url": "/assets/press/breathingflame-logos.zip",
-              "label": "Logo Pack (PNG/SVG)",
-              "type": "logo"
-            },
-            {
-              "label": "Founder Bio (PDF)",
-              "type": "pdf",
-              "url": "/assets/press/oscar-trelles-bio.pdf"
-            },
-            {
-              "type": "photo",
-              "label": "Photos (JPEG)",
-              "url": "/assets/press/photos.zip"
-            }
-          ]
-        },
+      ],
       "contact": {
-          "visible": true,
+        "subtext": "For interviews, speaking requests, or collaborations, reach out directly.",
         "headline": "Press Contact",
-          "subtext": "For interviews, speaking requests, or collaborations, reach out directly.",
         "email": "press@breathingflame.com",
         "phone": "+34 611 00 64 08"
       },
       "finalCTA": {
-          "visible": true,
         "headline": "Want to feature Breathing Flame?",
-          "subtext": "We'd love to share insights on resilience, clarity, and transformation with your audience.",
         "buttons": [
           {
             "pathOrUrl": "/contact",
             "label": "Book an Interview",
             "external": false
           }
-          ]
-        }
+        ],
+        "subtext": "We'd love to share insights on resilience, clarity, and transformation with your audience."
       }
     },
     "programs": {
       "id": "programs",
+      "finalCTA": {
+        "headline": "Your path to resilience starts here",
+        "subtext": "Pick the program or experience that meets you where you are — and take the first step today.",
+        "buttons": [
+          {
+            "external": false,
+            "label": "Join a Program",
+            "url": "/programs"
+          },
+          {
+            "external": false,
+            "label": "Book an Experience",
+            "url": "/events"
+          }
+        ]
+      },
       "seo": {
         "ogImage": "/og-image.jpg",
         "title": "Programs & Experiences – Breathing Flame",
         "description": "Explore Breathing Flame's programs and experiences — from 7-week coaching journeys to one-day immersions — all designed to build resilience, clarity, and performance."
       },
       "type": "landing",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "headline": "Programs & Experiences",
-          "subtext": "What if the next 7 weeks — or even one afternoon — could change the way you handle life forever?",
-          "media": {
-            "videoEmbed": "",
-            "imageUrl": "",
-            "videoId": ""
+      "programsSection": {
+        "programRefs": [
+          "reverse-aging-challenge",
+          "unblocked",
+          "unstoppable"
+        ],
+        "headline": "Choose your path — structured programs or powerful experiences."
+      },
+      "experiencesSection": {
+        "experienceRefs": [
+          "wim-hof-workshop",
+          "breathwork-masterclass",
+          "cold-exposure-intro"
+        ],
+        "headline": "Powerful One-Day Experiences"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Everything you need to know about our programs and experiences",
+        "items": [
+          {
+            "a": "Programs are comprehensive, multi-session journeys designed for deep transformation, while experiences are shorter, intensive sessions focused on specific techniques or outcomes.",
+            "q": "What's the difference between programs and experiences?"
           },
-          "ctas": []
-        },
-        "intro": {
-          "visible": true,
-          "title": "Programs & Experiences",
-          "body": "Our offerings combine science and practice to deliver real transformation. From deep coaching journeys to one-day immersions, each program helps you reset, build resilience, and perform better."
-        },
-        "programsSection": {
-          "visible": true,
-          "headline": "Choose your path — structured programs or powerful experiences.",
-          "programRefs": [
-            "reverse-aging-challenge",
-            "unblocked",
-            "unstoppable"
-          ]
-        },
-        "experiencesSection": {
-          "visible": true,
-          "headline": "Powerful One-Day Experiences",
-          "experienceRefs": [
-            "wim-hof-workshop",
-            "breathwork-masterclass",
-            "cold-exposure-intro"
-          ]
-        },
-        "solutionsSection": {
-          "visible": true,
-          "headline": "Solutions for Organizations",
-          "subtext": "Transform your team's performance and wellbeing with our corporate solutions.",
-          "solutionRefs": [
-            "breathwork-teams",
-            "leadership-resilience",
-            "stress-management-workshop"
-          ]
-        },
-        "outcomes": {
-          "visible": true,
-          "outcomes": [
-            "Wake with more energy and focus.",
-            "Handle challenges calmly and confidently.",
-            "Build systems that sustain progress.",
-            "Reconnect with what really matters."
-          ]
-        },
-        "faq": {
-          "visible": true,
-          "title": "Frequently Asked Questions",
-          "subtitle": "Everything you need to know about our programs and experiences",
-          "items": [
-            {
-              "a": "Programs are comprehensive, multi-session journeys designed for deep transformation, while experiences are shorter, intensive sessions focused on specific techniques or outcomes.",
-              "q": "What's the difference between programs and experiences?"
-            },
-            {
-              "q": "Do I need any prior experience with breathwork?",
-              "a": "No prior experience is necessary. Our programs and experiences are designed for all levels, from complete beginners to advanced practitioners."
-            },
-            {
-              "a": "Just bring yourself in comfortable clothing. We provide all necessary equipment including mats, blankets, and cushions.",
-              "q": "What should I bring to a session?"
-            },
-            {
-              "q": "Are sessions available online?",
-              "a": "Yes, we offer both in-person and online sessions. Check the specific program or experience details for availability."
-            },
-            {
-              "q": "How do I choose the right program for me?",
-              "a": "Consider your goals, time availability, and preferred intensity level. Our team can also help you choose the best option during a consultation."
-            }
-          ]
-        },
-        "finalCTA": {
-          "visible": true,
-          "headline": "Your path to resilience starts here",
-          "subtext": "Pick the program or experience that meets you where you are — and take the first step today.",
-          "buttons": [
-            {
-              "external": false,
-              "label": "Join a Program",
-              "url": "/programs"
-            },
-            {
-              "external": false,
-              "label": "Book an Experience",
-              "url": "/events"
-            }
-          ]
-        },
-        "detail": {
-          "visible": true,
-          "ui": {
-            "defaults": {
-              "outcomesTitle": "What You'll Achieve",
-              "detailsTitle": "Program Details",
-              "howItWorksTitle": "How It Works",
-              "includesTitle": "What's Included"
-            }
+          {
+            "q": "Do I need any prior experience with breathwork?",
+            "a": "No prior experience is necessary. Our programs and experiences are designed for all levels, from complete beginners to advanced practitioners."
+          },
+          {
+            "a": "Just bring yourself in comfortable clothing. We provide all necessary equipment including mats, blankets, and cushions.",
+            "q": "What should I bring to a session?"
+          },
+          {
+            "q": "Are sessions available online?",
+            "a": "Yes, we offer both in-person and online sessions. Check the specific program or experience details for availability."
+          },
+          {
+            "q": "How do I choose the right program for me?",
+            "a": "Consider your goals, time availability, and preferred intensity level. Our team can also help you choose the best option during a consultation."
           }
-        },
-        "filters": {
-          "visible": true,
-          "showAll": true,
-          "showPrograms": true,
-          "showExperiences": true,
-          "showSolutions": true
-        },
-        "search": {
-          "visible": true,
-          "enabled": true,
-          "placeholder": "Search programs, experiences, and solutions...",
-          "ariaLabel": "Search offerings"
+        ]
+      },
+      "hero": {
+        "subtext": "What if the next 7 weeks — or even one afternoon — could change the way you handle life forever?",
+        "headline": "Programs & Experiences",
+        "media": {
+          "videoEmbed": "",
+          "imageUrl": "",
+          "videoId": ""
         }
+      },
+      "detail": {
+        "ui": {
+          "defaults": {
+            "outcomesTitle": "What You'll Achieve",
+            "detailsTitle": "Program Details",
+            "howItWorksTitle": "How It Works",
+            "includesTitle": "What's Included"
+          }
+        }
+      },
+      "outcomes": [
+        "Wake with more energy and focus.",
+        "Handle challenges calmly and confidently.",
+        "Build systems that sustain progress.",
+        "Reconnect with what really matters."
+      ],
+      "intro": {
+        "body": "Our offerings combine science and practice to deliver real transformation. From deep coaching journeys to one-day immersions, each program helps you reset, build resilience, and perform better.",
+        "title": "Programs & Experiences"
       }
     },
     "resources": {
       "id": "resources",
+      "filters": {
+        "enabled": true,
+        "tags": [
+          "Performance",
+          "Resilience",
+          "Longevity"
+        ]
+      },
+      "newsletter": {
+        "ctaUrl": "/resources#newsletter",
+        "headline": "Get weekly tools in your inbox",
+        "subtext": "Join our newsletter for simple, science-backed practices to build resilience and clarity. No fluff, just what works.",
+        "ctaLabel": "Subscribe for Free",
+        "enabled": true,
+        "idAnchor": "newsletter"
+      },
+      "finalCTA": {
+        "subtext": "Explore our programs and experiences to turn insights into transformation.",
+        "buttons": [
+          {
+            "external": false,
+            "pathOrUrl": "/programs",
+            "label": "See All Programs"
+          },
+          {
+            "pathOrUrl": "/events",
+            "label": "Book an Experience",
+            "external": false
+          }
+        ],
+        "headline": "Ready to go deeper?"
+      },
+      "outcomes": [
+        "Learn techniques you can apply in minutes — not months.",
+        "Discover science explained simply — without jargon.",
+        "Turn insights into habits that actually stick."
+      ],
+      "hero": {
+        "subtext": "What if you had the tools to feel better, think clearer, and perform stronger — right at your fingertips?",
+        "headline": "Resources for Growth",
+        "media": {
+          "videoEmbed": "",
+          "imageUrl": "",
+          "videoId": ""
+        }
+      },
+      "intro": {
+        "body": "Our library of articles, videos, and guides gives you practical tools to transform stress into strength, build clarity, and live with more energy. Everything here is designed to be simple, actionable, and backed by science.",
+        "title": "Resources for Growth"
+      },
       "seo": {
         "ogImage": "/og-image.jpg",
         "title": "Resources – Breathing Flame",
         "description": "Explore Breathing Flame's resources — articles, videos, and guides that turn science into practical tools for resilience, clarity, and performance."
       },
+      "search": {
+        "enabled": true,
+        "placeholder": "Search articles…"
+      },
+      "emptyState": {
+        "title": "No posts found",
+        "subtext": "Try a different tag or clear the search."
+      },
       "type": "index",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "subtext": "What if you had the tools to feel better, think clearer, and perform stronger — right at your fingertips?",
-          "headline": "Resources for Growth",
-          "media": {
-            "videoEmbed": "",
-            "imageUrl": "",
-            "videoId": ""
-          },
-          "ctas": []
-        },
-        "intro": {
-          "visible": true,
-          "title": "Resources for Growth",
-          "body": "Our library of articles, videos, and guides gives you practical tools to transform stress into strength, build clarity, and live with more energy. Everything here is designed to be simple, actionable, and backed by science."
-        },
-        "filters": {
-          "visible": true,
-          "enabled": true,
-          "tags": ["breathwork", "resilience", "performance", "mindset", "science"],
-          "ariaLabel": "Filter articles"
-        },
-        "search": {
-          "visible": true,
-          "enabled": true,
-          "placeholder": "Search articles…",
-          "ariaLabel": "Search resources",
-          "label": "Search articles"
-        },
-        "articlesIntro": {
-          "visible": true,
-          "headline": "Explore our latest articles and videos — practical insights you can use today.",
-          "subtext": "Each piece is designed to give you something actionable you can implement immediately."
-        },
-        "featuredPostRef": {
-          "visible": true,
-          "postRef": "post1"
-        },
-        "emptyState": {
-          "visible": true,
-          "title": "No posts found",
-          "subtext": "Try a different tag or clear the search."
-        },
-        "newsletter": {
-          "visible": true,
-          "enabled": true,
-          "idAnchor": "newsletter",
-          "headline": "Stay Updated",
-          "subtext": "Get the latest insights and tools delivered to your inbox.",
-          "ctaLabel": "Subscribe Now",
-          "ctaUrl": "/newsletter"
-        },
-        "finalCTA": {
-          "visible": true,
-          "headline": "Ready to go deeper?",
-          "subtext": "Explore our programs and experiences to turn insights into transformation.",
-          "buttons": [
-            {
-              "external": false,
-              "pathOrUrl": "/programs",
-              "label": "See All Programs"
-            },
-            {
-              "pathOrUrl": "/events",
-              "label": "Book an Experience",
-              "external": false
-            }
-            ]
-        }
+      "articlesIntro": {
+        "subtext": "Each piece is designed to give you something actionable you can implement immediately.",
+        "headline": "Explore our latest articles and videos — practical insights you can use today."
       }
     },
     "search": {
       "id": "search",
+      "searchingText": "Searching...",
       "seo": {
         "title": "Search - Breathing Flame",
         "description": "Search for programs, experiences, articles, and resources"
       },
+      "resultsText": "{count} results for \"{query}\"",
       "type": "utility",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "headline": "Search",
-          "subtext": "Find programs, experiences, articles, and more",
-          "media": {
-            "videoEmbed": "",
-            "imageUrl": "",
-            "videoId": ""
-          },
-          "ctas": []
-        },
-        "searchForm": {
-          "visible": true,
-          "placeholder": "Search for programs, experiences, articles...",
-          "buttonLabel": "Search",
-          "ariaLabel": "Search site content"
-        },
-        "results": {
-          "visible": true,
-          "searchingText": "Searching...",
-          "resultsText": "{count} results for \"{query}\"",
-          "noResultsMessage": "No results found for \"{query}\"",
-          "noResultsHint": "Try searching for \"programs\", \"breathwork\", \"resilience\", or \"events\""
-        },
-        "popularSearches": {
-          "visible": true,
-          "headline": "Popular searches",
-          "terms": [
-            "breathwork",
-            "resilience",
-            "programs",
-            "events",
-            "wim hof",
-            "cold exposure"
-          ]
-        },
-        "typeLabels": {
-          "visible": true,
-          "program": "Program",
-          "solution": "Solution",
-          "experience": "Experience",
-          "post": "Article",
-          "route": "Page",
-          "default": "Result"
+      "searchButton": "Search",
+      "noResultsMessage": "No results found for \"{query}\"",
+      "hero": {
+        "subtext": "Find programs, experiences, articles, and more",
+        "headline": "Search",
+        "media": {
+          "videoEmbed": "",
+          "imageUrl": "",
+          "videoId": ""
         }
-      }
+      },
+      "popularSearches": {
+        "terms": [
+          "breathwork",
+          "resilience",
+          "programs",
+          "events",
+          "wim hof",
+          "cold exposure"
+        ],
+        "headline": "Popular searches"
+      },
+      "typeLabels": {
+        "program": "Program",
+        "solution": "Solution",
+        "experience": "Experience",
+        "post": "Article",
+        "route": "Page",
+        "default": "Result"
+      },
+      "searchPlaceholder": "Search for programs, experiences, articles...",
+      "noResultsHint": "Try searching for \"programs\", \"breathwork\", \"resilience\", or \"events\""
     },
     "testimonials": {
       "id": "testimonials",
-      "seo": {
-        "ogImage": "/og-image.jpg",
-        "title": "Testimonials – Breathing Flame",
-        "description": "Stories from individuals and organizations who transformed stress into strength and clarity into action with Breathing Flame."
-      },
-      "type": "landing",
-      "sections": {
-        "hero": {
-          "visible": true,
-          "headline": "Testimonials",
-          "subtext": "What if the change you want is closer than you think? Hear from people and teams who've already made it happen.",
-          "media": {
-            "imageUrl": "",
-            "videoEmbed": "",
-            "videoId": ""
+      "ctaBand": {
+        "buttons": [
+          {
+            "external": false,
+            "url": "/individuals",
+            "label": "Start Your Personal Reset"
           },
-          "ctas": []
-        },
-        "intro": {
-          "visible": true,
-          "title": "Real results. Real people.",
-          "body": "From professionals regaining energy and clarity to leadership teams performing under pressure — these are stories of resilience, clarity, and transformation. Explore highlights below, then choose the path that fits you."
-        },
-        "highlights": {
-          "visible": true,
+          {
+            "url": "/organizations",
+            "label": "Build Resilient Teams",
+            "external": false
+          }
+        ],
+        "headline": "Ready for your own story?",
+        "subtext": "Pick the path that meets you where you are."
+      },
+      "blocks": [
+        {
           "title": "Highlights",
-          "subtext": "A quick look at what participants and clients say most often.",
           "kind": "featured",
           "widget": {
             "preferFeatured": true,
@@ -1359,13 +1287,13 @@
               "byAuthor": true
             },
             "minRating": 4
-          }
+          },
+          "subtext": "A quick look at what participants and clients say most often."
         },
-        "individuals": {
-          "visible": true,
+        {
           "title": "For Individuals",
-          "subtext": "Personal breakthroughs from our programs and experiences.",
           "kind": "audience",
+          "subtext": "Personal breakthroughs from our programs and experiences.",
           "widget": {
             "minRating": 4,
             "context": {
@@ -1374,8 +1302,7 @@
             "maxCount": 8
           }
         },
-        "organizations": {
-          "visible": true,
+        {
           "title": "For Organizations",
           "subtext": "Outcomes from leadership, teams, and company workshops.",
           "kind": "audience",
@@ -1386,29 +1313,30 @@
             "maxCount": 8,
             "minRating": 4
           }
-        },
-        "finalCTA": {
-          "visible": true,
-          "headline": "Ready for your own story?",
-          "subtext": "Pick the path that meets you where you are.",
-          "buttons": [
-            {
-              "external": false,
-              "url": "/individuals",
-              "label": "Start Your Personal Reset"
-            },
-            {
-              "url": "/organizations",
-              "label": "Build Resilient Teams",
-              "external": false
-            }
-          ]
-        },
-        "reviewCTA": {
-          "visible": true,
-          "url": "https://g.page/r/CdczXTXsInRmEBM/review",
-          "label": "Share your experience"
         }
+      ],
+      "reviewCTA": {
+        "url": "https://g.page/r/CdczXTXsInRmEBM/review",
+        "label": "Share your experience"
+      },
+      "intro": {
+        "title": "Real results. Real people.",
+        "body": "From professionals regaining energy and clarity to leadership teams performing under pressure — these are stories of resilience, clarity, and transformation. Explore highlights below, then choose the path that fits you."
+      },
+      "type": "landing",
+      "hero": {
+        "media": {
+          "imageUrl": "",
+          "videoEmbed": "",
+          "videoId": ""
+        },
+        "headline": "Testimonials",
+        "subtext": "What if the change you want is closer than you think? Hear from people and teams who've already made it happen."
+      },
+      "seo": {
+        "ogImage": "/og-image.jpg",
+        "title": "Testimonials – Breathing Flame",
+        "description": "Stories from individuals and organizations who transformed stress into strength and clarity into action with Breathing Flame."
       }
     }
   },

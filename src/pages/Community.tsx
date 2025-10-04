@@ -60,9 +60,11 @@ const Community: React.FC = () => {
             url: 'https://breathingflame.com/community',
             mainEntity: {
               '@type': 'ItemList',
-              numberOfItems: pageData.sections?.reduce((total, section) => total + (section.cards?.length || 0), 0) || 0,
-              itemListElement: pageData.sections?.flatMap((section, sectionIndex) => 
-                section.cards?.map((card, cardIndex) => ({
+              numberOfItems: (Array.isArray(Object.values(pageData.sections || {}))
+                ? (Object.values(pageData.sections || {}) as any[]).reduce((total: number, section: any) => total + (section?.cards?.length || 0), 0)
+                : 0),
+              itemListElement: (Array.isArray(Object.values(pageData.sections || {}))
+                ? (Object.values(pageData.sections || {}) as any[]).flatMap((section: any, sectionIndex: number) => (section?.cards || []).map((card: any, cardIndex: number) => ({
                   '@type': 'ListItem',
                   position: (sectionIndex * 10) + cardIndex + 1,
                   item: {
@@ -75,8 +77,8 @@ const Community: React.FC = () => {
                       name: 'Breathing Flame'
                     }
                   }
-                })) || []
-              ) || []
+                })))
+                : [])
             }
           },
           // Organization schema
@@ -98,29 +100,33 @@ const Community: React.FC = () => {
       }} />
 
       {/* Hero Section */}
+      {pageData.sections?.hero?.visible !== false && (
       <section className={`section ${styles.heroSection}`}>
         <div className="container">
           <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>{pageData.hero.headline}</h1>
-            <p className={styles.heroSubtext}>{pageData.hero.subtext}</p>
+            <h1 className={styles.heroTitle}>{pageData.sections?.hero?.headline}</h1>
+            <p className={styles.heroSubtext}>{pageData.sections?.hero?.subtext}</p>
           </div>
         </div>
       </section>
+      )}
 
       {/* Intro Section */}
-      {pageData.intro && (
+      {(pageData.sections?.intro?.visible !== false) && pageData.sections?.intro && (
         <section className={`section ${styles.introSection}`}>
           <div className="container">
             <div className={styles.introContent}>
-              <h2 className={styles.introTitle}>{pageData.intro.title}</h2>
-              <p className={styles.introBody}>{pageData.intro.body}</p>
+              <h2 className={styles.introTitle}>{pageData.sections.intro.title}</h2>
+              <p className={styles.introBody}>{pageData.sections.intro.body}</p>
             </div>
           </div>
         </section>
       )}
 
       {/* Community Sections */}
-      {pageData.sections?.map((section, sectionIndex) => (
+      {Object.values(pageData.sections || {})
+        .filter((s: any) => (s as any).visible !== false && Array.isArray((s as any).cards) && (s as any).cards.length > 0)
+        .map((section: any, sectionIndex: number) => (
         <section key={sectionIndex} className={`section ${styles.section}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
@@ -131,7 +137,7 @@ const Community: React.FC = () => {
             </div>
             
             <div className={styles.cardsGrid}>
-              {section.cards?.map((card, cardIndex) => (
+              {section.cards?.map((card: any, cardIndex: number) => (
                 <a
                   key={cardIndex}
                   href={card.url}
@@ -164,11 +170,11 @@ const Community: React.FC = () => {
       ))}
 
       {/* Final CTA Band */}
-      {pageData.finalCTA && (
+      {(pageData.sections?.finalCTA?.visible !== false) && pageData.sections?.finalCTA && (
         <FinalCTABand 
-          headline={pageData.finalCTA.headline}
-          subtext={pageData.finalCTA.subtext}
-          buttons={pageData.finalCTA.buttons}
+          headline={pageData.sections.finalCTA.headline}
+          subtext={pageData.sections.finalCTA.subtext}
+          buttons={pageData.sections.finalCTA.buttons}
         />
       )}
     </>

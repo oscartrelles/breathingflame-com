@@ -59,7 +59,6 @@
 .controlsSection {
   background-color: var(--color-background);
   padding: var(--spacing-8) 0;
-  border-bottom: 1px solid var(--color-border);
 }
 
 .controlsContainer {
@@ -142,6 +141,31 @@
 
 .searchInput::placeholder {
   color: var(--color-text-muted);
+}
+
+/* Articles Intro Section */
+.articlesIntroSection {
+  background-color: var(--color-background);
+  padding: var(--spacing-12) 0;
+}
+
+.articlesIntroContent {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.articlesIntroTitle {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.articlesIntroSubtext {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
 }
 
 /* Featured Post Section */
@@ -302,6 +326,7 @@
 
 .loadMoreButton:hover {
   background-color: var(--color-primary-dark);
+  color: var(--color-background);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -369,6 +394,7 @@
 
 .newsletterButton:hover {
   background-color: var(--color-primary-dark);
+  color: var(--color-background);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -398,6 +424,14 @@
   .featuredExcerpt {
     font-size: var(--font-size-base);
   }
+  
+  .articlesIntroTitle {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .articlesIntroSubtext {
+    font-size: var(--font-size-base);
+  }
 }
 
 /* Dark Mode Support */
@@ -405,6 +439,7 @@
   .heroSection,
   .introSection,
   .controlsSection,
+  .articlesIntroSection,
   .articlesSection {
     background-color: var(--color-background-dark);
   }

@@ -254,13 +254,13 @@ a:hover {
 
 /* Section spacing - inspired by Positive Intelligence's generous whitespace */
 .section {
-  padding: var(--spacing-32) 0; /* Increased from 20 to 32 for more breathing room */
+  padding: var(--spacing-16) 0; /* Reduced from 32 to 16 for better spacing */
 }
 
 /* Ensure first section on every page accounts for fixed header */
 main > section:first-child,
 main > div:first-child > section:first-child {
-  padding-top: calc(var(--spacing-32) + var(--header-height));
+  padding-top: calc(var(--spacing-16) + var(--header-height));
 }
 
 /* Homepage hero should tuck behind header to hide video controls */

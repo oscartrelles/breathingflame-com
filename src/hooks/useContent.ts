@@ -227,8 +227,11 @@ export function usePageCommunity(locale: Locale = 'en'): ContentHookResult<any> 
 
 export function usePagePress(locale: Locale = 'en'): ContentHookResult<any> {
   const { data, loading, error } = useContent(locale);
+  
+  const result = data?.pages?.press || data?.pagePress || data?.press || null;
+  
   return {
-    data: data?.pages?.press || data?.pagePress || data?.press || null,
+    data: result,
     loading,
     error
   };
@@ -290,9 +293,9 @@ export function useAllOfferings(locale: Locale = 'en'): ContentHookResult<any[]>
   useEffect(() => {
     if (programs && experiences && solutions) {
       const merged = [
-        ...programs.map((p: any) => ({ ...p, kind: 'program' })),
-        ...experiences.map((e: any) => ({ ...e, kind: 'experience' })),
-        ...solutions.map((s: any) => ({ ...s, kind: 'solution' }))
+        ...programs.map((p: any) => ({ ...p, kind: 'programs' })),
+        ...experiences.map((e: any) => ({ ...e, kind: 'experiences' })),
+        ...solutions.map((s: any) => ({ ...s, kind: 'solutions' }))
       ].sort((a, b) => {
         if (a.order !== undefined && b.order !== undefined) {
           return a.order - b.order;
@@ -391,4 +394,5 @@ export function usePostBySlug(slug: string, locale: Locale = 'en'): ContentHookR
 
   return { data: post, loading, error };
 }
+
 

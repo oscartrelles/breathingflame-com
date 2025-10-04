@@ -263,13 +263,15 @@ export function useSolutionBySlug(slug: string) {
 export function useAllOfferings() {
   const { data: programs, loading: programsLoading, error: programsError } = usePrograms()
   const { data: experiences, loading: experiencesLoading, error: experiencesError } = useExperiences()
+  const { data: solutions, loading: solutionsLoading, error: solutionsError } = useSolutions()
   const [data, setData] = useState<Offering[]>([])
 
   useEffect(() => {
-    if (programs && experiences) {
+    if (programs && experiences && solutions) {
       const mergedOfferings: Offering[] = [
-        ...programs.map(program => ({ ...program, kind: 'program' as const })),
-        ...experiences.map(experience => ({ ...experience, kind: 'experience' as const }))
+        ...programs.map(program => ({ ...program, kind: 'programs' as const })),
+        ...experiences.map(experience => ({ ...experience, kind: 'experiences' as const })),
+        ...solutions.map(solution => ({ ...solution, kind: 'solutions' as const }))
       ].sort((a, b) => {
         // Sort by order if present, otherwise by title
         if (a.order !== undefined && b.order !== undefined) {
@@ -278,14 +280,27 @@ export function useAllOfferings() {
         return a.title.localeCompare(b.title)
       })
       
-      setData(mergedOfferings)
+      // Only update if the data has actually changed
+      setData(prevData => {
+        if (prevData.length !== mergedOfferings.length) {
+          return mergedOfferings
+        }
+        
+        // Check if any items have changed
+        const hasChanged = prevData.some((prevItem, index) => {
+          const newItem = mergedOfferings[index]
+          return !newItem || prevItem.id !== newItem.id || prevItem.title !== newItem.title
+        })
+        
+        return hasChanged ? mergedOfferings : prevData
+      })
     }
-  }, [programs, experiences])
+  }, [programs, experiences, solutions])
 
   return { 
     data, 
-    loading: programsLoading || experiencesLoading, 
-    error: programsError || experiencesError 
+    loading: programsLoading || experiencesLoading || solutionsLoading, 
+    error: programsError || experiencesError || solutionsError 
   }
 }
 
@@ -319,4 +334,5 @@ export function useResourceIgniteYourFlame() {
 export function useResourcePeakEnergyProfiler() {
   return useResourcePeakEnergyProfilerContent()
 }
+
 

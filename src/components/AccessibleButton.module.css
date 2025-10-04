@@ -45,6 +45,7 @@
 
 .primary:hover:not(:disabled) {
   background-color: var(--color-primary-dark);
+  color: var(--color-background);
   border-color: var(--color-primary-dark);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
@@ -95,6 +96,7 @@
 
 .danger:hover:not(:disabled) {
   background-color: var(--color-error-dark);
+  color: var(--color-background);
   border-color: var(--color-error-dark);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);

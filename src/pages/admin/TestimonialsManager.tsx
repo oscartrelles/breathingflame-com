@@ -72,7 +72,7 @@ export function TestimonialsManager() {
       
       testimonialsSnapshot.forEach((d) => {
         const data: any = d.data()
-        // Prefer nested author fields (matches front-end/TestimonialDisplay)
+        // Prefer nested author fields (matches front-end/TestimonialComponent)
         const resolvedName: string = coerceName(
           data.author?.name ?? data.name ?? data.displayName ?? data.reviewerName ?? data.user?.name
         )

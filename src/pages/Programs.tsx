@@ -4,6 +4,8 @@ import { HeroSection } from '@/components/HeroSection'
 import { SEO } from '@/components/SEO'
 import { OfferingCard } from '@/components/OfferingCard'
 import { LoadingWrapper } from '@/components/LoadingWrapper'
+import { FinalCTABand } from '@/components/FinalCTABand'
+import { FAQ } from '@/components/FAQ'
 import { motion } from 'framer-motion'
 import { 
   fadeInUp, 
@@ -17,7 +19,7 @@ import {
 import { Offering } from '@/types'
 import styles from './Programs.module.css'
 
-type FilterTab = 'all' | 'programs' | 'experiences'
+type FilterTab = 'all' | 'programs' | 'experiences' | 'solutions'
 
 export function Programs() {
   const { data: pageData } = usePagePrograms()
@@ -27,19 +29,6 @@ export function Programs() {
   const [activeTab, setActiveTab] = useState<FilterTab>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [visibleCount, setVisibleCount] = useState(12)
-
-  // Show loading state if data is not available
-  if (!pageData) {
-    return (
-      <LoadingWrapper
-        loading={true}
-        loadingMessage="Loading programs..."
-        variant="page"
-        loadingVariant="spinner"
-        loadingSize="lg"
-      />
-    )
-  }
 
   // Filter and search logic
   const filteredOfferings = useMemo(() => {
@@ -83,6 +72,7 @@ export function Programs() {
     setVisibleCount(12) // Reset pagination on tab change
   }, [])
 
+  // Early return after all hooks
   if (!pageData) {
     return (
       <div className="container">
@@ -163,28 +153,44 @@ export function Programs() {
       />
 
       {/* Hero Section */}
-      <HeroSection
-        title={pageData.hero?.headline}
-        subtitle={pageData.hero?.subtext}
-        media={pageData.hero?.media ?? {
-          imageUrl: pageData.hero?.imageUrl,
-          videoEmbed: pageData.hero?.videoEmbed,
-          videoId: pageData.hero?.videoId,
-        }}
-        ctas={pageData.hero?.ctas}
-        className="programs-hero"
-      />
+      {pageData.sections?.hero?.visible !== false && (
+        <HeroSection
+          title={pageData.sections.hero.headline}
+          subtitle={pageData.sections.hero.subtext}
+          media={pageData.sections.hero.media ?? {
+            imageUrl: pageData.sections.hero.imageUrl,
+            videoEmbed: pageData.sections.hero.videoEmbed,
+            videoId: pageData.sections.hero.videoId,
+          }}
+          ctas={pageData.sections.hero.ctas}
+          className="programs-hero"
+        />
+      )}
 
-      {/* Controls Section */}
-      <section className="section section--sm">
-        <div className="container">
-          <motion.div 
-            className={styles.controls}
+      {/* Intro Section */}
+      {(pageData.sections?.intro?.visible !== false) && pageData.sections?.intro && (
+        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '1rem' }}>
+          <motion.div
+            className={styles.sectionHeader}
             {...useInViewAnimation()}
           >
+            <h2 className={styles.sectionTitle}>{pageData.sections.intro.title}</h2>
+            <div className={styles.sectionDescription}>
+              {pageData.sections.intro.body}
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Controls Section */}
+      <div className="container" style={{ paddingTop: 'var(--spacing-2)', paddingBottom: 'var(--spacing-2)' }}>
+        <motion.div 
+          className={styles.controls}
+          {...useInViewAnimation()}
+        >
             {/* Filter Tabs */}
             <div className={styles.tabs} role="tablist">
-              {pageData.filters?.showAll && (
+              {(pageData.sections?.filters?.visible !== false) && pageData.sections?.filters?.showAll && (
               <button
                   className={`${styles.tab} ${activeTab === 'all' ? styles.tabActive : ''}`}
                   role="tab"
@@ -194,7 +200,7 @@ export function Programs() {
                   All
               </button>
               )}
-              {pageData.filters?.showPrograms && (
+              {(pageData.sections?.filters?.visible !== false) && pageData.sections?.filters?.showPrograms && (
                 <button
                   className={`${styles.tab} ${activeTab === 'programs' ? styles.tabActive : ''}`}
                   role="tab"
@@ -204,7 +210,7 @@ export function Programs() {
                   Programs
                 </button>
               )}
-              {pageData.filters?.showExperiences && (
+              {(pageData.sections?.filters?.visible !== false) && pageData.sections?.filters?.showExperiences && (
                 <button
                   className={`${styles.tab} ${activeTab === 'experiences' ? styles.tabActive : ''}`}
                   role="tab"
@@ -214,28 +220,36 @@ export function Programs() {
                   Experiences
                 </button>
               )}
+              {(pageData.sections?.filters?.visible !== false) && pageData.sections?.filters?.showSolutions && (
+                <button
+                  className={`${styles.tab} ${activeTab === 'solutions' ? styles.tabActive : ''}`}
+                  role="tab"
+                  aria-selected={activeTab === 'solutions'}
+                  onClick={() => handleTabChange('solutions')}
+                >
+                  Solutions
+                </button>
+              )}
                     </div>
                     
             {/* Search Input */}
-            {pageData.search?.enabled && (
+            {(pageData.sections?.search?.visible !== false) && pageData.sections?.search?.enabled && (
               <div className={styles.search}>
                 <input
                   type="text"
-                  placeholder={pageData.search?.placeholder}
+                  placeholder={pageData.sections?.search?.placeholder}
                   value={searchQuery}
                   onChange={handleSearchChange}
                   className={styles.searchInput}
-                  aria-label={pageData?.search?.ariaLabel || 'Search programs'}
+                  aria-label={pageData.sections?.search?.ariaLabel || 'Search programs'}
                 />
               </div>
             )}
           </motion.div>
-                      </div>
-      </section>
+        </div>
 
       {/* Programs Grid */}
-      <section className="section section--sm">
-        <div className="container">
+      <div className="container" style={{ paddingTop: 'var(--spacing-2)' }}>
           <motion.div 
             className={styles.grid}
             variants={reducedMotion ? {} : staggerContainer}
@@ -253,7 +267,6 @@ export function Programs() {
                 <OfferingCard offering={offering} pageData={pageData} />
               </motion.div>
             ))}
-              </motion.div>
 
           {/* Load More Button */}
           {hasMore && (
@@ -280,32 +293,36 @@ export function Programs() {
               <p>Try adjusting your search or filter criteria.</p>
             </motion.div>
           )}
-        </div>
-      </section>
-
-      {/* Footer CTA */}
-      <section className={styles.footerCTA}>
-        <div className="container">
-          <motion.div 
-            className={styles.footerContent}
-            {...useInViewAnimation()}
-          >
-            <h2 className={styles.footerTitle}>Not sure where to start?</h2>
-            <p className={styles.footerDescription}>
-              Explore our individual and organizational offerings to find the perfect fit for your needs.
-            </p>
-            
-            <div className={styles.footerButtons}>
-              <a href="/individuals" className="btn btn--primary btn--large">
-                For Individuals
-              </a>
-              <a href="/organizations" className="btn btn--secondary btn--large">
-                For Organizations
-              </a>
-            </div>
           </motion.div>
         </div>
-      </section>
+
+      {/* FAQ Section */}
+      {(pageData.sections?.faq?.visible !== false) && pageData.sections?.faq && (
+        <FAQ
+          title={pageData.sections.faq.title}
+          subtitle={pageData.sections.faq.subtitle}
+          items={pageData.sections.faq.items || []}
+        />
+      )}
+
+      {/* Final CTA Section */}
+      {(pageData.sections?.finalCTA?.visible !== false) && pageData.sections?.finalCTA && (
+        <FinalCTABand
+          headline={pageData.sections.finalCTA.headline}
+          subtext={pageData.sections.finalCTA.subtext}
+          buttons={pageData.sections.finalCTA.buttons?.map(button => ({
+            label: button.label,
+            url: button.url,
+            external: button.external || false
+          }))}
+          fallbackHeadline="Your path to resilience starts here"
+          fallbackSubtext="Pick the program or experience that meets you where you are — and take the first step today."
+          fallbackButtons={[
+            { label: "Join a Program", url: "/programs", external: false },
+            { label: "Book an Experience", url: "/events", external: false }
+          ]}
+        />
+      )}
     </motion.div>
   )
 }

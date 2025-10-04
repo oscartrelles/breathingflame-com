@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { SEO } from '@/components/SEO'
+import { HeroSection } from '@/components/HeroSection'
 import { AccessibleForm, FormField, useFormValidation } from '@/components/AccessibleForm'
 import { AccessibleButton } from '@/components/AccessibleButton'
 import { usePageContact } from '@/hooks/useContent'
@@ -172,25 +173,39 @@ export function Contact() {
         pageData={pageData}
       />
       
+      {/* Hero Section (from sections.hero) */}
+      {pageData.sections?.hero?.visible !== false && (
+        <HeroSection
+          title={pageData.sections.hero.headline}
+          subtitle={pageData.sections.hero.subtext}
+          media={pageData.sections.hero.media}
+          ctas={pageData.sections.hero.ctas}
+          className="contact-hero"
+        />
+      )}
+
 
       {/* Intro Section */}
+      {!!(pageData.sections?.intro?.visible ?? true) && pageData.sections?.intro && (
       <section className={`section section--xs ${styles.introSection}`}>
         <div className="container">
           <div className={styles.introContent}>
-            <h1 className={styles.introTitle}>{pageData.intro?.title}</h1>
-            <p className={styles.introBody}>{pageData.intro?.body}</p>
+            <h1 className={styles.introTitle}>{pageData.sections.intro.title}</h1>
+            <p className={styles.introBody}>{pageData.sections.intro.body}</p>
           </div>
         </div>
       </section>
+      )}
 
       {/* Contact Form Section */}
+      {!!(pageData.sections?.form?.visible ?? true) && (
       <section className={`section section--xs ${styles.formSection}`}>
         <div className="container">
           <div className={styles.formContainer}>
             <div className={styles.formHeader}>
-              <h2 className={styles.formTitle}>{pageData.form?.headline}</h2>
-              {pageData.form?.subtext && (
-                <p className={styles.formSubtext}>{pageData.form?.subtext}</p>
+              <h2 className={styles.formTitle}>{pageData.sections.form.headline}</h2>
+              {pageData.sections.form.subtext && (
+                <p className={styles.formSubtext}>{pageData.sections.form.subtext}</p>
               )}
             </div>
 
@@ -198,14 +213,14 @@ export function Contact() {
             {formStatus === 'success' && (
               <div className={`${styles.statusMessage} ${styles.success}`} role="status">
                 <span className={styles.statusIcon}>✅</span>
-                {pageData.form?.successMessage}
+                {pageData.sections.form.successMessage}
               </div>
             )}
 
             {formStatus === 'error' && (
               <div className={`${styles.statusMessage} ${styles.error}`} role="alert">
                 <span className={styles.statusIcon}>⚠️</span>
-                {pageData.form?.errorMessage}
+                {pageData.sections.form.errorMessage}
               </div>
             )}
 
@@ -217,65 +232,65 @@ export function Contact() {
             >
               <div className={styles.formFields}>
                 <FormField
-                  label={pageData.form?.fields?.name?.label || 'Full Name'}
+                  label={pageData.sections.form?.fields?.name?.label || 'Full Name'}
                   name="name"
                   type="text"
                   value={formData.name}
                   onChange={(value) => handleFieldChange('name', value)}
                   onBlur={() => handleFieldBlur('name')}
-                  placeholder={pageData.form?.fields?.name?.placeholder}
-                  required={pageData.form?.fields?.name?.required}
+                  placeholder={pageData.sections.form?.fields?.name?.placeholder}
+                  required={pageData.sections.form?.fields?.name?.required}
                   error={errors.name}
                 />
 
                 <FormField
-                  label={pageData.form?.fields?.email?.label || 'Email Address'}
+                  label={pageData.sections.form?.fields?.email?.label || 'Email Address'}
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={(value) => handleFieldChange('email', value)}
                   onBlur={() => handleFieldBlur('email')}
-                  placeholder={pageData.form?.fields?.email?.placeholder}
-                  required={pageData.form?.fields?.email?.required}
+                  placeholder={pageData.sections.form?.fields?.email?.placeholder}
+                  required={pageData.sections.form?.fields?.email?.required}
                   error={errors.email}
                 />
 
                 <FormField
-                  label={pageData.form?.fields?.phone?.label || 'Phone Number'}
+                  label={pageData.sections.form?.fields?.phone?.label || 'Phone Number'}
                   name="phone"
                   type="tel"
                   value={formData.phone}
                   onChange={(value) => handleFieldChange('phone', value)}
                   onBlur={() => handleFieldBlur('phone')}
-                  placeholder={pageData.form?.fields?.phone?.placeholder}
-                  required={pageData.form?.fields?.phone?.required}
+                  placeholder={pageData.sections.form?.fields?.phone?.placeholder}
+                  required={pageData.sections.form?.fields?.phone?.required}
                   error={errors.phone}
                 />
 
                 <FormField
-                  label={pageData.form?.fields?.type?.label || 'Inquiry Type'}
+                  label={pageData.sections.form?.fields?.type?.label || 'Inquiry Type'}
                   name="type"
                   type="select"
                   value={formData.type}
                   onChange={(value) => handleFieldChange('type', value)}
                   onBlur={() => handleFieldBlur('type')}
-                  options={pageData.form?.fields?.type?.options?.map(option => ({
+                  options={pageData.sections.form?.fields?.type?.options?.map((option: string) => ({
                     value: option,
                     label: option
                   })) || []}
-                  required={pageData.form?.fields?.type?.required}
+                  required={pageData.sections.form?.fields?.type?.required}
                   error={errors.type}
                 />
 
                 <FormField
-                  label={pageData.form?.fields?.message?.label || 'Message'}
+                  label={pageData.sections.form?.fields?.message?.label || 'Message'}
                   name="message"
                   type="textarea"
                   value={formData.message}
                   onChange={(value) => handleFieldChange('message', value)}
                   onBlur={() => handleFieldBlur('message')}
-                  placeholder={pageData.form?.fields?.message?.placeholder}
-                  required={pageData.form?.fields?.message?.required}
+                  placeholder={pageData.sections.form?.fields?.message?.placeholder}
+                  required={pageData.sections.form?.fields?.message?.required}
                   error={errors.message}
                   rows={6}
                 />
@@ -287,32 +302,33 @@ export function Contact() {
                   variant="primary"
                   size="lg"
                   loading={isSubmitting}
-                  loadingText={pageData.form?.submitLoading}
+                  loadingText={pageData.sections.form?.submitLoading}
                   fullWidth
                   announceOnClick={true}
                   announceMessage="Contact form submitted successfully"
                 >
-                  {pageData.form?.submitLabel || 'Send Message'}
+                  {pageData.sections.form?.submitLabel || 'Send Message'}
                 </AccessibleButton>
               </div>
             </AccessibleForm>
           </div>
         </div>
       </section>
+      )}
 
       {/* Contact Information Section */}
-      {pageData.contactInfo && (
+      {!!(pageData.sections?.contactInfo?.visible ?? true) && pageData.sections?.contactInfo && (
         <section className={`section section--xs ${styles.contactInfoSection}`}>
           <div className="container">
             <div className={styles.contactInfoHeader}>
-              <h2 className={styles.contactInfoTitle}>{pageData.contactInfo.headline}</h2>
-              {pageData.contactInfo.subtext && (
-                <p className={styles.contactInfoSubtext}>{pageData.contactInfo.subtext}</p>
+              <h2 className={styles.contactInfoTitle}>{pageData.sections.contactInfo.headline}</h2>
+              {pageData.sections.contactInfo.subtext && (
+                <p className={styles.contactInfoSubtext}>{pageData.sections.contactInfo.subtext}</p>
               )}
             </div>
 
             <div className={styles.contactMethods}>
-              {pageData.contactInfo.methods?.map((method, index) => (
+              {pageData.sections.contactInfo.methods?.map((method, index) => (
                 <div key={index} className={styles.contactMethod}>
                   <div className={styles.contactMethodIcon}>
                     {getContactIcon(method.type)}

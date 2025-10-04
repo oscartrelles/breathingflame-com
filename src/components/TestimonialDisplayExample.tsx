@@ -1,16 +1,16 @@
-import { TestimonialDisplay } from './TestimonialDisplay'
+import { TestimonialComponent } from './TestimonialComponent'
 
 /**
- * Example usage of the updated TestimonialDisplay component
- * This shows how to use the component with the new data structure and features
+ * Example usage of the unified TestimonialComponent
+ * This shows how to use the component with different modes and configurations
  */
 export function TestimonialDisplayExample() {
   return (
     <div>
       {/* Basic grid layout */}
-      <TestimonialDisplay
-        layout="grid"
-        maxItems={6}
+      <TestimonialComponent
+        mode="grid"
+        maxCount={6}
         title="What People Say"
         subtext="Real testimonials from our clients"
         showRating={true}
@@ -18,9 +18,9 @@ export function TestimonialDisplayExample() {
       />
 
       {/* Carousel with touch navigation */}
-      <TestimonialDisplay
-        layout="carousel"
-        maxItems={4}
+      <TestimonialComponent
+        mode="carousel"
+        maxCount={4}
         title="Featured Reviews"
         subtext="Hand-picked testimonials"
         showRating={true}
@@ -30,9 +30,9 @@ export function TestimonialDisplayExample() {
       />
 
       {/* List layout for specific program */}
-      <TestimonialDisplay
-        layout="list"
-        maxItems={3}
+      <TestimonialComponent
+        mode="grid"
+        maxCount={3}
         title="Program Testimonials"
         subtext="What participants say about our programs"
         showRating={true}
@@ -41,9 +41,9 @@ export function TestimonialDisplayExample() {
       />
 
       {/* Experience-specific testimonials */}
-      <TestimonialDisplay
-        layout="grid"
-        maxItems={4}
+      <TestimonialComponent
+        mode="grid"
+        maxCount={4}
         title="Experience Reviews"
         subtext="Feedback from our workshop participants"
         showRating={true}

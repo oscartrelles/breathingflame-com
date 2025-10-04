@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search as SearchIcon, ExternalLink, Calendar, Users, BookOpen, Briefcase } from 'lucide-react';
 import { useAllOfferingsLite, useLatestPostsLite, usePageSearch, useNavigation } from '../hooks/useFirestore';
 import { SEO } from '@/components/SEO';
+import { HeroSection } from '@/components/HeroSection';
 import styles from './Search.module.css';
 
 interface SearchResult {
@@ -64,38 +65,42 @@ const Search: React.FC = () => {
     });
 
     // Search offerings (programs, experiences, solutions)
-    offerings.forEach(offering => {
-      const titleMatch = offering.title.toLowerCase().includes(searchTerm);
-      const tagMatch = offering.tags?.some(tag => tag.toLowerCase().includes(searchTerm));
-      const summaryMatch = offering.summary?.toLowerCase().includes(searchTerm);
-      
-      if (titleMatch || tagMatch || summaryMatch) {
-        results.push({
-          id: `${offering.kind}-${offering.slug}`,
-          title: offering.title,
-          description: offering.summary || offering.description || '',
-          url: `/${offering.kind}s/${offering.slug}`,
-          type: offering.kind as 'program' | 'experience' | 'solution'
-        });
-      }
-    });
+    if (offerings && offerings.length > 0) {
+      offerings.forEach(offering => {
+        const titleMatch = offering.title.toLowerCase().includes(searchTerm);
+        const tagMatch = offering.tags?.some(tag => tag.toLowerCase().includes(searchTerm));
+        const summaryMatch = offering.summary?.toLowerCase().includes(searchTerm);
+        
+        if (titleMatch || tagMatch || summaryMatch) {
+          results.push({
+            id: `${offering.kind}-${offering.slug}`,
+            title: offering.title,
+            description: offering.summary || offering.description || '',
+            url: `/${offering.kind}s/${offering.slug}`,
+            type: offering.kind as 'program' | 'experience' | 'solution'
+          });
+        }
+      });
+    }
 
     // Search posts
-    posts.forEach(post => {
-      const titleMatch = post.title.toLowerCase().includes(searchTerm);
-      const excerptMatch = post.excerpt?.toLowerCase().includes(searchTerm);
-      const tagMatch = post.tags?.some(tag => tag.toLowerCase().includes(searchTerm));
-      
-      if (titleMatch || excerptMatch || tagMatch) {
-        results.push({
-          id: `post-${post.slug}`,
-          title: post.title,
-          description: post.excerpt || '',
-          url: `/article/${post.slug}`,
-          type: 'post'
-        });
-      }
-    });
+    if (posts && posts.length > 0) {
+      posts.forEach(post => {
+        const titleMatch = post.title.toLowerCase().includes(searchTerm);
+        const excerptMatch = post.excerpt?.toLowerCase().includes(searchTerm);
+        const tagMatch = post.tags?.some(tag => tag.toLowerCase().includes(searchTerm));
+        
+        if (titleMatch || excerptMatch || tagMatch) {
+          results.push({
+            id: `post-${post.slug}`,
+            title: post.title,
+            description: post.excerpt || '',
+            url: `/article/${post.slug}`,
+            type: 'post'
+          });
+        }
+      });
+    }
 
     return results.slice(0, 20); // Limit to 20 results
   }, [query, offerings, posts]);
@@ -143,7 +148,7 @@ const Search: React.FC = () => {
   };
 
   const getTypeLabel = (type: SearchResult['type']) => {
-    if (!pageData?.typeLabels) {
+    if (!pageData?.sections?.typeLabels) {
       switch (type) {
         case 'route': return 'Page';
         case 'program': return 'Program';
@@ -153,45 +158,57 @@ const Search: React.FC = () => {
         default: return 'Result';
       }
     }
-    return pageData.typeLabels[type] || pageData.typeLabels.default || 'Result';
+    return pageData.sections.typeLabels[type] || pageData.sections.typeLabels.default || 'Result';
   };
 
   return (
-    <div className={styles.container}>
+    <>
       <SEO data={{
         title: pageData?.seo?.title || 'Search - Breathing Flame',
         description: pageData?.seo?.description || 'Search for programs, experiences, articles, and resources'
       }} />
       
-      <div className={styles.header}>
-        <h1 className={styles.title}>{pageData?.hero?.headline || 'Search'}</h1>
-        <p className={styles.subtitle}>{pageData?.hero?.subtext || 'Find programs, experiences, articles, and more'}</p>
-      </div>
+      {/* Hero Section */}
+      {(pageData?.sections?.hero?.visible !== false) && pageData?.sections?.hero && (
+        <HeroSection
+          title={pageData.sections.hero.headline}
+          subtitle={pageData.sections.hero.subtext}
+          media={pageData.sections.hero.media}
+          ctas={pageData.sections.hero.ctas}
+        />
+      )}
 
-      <form onSubmit={handleSearch} className={styles.searchForm}>
-        <div className={styles.searchInputWrapper}>
-          <SearchIcon className={styles.searchIcon} />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={pageData?.searchPlaceholder || 'Search for programs, experiences, articles...'}
-            className={styles.searchInput}
-            autoFocus
-          />
-        </div>
-        <button type="submit" className={styles.searchButton} disabled={!query.trim()}>
-          {pageData?.searchButton || 'Search'}
-        </button>
-      </form>
+      <div className="container" style={{ maxWidth: '800px', paddingTop: 'var(--spacing-8)', paddingBottom: 'var(--spacing-8)' }}>
 
-      {query.trim() && (
-        <div className={styles.results}>
+      {/* Search Form Section */}
+      {(pageData?.sections?.searchForm?.visible !== false) && pageData?.sections?.searchForm && (
+        <form onSubmit={handleSearch} className={styles.searchForm} aria-label={pageData.sections.searchForm.ariaLabel}>
+          <div className={styles.searchInputWrapper}>
+            <SearchIcon className={styles.searchIcon} />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={pageData.sections.searchForm.placeholder}
+              className="form-input"
+              style={{ paddingLeft: '3rem' }}
+              autoFocus
+            />
+          </div>
+          <button type="submit" className="btn btn--primary" disabled={!query.trim()}>
+            {pageData.sections.searchForm.buttonLabel}
+          </button>
+        </form>
+      )}
+
+      {/* Results Section */}
+      {query.trim() && (pageData?.sections?.results?.visible !== false) && pageData?.sections?.results && (
+        <section className="section" style={{ paddingTop: 'var(--spacing-8)' }}>
           <div className={styles.resultsHeader}>
             <h2 className={styles.resultsTitle}>
               {isSearching 
-                ? (pageData?.searchingText || 'Searching...') 
-                : (pageData?.resultsText?.replace('{count}', searchResults.length.toString()).replace('{query}', query) || `${searchResults.length} results for "${query}"`)
+                ? pageData.sections.results.searchingText
+                : pageData.sections.results.resultsText.replace('{count}', searchResults.length.toString()).replace('{query}', query)
               }
             </h2>
           </div>
@@ -229,20 +246,21 @@ const Search: React.FC = () => {
             </div>
           ) : query.trim() && !isSearching ? (
             <div className={styles.noResults}>
-              <p>{pageData?.noResultsMessage?.replace('{query}', query) || `No results found for "${query}"`}</p>
+              <p>{pageData.sections.results.noResultsMessage.replace('{query}', query)}</p>
               <p className={styles.noResultsHint}>
-                {pageData?.noResultsHint || 'Try searching for "programs", "breathwork", "resilience", or "events"'}
+                {pageData.sections.results.noResultsHint}
               </p>
             </div>
           ) : null}
-        </div>
+        </section>
       )}
 
-      {!query.trim() && (
-        <div className={styles.suggestions}>
-          <h3 className={styles.suggestionsTitle}>{pageData?.popularSearches?.headline || 'Popular searches'}</h3>
+      {/* Popular Searches Section */}
+      {!query.trim() && (pageData?.sections?.popularSearches?.visible !== false) && pageData?.sections?.popularSearches && (
+        <section className="section" style={{ paddingTop: 'var(--spacing-8)', textAlign: 'center' }}>
+          <h3 className={styles.suggestionsTitle}>{pageData.sections.popularSearches.headline}</h3>
           <div className={styles.suggestionsList}>
-            {(pageData?.popularSearches?.terms || ['breathwork', 'resilience', 'programs', 'events', 'wim hof', 'cold exposure']).map((term) => (
+            {pageData.sections.popularSearches.terms.map((term: string) => (
               <button
                 key={term}
                 onClick={() => setQuery(term)}
@@ -252,9 +270,10 @@ const Search: React.FC = () => {
               </button>
             ))}
           </div>
-        </div>
+        </section>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

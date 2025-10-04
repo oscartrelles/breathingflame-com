@@ -55,14 +55,24 @@ export function selectTestimonials(
         const refs = t.refs || {};
         
         if (opts.context!.audience === 'individuals') {
+          // More inclusive filtering for individuals
           return tags.includes('individuals') || 
                  tags.includes('personal') || 
-                 refs.programSlugs?.length > 0;
+                 tags.includes('breathwork') ||
+                 tags.includes('cold-exposure') ||
+                 tags.includes('workshop') ||
+                 refs.programSlugs?.length > 0 ||
+                 // If no specific tags match, include all testimonials for now
+                 (!tags.includes('organizations') && !tags.includes('teams') && !tags.includes('leadership'));
         } else if (opts.context!.audience === 'organizations') {
+          // More inclusive filtering for organizations
           return tags.includes('organizations') || 
                  tags.includes('teams') || 
                  tags.includes('leadership') ||
-                 refs.solutionSlugs?.length > 0;
+                 tags.includes('leadership') ||
+                 refs.solutionSlugs?.length > 0 ||
+                 // If no specific tags match, include all testimonials for now
+                 (!tags.includes('individuals') && !tags.includes('personal'));
         }
         return true;
       });

@@ -1,6 +1,6 @@
 import { usePageIndividuals, usePrograms, useExperiences, usePosts } from '@/hooks/useFirestore'
 import { HeroSection } from '@/components/HeroSection'
-import { TestimonialsRail } from '@/components/TestimonialsRail'
+import { TestimonialComponent } from '@/components/TestimonialComponent'
 import { SEO } from '@/components/SEO'
 import { OfferingCard } from '@/components/OfferingCard'
 import { PillarsGrid } from '@/components/PillarsGrid'
@@ -39,18 +39,18 @@ export function Individuals() {
 
   // Get referenced programs
   const featuredPrograms = programs?.filter(program => 
-    pageData?.programs?.programRefs?.includes(program.id)
+    pageData?.sections?.programs?.programRefs?.includes(program.id)
   ) || []
 
   // Get referenced experiences
   const featuredExperiences = experiences?.filter(experience => 
-    pageData?.experiences?.experienceRefs?.includes(experience.id)
+    pageData?.sections?.experiences?.experienceRefs?.includes(experience.id)
   ) || []
 
 
   // Get featured blog post
   const featuredPost = posts?.find(post => 
-    post.id === pageData?.resources?.featuredPostRef
+    post.id === pageData?.sections?.resources?.featuredPostRef
   )
 
   if (!pageData) {
@@ -80,43 +80,45 @@ export function Individuals() {
       />
 
       {/* Hero Section */}
-      <HeroSection
-        title={pageData.hero.headline}
-        subtitle={pageData.hero.subtext}
-        media={pageData.hero.media ?? {
-          imageUrl: pageData.hero.imageUrl,
-          videoEmbed: pageData.hero.videoEmbed,
-          videoId: pageData.hero.videoId,
-        }}
-        ctas={pageData.hero.ctas}
-        className="individuals-hero"
-      />
+      {pageData.sections?.hero?.visible !== false && (
+        <HeroSection
+          title={pageData.sections.hero.headline}
+          subtitle={pageData.sections.hero.subtext}
+          media={pageData.sections.hero.media}
+          ctas={pageData.sections.hero.ctas}
+          className="individuals-hero"
+        />
+      )}
 
-      {/* Intro Blocks Section */}
+      {/* Pillars Section */}
+      {pageData.sections?.pillars?.visible !== false && (
       <PillarsGrid
-        pillars={pageData.introBlocks?.map((block: any) => ({
-          id: block.id,
-          title: block.title,
-          copy: block.copy,
-          icon: block.title?.charAt(0),
-          color: '#ffb332'
-        })) || []}
-        title="Our Approach"
-        subtitle="Three pillars that guide everything we do"
+        pillars={
+          (pageData.sections.pillars.pillars as any[]).map((p: any) => ({
+            id: p.title?.toLowerCase() || '',
+            title: p.title,
+            copy: p.copy,
+            icon: p.title?.charAt(0),
+            color: '#ffb332'
+          }))
+        }
+        title={pageData.sections.pillars.headline}
+        subtitle={pageData.sections.pillars.subtext}
         reducedMotion={reducedMotion}
       />
+      )}
 
       {/* Programs Section */}
-      {featuredPrograms.length > 0 && (
+      {(pageData.sections?.programs?.visible !== false) && featuredPrograms.length > 0 && (
       <section className="section section--sm">
         <div className="container">
             <motion.div 
               className={styles.sectionHeader}
               {...useInViewAnimation()}
             >
-              <h2 className={styles.sectionTitle}>{pageData.programs.headline}</h2>
+              <h2 className={styles.sectionTitle}>{pageData.sections.programs.headline}</h2>
             <p className={styles.sectionDescription}>
-                {pageData.programs.subtext}
+                {pageData.sections.programs.subtext}
               </p>
             </motion.div>
 
@@ -148,16 +150,16 @@ export function Individuals() {
       )}
 
       {/* Experiences Section */}
-      {featuredExperiences.length > 0 && (
+      {(pageData.sections?.experiences?.visible !== false) && featuredExperiences.length > 0 && (
       <section className="section section--sm">
         <div className="container">
             <motion.div 
               className={styles.sectionHeader}
               {...useInViewAnimation()}
             >
-              <h2 className={styles.sectionTitle}>{pageData.experiences.headline}</h2>
+              <h2 className={styles.sectionTitle}>{pageData.sections.experiences.headline}</h2>
             <p className={styles.sectionDescription}>
-                {pageData.experiences.subtext}
+                {pageData.sections.experiences.subtext}
               </p>
             </motion.div>
 
@@ -189,20 +191,24 @@ export function Individuals() {
       )}
 
       {/* Testimonials */}
-      <TestimonialsRail 
-        testimonialRefs={pageData?.testimonials?.testimonialRefs}
+      {(pageData.sections?.testimonials?.visible !== false) && (
+      <TestimonialComponent 
+        mode="grid"
+        testimonialRefs={pageData.sections.testimonials.testimonialRefs}
         context={{ audience: 'individuals' }}
-        title={pageData?.testimonials?.headline}
-        subtext={pageData?.testimonials?.subtext}
+        title={pageData.sections.testimonials.headline}
+        subtext={pageData.sections.testimonials.subtext}
         maxCount={6}
         minRating={4}
       />
+      )}
 
       {/* Resources Section */}
+      {(pageData.sections?.resources?.visible !== false) && (
       <ResourcesGrid
         resources={[
           // Assessment Links
-          ...(pageData.resources?.resourceLinks?.map((resource: any) => ({
+          ...(pageData.sections.resources.resourceLinks?.map((resource: any) => ({
             id: resource.id,
             title: resource.label,
             description: 'Free assessment to help you understand your current state and next steps.',
@@ -222,16 +228,18 @@ export function Individuals() {
             type: 'article' as const
           }] : [])
         ]}
-        title={pageData.resources?.headline}
-        subtitle={pageData.resources?.subtext}
+        title={pageData.sections.resources.headline}
+        subtitle={pageData.sections.resources.subtext}
         reducedMotion={reducedMotion}
       />
+      )}
 
       {/* Final CTA Section */}
+      {(pageData.sections?.finalCTA?.visible !== false) && (
       <FinalCTABand
-        headline={pageData.finalCTA?.headline}
-        subtext={pageData.finalCTA?.subtext}
-        buttons={pageData.finalCTA?.buttons?.map(button => ({
+        headline={pageData.sections.finalCTA.headline}
+        subtext={pageData.sections.finalCTA.subtext}
+        buttons={pageData.sections.finalCTA.buttons?.map(button => ({
           label: button.label,
           url: button.pathOrUrl,
           external: button.external || false
@@ -243,6 +251,7 @@ export function Individuals() {
           { label: "Learn More", url: "/about", external: false }
         ]}
       />
+      )}
     </motion.div>
   )
 }

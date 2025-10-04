@@ -1,11 +1,23 @@
 import React, { useEffect } from 'react';
 import { ExternalLink, Download, Mail, Phone, Calendar, Newspaper } from 'lucide-react';
-import { usePagePress } from '../hooks/useFirestore';
+import { usePagePress } from '../hooks/useContent';
 import { orgJSONLD, articleJSONLD } from '../seo/jsonld';
+import { HeroSection } from '../components/HeroSection';
+import { FinalCTABand } from '../components/FinalCTABand';
+import { motion } from 'framer-motion';
+import { 
+  fadeInUp, 
+  staggerContainer, 
+  staggerChild,
+  useInViewAnimation,
+  useReducedMotion
+} from '../utils/animations';
 import styles from './Press.module.css';
 
 const Press: React.FC = () => {
-  const { pageData, loading, error } = usePagePress();
+  const { data: pageData, loading, error } = usePagePress();
+  const reducedMotion = useReducedMotion();
+  
 
   useEffect(() => {
     if (pageData) {
@@ -25,7 +37,7 @@ const Press: React.FC = () => {
       });
 
       // Inject Article JSON-LD for each mention
-      const articleLDs = pageData.mentions.map(mention => 
+      const articleLDs = pageData.sections?.mentions?.mentions?.map(mention => 
         articleJSONLD({
           title: mention.title,
           description: mention.excerpt || '',
@@ -36,7 +48,7 @@ const Press: React.FC = () => {
           datePublished: mention.date,
           image: mention.image
         })
-      );
+      ) || [];
 
       // Inject all schemas
       const script1 = document.createElement('script');
@@ -94,44 +106,73 @@ const Press: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Loading press information...</div>
+      <div className="container">
+        <div className={styles.loading}>
+          <div className={styles.spinner} />
+          <p>Loading press information...</p>
+        </div>
       </div>
     );
   }
 
   if (error || !pageData) {
     return (
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.error}>Unable to load press information.</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
+    <div>
       {/* Hero Section */}
-      <section className={styles.hero}>
-        <h1 className={styles.heroTitle}>{pageData.hero.headline}</h1>
-        <p className={styles.heroSubtext}>{pageData.hero.subtext}</p>
-      </section>
+      {pageData.sections?.hero?.visible !== false && (
+        <HeroSection
+          title={pageData.sections.hero.headline}
+          subtitle={pageData.sections.hero.subtext}
+          media={pageData.sections.hero.media}
+          ctas={pageData.sections.hero.ctas}
+          className="press-hero"
+        />
+      )}
 
       {/* Intro Section */}
-      {pageData.intro && (
-        <section className={styles.intro}>
-          <h2 className={styles.introTitle}>{pageData.intro.title}</h2>
-          <div className={styles.introBody}>
-            {pageData.intro.body}
+      {(pageData.sections?.intro?.visible !== false) && pageData.sections?.intro && (
+        <section className="section section--sm">
+          <div className="container">
+            <motion.div
+              className={styles.sectionHeader}
+              {...useInViewAnimation()}
+            >
+              <h2 className={styles.sectionTitle}>{pageData.sections.intro.title}</h2>
+              <div className={styles.sectionDescription}>
+                {pageData.sections.intro.body}
+              </div>
+            </motion.div>
           </div>
         </section>
       )}
 
       {/* Media Mentions */}
-      {pageData.mentions && pageData.mentions.length > 0 && (
-        <section className={styles.mentions}>
-          <div className={styles.mentionsGrid}>
-            {pageData.mentions.map((mention, index) => (
-              <a
+      {(pageData.sections?.mentions?.visible !== false) && pageData.sections?.mentions?.mentions && pageData.sections.mentions.mentions.length > 0 && (
+        <section className="section section--sm">
+          <div className="container">
+            <motion.div
+              className={styles.sectionHeader}
+              {...useInViewAnimation()}
+            >
+              <h2 className={styles.sectionTitle}>{pageData.sections.mentionsIntro.headline}</h2>
+              <p className={styles.sectionDescription}>{pageData.sections.mentionsIntro.subtext}</p>
+            </motion.div>
+            <motion.div
+              className={styles.mentionsGrid}
+              variants={reducedMotion ? {} : staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+            {pageData.sections.mentions.mentions.map((mention, index) => (
+              <motion.a
                 key={index}
                 href={mention.url}
                 target="_blank"
@@ -139,6 +180,7 @@ const Press: React.FC = () => {
                 className={styles.mentionCard}
                 onClick={() => handleMentionClick(mention)}
                 aria-label={`Read ${mention.title} on ${mention.outlet}`}
+                variants={reducedMotion ? {} : staggerChild}
               >
                 <div className={styles.mentionHeader}>
                   {mention.image ? (
@@ -169,30 +211,43 @@ const Press: React.FC = () => {
                     )}
                   </div>
                 </div>
-              </a>
+              </motion.a>
             ))}
+            </motion.div>
           </div>
         </section>
       )}
 
       {/* Press Kit */}
-      <section className={styles.pressKit}>
-        <div className={styles.pressKitHeader}>
-          <h2 className={styles.pressKitTitle}>{pageData.pressKit.headline}</h2>
-          {pageData.pressKit.description && (
-            <p className={styles.pressKitDescription}>{pageData.pressKit.description}</p>
-          )}
-        </div>
-        
-        <div className={styles.assetsGrid}>
-          {pageData.pressKit.assets.map((asset, index) => (
-            <a
+      {(pageData.sections?.pressKit?.visible !== false) && pageData.sections?.pressKit && (
+      <section className="section section--sm">
+        <div className="container">
+          <motion.div
+            className={styles.sectionHeader}
+            {...useInViewAnimation()}
+          >
+            <h2 className={styles.sectionTitle}>{pageData.sections.pressKit.headline}</h2>
+            {pageData.sections.pressKit.description && (
+              <p className={styles.sectionDescription}>{pageData.sections.pressKit.description}</p>
+            )}
+          </motion.div>
+          
+          <motion.div
+            className={styles.assetsGrid}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+          {pageData.sections.pressKit.assets.map((asset, index) => (
+            <motion.a
               key={index}
               href={asset.url}
               download
               className={styles.assetCard}
               onClick={() => handleAssetDownload(asset)}
               aria-label={`Download ${asset.label}`}
+              variants={reducedMotion ? {} : staggerChild}
             >
               <div className={styles.assetIconWrapper}>
                 {getAssetIcon(asset.type)}
@@ -202,40 +257,77 @@ const Press: React.FC = () => {
                 <span className={styles.assetType}>{asset.type || (pageData?.assets?.defaultType || 'Download')}</span>
               </div>
               <Download className={styles.downloadIcon} />
-            </a>
+            </motion.a>
           ))}
+          </motion.div>
         </div>
       </section>
+      )}
 
       {/* Contact Section */}
-      <section className={styles.contact}>
-        <h2 className={styles.contactTitle}>{pageData.contact.headline}</h2>
-        {pageData.contact.subtext && (
-          <p className={styles.contactSubtext}>{pageData.contact.subtext}</p>
-        )}
-        
-        <div className={styles.contactMethods}>
-          <a
-            href={`mailto:${pageData.contact.email}`}
+      {(pageData.sections?.contact?.visible !== false) && pageData.sections?.contact && (
+      <section className="section section--sm">
+        <div className="container">
+          <motion.div
+            className={styles.sectionHeader}
+            {...useInViewAnimation()}
+          >
+            <h2 className={styles.sectionTitle}>{pageData.sections.contact.headline}</h2>
+            {pageData.sections.contact.subtext && (
+              <p className={styles.sectionDescription}>{pageData.sections.contact.subtext}</p>
+            )}
+          </motion.div>
+          
+          <motion.div
+            className={styles.contactMethods}
+            variants={reducedMotion ? {} : staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+          <motion.a
+            href={`mailto:${pageData.sections.contact.email}`}
             className={styles.contactMethod}
-            aria-label={`Email ${pageData.contact.email}`}
+            aria-label={`Email ${pageData.sections.contact.email}`}
+            variants={reducedMotion ? {} : staggerChild}
           >
             <Mail className={styles.contactIcon} />
-            <span>{pageData.contact.email}</span>
-          </a>
+            <span>{pageData.sections.contact.email}</span>
+          </motion.a>
           
-          {pageData.contact.phone && (
-            <a
-              href={`tel:${pageData.contact.phone}`}
+          {pageData.sections.contact.phone && (
+            <motion.a
+              href={`tel:${pageData.sections.contact.phone}`}
               className={styles.contactMethod}
-              aria-label={`Call ${pageData.contact.phone}`}
+              aria-label={`Call ${pageData.sections.contact.phone}`}
+              variants={reducedMotion ? {} : staggerChild}
             >
               <Phone className={styles.contactIcon} />
-              <span>{pageData.contact.phone}</span>
-            </a>
+              <span>{pageData.sections.contact.phone}</span>
+            </motion.a>
           )}
+          </motion.div>
         </div>
       </section>
+      )}
+
+      {/* Final CTA Section */}
+      {(pageData.sections?.finalCTA?.visible !== false) && pageData.sections?.finalCTA && (
+        <FinalCTABand
+          headline={pageData.sections.finalCTA.headline}
+          subtext={pageData.sections.finalCTA.subtext}
+          buttons={pageData.sections.finalCTA.buttons?.map(button => ({
+            label: button.label,
+            url: button.pathOrUrl,
+            external: button.external || false
+          }))}
+          fallbackHeadline="Want to feature Breathing Flame?"
+          fallbackSubtext="We'd love to share insights on resilience, clarity, and transformation with your audience."
+          fallbackButtons={[
+            { label: "Book an Interview", url: "/contact", external: false }
+          ]}
+        />
+      )}
     </div>
   );
 };

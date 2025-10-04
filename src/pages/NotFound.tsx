@@ -195,6 +195,7 @@ export function NotFound() {
       </section>
 
       {/* Quick Links */}
+      {(pageData?.sections?.popularPages?.visible !== false) && (
       <section className="section">
         <div className="container">
           <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
@@ -241,9 +242,10 @@ export function NotFound() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Programs & Workshops */}
-      {offerings.length > 0 && (
+      {(pageData?.sections?.programsWorkshops?.visible !== false) && offerings.length > 0 && (
         <section className="section">
           <div className="container">
             <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
@@ -290,7 +292,7 @@ export function NotFound() {
       )}
 
       {/* Latest Articles */}
-      {latestPosts && latestPosts.length > 0 && latestPosts.some(post => post && post.slug) && (
+      {(pageData?.sections?.latestArticles?.visible !== false) && latestPosts && latestPosts.length > 0 && latestPosts.some(post => post && post.slug) && (
         <section className="section">
           <div className="container">
             <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
@@ -342,6 +344,7 @@ export function NotFound() {
       )}
 
       {/* Assessments */}
+      {(pageData?.sections?.quickAssessments?.visible !== false) && (
       <section className="section">
         <div className="container">
           <h2 className="heading heading--lg" style={{ color: 'var(--color-primary)', marginBottom: 'var(--spacing-6)' }}>
@@ -367,8 +370,10 @@ export function NotFound() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Contact CTA */}
+      {(pageData?.sections?.help?.visible !== false) && (
       <section className="section">
         <div className="container">
           <div className="card" style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
@@ -391,6 +396,7 @@ export function NotFound() {
           </div>
         </div>
       </section>
+      )}
     </>
   )
 }

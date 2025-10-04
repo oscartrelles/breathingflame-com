@@ -26,14 +26,21 @@ export function Resources() {
     offset: 0 
   })
 
-  const tags = page?.filters?.tags ? ['All', ...page.filters.tags] : ['All']
+  const tags = page?.sections?.filters?.tags ? ['All', ...page.sections.filters.tags] : ['All']
+  
+  // Function to capitalize tag for display
+  const capitalizeTag = (tag: string) => {
+    if (tag === 'All') return tag
+    return tag.charAt(0).toUpperCase() + tag.slice(1)
+  }
+
 
   const collectionLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: page?.seo?.title || 'Resources',
     description: page?.seo?.description,
-    about: page?.filters?.tags || [],
+    about: page?.sections?.filters?.tags || [],
     url: 'https://breathingflame.com/resources',
     mainEntity: {
       '@type': 'ItemList',
@@ -96,67 +103,46 @@ export function Resources() {
       }} />
 
       {/* Hero Section */}
-      <section className={`section ${styles.heroSection}`}>
-        <div className="container">
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>{page.hero?.headline}</h1>
-            <p className={styles.heroSubtext}>{page.hero?.subtext}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Intro Section */}
-      {page.intro && (
-        <section className={`section ${styles.introSection}`}>
+      {(page.sections?.hero?.visible !== false) && page.sections?.hero && (
+        <section className={`section ${styles.heroSection}`}>
           <div className="container">
-            <div className={styles.introContent}>
-              <h2 className={styles.introTitle}>{page.intro.title}</h2>
-              <p className={styles.introBody}>{page.intro.body}</p>
+            <div className={styles.heroContent}>
+              <h1 className={styles.heroTitle}>{page.sections.hero.headline}</h1>
+              <p className={styles.heroSubtext}>{page.sections.hero.subtext}</p>
             </div>
           </div>
         </section>
       )}
 
-      {/* Controls Section */}
-      <section className={`section ${styles.controlsSection}`}>
-        <div className="container">
-          <div className={styles.controlsContainer}>
-            {page.filters?.enabled !== false && (
-              <div role="tablist" aria-label={page.filters?.ariaLabel || 'Filter articles'} className={styles.filterTabs}>
-                {tags.map(tag => (
-                  <button
-                    key={tag}
-                    role="tab"
-                    aria-selected={activeTag === tag}
-                    className={`${styles.filterTab} ${activeTag === tag ? styles.active : ''}`}
-                    onClick={() => onTagClick(tag)}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-            )}
-            {page.search?.enabled !== false && (
-              <form onSubmit={onSearchSubmit} aria-label={page.search?.ariaLabel || 'Search resources'} className={styles.searchForm}>
-                <label htmlFor="resources-search" className="sr-only">{page.search?.label || 'Search articles'}</label>
-                <input 
-                  id="resources-search" 
-                  value={query} 
-                  onChange={e => setQuery(e.target.value)} 
-                  placeholder={page.search?.placeholder} 
-                  className={styles.searchInput}
-                />
-              </form>
-            )}
+      {/* Intro Section */}
+      {(page.sections?.intro?.visible !== false) && page.sections?.intro && (
+        <section className={`section ${styles.introSection}`}>
+          <div className="container">
+            <div className={styles.introContent}>
+              <h2 className={styles.introTitle}>{page.sections.intro.title}</h2>
+              <p className={styles.introBody}>{page.sections.intro.body}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Articles Intro Section */}
+      {(page.sections?.articlesIntro?.visible !== false) && page.sections?.articlesIntro && (
+        <section className={`section ${styles.articlesIntroSection}`}>
+          <div className="container">
+            <div className={styles.articlesIntroContent}>
+              <h2 className={styles.articlesIntroTitle}>{page.sections.articlesIntro.headline}</h2>
+              <p className={styles.articlesIntroSubtext}>{page.sections.articlesIntro.subtext}</p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured Post Section */}
-      {page.featuredPostRef && posts && (
+      {(page.sections?.featuredPostRef?.visible !== false) && page.sections?.featuredPostRef?.postRef && posts && (
         <section className={`section ${styles.featuredSection}`}>
           <div className="container">
-            {posts.filter(p => p.id === page.featuredPostRef).map(p => (
+            {posts.filter(p => p.id === page.sections.featuredPostRef.postRef).map(p => (
               <a key={p.id} href={`/article/${p.slug}`} className={styles.featuredCard}>
                 {p.cover && <img src={p.cover} alt={p.title} className={styles.featuredImage} />}
                 <div className={styles.featuredContent}>
@@ -169,6 +155,39 @@ export function Resources() {
           </div>
         </section>
       )}
+
+      {/* Controls Section */}
+      <div className="container" style={{ paddingTop: 'var(--spacing-2)', paddingBottom: 'var(--spacing-2)' }}>
+        <div className={styles.controlsContainer}>
+            {(page.sections?.filters?.visible !== false) && page.sections?.filters?.enabled !== false && (
+              <div role="tablist" aria-label={page.sections?.filters?.ariaLabel || 'Filter articles'} className={styles.filterTabs}>
+                {tags.map(tag => (
+                  <button
+                    key={tag}
+                    role="tab"
+                    aria-selected={activeTag === tag}
+                    className={`${styles.filterTab} ${activeTag === tag ? styles.active : ''}`}
+                    onClick={() => onTagClick(tag)}
+                  >
+                    {capitalizeTag(tag)}
+                  </button>
+                ))}
+              </div>
+            )}
+            {(page.sections?.search?.visible !== false) && page.sections?.search?.enabled !== false && (
+              <form onSubmit={onSearchSubmit} aria-label={page.sections?.search?.ariaLabel || 'Search resources'} className={styles.searchForm}>
+                <label htmlFor="resources-search" className="sr-only">{page.sections?.search?.label || 'Search articles'}</label>
+                <input 
+                  id="resources-search" 
+                  value={query} 
+                  onChange={e => setQuery(e.target.value)} 
+                  placeholder={page.sections?.search?.placeholder} 
+                  className={styles.searchInput}
+                />
+              </form>
+            )}
+        </div>
+      </div>
 
       {/* Articles Grid Section */}
       <section className={`section ${styles.articlesSection}`}>
@@ -206,28 +225,28 @@ export function Resources() {
             </>
           ) : (
             <div className={styles.emptyState}>
-              <h3 className={styles.emptyStateTitle}>{page.emptyState?.title || 'No posts found'}</h3>
-              <p className={styles.emptyStateSubtext}>{page.emptyState?.subtext || 'Try a different tag or clear the search.'}</p>
+              <h3 className={styles.emptyStateTitle}>{page.sections?.emptyState?.title || 'No posts found'}</h3>
+              <p className={styles.emptyStateSubtext}>{page.sections?.emptyState?.subtext || 'Try a different tag or clear the search.'}</p>
             </div>
           )}
         </div>
       </section>
 
       {/* Newsletter Section */}
-      {page.newsletter?.enabled !== false && (
-        <section id={page.newsletter.idAnchor || 'newsletter'} className={`section ${styles.newsletterSection}`}>
+      {(page.sections?.newsletter?.visible !== false) && page.sections?.newsletter?.enabled !== false && (
+        <section id={page.sections?.newsletter?.idAnchor || 'newsletter'} className={`section ${styles.newsletterSection}`}>
       <div className="container">
             <div className={styles.newsletterCard}>
-              <h2 className={styles.newsletterTitle}>{page.newsletter.headline}</h2>
-              <p className={styles.newsletterSubtext}>{page.newsletter.subtext}</p>
+              <h2 className={styles.newsletterTitle}>{page.sections.newsletter.headline}</h2>
+              <p className={styles.newsletterSubtext}>{page.sections.newsletter.subtext}</p>
               <a 
                 className={styles.newsletterButton} 
-                href={page.newsletter.ctaUrl} 
+                href={page.sections.newsletter.ctaUrl} 
                 onClick={() => { 
                   if (window?.gtag) window.gtag('event','newsletter_click',{ location:'resources' }) 
                 }}
               >
-                {page.newsletter.ctaLabel}
+                {page.sections.newsletter.ctaLabel}
               </a>
             </div>
       </div>
@@ -235,11 +254,11 @@ export function Resources() {
       )}
 
       {/* Final CTA Band */}
-      {page.finalCTA && (
+      {(page.sections?.finalCTA?.visible !== false) && page.sections?.finalCTA && (
         <FinalCTABand 
-          headline={page.finalCTA.headline}
-          subtext={page.finalCTA.subtext}
-          buttons={page.finalCTA.buttons}
+          headline={page.sections.finalCTA.headline}
+          subtext={page.sections.finalCTA.subtext}
+          buttons={page.sections.finalCTA.buttons}
         />
       )}
     </>
